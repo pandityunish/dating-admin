@@ -1,0 +1,37 @@
+# Notification note :-
+    types of notification
+        incompletesignup : sent to admin on new signup
+        incompleteregistration : sent to admin after completing letstart page
+        completesignup : notification to admin after complete signup+
+        congo : 5 notification to user1 after complete signup
+        photoupload : editedd or uploaded photo
+        profileseen : if clickded on image of user2
+        partnerprefupdate : user1 update partner preferences
+        aboutmeupdate : user1 update his about me
+        notificationbell : user1 click on notification bell on profile scroll
+        connectnow
+        block
+        unblock
+        cancelinterest
+        report
+        unreport
+        shortlist
+        unshortlist
+        acceptrequest
+        declinerequest
+        savepreference
+        resetpreference
+        onlineuser
+        videouploadjlt : when user tries to upload just like that
+        videouploadsuccess : when video uploaded
+        queryraised
+        accountdelete
+        logout
+        login
+        knowHow : this is for KNOW HOW TO USE APP screen send from congo.dart
+
+
+# Chat Page note
+    type in message datatype
+        txt: for a text messaged
+        img: for a image insertion
