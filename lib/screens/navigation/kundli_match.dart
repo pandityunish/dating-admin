@@ -2,7 +2,7 @@ import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_webservice/places.dart';
+// import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
 import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
@@ -17,7 +17,7 @@ import '../service/search_profile.dart';
 import 'kundli_match_data.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
 
 List<String> list1 = <String>[
   'Year',
@@ -185,8 +185,8 @@ class KundliMatch extends StatefulWidget {
 }
 
 class _KundliMatchState extends State<KundliMatch> {
-  GoogleMapsPlaces _places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
+  // GoogleMapsPlaces _places =
+  //     GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
   final _searchController = TextEditingController();
   final _searchController2 = TextEditingController();
   String? location;
@@ -249,27 +249,27 @@ class _KundliMatchState extends State<KundliMatch> {
     });
   }
 
-  List<Prediction> _predictions = [];
-  List<Prediction> _predictions2 = [];
-  void _onSearchChanged(String value) async {
-    if (value.isNotEmpty) {
-      var response = await _places.autocomplete(value);
-      setState(() {
-        _predictions = response.predictions;
-        height_suggest1 = 200;
-      });
-    }
-  }
+  // List<Prediction> _predictions = [];
+  // List<Prediction> _predictions2 = [];
+  // void _onSearchChanged(String value) async {
+  //   if (value.isNotEmpty) {
+  //     var response = await _places.autocomplete(value);
+  //     setState(() {
+  //       _predictions = response.predictions;
+  //       height_suggest1 = 200;
+  //     });
+  //   }
+  // }
 
-  void _onSearchChanged2(String value) async {
-    if (value.isNotEmpty) {
-      var response = await _places.autocomplete(value);
-      setState(() {
-        _predictions2 = response.predictions;
-        height_suggest2 = 200;
-      });
-    }
-  }
+  // void _onSearchChanged2(String value) async {
+  //   if (value.isNotEmpty) {
+  //     var response = await _places.autocomplete(value);
+  //     setState(() {
+  //       _predictions2 = response.predictions;
+  //       height_suggest2 = 200;
+  //     });
+  //   }
+  // }
 
   var latf;
   var lngf;
@@ -277,35 +277,35 @@ class _KundliMatchState extends State<KundliMatch> {
   var lngm;
   TextEditingController birthPlaceController = TextEditingController();
   TextEditingController birthPlaceController2 = TextEditingController();
-  void _onSelectedPlace(Prediction prediction) async {
-    var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
-    latm = placeDetail.result.geometry?.location.lat;
-    lngm = placeDetail.result.geometry?.location.lng;
+  // void _onSelectedPlace(Prediction prediction) async {
+  //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
+  //   latm = placeDetail.result.geometry?.location.lat;
+  //   lngm = placeDetail.result.geometry?.location.lng;
 
-    // TODO: Use the lat/lng to display the selected place on the map or save it to your database
+  //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
 
-    setState(() {
-      _searchController.text = prediction.description!;
-      location = prediction.description!;
-      birthPlaceController.text = location!;
-      _predictions.clear();
-    });
-  }
+  //   setState(() {
+  //     _searchController.text = prediction.description!;
+  //     location = prediction.description!;
+  //     birthPlaceController.text = location!;
+  //     _predictions.clear();
+  //   });
+  // }
 
-  void _onSelectedPlace2(Prediction prediction) async {
-    var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
-    latf = placeDetail.result.geometry?.location.lat;
-    lngf = placeDetail.result.geometry?.location.lng;
+  // void _onSelectedPlace2(Prediction prediction) async {
+  //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
+  //   latf = placeDetail.result.geometry?.location.lat;
+  //   lngf = placeDetail.result.geometry?.location.lng;
 
-    // TODO: Use the lat/lng to display the selected place on the map or save it to your database
+  //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
 
-    setState(() {
-      _searchController2.text = prediction.description!;
-      location2 = prediction.description!;
-      birthPlaceController2.text = location2!;
-      _predictions2.clear();
-    });
-  }
+  //   setState(() {
+  //     _searchController2.text = prediction.description!;
+  //     location2 = prediction.description!;
+  //     birthPlaceController2.text = location2!;
+  //     _predictions2.clear();
+  //   });
+  // }
 
   var containerHeight;
 
@@ -584,61 +584,61 @@ String getMonthName(int monthNumber) {
                             // SizedBox(
                             //   height: 10,
                             // ),
-                            Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: TextFormField(
-                                // controller: birthPlaceController,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.name,
-                                onChanged: (value) {
-                                  _onSearchChanged(value);
-                                },
-                                focusNode: _focusNode,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    setState(() {
-                                      height_suggest1 = 0.0;
-                                    });
-                                    return "Enter your name";
-                                  }
-                                  return location;
-                                },
-                                decoration: const InputDecoration(
-                                    hintText: "Birth place",
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                            ),
-                            Stack(
-                              children: [
-                                SizedBox(height: 1),
-                                Container(
-                                  height: height_suggest1,
-                                  child: Card(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      itemCount: _predictions.length,
-                                      itemBuilder: (context, index) {
-                                        return SingleChildScrollView(
-                                          child: ListTile(
-                                              title: Text(_predictions[index]
-                                                  .description!),
-                                              onTap: () {
-                                                _onSelectedPlace(
-                                                    _predictions[index]);
-                                                setState(() {
-                                                  height_suggest1 = 0.0;
-                                                });
-                                              }),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Card(
+                            //   elevation: 4,
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(30)),
+                            //   child: TextFormField(
+                            //     // controller: birthPlaceController,
+                            //     textInputAction: TextInputAction.next,
+                            //     keyboardType: TextInputType.name,
+                            //     onChanged: (value) {
+                            //       _onSearchChanged(value);
+                            //     },
+                            //     focusNode: _focusNode,
+                            //     validator: (value) {
+                            //       if (value!.isEmpty) {
+                            //         setState(() {
+                            //           height_suggest1 = 0.0;
+                            //         });
+                            //         return "Enter your name";
+                            //       }
+                            //       return location;
+                            //     },
+                            //     decoration: const InputDecoration(
+                            //         hintText: "Birth place",
+                            //         border: InputBorder.none,
+                            //         contentPadding: EdgeInsets.all(10)),
+                            //   ),
+                            // ),
+                            // Stack(
+                            //   children: [
+                            //     SizedBox(height: 1),
+                            //     Container(
+                            //       height: height_suggest1,
+                            //       child: Card(
+                            //         child: ListView.builder(
+                            //           padding: EdgeInsets.zero,
+                            //           itemCount: _predictions.length,
+                            //           itemBuilder: (context, index) {
+                            //             return SingleChildScrollView(
+                            //               child: ListTile(
+                            //                   title: Text(_predictions[index]
+                            //                       .description!),
+                            //                   onTap: () {
+                            //                     _onSelectedPlace(
+                            //                         _predictions[index]);
+                            //                     setState(() {
+                            //                       height_suggest1 = 0.0;
+                            //                     });
+                            //                   }),
+                            //             );
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                 
                             Text(
                               "Bride's Information",
@@ -811,64 +811,64 @@ String getMonthName(int monthNumber) {
                                 ),
                               ],
                             ),
-                            Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: TextFormField(
-                                // controller: birthPlaceController2,
+                            // Card(
+                            //   elevation: 4,
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(30)),
+                            //   child: TextFormField(
+                            //     // controller: birthPlaceController2,
                                 
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.name,
-                                onChanged: (value) {
-                                  _onSearchChanged2(value);
-                                },
-                                focusNode: _focusNode2,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    setState(() {
-                                      height_suggest2 = 0.0;
-                                    });
-                                    return "Enter your birth place";
-                                  }
-                                  return location2;
-                                },
-                                decoration: const InputDecoration(
-                                    hintText: "Birth place",
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.all(10)),
-                              ),
-                            ),
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  height: 1,
-                                ),
-                                Container(
-                                  height: height_suggest2,
-                                  child: Card(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      itemCount: _predictions2.length,
-                                      itemBuilder: (context, index) {
-                                        return SingleChildScrollView(
-                                          child: ListTile(
-                                              title: Text(_predictions2[index]
-                                                  .description!),
-                                              onTap: () {
-                                                _onSelectedPlace2(
-                                                    _predictions2[index]);
-                                                setState(() {
-                                                  height_suggest2 = 0.0;
-                                                });
-                                              }),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            //     textInputAction: TextInputAction.next,
+                            //     keyboardType: TextInputType.name,
+                            //     onChanged: (value) {
+                            //       _onSearchChanged2(value);
+                            //     },
+                            //     focusNode: _focusNode2,
+                            //     validator: (value) {
+                            //       if (value!.isEmpty) {
+                            //         setState(() {
+                            //           height_suggest2 = 0.0;
+                            //         });
+                            //         return "Enter your birth place";
+                            //       }
+                            //       return location2;
+                            //     },
+                            //     decoration: const InputDecoration(
+                            //         hintText: "Birth place",
+                            //         border: InputBorder.none,
+                            //         contentPadding: EdgeInsets.all(10)),
+                            //   ),
+                            // ),
+                            // Stack(
+                            //   children: [
+                            //     SizedBox(
+                            //       height: 1,
+                            //     ),
+                            //     Container(
+                            //       height: height_suggest2,
+                            //       child: Card(
+                            //         child: ListView.builder(
+                            //           padding: EdgeInsets.zero,
+                            //           itemCount: _predictions2.length,
+                            //           itemBuilder: (context, index) {
+                            //             return SingleChildScrollView(
+                            //               child: ListTile(
+                            //                   title: Text(_predictions2[index]
+                            //                       .description!),
+                            //                   onTap: () {
+                            //                     _onSelectedPlace2(
+                            //                         _predictions2[index]);
+                            //                     setState(() {
+                            //                       height_suggest2 = 0.0;
+                            //                     });
+                            //                   }),
+                            //             );
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ]),
                       Container(
                         margin: const EdgeInsets.only(top: 2),
@@ -1204,7 +1204,7 @@ String getMonthName(int monthNumber) {
                                   textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.name,
                                   onChanged: (value) {
-                                    _onSearchChanged(value);
+                                    // _onSearchChanged(value);
                                   },
                                   focusNode: _focusNode,
                                   validator: (value) {
@@ -1222,34 +1222,34 @@ String getMonthName(int monthNumber) {
                                       contentPadding: EdgeInsets.all(10)),
                                 ),
                               ),
-                              Stack(
-                                children: [
-                                  SizedBox(height: 1),
-                                  Container(
-                                    height: height_suggest1,
-                                    child: Card(
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        itemCount: _predictions.length,
-                                        itemBuilder: (context, index) {
-                                          return SingleChildScrollView(
-                                            child: ListTile(
-                                                title: Text(_predictions[index]
-                                                    .description!),
-                                                onTap: () {
-                                                  _onSelectedPlace(
-                                                      _predictions[index]);
-                                                  setState(() {
-                                                    height_suggest1 = 0.0;
-                                                  });
-                                                }),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Stack(
+                              //   children: [
+                              //     SizedBox(height: 1),
+                              //     Container(
+                              //       height: height_suggest1,
+                              //       child: Card(
+                              //         child: ListView.builder(
+                              //           padding: EdgeInsets.zero,
+                              //           itemCount: _predictions.length,
+                              //           itemBuilder: (context, index) {
+                              //             return SingleChildScrollView(
+                              //               child: ListTile(
+                              //                   title: Text(_predictions[index]
+                              //                       .description!),
+                              //                   onTap: () {
+                              //                     _onSelectedPlace(
+                              //                         _predictions[index]);
+                              //                     setState(() {
+                              //                       height_suggest1 = 0.0;
+                              //                     });
+                              //                   }),
+                              //             );
+                              //           },
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                                      Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 0),
                         child: SizedBox(
@@ -1451,7 +1451,7 @@ String getMonthName(int monthNumber) {
                                   textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.name,
                                   onChanged: (value) {
-                                    _onSearchChanged2(value);
+                                    // _onSearchChanged2(value);
                                   },
                                   focusNode: _focusNode2,
                                   validator: (value) {
@@ -1469,36 +1469,36 @@ String getMonthName(int monthNumber) {
                                       contentPadding: EdgeInsets.all(10)),
                                 ),
                               ),
-                              Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 1,
-                                  ),
-                                  Container(
-                                    height: height_suggest2,
-                                    child: Card(
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        itemCount: _predictions2.length,
-                                        itemBuilder: (context, index) {
-                                          return SingleChildScrollView(
-                                            child: ListTile(
-                                                title: Text(_predictions2[index]
-                                                    .description!),
-                                                onTap: () {
-                                                  _onSelectedPlace2(
-                                                      _predictions2[index]);
-                                                  setState(() {
-                                                    height_suggest2 = 0.0;
-                                                  });
-                                                }),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Stack(
+                              //   children: [
+                              //     SizedBox(
+                              //       height: 1,
+                              //     ),
+                              //     Container(
+                              //       height: height_suggest2,
+                              //       child: Card(
+                              //         child: ListView.builder(
+                              //           padding: EdgeInsets.zero,
+                              //           itemCount: _predictions2.length,
+                              //           itemBuilder: (context, index) {
+                              //             return SingleChildScrollView(
+                              //               child: ListTile(
+                              //                   title: Text(_predictions2[index]
+                              //                       .description!),
+                              //                   onTap: () {
+                              //                     _onSelectedPlace2(
+                              //                         _predictions2[index]);
+                              //                     setState(() {
+                              //                       height_suggest2 = 0.0;
+                              //                     });
+                              //                   }),
+                              //             );
+                              //           },
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ]),
                         Container(
                           margin: const EdgeInsets.only(top: 2),
@@ -1900,7 +1900,7 @@ String getMonthName(int monthNumber) {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
                               onChanged: (value) {
-                                _onSearchChanged(value);
+                                // _onSearchChanged(value);
                               },
                               focusNode: _focusNode,
                               validator: (value) {
@@ -1918,34 +1918,34 @@ String getMonthName(int monthNumber) {
                                   contentPadding: EdgeInsets.all(10)),
                             ),
                           ),
-                          Stack(
-                            children: [
-                              SizedBox(height: 1),
-                              Container(
-                                height: height_suggest1,
-                                child: Card(
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: _predictions.length,
-                                    itemBuilder: (context, index) {
-                                      return SingleChildScrollView(
-                                        child: ListTile(
-                                            title: Text(_predictions[index]
-                                                .description!),
-                                            onTap: () {
-                                              _onSelectedPlace(
-                                                  _predictions[index]);
-                                              setState(() {
-                                                height_suggest1 = 0.0;
-                                              });
-                                            }),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Stack(
+                          //   children: [
+                          //     SizedBox(height: 1),
+                          //     Container(
+                          //       height: height_suggest1,
+                          //       child: Card(
+                          //         child: ListView.builder(
+                          //           padding: EdgeInsets.zero,
+                          //           itemCount: _predictions.length,
+                          //           itemBuilder: (context, index) {
+                          //             return SingleChildScrollView(
+                          //               child: ListTile(
+                          //                   title: Text(_predictions[index]
+                          //                       .description!),
+                          //                   onTap: () {
+                          //                     _onSelectedPlace(
+                          //                         _predictions[index]);
+                          //                     setState(() {
+                          //                       height_suggest1 = 0.0;
+                          //                     });
+                          //                   }),
+                          //             );
+                          //           },
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
       Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       child: SizedBox(
@@ -2130,7 +2130,7 @@ String getMonthName(int monthNumber) {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
                               onChanged: (value) {
-                                _onSearchChanged2(value);
+                                // _onSearchChanged2(value);
                               },
                               focusNode: _focusNode2,
                               validator: (value) {
@@ -2148,36 +2148,36 @@ String getMonthName(int monthNumber) {
                                   contentPadding: EdgeInsets.all(10)),
                             ),
                           ),
-                          Stack(
-                            children: [
-                              SizedBox(
-                                height: 1,
-                              ),
-                              Container(
-                                height: height_suggest2,
-                                child: Card(
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: _predictions2.length,
-                                    itemBuilder: (context, index) {
-                                      return SingleChildScrollView(
-                                        child: ListTile(
-                                            title: Text(_predictions2[index]
-                                                .description!),
-                                            onTap: () {
-                                              _onSelectedPlace2(
-                                                  _predictions2[index]);
-                                              setState(() {
-                                                height_suggest2 = 0.0;
-                                              });
-                                            }),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Stack(
+                          //   children: [
+                          //     SizedBox(
+                          //       height: 1,
+                          //     ),
+                          //     Container(
+                          //       height: height_suggest2,
+                          //       child: Card(
+                          //         child: ListView.builder(
+                          //           padding: EdgeInsets.zero,
+                          //           itemCount: _predictions2.length,
+                          //           itemBuilder: (context, index) {
+                          //             return SingleChildScrollView(
+                          //               child: ListTile(
+                          //                   title: Text(_predictions2[index]
+                          //                       .description!),
+                          //                   onTap: () {
+                          //                     _onSelectedPlace2(
+                          //                         _predictions2[index]);
+                          //                     setState(() {
+                          //                       height_suggest2 = 0.0;
+                          //                     });
+                          //                   }),
+                          //             );
+                          //           },
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ]),
                     Container(
                       margin: const EdgeInsets.only(top: 2),

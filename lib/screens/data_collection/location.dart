@@ -5,7 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_webservice/places.dart';
+// import 'package:google_maps_webservice/places.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/screens/data_collection/aboutMe.dart';
 import 'package:matrimony_admin/screens/service/auth_service.dart';
@@ -43,86 +43,86 @@ class _LocationState extends State<Location> {
   }
 
   final _searchController = TextEditingController();
-  GoogleMapsPlaces _places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
+  // GoogleMapsPlaces _places =
+  //     GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
 
-  List<Prediction> _predictions = [];
+  // List<Prediction> _predictions = [];
   UserService userService = Get.put(UserService());
   @override
   Widget build(BuildContext context) {
-    void _onSearchChanged(String value) async {
-      lng = "";
-      lat = "";
-      print(value);
-      // print(_places.searchByText(value));
-      var res = await _places.searchByText(value);
-      print(res.results.length);
-      if (value.isNotEmpty) {
-        var response = await _places.autocomplete(value, types: ["(cities)"]);
-        setState(() {
-          _predictions = response.predictions;
-        });
-        print(response.predictions);
-      }
-    }
+    // void _onSearchChanged(String value) async {
+    //   lng = "";
+    //   lat = "";
+    //   print(value);
+    //   // print(_places.searchByText(value));
+    //   var res = await _places.searchByText(value);
+    //   print(res.results.length);
+    //   if (value.isNotEmpty) {
+    //     var response = await _places.autocomplete(value, types: ["(cities)"]);
+    //     setState(() {
+    //       _predictions = response.predictions;
+    //     });
+    //     print(response.predictions);
+    //   }
+    // }
 
-    void _onSelectedPlace(Prediction prediction) async {
-      print(prediction.description);
-      var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
-      lat = placeDetail.result.geometry?.location.lat;
-      lng = placeDetail.result.geometry?.location.lng;
+    // void _onSelectedPlace(Prediction prediction) async {
+    //   print(prediction.description);
+    //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
+    //   lat = placeDetail.result.geometry?.location.lat;
+    //   lng = placeDetail.result.geometry?.location.lng;
 
-      // TODO: Use the lat/lng to display the selected place on the map or save it to your database
+    //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
 
-      setState(() {
-        _searchController.text = prediction.description!;
-        location = prediction.description;
-        try {
-          city = prediction.structuredFormatting!.mainText;
-          state = prediction.structuredFormatting!.secondaryText
-              .toString()
-              .split(',')[0];
-          country = (prediction.structuredFormatting!.secondaryText
-                      .toString()
-                      .split(',')[prediction.structuredFormatting!.secondaryText
-                              .toString()
-                              .split(',')
-                              .length -
-                          1]
-                      .split(" ")[0] !=
-                  " ")
-              ? state
-              : prediction.structuredFormatting!.secondaryText
-                  .toString()
-                  .split(',')[prediction.structuredFormatting!.secondaryText
-                          .toString()
-                          .split(',')
-                          .length -
-                      1]
-                  .split(" ")[1];
+    //   setState(() {
+    //     _searchController.text = prediction.description!;
+    //     location = prediction.description;
+    //     try {
+    //       city = prediction.structuredFormatting!.mainText;
+    //       state = prediction.structuredFormatting!.secondaryText
+    //           .toString()
+    //           .split(',')[0];
+    //       country = (prediction.structuredFormatting!.secondaryText
+    //                   .toString()
+    //                   .split(',')[prediction.structuredFormatting!.secondaryText
+    //                           .toString()
+    //                           .split(',')
+    //                           .length -
+    //                       1]
+    //                   .split(" ")[0] !=
+    //               " ")
+    //           ? state
+    //           : prediction.structuredFormatting!.secondaryText
+    //               .toString()
+    //               .split(',')[prediction.structuredFormatting!.secondaryText
+    //                       .toString()
+    //                       .split(',')
+    //                       .length -
+    //                   1]
+    //               .split(" ")[1];
 
-          FocusManager.instance.primaryFocus?.unfocus();
-        } catch (e) {
-          print(e);
-        }
-        // print(prediction.structuredFormatting!.secondaryText);
-        // setData();
-        // setData();
-        List<String> parts = prediction.description!.split(RegExp(r'[,\s]+'));
-        String lastWord = parts.last;
-        print(lastWord);
-        userService.userdata.addAll({
-          "location": location,
-          "state": state,
-          "country": lastWord,
-          "city": city,
-          "lat": lat,
-          "lng": lng
-        });
+    //       FocusManager.instance.primaryFocus?.unfocus();
+    //     } catch (e) {
+    //       print(e);
+    //     }
+    //     // print(prediction.structuredFormatting!.secondaryText);
+    //     // setData();
+    //     // setData();
+    //     List<String> parts = prediction.description!.split(RegExp(r'[,\s]+'));
+    //     String lastWord = parts.last;
+    //     print(lastWord);
+    //     userService.userdata.addAll({
+    //       "location": location,
+    //       "state": state,
+    //       "country": lastWord,
+    //       "city": city,
+    //       "lat": lat,
+    //       "lng": lng
+    //     });
 
-        _predictions.clear();
-      });
-    }
+    //     _predictions.clear();
+    //   });
+    // }
 
     @override
     void dispose() {
@@ -171,24 +171,24 @@ class _LocationState extends State<Location> {
                                         color: main_color,
                                       ),
                                       border: InputBorder.none),
-                                  onChanged: (value) =>
-                                      _onSearchChanged(value),
+                                  onChanged: (value) {}
+                                      // _onSearchChanged(value),
                                 ),
                               ),
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: _predictions.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                        title: Text(
-                                            _predictions[index].description!),
-                                        onTap: () {
-                                          _onSelectedPlace(
-                                              _predictions[index]);
-                                        });
-                                  },
-                                ),
-                              ),
+                              // Expanded(
+                              //   child: ListView.builder(
+                              //     itemCount: _predictions.length,
+                              //     itemBuilder: (context, index) {
+                              //       return ListTile(
+                              //           title: Text(
+                              //               _predictions[index].description!),
+                              //           onTap: () {
+                              //             _onSelectedPlace(
+                              //                 _predictions[index]);
+                              //           });
+                              //     },
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_webservice/places.dart';
+// import 'package:google_maps_webservice/places.dart';
 import '../../Assets/Error.dart';
-import 'package:csc_picker/csc_picker.dart';
+// import 'package:csc_picker/csc_picker.dart';
 // import '../../Assets/G_Sign.dart';
 // import '../../models/shared_pref.dart';
 // import '../../models/user_model.dart';
@@ -35,36 +35,36 @@ class _LocationSearchState extends State<LocationSearch> {
   }
 
   TextEditingController _searchController = TextEditingController();
-  GoogleMapsPlaces _places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyCY0Kuh0x5rOk2yKXejCwEBMcbciJyH5cc');
+  // GoogleMapsPlaces _places =
+  //     GoogleMapsPlaces(apiKey: 'AIzaSyCY0Kuh0x5rOk2yKXejCwEBMcbciJyH5cc');
 
-  List<Prediction> _predictions = [];
+  // List<Prediction> _predictions = [];
 
   @override
   Widget build(BuildContext context) {
-    void _onSearchChanged(String value) async {
-      if (value.isNotEmpty) {
-        var response = await _places.autocomplete(value);
-        setState(() {
-          _predictions = response.predictions;
-        });
-      }
-    }
+    // void _onSearchChanged(String value) async {
+    //   if (value.isNotEmpty) {
+    //     var response = await _places.autocomplete(value);
+    //     setState(() {
+    //       _predictions = response.predictions;
+    //     });
+    //   }
+    // }
 
-    void _onSelectedPlace(Prediction prediction) async {
-      var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
-      var lat = placeDetail.result.geometry?.location.lat;
-      var lng = placeDetail.result.geometry?.location.lng;
+    // void _onSelectedPlace(Prediction prediction) async {
+    //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
+    //   var lat = placeDetail.result.geometry?.location.lat;
+    //   var lng = placeDetail.result.geometry?.location.lng;
 
-      // TODO: Use the lat/lng to display the selected place on the map or save it to your database
+    //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
 
-      setState(() {
-        // _searchController.text = prediction.description!;
-        _searchController.text = "";
-        location.add(prediction.description!);
-        _predictions.clear();
-      });
-    }
+    //   setState(() {
+    //     // _searchController.text = prediction.description!;
+    //     _searchController.text = "";
+    //     location.add(prediction.description!);
+    //     _predictions.clear();
+    //   });
+    // }
 
     @override
     void dispose() {
@@ -375,24 +375,24 @@ class _LocationSearchState extends State<LocationSearch> {
                 //   ///Show only specific countries using country filter
                 //   // countryFilter: ["United States", "Canada", "Mexico"],
                 // ),
-                CSCPicker(
-                  layout: Layout.vertical,
-                  //flagState: CountryFlag.DISABLE,
-                  onCountryChanged: (country) {
-                    print(country);
-                  },
-                  onStateChanged: (state) {
-                    print(state);
-                  },
-                  onCityChanged: (city) {
-                    print(city);
-                  },
-                  /* countryDropdownLabel: "*Country",
-          stateDropdownLabel: "*State",
-          cityDropdownLabel: "*City",*/
-                  //dropdownDialogRadius: 30,
-                  //searchBarRadius: 30,
-                ),
+          //       CSCPicker(
+          //         layout: Layout.vertical,
+          //         //flagState: CountryFlag.DISABLE,
+          //         onCountryChanged: (country) {
+          //           print(country);
+          //         },
+          //         onStateChanged: (state) {
+          //           print(state);
+          //         },
+          //         onCityChanged: (city) {
+          //           print(city);
+          //         },
+          //         /* countryDropdownLabel: "*Country",
+          // stateDropdownLabel: "*State",
+          // cityDropdownLabel: "*City",*/
+          //         //dropdownDialogRadius: 30,
+          //         //searchBarRadius: 30,
+          //       ),
 
                 ///print newly selected country state and city in Text Widget
                 TextButton(

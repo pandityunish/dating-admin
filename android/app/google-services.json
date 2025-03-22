@@ -15,75 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "295563077707-5hvjjuq8tj8h56tekn9pdmcj9i5dnspp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "8c430661bf40039137a2a4053cbb33c5685c0dfd"
-          }
-        },
-        {
-          "client_id": "295563077707-6clnseab3btq7o3ghqr1v7lb6pevkk8u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "c150c9567053728fe9baa4207190da75e1ffe672"
-          }
-        },
-        {
-          "client_id": "295563077707-8e72m2lrvp395e5v3jmr8bcb3sl1ths7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "e3cc01cf8d77fc8961a51a3a7abd426fe5fd7490"
-          }
-        },
-        {
-          "client_id": "295563077707-dh16ddkvurhliadasnbi0c454c4ifqgn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "c282c4f507416f735f32738adc7eff17b2dfc25d"
-          }
-        },
-        {
-          "client_id": "295563077707-di5h309ao1u23pcc66sg2lh1vj69hs27.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "4d17e4b83d936e131a81ed721a3a85227e0b744a"
-          }
-        },
-        {
-          "client_id": "295563077707-h1ecvkdvhjvtgfmv0f6rjsnk1pnkddc3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "ced9813678097fabf4592b62db5d38ae5c77cd64"
-          }
-        },
-        {
           "client_id": "295563077707-l8hpf23vek7u9nfcb818rr7n54p22igi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.matrimony_admin",
             "certificate_hash": "a14b8438b18c9ef4cef6bd98c968fe69f437ba79"
-          }
-        },
-        {
-          "client_id": "295563077707-lb7ghpjnpjl80eif0j6ots9u6l86c1p0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "5d2d5249f17af258f3da63737661bb6bf211a89b"
-          }
-        },
-        {
-          "client_id": "295563077707-qrukm0nvfh6ehghig5k1tdungh7pgf49.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.matrimony_admin",
-            "certificate_hash": "ac244c41e2caf2ebb4da6163b7c643bf277eeb8c"
           }
         },
         {

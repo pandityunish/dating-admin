@@ -9,7 +9,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import '../../globalVars.dart';
 import 'model/select_status_model.dart' as StatusModel;
-import 'package:google_maps_webservice/places.dart';
+// import 'package:google_maps_webservice/places.dart';
 
 // import 'package:couple_match/countryModel/assets/country.json';
 // import 'model/select_status_model.dart';
@@ -238,67 +238,66 @@ void addlocation(){
       cityDataList = tempCount;
     });
   }
- GoogleMapsPlaces _places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
-        List<Prediction> _predictions = [];
-         List<Prediction> _citypredictions = [];
+//  GoogleMapsPlaces _places =
+//       GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
+//         List<Prediction> _predictions = [];
+//          List<Prediction> _citypredictions = [];
   final _searchController = TextEditingController();
 List<String> statename=[];
 List<String> cityname=[];
 
-void onselectstate(Prediction prediction)async{
+// void onselectstate(Prediction prediction)async{
    
-   statename.add(prediction.structuredFormatting!.mainText);
-   print(prediction.structuredFormatting!.mainText);
-   setState(() {
+//    statename.add(prediction.structuredFormatting!.mainText);
+//    print(prediction.structuredFormatting!.mainText);
+//    setState(() {
      
-   });
-}
-void onselectcity(Prediction prediction)async{
+//    });
+// }
+// void onselectcity(Prediction prediction)async{
    
-   cityname.add(prediction.structuredFormatting!.mainText);
-   print(prediction.structuredFormatting!.mainText);
-   setState(() {
+//    cityname.add(prediction.structuredFormatting!.mainText);
+//    print(prediction.structuredFormatting!.mainText);
+//    setState(() {
      
-   });
-}
-// 🇦🇫    Afghanistan
+//    });
+// }
   @override
   Widget build(BuildContext context) {
-     void _onSearchChanged(String value) async {
+    //  void _onSearchChanged(String value) async {
     
-      print(value);
-      // print(_places.searchByText(value));
-      var res=await _places.searchByText(value);
-      print(res.results.length);
-      if (value.isNotEmpty) {
-        var response = await _places.autocomplete(value,types: [
-          "(regions)"
-        ]);
-         List<Prediction> statePredictions =
-            response.predictions.where((prediction) {
-          return prediction.types.contains('administrative_area_level_1');
-        }).toList();
-        setState(() {
-          _predictions = statePredictions;
-        });
-        print(response.predictions);
-      }
-    }
-     void _cityonSearchChanged(String value) async {
+    //   print(value);
+    //   // print(_places.searchByText(value));
+    //   var res=await _places.searchByText(value);
+    //   print(res.results.length);
+    //   if (value.isNotEmpty) {
+    //     var response = await _places.autocomplete(value,types: [
+    //       "(regions)"
+    //     ]);
+    //      List<Prediction> statePredictions =
+    //         response.predictions.where((prediction) {
+    //       return prediction.types.contains('administrative_area_level_1');
+    //     }).toList();
+    //     setState(() {
+    //       _predictions = statePredictions;
+    //     });
+    //     print(response.predictions);
+    //   }
+    // }
+    //  void _cityonSearchChanged(String value) async {
     
-      print(value);
-      // print(_places.searchByText(value));
-      var res=await _places.searchByText(value);
-      print(res.results.length);
-      if (value.isNotEmpty) {
-        var response = await _places.autocomplete(value, types: ["(cities)"]);
-        setState(() {
-          _citypredictions = response.predictions;
-        });
-        print(response.predictions);
-      }
-    }
+    //   print(value);
+    //   // print(_places.searchByText(value));
+    //   var res=await _places.searchByText(value);
+    //   print(res.results.length);
+    //   if (value.isNotEmpty) {
+    //     var response = await _places.autocomplete(value, types: ["(cities)"]);
+    //     setState(() {
+    //       _citypredictions = response.predictions;
+    //     });
+    //     print(response.predictions);
+    //   }
+    // }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return MediaQuery(
@@ -540,7 +539,7 @@ void onselectcity(Prediction prediction)async{
                                     // focusNode: countryfocus,
                                     controller: stateController,
                                     onChanged: (value) {
-                                      _onSearchChanged(value);
+                                      // _onSearchChanged(value);
                                     },
                                   ),
                                 ),
@@ -553,17 +552,17 @@ void onselectcity(Prediction prediction)async{
                     height: 10,
                   ),
                   
-                  statefocus
-                      ? Container(
-                          height:
-                              MediaQuery.of(context).size.height * 0.22,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: stateSuggetion1(_predictions),
-                            ),
-                          ),
-                        )
-                      : Container(),
+                  // statefocus
+                  //     ? Container(
+                  //         height:
+                  //             MediaQuery.of(context).size.height * 0.22,
+                  //         child: SingleChildScrollView(
+                  //           child: Column(
+                  //             children: stateSuggetion1(_predictions),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
                   const SizedBox(height: 20),
                   
                   countryfocus || statefocus
@@ -642,7 +641,7 @@ void onselectcity(Prediction prediction)async{
                                     // focusNode: countryfocus,
                                     controller: cityController,
                                     onChanged: (value) {
-                                     _cityonSearchChanged(value);
+                                    //  _cityonSearchChanged(value);
                                     },
                                   ),
                                 ),
@@ -657,17 +656,17 @@ void onselectcity(Prediction prediction)async{
                     height: 10,
                   ),
                   
-                  cityfocus
-                      ? Container(
-                          height:
-                              MediaQuery.of(context).size.height * 0.15,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: citySuggetion1(_citypredictions),
-                            ),
-                          ),
-                        )
-                      : Container(),
+                  // cityfocus
+                  //     ? Container(
+                  //         height:
+                  //             MediaQuery.of(context).size.height * 0.15,
+                  //         child: SingleChildScrollView(
+                  //           child: Column(
+                  //             children: citySuggetion1(_citypredictions),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
                 ],
               ),
             ),
@@ -890,60 +889,60 @@ void onselectcity(Prediction prediction)async{
 
     return statetemp;
   }
- List<Widget> stateSuggetion1(List<Prediction> stateList) {
-    List<Widget> statetemp = [];
-    for (Prediction state in stateList) {
-      statetemp.add(Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-                color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
-        child: ListTile(
-          iconColor: Colors.black,
-          leading: Icon(
-            Icons.location_on_outlined,
-            color: main_color,
-          ),
-          title: Text(state.description!,
-              style: TextStyle(
-                color: main_color,
-              )),
-          onTap: () {
-            if (statename.contains(state.structuredFormatting!.mainText)) {
-              statename.remove(state.structuredFormatting!.mainText);
-              // _cities = [];
-              // cityDataList = [];
-              // getCity();
-              statename.remove(state.structuredFormatting!.mainText);
+//  List<Widget> stateSuggetion1(List<Prediction> stateList) {
+//     List<Widget> statetemp = [];
+//     for (Prediction state in stateList) {
+//       statetemp.add(Container(
+//         margin: const EdgeInsets.symmetric(
+//           horizontal: 10,
+//         ),
+//         decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(5),
+//             border: Border.all(
+//                 color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
+//         child: ListTile(
+//           iconColor: Colors.black,
+//           leading: Icon(
+//             Icons.location_on_outlined,
+//             color: main_color,
+//           ),
+//           title: Text(state.description!,
+//               style: TextStyle(
+//                 color: main_color,
+//               )),
+//           onTap: () {
+//             if (statename.contains(state.structuredFormatting!.mainText)) {
+//               statename.remove(state.structuredFormatting!.mainText);
+//               // _cities = [];
+//               // cityDataList = [];
+//               // getCity();
+//               statename.remove(state.structuredFormatting!.mainText);
 
-              setState(() {});
-            } else {
-              onselectstate(state);
-              statefocus = false;
-              stateController.clear();
-              cityDataList = [];
-              _cities = [];
+//               setState(() {});
+//             } else {
+//               onselectstate(state);
+//               statefocus = false;
+//               stateController.clear();
+//               cityDataList = [];
+//               _cities = [];
              
-            }
-            setState(() {});
-          },
-          // trailing: 
-          // selectedStateList.map((e) => e.id).contains(state.id)
-          //     ? Icon(
-          //         CupertinoIcons.check_mark,
-          //         color: main_color,
-          //       )
-          //     : null,
-        ),
-      ));
-    }
+//             }
+//             setState(() {});
+//           },
+//           // trailing: 
+//           // selectedStateList.map((e) => e.id).contains(state.id)
+//           //     ? Icon(
+//           //         CupertinoIcons.check_mark,
+//           //         color: main_color,
+//           //       )
+//           //     : null,
+//         ),
+//       ));
+//     }
 
-    return statetemp;
-  }
+//     return statetemp;
+//   }
   List<Widget> citySuggetion(List<StatusModel.City> cityList) {
     List<Widget> citytemp = [];
     for (StatusModel.City city in cityList) {
@@ -988,67 +987,67 @@ void onselectcity(Prediction prediction)async{
 
     return citytemp;
   }
-  List<Widget> citySuggetion1(List<Prediction> cityList) {
-    List<Widget> citytemp = [];
-    for (Prediction city in cityList) {
-      citytemp.add(Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-                color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
-        child: ListTile(
-          title: Text(city.description!,
-              style: TextStyle(
-                color: main_color,
-              )),
-          iconColor: Colors.black,
-          leading: Icon(
-            Icons.location_on_outlined,
-            color: main_color,
-          ),
-          onTap: () {
-            if (cityname.contains(city.structuredFormatting!.mainText)) {
-              cityname.remove(city.structuredFormatting!.mainText);
-              // _cities = [];
-              // cityDataList = [];
-              // getCity();
-              cityname.remove(city.structuredFormatting!.mainText);
+  // List<Widget> citySuggetion1(List<Prediction> cityList) {
+  //   List<Widget> citytemp = [];
+  //   for (Prediction city in cityList) {
+  //     citytemp.add(Container(
+  //       margin: const EdgeInsets.symmetric(
+  //         horizontal: 10,
+  //       ),
+  //       decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(5),
+  //           border: Border.all(
+  //               color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
+  //       child: ListTile(
+  //         title: Text(city.description!,
+  //             style: TextStyle(
+  //               color: main_color,
+  //             )),
+  //         iconColor: Colors.black,
+  //         leading: Icon(
+  //           Icons.location_on_outlined,
+  //           color: main_color,
+  //         ),
+  //         onTap: () {
+  //           if (cityname.contains(city.structuredFormatting!.mainText)) {
+  //             cityname.remove(city.structuredFormatting!.mainText);
+  //             // _cities = [];
+  //             // cityDataList = [];
+  //             // getCity();
+  //             cityname.remove(city.structuredFormatting!.mainText);
 
-              setState(() {});
-            } else {
-              onselectcity(city);
-              cityfocus = false;
-              cityController.clear();
-              cityDataList = [];
+  //             setState(() {});
+  //           } else {
+  //             onselectcity(city);
+  //             cityfocus = false;
+  //             cityController.clear();
+  //             cityDataList = [];
               
              
-            }
-            setState(() {});
-            // if (selectedCityList.contains(city)) {
-            //   selectedCityList.remove(city);
-            // } else {
-            //   selectedCityList.add(city);
-            //   cityfocus = false;
-            //   cityController.clear();
-            // }
-            // setState(() {});
-          },
-          // trailing: selectedCityList.contains(city)
-          //     ? Icon(
-          //         CupertinoIcons.check_mark,
-          //         color: main_color,
-          //       )
-          //     : null,
-        ),
-      ));
-    }
+  //           }
+  //           setState(() {});
+  //           // if (selectedCityList.contains(city)) {
+  //           //   selectedCityList.remove(city);
+  //           // } else {
+  //           //   selectedCityList.add(city);
+  //           //   cityfocus = false;
+  //           //   cityController.clear();
+  //           // }
+  //           // setState(() {});
+  //         },
+  //         // trailing: selectedCityList.contains(city)
+  //         //     ? Icon(
+  //         //         CupertinoIcons.check_mark,
+  //         //         color: main_color,
+  //         //       )
+  //         //     : null,
+  //       ),
+  //     ));
+  //   }
 
-    return citytemp;
-  }
+  //   return citytemp;
+  // }
 }
 
 InputDecoration textFiedstyle = InputDecoration(

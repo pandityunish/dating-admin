@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_webservice/places.dart';
+// import 'package:google_maps_webservice/places.dart';
 
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -622,41 +622,41 @@ setState(() {
     TextEditingController birthPlaceController = TextEditingController();
       final _searchController = TextEditingController();
       String? location;
-    List<Prediction> _predictions = [];
-      var height_suggest1 = 0.0;
+  //   List<Prediction> _predictions = [];
+  //     var height_suggest1 = 0.0;
        List<String> landmarkssug=[];
-   GoogleMapsPlaces _places =
-      GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
-       void _onSelectedPlace(Prediction prediction) async {
-    var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
+  //  GoogleMapsPlaces _places =
+  //     GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
+  //      void _onSelectedPlace(Prediction prediction) async {
+  //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
  
 
-    // TODO: Use the lat/lng to display the selected place on the map or save it to your database
-    if (!mounted) return;
-    setState(() {
-      _searchController.text = prediction.description!;
-      location = prediction.description!;
-      birthPlaceController.text = location!;
-      _predictions.clear();
-      // landmarkssug.clear();
-    });
-  }
-void _onSearchChanged(String value) async {
-    if (value.isNotEmpty) {
-      var response = await _places.autocomplete(value);
-      if (!mounted) return;
-      setState(() {
-        _predictions = response.predictions;
-        height_suggest1 = 200;
-      });
-      for (var i = 0; i < _predictions.length; i++) {
-        landmarkssug.add(_predictions[i].description!);
-      }
-      setState(() {
+  //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
+  //   if (!mounted) return;
+  //   setState(() {
+  //     _searchController.text = prediction.description!;
+  //     location = prediction.description!;
+  //     birthPlaceController.text = location!;
+  //     _predictions.clear();
+  //     // landmarkssug.clear();
+  //   });
+  // }
+// void _onSearchChanged(String value) async {
+//     if (value.isNotEmpty) {
+//       var response = await _places.autocomplete(value);
+//       if (!mounted) return;
+//       setState(() {
+//         _predictions = response.predictions;
+//         height_suggest1 = 200;
+//       });
+//       for (var i = 0; i < _predictions.length; i++) {
+//         landmarkssug.add(_predictions[i].description!);
+//       }
+//       setState(() {
         
-      });
-    }
-  }
+//       });
+//     }
+//   }
   @override
   Widget build(BuildContext context) {
     // setState(() {
@@ -1173,7 +1173,7 @@ void _onSearchChanged(String value) async {
                                   textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.name,
                                   onChanged: (value) {
-                                    _onSearchChanged(value);
+                                    // _onSearchChanged(value);
                                     _scrollController.animateTo(
                 _scrollController.position.maxScrollExtent,
                 duration: Duration(seconds: 1),
@@ -1207,35 +1207,35 @@ void _onSearchChanged(String value) async {
                                 ),
                               ),
                       ),
-                            Stack(
-                              children: [
-                                SizedBox(height: 1),
-                                Container(
-                                  height: height_suggest1,
-                                  child: Card(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      itemCount: _predictions.length,
-                                      itemBuilder: (context, index) {
-                                        return SingleChildScrollView(
-                                          child: ListTile(
-                                              title: Text(_predictions[index]
-                                                  .description!),
-                                              onTap: () {
-                                                _onSelectedPlace(
-                                                    _predictions[index]);
-                                                if (!mounted) return;
-                                                setState(() {
-                                                  height_suggest1 = 0.0;
-                                                });
-                                              }),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Stack(
+                            //   children: [
+                            //     SizedBox(height: 1),
+                            //     Container(
+                            //       height: height_suggest1,
+                            //       child: Card(
+                            //         child: ListView.builder(
+                            //           padding: EdgeInsets.zero,
+                            //           itemCount: _predictions.length,
+                            //           itemBuilder: (context, index) {
+                            //             return SingleChildScrollView(
+                            //               child: ListTile(
+                            //                   title: Text(_predictions[index]
+                            //                       .description!),
+                            //                   onTap: () {
+                            //                     _onSelectedPlace(
+                            //                         _predictions[index]);
+                            //                     if (!mounted) return;
+                            //                     setState(() {
+                            //                       height_suggest1 = 0.0;
+                            //                     });
+                            //                   }),
+                            //             );
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                    const SizedBox(
                     height: 10,
                   ),
