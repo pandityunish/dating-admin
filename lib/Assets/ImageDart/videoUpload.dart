@@ -136,7 +136,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(main_color)),
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(main_color)),
             );
           }
         },
@@ -256,14 +257,21 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
   }
 
   void _toggleVideoPlayback() {
-      
     setState(() {
       if (_videoPlayerController.value.isPlaying) {
         _videoPlayerController.pause();
         _isPlaying = false;
       } else {
-        SearchProfile().addtoadminnotification(userid: userSave!.uid!, useremail:widget.userSave!.email!, userimage:widget.userSave!.imageurls!.isEmpty?"":widget.userSave!.imageurls![0],  
-  title: "${userSave.displayName} PLAYS VIDEO BY ${widget.userSave.name[0]} ${widget.userSave.surname} ${widget.userSave.puid}", email: userSave.email!, subtitle: "");
+        SearchProfile().addtoadminnotification(
+            userid: userSave!.uid!,
+            useremail: widget.userSave!.email!,
+            userimage: widget.userSave!.imageurls!.isEmpty
+                ? ""
+                : widget.userSave!.imageurls![0],
+            title:
+                "${userSave.displayName} PLAYS VIDEO BY ${widget.userSave.name[0]} ${widget.userSave.surname} ${widget.userSave.puid}",
+            email: userSave.email!,
+            subtitle: "");
         _videoPlayerController.play();
         _isPlaying = true;
       }
@@ -297,7 +305,9 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
                       child: Center(
                         child: IconButton(
                           icon: Icon(
-                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                            _isPlaying
+                                ? Icons.play_circle_filled_rounded
+                                : Icons.play_circle_outline,
                             color: main_color,
                             size: 40,
                           ),
@@ -310,7 +320,8 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(main_color)),
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(main_color)),
             );
           }
         },

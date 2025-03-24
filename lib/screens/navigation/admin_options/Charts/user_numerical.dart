@@ -253,7 +253,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Gender",
                                     data: genderCounts,
@@ -279,6 +279,7 @@ class _UserNumericalState extends State<UserNumerical> {
                           ],
                         ),
                         const Divider(
+                          height: 25,
                           thickness: 1,
                         ),
                       ],
@@ -293,7 +294,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Country Code",
                                     data: realCountryCodeList,
@@ -319,6 +320,7 @@ class _UserNumericalState extends State<UserNumerical> {
                           ],
                         ),
                         const Divider(
+                          height: 25,
                           thickness: 1,
                         ),
                       ],
@@ -333,7 +335,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Birth Year",
                                     data: birthYearList,
@@ -360,11 +362,11 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
-                  } else if (userNumericalData[index] ==
-                      "RELIGION PROFILES") {
+                  } else if (userNumericalData[index] == "RELIGION PROFILES") {
                     return Column(
                       children: [
                         Row(
@@ -374,7 +376,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Religion",
                                     data: religionList,
@@ -401,6 +403,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -414,7 +417,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Marital Status",
                                     data: maritialStatusList,
@@ -441,6 +444,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -454,7 +458,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Kundli Dosh",
                                     data: kundaliDoshList,
@@ -481,6 +485,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -494,7 +499,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: dietList,
                                     title: "Diet",
@@ -521,6 +526,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -534,7 +540,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: drinkList,
                                     title: "Drink",
@@ -561,6 +567,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -574,7 +581,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: smokeList,
                                     title: "Smoke",
@@ -601,6 +608,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -614,7 +622,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: disabilityList,
                                     title: "Disability",
@@ -641,6 +649,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -654,7 +663,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: heightList,
                                     title: "Height",
@@ -681,6 +690,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -694,7 +704,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: educationList,
                                     title: "Education",
@@ -721,6 +731,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -734,7 +745,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Proferssion",
                                     data: professionList,
@@ -761,6 +772,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -774,7 +786,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: annualIncomeList,
                                     title: "Annual Income",
@@ -801,6 +813,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -814,7 +827,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Country",
                                     data: countryList,
@@ -841,6 +854,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -854,7 +868,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "State",
                                     data: stateList,
@@ -881,6 +895,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -894,7 +909,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "City",
                                     data: cityList,
@@ -921,6 +936,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -934,7 +950,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "About Me",
                                     data: aboutMeList,
@@ -961,6 +977,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -975,7 +992,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     title: "Patner Preference",
                                     data: aboutPartnerList,
@@ -1002,6 +1019,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -1015,7 +1033,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: profilePicList,
                                     title: "Profile Pic",
@@ -1042,6 +1060,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -1055,7 +1074,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: profilePicList,
                                     title: "Pic",
@@ -1082,6 +1101,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -1095,7 +1115,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: profilePicList,
                                     title: "Profile Pic",
@@ -1122,6 +1142,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );
@@ -1135,7 +1156,7 @@ class _UserNumericalState extends State<UserNumerical> {
                             ),
                             InkWell(
                               onTap: () async {
-                                if (widget.title == "User Numerical Chart") {
+                                if (widget.title == "User Numerical Charts") {
                                   Get.to(NumericalData(
                                     data: profilePicList,
                                     title: "App Store",
@@ -1162,6 +1183,7 @@ class _UserNumericalState extends State<UserNumerical> {
                         ),
                         const Divider(
                           thickness: 1,
+                          height: 25,
                         ),
                       ],
                     );

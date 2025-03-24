@@ -17,6 +17,7 @@ class NumericalData extends StatefulWidget {
 
 class _NumericalDataState extends State<NumericalData> {
   List<CountryDetails> countryList = [];
+
   getCountryCodesNow() async {
     await CountryCodes.init();
     setState(() {
@@ -27,13 +28,14 @@ class _NumericalDataState extends State<NumericalData> {
   @override
   void initState() {
     getCountryCodesNow();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final realData = widget.data.entries.toList();
+    // Convert Map to List and Sort Alphabetically by Country Name
+    final realData = widget.data.entries.toList()
+      ..sort((a, b) => a.key.toString().compareTo(b.key.toString()));
 
     return MediaQuery(
       data: MediaQuery.of(context)
@@ -60,23 +62,19 @@ class _NumericalDataState extends State<NumericalData> {
               )
             ],
           ),
-          trailing:  Icon(Icons.calendar_month,color:main_color ,),
+          trailing: Icon(Icons.calendar_month, color: main_color),
           previousPageTitle: "",
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               ListView.builder(
                 itemCount: realData.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  // countryList.forEach((item) {
-                  //   print(item.dialCode);
-                  // });
-                  // print("country code ko count ${countryList.length}");
                   String countryCode = "";
                   for (var item in countryList) {
                     if (realData[index].key.toString().toUpperCase() ==
@@ -90,9 +88,7 @@ class _NumericalDataState extends State<NumericalData> {
                       children: [
                         Row(
                           children: [
-                            const SizedBox(
-                              width: 15,
-                            ),
+                            const SizedBox(width: 15),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: SizedBox(
@@ -108,9 +104,7 @@ class _NumericalDataState extends State<NumericalData> {
                             ),
                           ],
                         ),
-                        const Divider(
-                          thickness: 1,
-                        ),
+                        const Divider(thickness: 1),
                       ],
                     ),
                   );
