@@ -300,7 +300,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -350,7 +350,7 @@ class _FirstScreenState extends State<FirstScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 1,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -447,7 +447,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 10),
+                            horizontal: 0, vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

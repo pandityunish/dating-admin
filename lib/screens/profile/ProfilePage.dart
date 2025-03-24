@@ -590,7 +590,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
     } else {
       return List<Widget>.generate(galleryItems.length, (int index) {
         return widget.userSave!.isBlur == true
-            ?  SizedBox(
+            ? SizedBox(
                 height: 25,
                 width: 25,
                 child: ClipRRect(
@@ -611,13 +611,19 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                               0), // Required to make BackdropFilter work
                         ),
                       ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("images/lock.png"),
-                      SizedBox(height: 10,),
-                      Text("Locked",style: TextStyle(color: main_color),)
-                    ],)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("images/lock.png"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Locked",
+                            style: TextStyle(color: main_color),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -738,7 +744,6 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                             fontFamily: "Sans-serif",
                                             fontSize: 20,
                                             color: Colors.white,
-                                            
                                             fontWeight: FontWeight.w700,
                                             shadows: <Shadow>[
                                               Shadow(
@@ -1038,10 +1043,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                     Container(
                                       // width: MediaQuery.of(context).size.width * 1,
                                       margin: const EdgeInsets.only(
-                                        left: 10,
-                                        right: 0,
-                                        top: 5
-                                      ),
+                                          left: 10, right: 0, top: 5),
                                       child: Wrap(
                                         spacing: 5,
                                         runSpacing: 5,
@@ -1179,7 +1181,6 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                         ],
                                       ),
                                     ),
-                               
                                     Container(
                                       padding: const EdgeInsets.only(right: 5),
                                       child: Container(
@@ -1211,8 +1212,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                                   ? "${widget.userSave!.About_Me} ................................................................................................................."
                                                   : widget.userSave!.About_Me!,
                                           collapseText: 'Less',
-                                          style: TextStyle(
-                                              fontSize: 12),
+                                          style: TextStyle(fontSize: 12),
                                           linkColor: glb.main_color,
                                           onExpandedChanged: (value) {
                                             SearchProfile().addtoadminnotification(
@@ -1275,7 +1275,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                         ? const Center()
                                         : Wrap(
                                             spacing: 3,
-                                        runSpacing: 3,
+                                            runSpacing: 3,
                                             children: [
                                               SizedBox(
                                                 height: MediaQuery.of(context)
@@ -1404,8 +1404,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                                 : widget
                                                     .userSave!.Partner_Prefs!,
                                         collapseText: 'Less',
-                                        style: TextStyle(
-                                            fontSize:12),
+                                        style: TextStyle(fontSize: 12),
                                         onExpandedChanged: (value) {
                                           _moreNoti();
                                           SearchProfile().addtoadminnotification(
@@ -1491,7 +1490,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                       child: const Icon(
                         // Icons.more_vert_outlined,//for three dots
                         FontAwesomeIcons.bell, //for three lines
-                       size: 22,
+                        size: 22,
                         color: Colors.white,
                         shadows: <Shadow>[
                           Shadow(color: Colors.black, blurRadius: 15.0)
