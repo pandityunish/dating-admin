@@ -1437,7 +1437,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
               ),
             ),
             Positioned(
-              left: MediaQuery.of(context).size.width * 0.05,
+              left: MediaQuery.of(context).size.width * 0.0006,
               top: MediaQuery.of(context).size.height * 0.04,
               child: IconButton(
                 icon: const Icon(
@@ -1481,7 +1481,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
               ),
             ),
             Positioned(
-              right: MediaQuery.of(context).size.width * 0.04,
+              right: MediaQuery.of(context).size.width * 0.004,
               top: MediaQuery.of(context).size.height * 0.04,
               child: IconButton(
                 icon: Stack(

@@ -9,10 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:matrimony_admin/screens/data_collection/religion.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart';
 import 'package:matrimony_admin/screens/service/auth_service.dart';
 // import '../../Assets/calender.dart'; 
 import '../../Assets/Error.dart';
 import '../../Assets/caldener.dart';
+import '../../Assets/countryModel/country_state_city_picker.dart';
 import '../../Assets/tpage.dart';
 import '../../globalVars.dart';
 import '../../models/shared_pref.dart';
@@ -188,13 +190,14 @@ List<String> list7 = <String>[
   '28'
 ];
 List<String> minutes = <String>[
-  'Minutes',
+  'Minute',
  "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"
 ];
+
 String selectedhours="Hour";
 String selectedminutes="Minute";
 List<String> hours = <String>[
-  'Hours',
+  'Hour',
   '01',
   '02',
   '03',
@@ -212,6 +215,16 @@ List<String> hours = <String>[
 List<String> ampm=[
   'Am','Pm'
 ];
+class DataLocation {
+  final String countryname;
+  final String countrycity;
+  final String countrystate;
+  DataLocation({
+    required this.countryname,
+    required this.countrycity,
+    required this.countrystate,
+  });
+}
 String selectedampm="Am";
 List<String> list8 = <String>['Date'];
 
@@ -254,6 +267,10 @@ class _LetsStartState extends State<LetsStart> {
   DateDuration? dateOfBirth;
 
   DateTime? dateTime;
+   void getalllocation() async {
+    alllocations = await Searchservice().getData();
+    setState(() {});
+  }
   updateMaleDate(var date, var month, var year) {
     // print("update male date called");
     // print("$date  $month $year");
@@ -271,6 +288,42 @@ class _LetsStartState extends State<LetsStart> {
       dob_timestamp = birthday.millisecondsSinceEpoch;
     });
   }
+    List<DataLocation> alllist = [];
+  List<LocationModel> alllocations = [];
+  List<String> allcities = [];
+  var height_suggest1 = 0.0;
+
+  void _fileterlocation(String query) {
+    alllist.clear();
+    print(query);
+    allcities.clear();
+    height_suggest1 = 200;
+    for (var country in alllocations) {
+      for (var state in country.state) {
+        for (var city in state.city) {
+          if (city.name.toLowerCase().contains(query.toLowerCase())) {
+            alllist.add(DataLocation(
+                countryname: country.name,
+                countrycity: city.name,
+                countrystate: state.name));
+            allcities.add("${city.name},${state.name ?? ""},${country.name}");
+          }
+        }
+      }
+    }
+    setState(() {});
+  }
+    void _onSelectedPlace1(DataLocation prediction) async {
+    if (!mounted) return;
+    setState(() {
+      _searchController.text = prediction.countrycity;
+      location =
+          "${prediction.countrycity},${prediction.countrystate ?? ""},${prediction.countryname}";
+      birthPlaceController.text = location!;
+      // _predictions.clear();
+      // landmarkssug.clear();
+    });
+  }
 bool isGmailValid(String email) {
   if (EmailValidator.validate(email)) {
     if (email.contains("@gmail.com")) {
@@ -282,6 +335,7 @@ bool isGmailValid(String email) {
   TextEditingController dateInput = TextEditingController();
   @override
   void initState() {
+    getalllocation();
     dateInput.text = ""; //set the initial value of text field
     super.initState();
     print("initState running ???");
@@ -1064,37 +1118,40 @@ setState(() {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 Card(
-              elevation: 4,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: SizedBox(
-                height: 46,
-                width: MediaQuery.of(context).size.width * 0.29,
-                child: Center(
-                  child: DropdownButton<String>(
-                    alignment: AlignmentDirectional.center,
-                    underline: Container(
-                      color: Colors.white,
-                    ),
-                    value: selectedhours,
-                    items: hours.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value,style: TextStyle(color: textColor),),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedhours = newValue!;
-                        // _updateDaysInMonth();
-                      });
-                    },
-                  ),
+             Card(
+      elevation: 4,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: SizedBox(
+        height: 46,
+        width: MediaQuery.of(context).size.width * 0.29,
+        child: Center(
+          child: DropdownButton<String>(
+            alignment: AlignmentDirectional.center,
+            underline: Container(color: Colors.white),
+            value: selectedhours,
+            items: hours.map((value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: TextStyle(color: textColor),
                 ),
-              ),
-                          ),
+              );
+            }).toList(),
+            onChanged: (newValue) {
+              setState(() {
+                selectedhours = newValue!;
+                print('Selected hours: $selectedhours');
+                // _updateDaysInMonth(); // Uncomment if you need this
+              });
+            },
+          ),
+        ),
+      ),
+    ),
                  Card(
               elevation: 4,
               color: Colors.white,
@@ -1161,81 +1218,70 @@ setState(() {
               ],
                   ),
                   SizedBox(height: 5,),
-                 Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                        child: Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: TextFormField(
-                                  controller: birthPlaceController,
-
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  onChanged: (value) {
-                                    // _onSearchChanged(value);
-                                    _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: Duration(seconds: 1),
-                curve: Curves.easeOut,
-              );
+                  Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 3),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: TextFormField(
+                              controller: birthPlaceController,
+                              textInputAction: TextInputAction.next,
+                              keyboardType: TextInputType.name,
+                              onChanged: (value) {
+                                _fileterlocation(value);
+                                _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeOut,
+                                );
+                              },
+                              onTap: () {
+                                _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeOut,
+                                );
+                              },
+                              focusNode: _focusNode4,
+                              decoration:  InputDecoration(
+                                  hintText: "Enter Place of Birth",
+                                  hintStyle: TextStyle(color: newtextColor),
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.all(10)),
+                            ),
+                          ),
+                        ),
+                        Stack(
+                          children: [
+                            const SizedBox(height: 1),
+                            SizedBox(
+                              height: height_suggest1,
+                              child: Card(
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: alllist.length,
+                                  itemBuilder: (context, index) {
+                                    var data = alllist[index];
+                                    return SingleChildScrollView(
+                                      child: ListTile(
+                                          title: Text(
+                                              "${data.countrycity},${data.countrystate},${data.countryname}"),
+                                          onTap: () {
+                                            _onSelectedPlace1(data);
+                  
+                                            setState(() {
+                                              height_suggest1 = 0.0;
+                                            });
+                                          }),
+                                    );
                                   },
-                                  onTap: () {
-                                    print("hello");
-                                    _scrollController.animateTo(
-                _scrollController.position.maxScrollExtent,
-                duration: Duration(seconds: 1),
-                curve: Curves.easeOut,
-              );
-                          
-                                  },
-                                  focusNode: _focusNode4,
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     setState(() {
-                                  //       height_suggest1 = 0.0;
-                                  //     });
-                                  //     return "Enter your name";
-                                  //   }
-                                  //   return location;
-                                  // },
-                                  decoration: const InputDecoration(
-                                      hintText: "Enter Place Of Birth",
-                                       hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10)),
                                 ),
                               ),
-                      ),
-                            // Stack(
-                            //   children: [
-                            //     SizedBox(height: 1),
-                            //     Container(
-                            //       height: height_suggest1,
-                            //       child: Card(
-                            //         child: ListView.builder(
-                            //           padding: EdgeInsets.zero,
-                            //           itemCount: _predictions.length,
-                            //           itemBuilder: (context, index) {
-                            //             return SingleChildScrollView(
-                            //               child: ListTile(
-                            //                   title: Text(_predictions[index]
-                            //                       .description!),
-                            //                   onTap: () {
-                            //                     _onSelectedPlace(
-                            //                         _predictions[index]);
-                            //                     if (!mounted) return;
-                            //                     setState(() {
-                            //                       height_suggest1 = 0.0;
-                            //                     });
-                            //                   }),
-                            //             );
-                            //           },
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+                            ),
+                          ],
+                        ),
                    const SizedBox(
                     height: 10,
                   ),

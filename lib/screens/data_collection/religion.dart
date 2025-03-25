@@ -84,7 +84,7 @@ class _ReligionState extends State<Religion> {
                   reverseTransitionDuration: Duration(milliseconds: 0),
                   pageBuilder: (_, __, ___) => MStatus()));
         }
-        selectedhours = "Hours";
+        // selectedhours = "Hours";
         selectedminutes = "Minutes";
       },
       child: Text(

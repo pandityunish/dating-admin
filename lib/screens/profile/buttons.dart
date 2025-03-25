@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
 
@@ -266,18 +267,19 @@ class _PbuttonsState extends State<Pbuttons> {
           .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: Center(
         child: Container(
+          width: Get.width,
           margin: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.05),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center, children: [
             SizedBox(height: 10,),
             Container(
-              padding: const EdgeInsets.only(left: 28, right: 28),
+              // padding: const EdgeInsets.only(left: 28, right: 28),
               alignment: Alignment.center,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     // minimumSize: Size(200, 50),
                     minimumSize:
-                        Size(MediaQuery.of(context).size.width * 0.87, 40),
+                        Size(MediaQuery.of(context).size.width * 0.95, 40),
                     elevation: 0,
                     backgroundColor: Colors.white,
                     shadowColor: Colors.black,
@@ -337,8 +339,8 @@ class _PbuttonsState extends State<Pbuttons> {
             ),
            
             Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(left: 34, right: 12),
+                width: MediaQuery.of(context).size.width*.95,
+                // padding: EdgeInsets.only(left: 34, right: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -347,7 +349,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(
-                                  MediaQuery.of(context).size.width / 4 - 10,
+                                  MediaQuery.of(context).size.width / 4,
                                   40),
                               // minimumSize: Size(150, 50),
                               elevation: 0,
@@ -394,7 +396,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width / 4 - 10, 40),
+                                MediaQuery.of(context).size.width / 4, 40),
                             // minimumSize: Size(150, 50),
                             elevation: 0,
                             backgroundColor: Colors.white,
@@ -441,7 +443,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width / 4 - 10, 40),
+                                MediaQuery.of(context).size.width / 4, 40),
                             // minimumSize: Size(150, 50),
                             elevation: 0,
                             backgroundColor: Colors.white,

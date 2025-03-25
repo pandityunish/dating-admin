@@ -284,6 +284,7 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
                 alignment: Alignment.center,
                 children: [
                   AspectRatio(
+                    
                     aspectRatio: _videoPlayerController.value.aspectRatio,
                     child: VideoPlayer(_videoPlayerController),
                   ),

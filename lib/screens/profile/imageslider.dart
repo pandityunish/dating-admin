@@ -181,44 +181,71 @@ Future<void> approveProfile() async {
 
                 ),
           ),
-          Container(
-            child: Positioned(
-              top: 40,
-              left: MediaQuery.of(context).size.width * 0.01,
-              // right: 25,
-              child: PopupMenuButton(
-                icon: const Icon(
-                  Icons.more_vert,
-                  color: Colors.white,
-                  shadows: <Shadow>[
-                    Shadow(color: Colors.black, blurRadius: 15.0)
-                  ],
-                ),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                      child: Text(
-                      widget.profileData!.status=='approved'?"Approved":"Approve",
-                      ),
-                      onTap: () {
-                        approveProfile();
-                      }),
-                  PopupMenuItem(
-                      child: Text(
-                       widget.profileData.status=="blocked"?  'Unblock':"Block",
-                      ),
-                      onTap: () {
-                        block();
-                      }),
-                  PopupMenuItem(
-                      child: Text(
-                        'Delete',
-                      ),
-                      onTap: () {}),
-                ],
-              ),
-            ),
-          ),
-          Container(
+          // Container(
+          //   child: Positioned(
+          //     top: 40,
+          //     left: MediaQuery.of(context).size.width * 0.01,
+          //     // right: 25,
+          //     child: PopupMenuButton(
+          //       icon: const Icon(
+          //         Icons.more_vert,
+          //         color: Colors.white,
+          //         shadows: <Shadow>[
+          //           Shadow(color: Colors.black, blurRadius: 15.0)
+          //         ],
+          //       ),
+          //       itemBuilder: (context) => [
+          //         PopupMenuItem(
+          //             child: Text(
+          //             widget.profileData!.status=='approved'?"Approved":"Approve",
+          //             ),
+          //             onTap: () {
+          //               approveProfile();
+          //             }),
+          //         PopupMenuItem(
+          //             child: Text(
+          //              widget.profileData.status=="blocked"?  'Unblock':"Block",
+          //             ),
+          //             onTap: () {
+          //               block();
+          //             }),
+          //         PopupMenuItem(
+          //             child: Text(
+          //               'Delete',
+          //             ),
+          //             onTap: () {}),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Container(
+          //   child: Positioned(
+          //     top: 50,
+          //     left: MediaQuery.of(context).size.width * 0.85,
+          //     // right: 25,
+          //     child: GestureDetector(
+          //       onTap: () {
+          //         // print("Print");
+          //         Navigator.of(context).pop();
+          //       },
+          //       child: Container(
+          //         width: 30,
+          //         height: 30,
+          //         // decoration: BoxDecoration(
+          //         //     color: Colors.white,
+          //         //     borderRadius: BorderRadius.circular(40)),
+          //         child: ImageIcon(
+          //           AssetImage(
+          //             'images/icons/Close_icon.png',
+          //           ),
+          //           // fontWeight:FontWeight.w700,
+          //           color: main_color,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+           Container(
             child: Positioned(
               top: 50,
               left: MediaQuery.of(context).size.width * 0.85,
@@ -231,16 +258,10 @@ Future<void> approveProfile() async {
                 child: Container(
                   width: 30,
                   height: 30,
-                  // decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.circular(40)),
-                  child: ImageIcon(
-                    AssetImage(
-                      'images/icons/Close_icon.png',
-                    ),
-                    // fontWeight:FontWeight.w700,
-                    color: main_color,
-                  ),
+                  decoration: BoxDecoration(
+                      color: main_color,
+                      borderRadius: BorderRadius.circular(40)),
+                  child: Icon(Icons.close,color: Colors.white,),
                 ),
               ),
             ),

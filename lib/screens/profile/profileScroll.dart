@@ -302,7 +302,7 @@ class _SlideProfileState extends State<SlideProfile> {
                         itemCount: allusers.length,
                       ),
             Positioned(
-                right: 30.0,
+                right: 15.0,
                 top: 90.0,
                 child: GestureDetector(
                   onTap: () {
@@ -328,7 +328,7 @@ class _SlideProfileState extends State<SlideProfile> {
                   ),
                 )),
             Positioned(
-                right: 30.0,
+                right: 15.0,
                 top: 220,
                 child: GestureDetector(
                   onTap: () {
@@ -359,7 +359,7 @@ class _SlideProfileState extends State<SlideProfile> {
                   ),
                 )),
             Positioned(
-                right: 30.0,
+                right: 15.0,
                 top: 130.0,
                 child: GestureDetector(
                   onTap: () {
@@ -396,7 +396,7 @@ class _SlideProfileState extends State<SlideProfile> {
                   ),
                 )),
             Positioned(
-                right: 30.0,
+                right: 15.0,
                 top: 170.0,
                 child: GestureDetector(
                   onTap: () {

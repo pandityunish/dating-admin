@@ -754,14 +754,13 @@ class _VerifyState extends State<Verify> {
                         color: Colors.black,
                       ),
                     ),
-                   
-                    SizedBox(
-                        height: 200,
-                        width: 300,
-                        child: VideoPlayerWidget1(
-                          videoUrl: verifyvideo[index].videoLink!,
-                          userSave: widget.userSave,
-                        )),
+                     SizedBox(
+                      height: 20,
+                    ),
+                    VideoPlayerWidget1(
+                      videoUrl: verifyvideo[index].videoLink!,
+                      userSave: widget.userSave,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
