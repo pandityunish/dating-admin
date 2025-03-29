@@ -79,7 +79,9 @@ class _ReligionState extends State<Drink> {
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60.0),
                   side: BorderSide(
-                      color: (value.contains(index)) ? main_color : Colors.white))),
+                      color: (value.contains(index))
+                          ? main_color
+                          : Colors.white))),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
     );
   }

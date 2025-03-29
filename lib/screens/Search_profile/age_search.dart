@@ -4,15 +4,16 @@ import '../../globalVars.dart';
 import '../../models/new_user_model.dart';
 
 class AgeSelectionScreen extends StatefulWidget {
-  
-  const AgeSelectionScreen({super.key, });
+  const AgeSelectionScreen({
+    super.key,
+  });
 
   @override
   State<AgeSelectionScreen> createState() => _AgeSelectionScreenState();
 }
 
 class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
-  int _minAge =18;
+  int _minAge = 18;
   int _maxAge = 70;
 
   List<DropdownMenuItem<int>> _getDropdownItems(int start, int end) {
@@ -34,7 +35,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            List<String> res = [ _minAge.toString(), _maxAge.toString()];
+            List<String> res = [_minAge.toString(), _maxAge.toString()];
             Navigator.of(context).pop(res);
           },
           child: Icon(
@@ -108,22 +109,24 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                             height: 30,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
-                              child: Text("Min Age",style: TextStyle(color: main_color)),
+                              child: Text("Min Age",
+                                  style: TextStyle(color: main_color)),
                             ),
                           ),
                           Container(
                             height: 30,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
-                              child: Text("Max Age",style: TextStyle(color: main_color),),
+                              child: Text(
+                                "Max Age",
+                                style: TextStyle(color: main_color),
+                              ),
                             ),
                           ),
                         ],
@@ -168,9 +171,8 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                             height: 30,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               // child: DropdownButton(
                               //     alignment: Alignment.center,
@@ -191,9 +193,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                                 value: _minAge,
                                 style: TextStyle(color: main_color),
                                 iconEnabledColor: main_color,
-                                items: _getDropdownItems(
-                                    18,
-                                    70),
+                                items: _getDropdownItems(18, 70),
                                 onChanged: (int? value) {
                                   setState(() {
                                     _minAge = value!;
@@ -209,9 +209,8 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                             height: 30,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               // child: DropdownButton(
                               //     alignment: Alignment.center,
@@ -230,9 +229,9 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                               //     }),
                               child: DropdownButton<int>(
                                 value: _maxAge,
-                                 style: TextStyle(color: main_color),
+                                style: TextStyle(color: main_color),
                                 iconEnabledColor: main_color,
-                                items: _getDropdownItems(_minAge+1, 70),
+                                items: _getDropdownItems(_minAge + 1, 70),
                                 onChanged: (int? value) {
                                   setState(() {
                                     _maxAge = value!;
