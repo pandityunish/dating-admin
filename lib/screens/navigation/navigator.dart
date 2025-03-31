@@ -413,7 +413,9 @@ class _MyProfileState extends State<MyProfile> {
                                                   height: 45,
                                                   decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      border: (widget.userSave.imageurls == null ||
+                                                      border: (widget.userSave
+                                                                      .imageurls ==
+                                                                  null ||
                                                               widget
                                                                   .userSave
                                                                   .imageurls
@@ -427,7 +429,7 @@ class _MyProfileState extends State<MyProfile> {
                                                                   Colors.white),
                                                       color: Colors.white,
                                                       image: DecorationImage(
-                                                        fit: BoxFit.cover,
+                                                          fit: BoxFit.cover,
                                                           image: (userprofile !=
                                                                   null)
                                                               ? NetworkImage(
@@ -552,6 +554,7 @@ class _MyProfileState extends State<MyProfile> {
                                                                 .userSave.puid!
                                                             : "",
                                                         size: 13,
+                                                        color: main_color,
                                                       ),
                                                     ),
                                                   ],
@@ -784,7 +787,7 @@ class _MyProfileState extends State<MyProfile> {
                         //   ),
                         // ),
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -885,7 +888,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -989,7 +992,7 @@ class _MyProfileState extends State<MyProfile> {
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1044,7 +1047,7 @@ class _MyProfileState extends State<MyProfile> {
                                   //         color: Color(0xFF33D374)),
                                   //   ),
                                   // ),
-                                 
+
                                   SizedBox(
                                     width: 3,
                                   ),
@@ -1060,11 +1063,10 @@ class _MyProfileState extends State<MyProfile> {
                                 ],
                               ),
                             ),
-                          
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1165,7 +1167,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1176,7 +1178,9 @@ class _MyProfileState extends State<MyProfile> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            FreeMatchmakingScreen(profileDetail: widget.userSave,)));
+                                            FreeMatchmakingScreen(
+                                              profileDetail: widget.userSave,
+                                            )));
                                 // if (userSave.verifiedStatus == "verified") {
                                 //   Navigator.push(
                                 //       context,
@@ -1276,7 +1280,7 @@ class _MyProfileState extends State<MyProfile> {
                         //   ),
                         // ),
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1334,7 +1338,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         (userSave.religion == "Hindu")
                             ? Column(
@@ -1468,7 +1472,7 @@ class _MyProfileState extends State<MyProfile> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 12,
+                                    height: 15,
                                   ),
                                 ],
                               )
@@ -1482,24 +1486,24 @@ class _MyProfileState extends State<MyProfile> {
                                         "Can Download Matrimonial Biodata") ||
                                     listofadminpermissions!.contains("All")) {
                                   if (widget.userSave.imageurls.isEmpty) {
-                                       showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: SizedBox(
-                                            child: SnackBarContent(
-                                              error_text:
-                                                  "Profile Verification Required\nTo\nDownload Matrimonial BioData",
-                                              appreciation: "",
-                                              icon: Icons.error,
-                                              sec: 3,
+                                    showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: SizedBox(
+                                              child: SnackBarContent(
+                                                error_text:
+                                                    "Profile Verification Required\nTo\nDownload Matrimonial BioData",
+                                                appreciation: "",
+                                                icon: Icons.error,
+                                                sec: 3,
+                                              ),
                                             ),
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        );
-                                      });
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 0,
+                                          );
+                                        });
                                     SearchProfile().addtoadminnotification(
                                         userid: widget.userSave!.id!,
                                         useremail: widget.userSave!.email!,
@@ -1595,7 +1599,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1672,7 +1676,7 @@ class _MyProfileState extends State<MyProfile> {
                         // ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1740,7 +1744,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
 
                         SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1824,11 +1828,12 @@ class _MyProfileState extends State<MyProfile> {
                           width: 5,
                         ),
                         Container(
-                          
                             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                             child: DropdownButton(
                               icon: Icon(Icons.keyboard_arrow_down_sharp),
-                              underline: Container(color: Colors.white,),
+                              underline: Container(
+                                color: Colors.white,
+                              ),
                               hint: Text("Admin Options",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w800,
@@ -1838,6 +1843,7 @@ class _MyProfileState extends State<MyProfile> {
                                   this.type = val;
                                 });
                               },
+                              //  menuMaxHeight: 200,
                               value: this.type,
                               items: [
                                 DropdownMenuItem(
@@ -2025,17 +2031,16 @@ class _MyProfileState extends State<MyProfile> {
                                                 "Can Invisible Profile") ||
                                             listofadminpermissions!
                                                 .contains("All")) {
-                                                  if (widget.userSave.status ==
+                                          if (widget.userSave.status ==
                                               "approved") {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Invisible(
-                                                        newUserModel:
-                                                            widget.userSave,
-                                                      )));} else {
-                                        
-
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Invisible(
+                                                          newUserModel:
+                                                              widget.userSave,
+                                                        )));
+                                          } else {
                                             showDialog(
                                                 barrierDismissible: false,
                                                 context: context,
@@ -2054,7 +2059,6 @@ class _MyProfileState extends State<MyProfile> {
                                                   );
                                                 });
                                           }
-
                                         }
                                       },
                                       child: Row(
@@ -2114,112 +2118,128 @@ class _MyProfileState extends State<MyProfile> {
                                                 .contains("Can send OTP") ||
                                             listofadminpermissions!
                                                 .contains("All")) {
-                                                  
- showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: SizedBox(
-                          height: 244,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // SizedBox(
-                              //   height: 26,
-                              // ),
-                             Text("Send OTP",
-                                  textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("Are You Sure about Send OTP?",
-                                  textAlign: TextAlign.center),
-                              SizedBox(
-                                height: 23,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 6),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        shadowColor:
-                                            MaterialStateColor.resolveWith(
-                                                (states) => Colors.black),
-                                        padding: MaterialStateProperty.all<
-                                            EdgeInsetsGeometry?>(
-                                          EdgeInsets.symmetric(
-                                            vertical: 17,
-                                          ),
-                                        ),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(60.0),
-                                                side: BorderSide(
-                                                  color:  Colors.white
-                                                     
-                                                ))),
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.white)),
-                                    onPressed: () async {
-                                    
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content: SizedBox(
+                                                  height: 244,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // SizedBox(
+                                                      //   height: 26,
+                                                      // ),
+                                                      Text(
+                                                        "Send OTP",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                          "Are You Sure about Send OTP?",
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                      SizedBox(
+                                                        height: 23,
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 6),
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                        child: ElevatedButton(
+                                                            style: ButtonStyle(
+                                                                shadowColor: MaterialStateColor.resolveWith(
+                                                                    (states) =>
+                                                                        Colors
+                                                                            .black),
+                                                                padding:
+                                                                    MaterialStateProperty.all<
+                                                                        EdgeInsetsGeometry?>(
+                                                                  EdgeInsets
+                                                                      .symmetric(
+                                                                    vertical:
+                                                                        17,
+                                                                  ),
+                                                                ),
+                                                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            60.0),
+                                                                    side: BorderSide(
+                                                                        color: Colors
+                                                                            .white))),
+                                                                backgroundColor:
+                                                                    MaterialStateProperty.all<Color>(
+                                                                        Colors.white)),
+                                                            onPressed: () async {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              // logout(context: context);
+                                                            },
+                                                            child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
 
-                                      Navigator.pop(context);
-                                      // logout(context: context);
-                                    },
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontFamily: 'Serif',
-                                              fontWeight: FontWeight.w700)
-                                          
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                             
-                              Container(
-                                margin: EdgeInsets.only(left: 6),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        shadowColor:
-                                            MaterialStateColor.resolveWith(
-                                                (states) => Colors.black),
-                                        padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                            EdgeInsets.symmetric(vertical: 17)),
-                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(60.0),
-                                                side: BorderSide(
-                                                  color: Colors.white,
-                                                ))),
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Colors.white)),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Cancel",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontFamily: 'Serif',
-                                            fontWeight: FontWeight.w700))),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                                                }
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 6),
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                        child: ElevatedButton(
+                                                            style: ButtonStyle(
+                                                                shadowColor: MaterialStateColor.resolveWith(
+                                                                    (states) =>
+                                                                        Colors
+                                                                            .black),
+                                                                padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
+                                                                    EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            17)),
+                                                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                    RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                60.0),
+                                                                        side:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ))),
+                                                                backgroundColor:
+                                                                    MaterialStateProperty.all<Color>(
+                                                                        Colors.white)),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text("Cancel", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
                                       },
                                       child: Row(
                                         mainAxisAlignment:
@@ -2478,16 +2498,18 @@ class _MyProfileState extends State<MyProfile> {
           switch (index) {
             case 0:
               if (listofadminpermissions!.contains("Can Delete Profile") ||
-                  listofadminpermissions!.contains("All")||widget.isDelete == true) {
+                  listofadminpermissions!.contains("All") ||
+                  widget.isDelete == true) {
                 deleteAccount();
               }
               break;
             case 1:
               // logout(context: context);
               if ((listofadminpermissions!.contains("Can logout Profile") ||
-                  listofadminpermissions!.contains("All")) && widget.userSave.isLogOut == "true") {
+                      listofadminpermissions!.contains("All")) &&
+                  widget.userSave.isLogOut == "true") {
                 {
-                   showDialog(
+                  showDialog(
                     barrierDismissible: false,
                     context: context,
                     builder: (context) {
@@ -2504,8 +2526,8 @@ class _MyProfileState extends State<MyProfile> {
                                 //   height: 26,
                                 // ),
                                 // const LogoText(),
-                               
-                                const Text("Log Out \n You Want to Log Out?",
+
+                                const Text("Log Out \n You Want to Log Out User?",
                                     textAlign: TextAlign.center),
                                 const SizedBox(
                                   height: 23,
@@ -2541,42 +2563,43 @@ class _MyProfileState extends State<MyProfile> {
                                               MaterialStateProperty.all<Color>(
                                                   Colors.white)),
                                       onPressed: () async {
-                                      setState(() {
-                                        widget.userSave.isLogOut = "false";
-                                        color_done2 = true;
-                                      });
-                                      SearchProfile().addtoadminnotification(
-                                          userid: widget.userSave!.id!,
-                                          useremail: widget.userSave!.email!,
-                                          userimage: widget
-                                                  .userSave!.imageurls!.isEmpty
-                                              ? ""
-                                              : widget.userSave!.imageurls![0],
-                                          title:
-                                              "${userSave.displayName} LOGOUT PROFILE OF ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname..toLowerCase()} ${widget.userSave!.puid} ",
-                                          email: userSave.email!,
-                                          subtitle: "");
-                                      HomeService().updatelogin(
-                                          email: widget.userSave.email!,
-                                          mes: "false");
-                                      await showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return const AlertDialog(
-                                              content: SnackBarContent(
-                                                appreciation: "",
-                                                error_text:
-                                                    "User Logout Successfully",
-                                                icon: Icons.check_circle,
-                                                sec: 2,
-                                              ),
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0,
-                                            );
-                                          });
+                                        setState(() {
+                                          widget.userSave.isLogOut = "false";
+                                          color_done2 = true;
+                                        });
+                                        SearchProfile().addtoadminnotification(
+                                            userid: widget.userSave!.id!,
+                                            useremail: widget.userSave!.email!,
+                                            userimage: widget.userSave!
+                                                    .imageurls!.isEmpty
+                                                ? ""
+                                                : widget
+                                                    .userSave!.imageurls![0],
+                                            title:
+                                                "${userSave.displayName} LOGOUT PROFILE OF ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname..toLowerCase()} ${widget.userSave!.puid} ",
+                                            email: userSave.email!,
+                                            subtitle: "");
+                                        HomeService().updatelogin(
+                                            email: widget.userSave.email!,
+                                            mes: "false");
+                                        await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return const AlertDialog(
+                                                content: SnackBarContent(
+                                                  appreciation: "",
+                                                  error_text:
+                                                      "User Log Out Successfully",
+                                                  icon: Icons.check_circle,
+                                                  sec: 2,
+                                                ),
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                elevation: 0,
+                                              );
+                                            });
 
-                                      Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Text(
                                         "Yes",
@@ -2632,7 +2655,6 @@ class _MyProfileState extends State<MyProfile> {
                       );
                     },
                   );
-                 
                 }
               }
               break;
@@ -2642,25 +2664,34 @@ class _MyProfileState extends State<MyProfile> {
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('images/icons/delete_bin.png'),
-              size: 22,
-              color: widget.isDelete == true ? Colors.red : main_color,
+            icon: SizedBox(
+              width: 24, // Set width explicitly
+              height: 24, // Set height explicitly
+              child: ImageIcon(
+                AssetImage('images/icons/delete_bin.png'),
+                size: 22, // Ensure size consistency
+                color: widget.isDelete == true ? Colors.red : main_color,
+              ),
             ),
             label: 'Delete Profile',
-            
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.logout,
-              size: 25,
-              color:
-                  widget.userSave.isLogOut == "false" ? Colors.red : main_color,
+            icon: SizedBox(
+              width: 24, // Ensure width consistency
+              height: 24, // Ensure height consistency
+              child: Icon(
+                Icons.logout,
+                size: 22, // Same as ImageIcon
+                color: widget.userSave.isLogOut == "false"
+                    ? Colors.red
+                    : main_color,
+              ),
             ),
             label: 'Log Out',
-            
           ),
         ],
+        selectedFontSize: 12, // Adjust label size if needed
+        unselectedFontSize: 12,
       ),
     );
   }

@@ -79,17 +79,16 @@ class _ReligionState extends State<NextchartScreen> {
               size: 25,
             ),
           ),
-          title: Text(
-            widget.title,
-            style: TextStyle(color: main_color, fontSize: 23,fontWeight: FontWeight.bold)
-          ),
-    
+          title: Text(widget.title,
+              style: TextStyle(
+                  color: main_color,
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold)),
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-            
               Center(
                   child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.85,
@@ -102,7 +101,7 @@ class _ReligionState extends State<NextchartScreen> {
                             button_pressed: () {
                               if (widget.title == "User Chart") {
                                 Get.to(() => const UserNumerical(
-                                      title: "User Numerical Chart",
+                                      title: "User Numerical Charts",
                                     ));
                               } else {
                                 Get.to(() =>

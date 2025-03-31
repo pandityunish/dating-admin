@@ -233,179 +233,197 @@ print(allnotification);
           return Center(
                child: Container(
              height: MediaQuery.of(context).size.height * 0.85,
-             child: SingleChildScrollView(
-               child: Column(
-                 children: [
-                   Container(
-                     margin: EdgeInsets.only(left: 15, right: 15),
-                     child: TextField(
-                       controller: headcontroller,
-                       minLines: 3,
-                       maxLines: 5,
-                       maxLength: 50,
-                       style:
-                           TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
-                       decoration: InputDecoration(
-                         hintText: "Enter Headline here",
-                         border: OutlineInputBorder(
-                             borderSide: new BorderSide(color: main_color)),
-                         focusedBorder: OutlineInputBorder(
-                             borderSide: new BorderSide(color: main_color)),
-                         // labelText: 'Write Here',
-                       ),
-                     ),
-                   ),
-                   SizedBox(
-                     height: 10,
-                   ),
-                   Container(
-                     margin: EdgeInsets.only(left: 15, right: 15),
-                     child: TextField(
-                       controller: controller,
-                       minLines: 3,
-                       maxLines: 7,
-                       maxLength: 50,
-                       style:
-                           TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
-                       decoration: InputDecoration(
-                         hintText: "Enter Notification Here",
-                         border: OutlineInputBorder(
-                             borderSide: new BorderSide(color: main_color)),
-                         focusedBorder: OutlineInputBorder(
-                             borderSide: new BorderSide(color: main_color)),
-                         // labelText: 'Write Here',
-                       ),
-                     ),
-                   ),
-                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                    child: SizedBox(
-                      width: Get.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                 index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
-                                _pageController.previousPage( duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,)
-                              }),              
-                              IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
-                                _pageController.nextPage( duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,)
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                   SizedBox(
-                     height: 20,
-                   ),
-                   SizedBox(
-                     width: 300,
-                     height: 50,
-                     child: ElevatedButton(
-                       style: ButtonStyle(
-                           shadowColor: MaterialStateColor.resolveWith(
-                               (states) => Colors.black),
-                           padding: MaterialStateProperty.all<
-                                   EdgeInsetsGeometry?>(
-                               EdgeInsets.symmetric(vertical: 13)),
-                           shape: MaterialStateProperty.all<
-                                   RoundedRectangleBorder>(
-                               RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(60.0),
-                             // side: BorderSide(
-                             //   color: (value == false)
-                             //       ? Colors.white
-                             //       : main_color,
-                             // )
-                           )),
-                           backgroundColor: MaterialStateProperty.all<Color>(
-                               Colors.white)),
-                       child: Text(
-                         "Send Notification",
-                         style: TextStyle(
-                           fontSize: 20,
-                           color: Colors.black,
+             child: Column(
+               children: [
+                 Expanded(
+                   child: Column(
+                     children: [
+                       Container(
+                         margin: EdgeInsets.only(left: 15, right: 15),
+                         child: TextField(
+                           controller: headcontroller,
+                           minLines: 3,
+                           maxLines: 5,
+                           maxLength: 50,
+                           cursorColor: main_color ,
+                           style:
+                               TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
+                           decoration: InputDecoration(
+                             hintText: "Enter Headline here",
+                             border: OutlineInputBorder(
+                                 borderSide: new BorderSide(color: main_color)),
+                             focusedBorder: OutlineInputBorder(
+                                 borderSide: new BorderSide(color: main_color)),
+                             // labelText: 'Write Here',
+                           ),
                          ),
                        ),
-                       onPressed: () async {
-                         print(widget.userSave.token);
-                         // print(widget.users);
-                         // if(widget.users!.isEmpty){
-                         if (controller.text.isEmpty ||
-                             headcontroller.text.isEmpty) {
-                           showDialog(
-                               context: context,
-                               builder: (context) {
-                                 return const AlertDialog(
-                                   content: SnackBarContent(
-                                       sec: 2,
-                                       error_text: "Please Enter Value",
-                                       appreciation: "",
-                                       icon: Icons.error),
-                                   backgroundColor: Colors.transparent,
-                                   elevation: 0,
-                                 );
-                               });
-                         } else {
-                          print(widget.userSave.token);
-          
-                           sendPushMessage(
-                               controller.text,
-                               headcontroller.text,
-                               widget.userSave.id,
-                               "",
-                               widget.userSave.token);
-          
-                           SearchProfile()
-                               .addtoadminnotification(
-                                   userid: userSave!.puid!,
-                                   useremail: userSave.email!,
-                                   userimage: userSave.imageUrls!.isEmpty
-                                       ? ""
-                                       : userSave.imageUrls![0],
-                                   title:
-                                       "${userSave.displayName} SEND NOTIFICATION TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave.puid} HEADLINE (${headcontroller.text}) NOTIFICATION (${controller.text})",
-                                   email: userSave.email!,
-                                   subtitle: "")
-                               .whenComplete(
-                             () {
-                               
-                             },
-                           );
-                            showDialog(
-                               context: context,
-                               builder: (context) {
-                                 return const AlertDialog(
-                                   content: SnackBarContent(
-                                       sec: 2,
-                                       error_text: "Notification Send Successfully",
-                                       appreciation: "",
-                                       icon: Icons.check_circle),
-                                   backgroundColor: Colors.transparent,
-                                   elevation: 0,
-                                 );
-                               }).whenComplete(() {
-                                  Navigator.push(
-                                                         context,
-                                                         MaterialPageRoute(
-                                                             builder: (context) => MyProfile(
-                                                                  profilecomp: 50,
-                                                                  userSave: widget.userSave,
-                                                                 )));
-                               },);
-                           controller.clear();
-                           headcontroller.clear();
-                         }
-          
-                         // }else{
-          
-                         // }
-                       },
-                     ),
+                       SizedBox(
+                         height: 10,
+                       ),
+                       Container(
+                         margin: EdgeInsets.only(left: 15, right: 15),
+                         child: TextField(
+                           controller: controller,
+                           minLines: 3,
+                           maxLines: 7,
+                           maxLength: 50,
+                           cursorColor: main_color ,
+                           style:
+                               TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
+                           decoration: InputDecoration(
+                             hintText: "Enter Notification Here",
+                             border: OutlineInputBorder(
+                                 borderSide: new BorderSide(color: main_color)),
+                             focusedBorder: OutlineInputBorder(
+                                 borderSide: new BorderSide(color: main_color)),
+                             // labelText: 'Write Here',
+                           ),
+                         ),
+                       ),
+                       Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                        child: SizedBox(
+                          width: Get.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                      index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
+                                    _pageController.previousPage( duration: Duration(milliseconds: 500),
+                                       curve: Curves.easeInOut,)
+                                  }),              
+                               allnotification.length>1?   IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
+                                    _pageController.nextPage( duration: Duration(milliseconds: 500),
+                                       curve: Curves.easeInOut,)
+                                  }):Center(),
+                            ],
+                          ),
+                        ),
+                                       ),
+                     ],
                    ),
-                 ],
-               ),
+                 ),
+            
+                 SizedBox(
+                   width: 300,
+                   height: 50,
+                   child: ElevatedButton(
+                     style: ButtonStyle(
+                         shadowColor: MaterialStateColor.resolveWith(
+                             (states) => Colors.black),
+                         padding: MaterialStateProperty.all<
+                                 EdgeInsetsGeometry?>(
+                             EdgeInsets.symmetric(vertical: 13)),
+                         shape: MaterialStateProperty.all<
+                                 RoundedRectangleBorder>(
+                             RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(60.0),
+                           // side: BorderSide(
+                           //   color: (value == false)
+                           //       ? Colors.white
+                           //       : main_color,
+                           // )
+                         )),
+                         backgroundColor: MaterialStateProperty.all<Color>(
+                             Colors.white)),
+                     child: Text(
+                       "Send Notification",
+                       style: TextStyle(
+                         fontSize: 20,
+                         color: Colors.black,
+                       ),
+                     ),
+                     onPressed: () async {
+                       print(widget.userSave.token);
+                       // print(widget.users);
+                       // if(widget.users!.isEmpty){
+                       if (controller.text.isEmpty ) {
+                         showDialog(
+                             context: context,
+                             builder: (context) {
+                               return const AlertDialog(
+                                 content: SnackBarContent(
+                                     sec: 2,
+                                     error_text: "Please Enter Notifiation",
+                                     appreciation: "",
+                                     icon: Icons.error),
+                                 backgroundColor: Colors.transparent,
+                                 elevation: 0,
+                               );
+                             });
+                       } else  if (headcontroller.text.isEmpty ) {
+                         showDialog(
+                             context: context,
+                             builder: (context) {
+                               return const AlertDialog(
+                                 content: SnackBarContent(
+                                     sec: 2,
+                                     error_text: "Please Enter Headline",
+                                     appreciation: "",
+                                     icon: Icons.error),
+                                 backgroundColor: Colors.transparent,
+                                 elevation: 0,
+                               );
+                             });
+                       } else {
+                        print(widget.userSave.token);
+                       
+                         sendPushMessage(
+                             controller.text,
+                             headcontroller.text,
+                             widget.userSave.id,
+                             "",
+                             widget.userSave.token);
+                       
+                         SearchProfile()
+                             .addtoadminnotification(
+                                 userid: userSave!.puid!,
+                                 useremail: userSave.email!,
+                                 userimage: userSave.imageUrls!.isEmpty
+                                     ? ""
+                                     : userSave.imageUrls![0],
+                                 title:
+                                     "${userSave.displayName} SEND NOTIFICATION TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave.puid} HEADLINE (${headcontroller.text}) NOTIFICATION (${controller.text})",
+                                 email: userSave.email!,
+                                 subtitle: "")
+                             .whenComplete(
+                           () {
+                             
+                           },
+                         );
+                          showDialog(
+                             context: context,
+                             builder: (context) {
+                               return const AlertDialog(
+                                 content: SnackBarContent(
+                                     sec: 2,
+                                     error_text: "Notification Send Successfully",
+                                     appreciation: "",
+                                     icon: Icons.check_circle),
+                                 backgroundColor: Colors.transparent,
+                                 elevation: 0,
+                               );
+                             }).whenComplete(() {
+                                Navigator.push(
+                                                       context,
+                                                       MaterialPageRoute(
+                                                           builder: (context) => MyProfile(
+                                                                profilecomp: 50,
+                                                                userSave: widget.userSave,
+                                                               )));
+                             },);
+                         controller.clear();
+                         headcontroller.clear();
+                       }
+                       
+                       // }else{
+                       
+                       // }
+                     },
+                   ),
+                 ),
+                 SizedBox(height: 5,)
+               ],
              ),
            ));
           }

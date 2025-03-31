@@ -302,6 +302,7 @@ class _LetsStartState extends State<LetsStart> {
       for (var state in country.state) {
         for (var city in state.city) {
           if (city.name.toLowerCase().contains(query.toLowerCase())) {
+            // landmarkssug.add(value)
             alllist.add(DataLocation(
                 countryname: country.name,
                 countrycity: city.name,
@@ -618,26 +619,27 @@ setState(() {
               );
             });
       });
-    }  else   if(!landmarkssug.contains(birthPlaceController.text)){
-                            setState(() {
-        error = "";
-        showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: SnackBarContent(
-                  error_text: "Please Enter Valid Place of Birth",
-                  appreciation: "",
-                  icon: Icons.error,
-                  sec: 2,
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-              );
-            });
-      }); 
-    }
+    } 
+    //  else   if(!landmarkssug.contains(birthPlaceController.text)){
+    //                         setState(() {
+    //     error = "";
+    //     showDialog(
+    //         barrierDismissible: false,
+    //         context: context,
+    //         builder: (context) {
+    //           return AlertDialog(
+    //             content: SnackBarContent(
+    //               error_text: "Please Enter Valid Place of Birth",
+    //               appreciation: "",
+    //               icon: Icons.error,
+    //               sec: 2,
+    //             ),
+    //             backgroundColor: Colors.transparent,
+    //             elevation: 0,
+    //           );
+    //         });
+    //   }); 
+    // }
     else {
        SearchProfile().addtoadminnotification(userid: "12324", useremail:userSave.email!, userimage:"", 
   title: "${userSave.displayName} TRIED TO CREATE PROFILE WITH ${User_email}", email: userSave.email!, subtitle: "");

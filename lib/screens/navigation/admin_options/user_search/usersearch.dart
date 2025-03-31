@@ -66,7 +66,7 @@ class _UserSearchState extends State<UserSearch> {
                     style: const TextStyle(
                         decoration: TextDecoration.none,
                         color: Colors.black,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Sans-serif'),
                   ))
@@ -101,7 +101,7 @@ class _UserSearchState extends State<UserSearch> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -118,7 +118,7 @@ class _UserSearchState extends State<UserSearch> {
                                 style: GoogleFonts.poppins(
                                     decoration: TextDecoration.none,
                                     color: Colors.black38,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -127,7 +127,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -157,7 +157,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -175,7 +175,7 @@ class _UserSearchState extends State<UserSearch> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -192,7 +192,7 @@ class _UserSearchState extends State<UserSearch> {
                                 style: GoogleFonts.poppins(
                                     decoration: TextDecoration.none,
                                     color: Colors.black38,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -201,7 +201,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -232,7 +232,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -280,7 +280,7 @@ class _UserSearchState extends State<UserSearch> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -297,7 +297,7 @@ class _UserSearchState extends State<UserSearch> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -306,7 +306,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -336,7 +336,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -346,25 +346,25 @@ class _UserSearchState extends State<UserSearch> {
         ),
         GestureDetector(
           onTap: () async {
-            var ds = await tap(context, val);
-            print(ds.toString());
-            if (ds != null) {
-              if (!mounted) return;
-              setState(() {
-                val.clear();
-              });
-              for (var element in ds) {
-                if (!mounted) return;
+            // var ds = await tap(context, val);
+            // print(ds.toString());
+            // if (ds != null) {
+            //   if (!mounted) return;
+            //   setState(() {
+            //     val.clear();
+            //   });
+            //   for (var element in ds) {
+            //     if (!mounted) return;
 
-                setState(() {
-                  val.add(element);
-                });
-              }
-              // setState(() {
-              //   val.add(ds[]);
-              // });
-              // }
-            }
+            //     setState(() {
+            //       val.add(element);
+            //     });
+            //   }
+            //   // setState(() {
+            //   //   val.add(ds[]);
+            //   // });
+            //   // }
+            // }
           },
           child: Row(
             children: [
@@ -390,7 +390,7 @@ class _UserSearchState extends State<UserSearch> {
                               style: GoogleFonts.poppins(
                                 decoration: TextDecoration.none,
                                 color: Colors.black38,
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -406,7 +406,7 @@ class _UserSearchState extends State<UserSearch> {
                                   style: GoogleFonts.poppins(
                                     decoration: TextDecoration.none,
                                     color: Colors.black38,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -422,7 +422,7 @@ class _UserSearchState extends State<UserSearch> {
                                       style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -436,7 +436,7 @@ class _UserSearchState extends State<UserSearch> {
                                       style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     )
@@ -448,7 +448,7 @@ class _UserSearchState extends State<UserSearch> {
                                           style: GoogleFonts.poppins(
                                               decoration: TextDecoration.none,
                                               color: Colors.black38,
-                                              fontSize: 16,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w400),
                                         )
                                       : Text(
@@ -458,13 +458,13 @@ class _UserSearchState extends State<UserSearch> {
                                           style: GoogleFonts.poppins(
                                               decoration: TextDecoration.none,
                                               color: Colors.black38,
-                                              fontSize: 16,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w400),
                                         ),
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -494,7 +494,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -504,18 +504,18 @@ class _UserSearchState extends State<UserSearch> {
         ),
         GestureDetector(
           onTap: () async {
-            var ds = await tap(context);
-            print(ds.toString());
-            if (ds != null) {
-              // setState(() {
-              val.clear();
-              // });
-              for (var i = 0; i < ds.length; i++) {
-                setState(() {
-                  val.add(ds[i]);
-                });
-              }
-            }
+            // var ds = await tap(context);
+            // print(ds.toString());
+            // if (ds != null) {
+            //   // setState(() {
+            //   val.clear();
+            //   // });
+            //   for (var i = 0; i < ds.length; i++) {
+            //     setState(() {
+            //       val.add(ds[i]);
+            //     });
+            //   }
+            // }
           },
           child: Row(
             children: [
@@ -525,7 +525,7 @@ class _UserSearchState extends State<UserSearch> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -542,7 +542,7 @@ class _UserSearchState extends State<UserSearch> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -559,7 +559,7 @@ class _UserSearchState extends State<UserSearch> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -568,7 +568,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -598,7 +598,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -641,7 +641,7 @@ class _UserSearchState extends State<UserSearch> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -650,7 +650,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -681,7 +681,7 @@ class _UserSearchState extends State<UserSearch> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -702,7 +702,7 @@ class _UserSearchState extends State<UserSearch> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -717,7 +717,7 @@ class _UserSearchState extends State<UserSearch> {
                                 style: GoogleFonts.poppins(
                                     decoration: TextDecoration.none,
                                     color: Colors.black38,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -726,7 +726,7 @@ class _UserSearchState extends State<UserSearch> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
-                size: 16,
+                size: 18,
               )
             ],
           ),
@@ -974,7 +974,7 @@ class _UserSearchState extends State<UserSearch> {
                                                       decoration:
                                                           TextDecoration.none,
                                                       color: main_color,
-                                                      fontSize: 16,
+                                                      fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       fontFamily:
@@ -1004,7 +1004,7 @@ class _UserSearchState extends State<UserSearch> {
                                                           decoration:
                                                               TextDecoration.none,
                                                           color: main_color,
-                                                          fontSize: 16,
+                                                          fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
                                                     ),
@@ -1019,7 +1019,7 @@ class _UserSearchState extends State<UserSearch> {
                                                           decoration:
                                                               TextDecoration.none,
                                                           color: main_color,
-                                                          fontSize: 16,
+                                                          fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
                                                     ),
@@ -1154,7 +1154,7 @@ class _UserSearchState extends State<UserSearch> {
                                                     decoration:
                                                         TextDecoration.none,
                                                     color: main_color,
-                                                    fontSize: 16,
+                                                    fontSize: 18,
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily: 'Sans-serif'),
                                               )
@@ -1293,7 +1293,7 @@ class _UserSearchState extends State<UserSearch> {
                                                 },
                                                 child: Icon(
                                                   Icons.arrow_forward_ios,
-                                                  size: 16,
+                                                  size: 18,
                                                   color: main_color,
                                                 ))
                                           ],
@@ -1558,7 +1558,7 @@ class _UserSearchState extends State<UserSearch> {
                                                     decoration:
                                                         TextDecoration.none,
                                                     color: main_color,
-                                                    fontSize: 16,
+                                                    fontSize: 18,
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily: 'Sans-serif')),
                                           ),
@@ -1570,7 +1570,7 @@ class _UserSearchState extends State<UserSearch> {
                                           //         decoration:
                                           //             TextDecoration.none,
                                           //         color: main_color,
-                                          //         fontSize: 16,
+                                          //         fontSize: 18,
                                           //         fontWeight: FontWeight.w400,
                                           //         fontFamily: 'Sans-serif'),
                                           //   ),
@@ -1593,7 +1593,7 @@ class _UserSearchState extends State<UserSearch> {
                                                           decoration:
                                                               TextDecoration.none,
                                                           color: main_color,
-                                                          fontSize: 16,
+                                                          fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
                                                     ),
@@ -1608,7 +1608,7 @@ class _UserSearchState extends State<UserSearch> {
                                                           decoration:
                                                               TextDecoration.none,
                                                           color: main_color,
-                                                          fontSize: 16,
+                                                          fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
                                                     ),
@@ -1725,7 +1725,7 @@ class _UserSearchState extends State<UserSearch> {
                                                   decoration:
                                                       TextDecoration.none,
                                                   color: main_color,
-                                                  fontSize: 16,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily: 'Sans-serif'),
                                             )
@@ -1748,7 +1748,7 @@ class _UserSearchState extends State<UserSearch> {
                                               },
                                               child: Icon(
                                                 Icons.arrow_back_ios_new,
-                                                size: 16,
+                                                size: 18,
                                                 color: main_color,
                                               )),
                                           SizedBox(
@@ -1886,7 +1886,7 @@ class _UserSearchState extends State<UserSearch> {
                                               },
                                               child: Icon(
                                                 Icons.arrow_forward_ios,
-                                                size: 16,
+                                                size: 18,
                                                 color: main_color,
                                               )),
                                         ],

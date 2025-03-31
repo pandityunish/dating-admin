@@ -57,7 +57,7 @@ class _VerifyState extends State<Verify> {
       //   videoLink: "",
       // );
       biodatas.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      verifyvideo = [ ...biodatas];
+      verifyvideo = [...biodatas];
       setState(() {});
     } catch (e) {
       print(e);
@@ -351,7 +351,9 @@ class _VerifyState extends State<Verify> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-          appBar:CustomAppBar(title: "Profile Verification", iconImage: "images/icons/verified.png"),
+          appBar: CustomAppBar(
+              title: "Profile Verification",
+              iconImage: "images/icons/verified.png"),
           //  CupertinoNavigationBar(
           //   middle: Row(
           //     children: [
@@ -740,99 +742,113 @@ class _VerifyState extends State<Verify> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-               Expanded(
-                 child: Column(
-                  children: [
-                  Text(
-                      DateFormat('EEEE MMMM d y HH:mm').format(
-                          DateTime.parse(verifyvideo[index].createdAt)
-                              .toLocal()),
-                      style: TextStyle(
-                        fontFamily: 'Serif',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                      ),
-                    ),
-                     SizedBox(
-                      height: 20,
-                    ),
-                    VideoPlayerWidget1(
-                      videoUrl: verifyvideo[index].videoLink!,
-                      userSave: widget.userSave,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    // Text(
-                    //   "A Video About Me",
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //       decoration: TextDecoration.none,
-                    //       fontSize: 20,
-                    //       fontFamily: 'Sans-serif',
-                    //       color: Colors.black54,
-                    //       fontWeight: FontWeight.w600),
-                    // ),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                               
-                    // SizedBox(
-                    //     height: 200,
-                    //     width: 300,
-                    //     child: VideoPlayerWidget1(
-                    //         userSave: widget.userSave,
-                    //         videoUrl: (widget.userSave.gender != "male")
-                    //             ? "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/videos%2Ffemalevideo.mp4?alt=media&token=46d36b9f-e321-4fe8-ac66-496a27aca7c7"
-                    //             : "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/videos%2Fmalevideo.mp4?alt=media&token=96c5c184-1ee7-49c2-80dd-ba63f564766d")),
-                    // BigText(text: 'A Video About Me'),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: SizedBox(
-                        width: Get.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            index == 0
-                                ? Center()
-                                : IconButton(
-                                    icon: Icon(Icons.arrow_back_ios),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Uploaded on " +
+                              DateFormat('EEEE d MMM y HH:mm').format(
+                                DateTime.parse(verifyvideo[index].createdAt)
+                                    .toLocal(),
+                              ),
+                          style: TextStyle(
+                            fontFamily: 'Serif',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+
+                        SizedBox(
+                            height: 200,
+                            width: Get.width * 0.9,
+                            child: VideoPlayerWidget1(
+                              videoUrl: verifyvideo[index].videoLink!,
+                              userSave: widget.userSave,
+                            )),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // Text(
+                        //   "A Video About Me",
+                        //   textAlign: TextAlign.center,
+                        //   style: TextStyle(
+                        //       decoration: TextDecoration.none,
+                        //       fontSize: 20,
+                        //       fontFamily: 'Sans-serif',
+                        //       color: Colors.black54,
+                        //       fontWeight: FontWeight.w600),
+                        // ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
+
+                        // SizedBox(
+                        //     height: 200,
+                        //     width: 300,
+                        //     child: VideoPlayerWidget1(
+                        //         userSave: widget.userSave,
+                        //         videoUrl: (widget.userSave.gender != "male")
+                        //             ? "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/videos%2Ffemalevideo.mp4?alt=media&token=46d36b9f-e321-4fe8-ac66-496a27aca7c7"
+                        //             : "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/videos%2Fmalevideo.mp4?alt=media&token=96c5c184-1ee7-49c2-80dd-ba63f564766d")),
+                        // BigText(text: 'A Video About Me'),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: SizedBox(
+                            width: Get.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                index == 0
+                                    ? Center()
+                                    : IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: main_color,
+                                        ),
+                                        onPressed: () => {
+                                              _pageController.previousPage(
+                                                duration:
+                                                    Duration(milliseconds: 500),
+                                                curve: Curves.easeInOut,
+                                              )
+                                            }),
+                                IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: main_color,
+                                    ),
                                     onPressed: () => {
-                                          _pageController.previousPage(
+                                          _pageController.nextPage(
                                             duration:
                                                 Duration(milliseconds: 500),
                                             curve: Curves.easeInOut,
                                           )
                                         }),
-                            IconButton(
-                                icon: Icon(Icons.arrow_forward_ios),
-                                onPressed: () => {
-                                      _pageController.nextPage(
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut,
-                                      )
-                                    }),
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                 ),
-               ),
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.045,
                   ),
                   SizedBox(
                     height: 50,
-                    width: 300,
+                    width: Get.width * 0.9,
                     child: ElevatedButton(
                       style: ButtonStyle(
                           shadowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.black),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(RoundedRectangleBorder(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                             // side: const BorderSide(
                             //     color: Colors.black)
@@ -865,13 +881,14 @@ class _VerifyState extends State<Verify> {
                   ),
                   SizedBox(
                     height: 50,
-                    width: 300,
+                    width: Get.width * 0.9,
                     child: ElevatedButton(
                       style: ButtonStyle(
                           shadowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.black),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(RoundedRectangleBorder(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                             // side: const BorderSide(
                             //     color: Colors.black)
@@ -909,7 +926,6 @@ class _VerifyState extends State<Verify> {
                   //     color: Colors.black,
                   //   ),
                   // ),
-                 
                 ],
               );
             },

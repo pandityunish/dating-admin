@@ -102,6 +102,26 @@ class NotificationWidget2 extends StatefulWidget {
 
 class _NotificationWidget2State extends State<NotificationWidget2> {
   var time;
+    late DatabaseReference _dbref;
+  late DatabaseReference _dbref5;
+  SavedPref defaultSp = SavedPref();
+
+  var connectivity = '';
+   setconnection() {
+    _dbref = _dbref.child("onlineStatus");
+    _dbref5 = _dbref5.child("token");
+    _dbref.child(widget.notiData.userid).onValue.listen((event) {
+      try {
+        var res = event.snapshot.child('status').value;
+        setState(() {
+          connectivity = res.toString();
+        });
+      } catch (e) {
+        print(e);
+      }
+    });
+   
+  }
   Future<void> _loadFormattedDateTime() async {
     DateTime timestamp = DateTime.parse(widget.notiData.createdAt);
     // String timeZone = await FlutterNativeTimezone.getLocalTimezone();
@@ -182,7 +202,7 @@ class _NotificationWidget2State extends State<NotificationWidget2> {
       margin: const EdgeInsets.only(bottom: 10, left: 5),
       child: GestureDetector(
         onTap: () async {
-          ;
+          
           SearchProfile().addtoadminnotification(
               userid: "2345",
               useremail: "lksjflajk",
@@ -267,14 +287,44 @@ class _NotificationWidget2State extends State<NotificationWidget2> {
             width: 350,
             child: Row(
               children: [
-                ClipOval(
-                  child: Image.network(
-                    imgurl,
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.low,
-                    width: 42,
-                    height: 42,
-                  ),
+                Stack(
+                  children: [
+                    ClipOval(
+                      child: Image.network(
+                        imgurl,
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.low,
+                        width: 42,
+                        height: 42,
+                      ),
+                    ),
+                     Positioned(
+                      bottom: 0,
+                      right: 0,
+                       child: ClipOval(
+                                                  child: Container(
+                                                    // padding: EdgeInsets.all(30),
+                                                    width: 9,
+                                                    height: 9,
+                                                    decoration: BoxDecoration(
+                                                        color: (connectivity ==
+                                                                "Online")
+                                                            ? const Color(
+                                                                0xFF00FF19)
+                                                            : (connectivity ==
+                                                                    "Resumed")
+                                                                ? const Color
+                                                                    .fromARGB(255,
+                                                                    255, 208, 0)
+                                                                : const Color(
+                                                                    0xFFBDBDBD)
+                                                        // color: Color(0xFF33D374)),
+                                                        // color: if(userSave.connectivity == "Online"){Color(0xFF00FF19)}else if(userSave.connectivity == "Offline"){Color(0xFFBDBDBD)} else{Color(0xFFDBFF00)}
+                                                        ),
+                                                  ),
+                                                ),
+                     ),
+                  ],
                 ),
                 const SizedBox(
                   width: 5,
@@ -295,7 +345,7 @@ class _NotificationWidget2State extends State<NotificationWidget2> {
                           children: [
                             RichText(
                                 text: TextSpan(
-                                    text: widget.notiData.title.trim(),
+                                    text: widget.notiData.title.toUpperCase(),
                                     style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,

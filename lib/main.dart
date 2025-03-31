@@ -282,9 +282,10 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-     theme: ThemeData(useMaterial3: false,
-      scaffoldBackgroundColor: Colors.white
-      ,appBarTheme: AppBarTheme(color: Colors.white,elevation: 0)),
+      theme: ThemeData(
+          useMaterial3: false,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(color: Colors.white, elevation: 0)),
       title: 'Couple Mate',
       home: FirstScreen(),
       debugShowCheckedModeBanner: false,
@@ -332,6 +333,7 @@ class _SecondMainState extends State<SecondMain> {
     if (data[0]["isUnder"] == false) {
       if (userSave.email == "s9053622222@gmail.com" ||
           userSave.email == "s9728401234@gmail.com" ||
+          userSave.email == "hari222sk@gmail.com" ||
           userSave.email == "yunishpandit98@gmail.com" ||
           userSave.email == "pandityunish1228@gmail.com") {
         print("mein ${userSave.email}");
@@ -356,9 +358,8 @@ class _SecondMainState extends State<SecondMain> {
     return GetMaterialApp(
       theme: ThemeData(
           useMaterial3: false,
-            scaffoldBackgroundColor: Colors.white
-      ,appBarTheme: AppBarTheme(color: Colors.white,elevation: 0),
-        
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
           expansionTileTheme: ExpansionTileThemeData(
             iconColor: main_color,
             textColor: main_color,

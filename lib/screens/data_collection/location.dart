@@ -5,13 +5,18 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:matrimony_admin/Assets/countryModel/country_state_city_picker.dart';
 // import 'package:google_maps_webservice/places.dart';
 import 'package:matrimony_admin/globalVars.dart';
+import 'package:matrimony_admin/screens/data_collection/LetsStart.dart';
 import 'package:matrimony_admin/screens/data_collection/aboutMe.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart' show Searchservice;
 import 'package:matrimony_admin/screens/service/auth_service.dart';
 import '../../Assets/Error.dart';
 import '../../Assets/G_Sign.dart';
 import '../../models/shared_pref.dart';
+import 'package:geocoding/geocoding.dart' as location3;
+
 import '../../models/user_model.dart';
 import 'custom_app_bar.dart';
 
@@ -36,10 +41,38 @@ class _LocationState extends State<Location> {
   var lng;
   bool locate = false;
 
+@override
+  void initState() {
+    getalllocation();
+    super.initState();
+  }
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+    void getalllocation() async {
+    alllocations = await Searchservice().getData();
+    setState(() {});
+  }
+  List<DataLocation> alllist = [];
+  List<LocationModel> alllocations = [];
+
+  void _fileterlocation(String query) {
+    alllist.clear();
+    for (var country in alllocations) {
+      for (var state in country.state) {
+        for (var city in state.city) {
+          if (city.name.toLowerCase().contains(query.toLowerCase())) {
+            alllist.add(DataLocation(
+                countryname: country.name,
+                countrycity: city.name,
+                countrystate: state.name));
+          }
+        }
+      }
+    }
+    setState(() {});
   }
 
   final _searchController = TextEditingController();
@@ -50,6 +83,8 @@ class _LocationState extends State<Location> {
   UserService userService = Get.put(UserService());
   @override
   Widget build(BuildContext context) {
+    double heightSuggest1 = 200.0;
+
     // void _onSearchChanged(String value) async {
     //   lng = "";
     //   lat = "";
@@ -123,7 +158,46 @@ class _LocationState extends State<Location> {
     //     _predictions.clear();
     //   });
     // }
+ void onSelectedPlace1(DataLocation prediction) async {
+      // lat =prediction.lat;
+      // lng =prediction.lng;
+      String somelocation =
+          "${prediction.countryname},${prediction.countrystate},${prediction.countrycity}";
+      List<location3.Location> locations =
+          await locationFromAddress(somelocation);
+      print(locations[0].latitude);
+      print(locations[0].longitude);
+      lat = locations[0].latitude;
+      lng = locations[0].longitude;
 
+      setState(() {
+        heightSuggest1 = 0.0;
+        _searchController.text =
+            "${prediction.countrycity},${prediction.countrystate ?? ""},${prediction.countryname}";
+        location = prediction.countrycity;
+        try {
+          city = prediction.countrycity;
+          state = prediction.countrystate ?? "";
+
+          country = prediction.countryname;
+
+          FocusManager.instance.primaryFocus?.unfocus();
+        } catch (e) {
+          print(e);
+        }
+
+        userService.userdata.addAll({
+          "location": location,
+          "state": state,
+          "country": country,
+          "city": city,
+          "lat": lat,
+          "lng": lng
+        });
+
+        alllist.clear();
+      });
+    }
     @override
     void dispose() {
       _searchController.dispose();
@@ -171,10 +245,42 @@ class _LocationState extends State<Location> {
                                         color: main_color,
                                       ),
                                       border: InputBorder.none),
-                                  onChanged: (value) {}
+                                  onChanged: (value) {
+                                    
+                                    // _onSearchChanged(value);
+                                    _fileterlocation(value);
+                                  }
                                       // _onSearchChanged(value),
                                 ),
                               ),
+                                 SizedBox(
+                                  height: heightSuggest1,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    itemCount: alllist.length,
+                                    itemBuilder: (context, index) {
+                                      var data = alllist[index];
+                                      return SingleChildScrollView(
+                                        child: ListTile(
+                                            title: Text(
+                                                "${data.countrycity},${data.countrystate},${data.countryname}"),
+                                            onTap: () {
+                                              setState(() {
+                                                heightSuggest1 = 0.0;
+                                              });
+                                              onSelectedPlace1(data);
+                                              // filteredPersons.clear();
+                                              // _onSelectedPlace3(
+                                              //     filteredPersons[index]);
+                                              // if (!mounted) return;
+                                              print(heightSuggest1);
+                                            }),
+                                      );
+                                    },
+                                  )
+                          
+                                  // }),
+                                  ),
                               // Expanded(
                               //   child: ListView.builder(
                               //     itemCount: _predictions.length,

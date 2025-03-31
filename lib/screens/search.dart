@@ -53,7 +53,7 @@ class _SearchState extends State<Search> {
   var startValue = 0.0;
   var endValue = 0.0;
   bool searchingbool = false;
-
+bool ison=true;
   late String profileSearch = "";
   late String EmailSearch = "";
   late String NameSearch = "";
@@ -134,7 +134,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -238,7 +238,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -397,7 +397,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -519,7 +519,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -592,7 +592,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -696,7 +696,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -768,7 +768,7 @@ class _SearchState extends State<Search> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -842,7 +842,7 @@ class _SearchState extends State<Search> {
                     style: const TextStyle(
                         decoration: TextDecoration.none,
                         color: Colors.black,
-                        fontSize: 22,
+                        fontSize: 18,
                         fontWeight: FontWeight.w400,
                         fontFamily: 'Sans-serif'),
                   ))
@@ -1061,6 +1061,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       hintText:
                                                                           'Enter Profile Id',
+                                                                          hintStyle: TextStyle(fontSize: 12),
                                                                       border: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                               30),
@@ -1251,6 +1252,8 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       hintText:
                                                                           'Enter Email Id',
+                                                                          hintStyle: TextStyle(fontSize: 12),
+
                                                                       border: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                               30),
@@ -1396,7 +1399,8 @@ class _SearchState extends State<Search> {
                                                                       right:
                                                                           10),
                                                               child: Text(
-                                                                "Search By phone",
+                                                                "Search By Contact No",
+
                                                                 style: TextStyle(
                                                                     decoration:
                                                                         TextDecoration
@@ -1441,7 +1445,8 @@ class _SearchState extends State<Search> {
                                                                           left:
                                                                               10),
                                                                       hintText:
-                                                                          'Enter Phone',
+                                                                          'Enter Contact Number',
+                                                                          hintStyle: TextStyle(fontSize: 12),
                                                                       border: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                               30),
@@ -1632,6 +1637,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       hintText:
                                                                           'Enter Name',
+                                                                          hintStyle: TextStyle(fontSize: 12),
                                                                       border: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                               30),
@@ -1815,6 +1821,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       hintText:
                                                                           'Enter Suname',
+                                                                          hintStyle: TextStyle(fontSize: 12),
                                                                       border: OutlineInputBorder(
                                                                           borderRadius: BorderRadius.circular(
                                                                               30),
@@ -1993,6 +2000,17 @@ class _SearchState extends State<Search> {
                                                   ),
                                                 ],
                                               ),
+                                              SizedBox(height: 10,),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text("0 km",style: TextStyle(color: main_color),),
+                                                    Text("200 km",style: TextStyle(color: main_color),)
+                                                  ],
+                                                ),
+                                              ),
                                               Column(
                                                 children: [
                                                   SliderTheme(
@@ -2055,47 +2073,103 @@ class _SearchState extends State<Search> {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             right: 5),
-                                                    child: Row(
+                                                    child: 
+                                                    Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
                                                       children: [
-                                                        Container(
-                                                          height: 30,
-                                                          width: 55,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black12),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30.0),
-                                                          ),
-                                                          child:
-                                                              CupertinoSwitch(
-                                                            // overrides the default green color of the track
-                                                            activeColor:
-                                                                Colors.white,
-                                                            // color of the round icon, which moves from right to left
-                                                            thumbColor: forIos
-                                                                ? main_color
-                                                                : Colors
-                                                                    .black12,
-                                                            // when the switch is off
-                                                            trackColor: forIos
-                                                                ? Colors.white
-                                                                : Colors
-                                                                    .black12,
-                                                            // boolean variable value
-                                                            value: forIos,
-                                                            // changes the state of the switch
-                                                            onChanged: (value) =>
-                                                                setState(() =>
+                                                         Container(
+                    height: 35,
+                    width: 55,
+                    decoration: BoxDecoration(
+                    
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Track
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          decoration: BoxDecoration(
+                            color: ison ?Colors.black12: main_color ,
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          width: 55,
+                          height: 28,
+                        ),
+                        // Thumb with text
+                        Align(
+                          alignment: ison
+                              ? Alignment.centerLeft:Alignment.centerRight
+                               ,
+                          child: GestureDetector(
+                            onTap: () {
+                              ison=!ison;
+                                       setState(() =>
                                                                     forIos =
-                                                                        value),
-                                                          ),
-                                                        ),
+                                                                        !forIos);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              height: 20,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                ison ? "Off" : "On",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                                                        // Container(
+                                                        //   height: 30,
+                                                        //   width: 55,
+                                                        //   decoration:
+                                                        //       BoxDecoration(
+                                                        //     border: Border.all(
+                                                        //         color: Colors
+                                                        //             .black12),
+                                                        //     borderRadius:
+                                                        //         BorderRadius
+                                                        //             .circular(
+                                                        //                 30.0),
+                                                        //   ),
+                                                        //   child:
+                                                        //       CupertinoSwitch(
+                                                        //     // overrides the default green color of the track
+                                                        //     activeColor:
+                                                        //         Colors.white,
+                                                        //     // color of the round icon, which moves from right to left
+                                                        //     thumbColor: forIos
+                                                        //         ? main_color
+                                                        //         : Colors
+                                                        //             .black12,
+                                                        //     // when the switch is off
+                                                        //     trackColor: forIos
+                                                        //         ? Colors.white
+                                                        //         : Colors
+                                                        //             .black12,
+                                                        //     // boolean variable value
+                                                        //     value: forIos,
+                                                        //     // changes the state of the switch
+                                                        //     onChanged: (value) =>
+                                                        //         setState(() =>
+                                                        //             forIos =
+                                                        //                 value),
+                                                        //   ),
+                                                        // ),
                                                       ],
                                                     ),
                                                   ),
@@ -2171,7 +2245,7 @@ class _SearchState extends State<Search> {
                                                               TextDecoration
                                                                   .none,
                                                           color: Colors.black,
-                                                          fontSize: 22,
+                                                          fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
@@ -2216,7 +2290,7 @@ class _SearchState extends State<Search> {
                                                               TextDecoration
                                                                   .none,
                                                           color: Colors.black,
-                                                          fontSize: 22,
+                                                          fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
@@ -3731,7 +3805,7 @@ class _SearchState extends State<Search> {
                                                               TextDecoration
                                                                   .none,
                                                           color: Colors.black,
-                                                          fontSize: 22,
+                                                          fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
@@ -3776,7 +3850,7 @@ class _SearchState extends State<Search> {
                                                               TextDecoration
                                                                   .none,
                                                           color: Colors.black,
-                                                          fontSize: 22,
+                                                          fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:

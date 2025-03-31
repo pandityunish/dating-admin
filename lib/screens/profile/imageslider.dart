@@ -12,11 +12,11 @@ class ImageSliderPopUp extends StatefulWidget {
     super.key,
     this.galleryItems,
     required this.profileData,
-     required this.currentindex,
+    required this.currentindex,
   });
   var galleryItems;
   NewUserModel profileData;
-   int currentindex;
+  int currentindex;
 
   @override
   State<ImageSliderPopUp> createState() => _ImageSliderPopUpState();
@@ -38,8 +38,8 @@ class _ImageSliderPopUpState extends State<ImageSliderPopUp> {
     } else {
       return List<Widget>.generate(galleryItems.length, (int index) {
         return PhotoView(
-           minScale: PhotoViewComputedScale.contained,
-  maxScale: PhotoViewComputedScale.covered * 2, 
+          minScale: PhotoViewComputedScale.contained,
+          maxScale: PhotoViewComputedScale.covered * 2,
           imageProvider: NetworkImage(
             galleryItems[index],
             // fit: BoxFit.cover,
@@ -48,33 +48,34 @@ class _ImageSliderPopUpState extends State<ImageSliderPopUp> {
       });
     }
   }
-   Future<void> block() async {
+
+  Future<void> block() async {
     // final docUser = FirebaseFirestore.instance
     //     .collection('user_data')
     //     .doc(widget.profileData!.id);
     // try {
-      print(widget.profileData!.status);
-      setState(() {
-        widget.profileData!.status = "blocked";
-      });
-      HomeService().addtoblock(email: widget.profileData!.email);
-      ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  duration: Duration(seconds: 1),
-                  content: const SnackBarContent(
-                    error_text: "Profile Blocked",
-                    appreciation: "",
-                    icon: Icons.check,
-                    sec: 2,
-                  ),
-                  margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.25,
-                      left: MediaQuery.of(context).size.width * 0.06),
-                  behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-              );
+    print(widget.profileData!.status);
+    setState(() {
+      widget.profileData!.status = "blocked";
+    });
+    HomeService().addtoblock(email: widget.profileData!.email);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 1),
+        content: const SnackBarContent(
+          error_text: "Profile Blocked",
+          appreciation: "",
+          icon: Icons.check,
+          sec: 2,
+        ),
+        margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height * 0.25,
+            left: MediaQuery.of(context).size.width * 0.06),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
     //   final json = widget.profileData!.toJson();
     //   await docUser
     //       .update(json)
@@ -100,7 +101,8 @@ class _ImageSliderPopUpState extends State<ImageSliderPopUp> {
     //   print(Excepetion);
     // }
   }
-Future<void> approveProfile() async {
+
+  Future<void> approveProfile() async {
     if (widget.profileData!.status == "report") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -119,8 +121,7 @@ Future<void> approveProfile() async {
           elevation: 0,
         ),
       );
-    }
-    else if (widget.profileData!.status == "blocked") {
+    } else if (widget.profileData!.status == "blocked") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: Duration(seconds: 1),
@@ -138,29 +139,31 @@ Future<void> approveProfile() async {
           elevation: 0,
         ),
       );
-    }else{
+    } else {
       HomeService().approveuser(widget.profileData!.email);
-         setState(() {
-          widget.profileData!.status = "approved";
-        });
-       ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    duration: Duration(seconds: 1),
-                    content: const SnackBarContent(
-                      error_text: "Profile Approved",
-                      appreciation: "",
-                      icon: Icons.check,
-                      sec: 2,
-                    ),
-                    margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.25,
-                        left: MediaQuery.of(context).size.width * 0.06),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                  ),
-                );}
+      setState(() {
+        widget.profileData!.status = "approved";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 1),
+          content: const SnackBarContent(
+            error_text: "Profile Approved",
+            appreciation: "",
+            icon: Icons.check,
+            sec: 2,
+          ),
+          margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.25,
+              left: MediaQuery.of(context).size.width * 0.06),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
     }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -169,7 +172,7 @@ Future<void> approveProfile() async {
           Container(
             child: ImageSlideshow(
                 indicatorRadius: 5,
-                initialPage: widget. currentindex,
+                initialPage: widget.currentindex,
                 height: MediaQuery.of(context).size.height * 1,
                 // height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width,
@@ -197,14 +200,18 @@ Future<void> approveProfile() async {
           //       itemBuilder: (context) => [
           //         PopupMenuItem(
           //             child: Text(
-          //             widget.profileData!.status=='approved'?"Approved":"Approve",
+          //               widget.profileData!.status == 'approved'
+          //                   ? "Approved"
+          //                   : "Approve",
           //             ),
           //             onTap: () {
           //               approveProfile();
           //             }),
           //         PopupMenuItem(
           //             child: Text(
-          //              widget.profileData.status=="blocked"?  'Unblock':"Block",
+          //               widget.profileData.status == "blocked"
+          //                   ? 'Unblock'
+          //                   : "Block",
           //             ),
           //             onTap: () {
           //               block();
@@ -218,34 +225,7 @@ Future<void> approveProfile() async {
           //     ),
           //   ),
           // ),
-          // Container(
-          //   child: Positioned(
-          //     top: 50,
-          //     left: MediaQuery.of(context).size.width * 0.85,
-          //     // right: 25,
-          //     child: GestureDetector(
-          //       onTap: () {
-          //         // print("Print");
-          //         Navigator.of(context).pop();
-          //       },
-          //       child: Container(
-          //         width: 30,
-          //         height: 30,
-          //         // decoration: BoxDecoration(
-          //         //     color: Colors.white,
-          //         //     borderRadius: BorderRadius.circular(40)),
-          //         child: ImageIcon(
-          //           AssetImage(
-          //             'images/icons/Close_icon.png',
-          //           ),
-          //           // fontWeight:FontWeight.w700,
-          //           color: main_color,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-           Container(
+          Container(
             child: Positioned(
               top: 50,
               left: MediaQuery.of(context).size.width * 0.85,
@@ -258,10 +238,14 @@ Future<void> approveProfile() async {
                 child: Container(
                   width: 30,
                   height: 30,
-                  decoration: BoxDecoration(
-                      color: main_color,
-                      borderRadius: BorderRadius.circular(40)),
-                  child: Icon(Icons.close,color: Colors.white,),
+                  // decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(40)),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                  // fontWeight:FontWeight.w700,
                 ),
               ),
             ),
