@@ -126,24 +126,27 @@ class _SelectStateDataState extends State<SelectStateData> {
   String _selectedState = "Choose State/Province";
   List<StatusModel.State> _states = [];
   var responses;
-void addlocation(){
-  print(selectedCounty);
-  for (var i = 0; i < selectedCounty!.length; i++) {
-      selectedCountryList.add(StatusModel.StatusModel(emoji: "",emojiU: "",id: i,name:selectedCounty![i]["name"],state:[] ));
+  void addlocation() {
+    print(selectedCounty);
+    for (var i = 0; i < selectedCounty!.length; i++) {
+      selectedCountryList.add(StatusModel.StatusModel(
+          emoji: "",
+          emojiU: "",
+          id: i,
+          name: selectedCounty![i]["name"],
+          state: []));
+    }
+    for (var i = 0; i < selectedCity!.length; i++) {
+      cityname.add(selectedCity![i]["name"]);
+    }
+    for (var i = 0; i < selectedState!.length; i++) {
+      statename.add(
+        selectedState![i]["name"],
+      );
+    }
+    setState(() {});
+  }
 
-  }
-  for (var i = 0; i < selectedCity!.length; i++) {
-      cityname.add( selectedCity![i]["name"]);
-    
-  }
-   for (var i = 0; i < selectedState!.length; i++) {
-      statename.add( selectedState![i]["name"], );
-    
-  }
-  setState(() {
-    
-  });
-}
   @override
   void initState() {
     setdata();
@@ -164,8 +167,8 @@ void addlocation(){
   }
 
   Future getResponse() async {
-    var res =
-        await rootBundle.loadString('lib/Assets/countryModel/assets/country.json');
+    var res = await rootBundle
+        .loadString('lib/Assets/countryModel/assets/country.json');
     return jsonDecode(res);
   }
 
@@ -319,34 +322,35 @@ void addlocation(){
       cityDataList = tempCount;
     });
   }
+
 //  GoogleMapsPlaces _places =
 //       GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
 //         List<Prediction> _predictions = [];
 //          List<Prediction> _citypredictions = [];
   final _searchController = TextEditingController();
-List<String> statename=[];
-List<String> cityname=[];
+  List<String> statename = [];
+  List<String> cityname = [];
 
 // void onselectstate(Prediction prediction)async{
-   
+
 //    statename.add(prediction.structuredFormatting!.mainText);
 //    print(prediction.structuredFormatting!.mainText);
 //    setState(() {
-     
+
 //    });
 // }
 // void onselectcity(Prediction prediction)async{
-   
+
 //    cityname.add(prediction.structuredFormatting!.mainText);
 //    print(prediction.structuredFormatting!.mainText);
 //    setState(() {
-     
+
 //    });
 // }
   @override
   Widget build(BuildContext context) {
     //  void _onSearchChanged(String value) async {
-    
+
     //   print(value);
     //   // print(_places.searchByText(value));
     //   var res=await _places.searchByText(value);
@@ -366,7 +370,7 @@ List<String> cityname=[];
     //   }
     // }
     //  void _cityonSearchChanged(String value) async {
-    
+
     //   print(value);
     //   // print(_places.searchByText(value));
     //   var res=await _places.searchByText(value);
@@ -427,12 +431,11 @@ List<String> cityname=[];
                           fontFamily: 'Sans-serif',
                           fontWeight: FontWeight.w700,
                           fontSize: 24),
-                      child: Text("Address")),
+                      child: Text("Location")),
                 )
               ],
             ),
           ),
-      
         ),
         body: Column(
           children: [
@@ -451,7 +454,7 @@ List<String> cityname=[];
                         height: 50,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                  
+
                           // reverse: true,
                           children: [
                             ...List<Widget>.generate(
@@ -461,21 +464,17 @@ List<String> cityname=[];
                                         setState(() {
                                           selectedCountryList.removeWhere(
                                               (element) =>
-                                                  selectedCountryList[
-                                                          index]
+                                                  selectedCountryList[index]
                                                       .name ==
                                                   element.name);
                                           removeState();
                                         });
                                       },
                                       child: Container(
-                                        margin:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 10,
-                                                horizontal: 5),
-                                        padding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 5),
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
                                         height: 20,
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -484,13 +483,11 @@ List<String> cityname=[];
                                                 255, 230, 228, 228)),
                                         child: Row(
                                           children: [
-                                            Text(
-                                                selectedCountryList[index]
-                                                    .name!),
+                                            Text(selectedCountryList[index]
+                                                .name!),
                                             Icon(
                                                 size: 15,
-                                                CupertinoIcons
-                                                    .clear_circled,
+                                                CupertinoIcons.clear_circled,
                                                 color: main_color),
                                           ],
                                         ),
@@ -500,16 +497,16 @@ List<String> cityname=[];
                               // decoration: containerStyle,
                               height: 50,
                               width: width - 50,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
                               child: TextField(
                                 cursorColor: main_color,
                                 decoration: textFiedstyle.copyWith(
                                   hintText: 'Country',
                                 ),
-                  
+
                                 // focusNode: countryfocus,
                                 controller: countryController,
                                 onChanged: (value) {
@@ -529,8 +526,7 @@ List<String> cityname=[];
                   ),
                   countryfocus
                       ? Container(
-                          height:
-                              MediaQuery.of(context).size.height * 0.29,
+                          height: MediaQuery.of(context).size.height * 0.29,
                           // height: 230,
                           child: SingleChildScrollView(
                             child: Column(
@@ -540,7 +536,7 @@ List<String> cityname=[];
                         )
                       : Container(),
                   const SizedBox(height: 20),
-                  
+
                   countryfocus
                       ? Container()
                       : Focus(
@@ -561,43 +557,28 @@ List<String> cityname=[];
                                     (index) => GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              statename
-                                                  .removeWhere((element) =>
-                                                      statename[
-                                                              index]
-                                                          ==
-                                                      element);
+                                              statename.removeWhere((element) =>
+                                                  statename[index] == element);
                                               // kkk
-                                          
                                             });
                                           },
                                           child: Container(
-                                            margin: const EdgeInsets
-                                                    .symmetric(
-                                                vertical: 10,
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 5),
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
-                                            padding: const EdgeInsets
-                                                .symmetric(horizontal: 5),
                                             height: 20,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        10),
-                                                color:
-                                                    const Color.fromARGB(
-                                                        255,
-                                                        230,
-                                                        228,
-                                                        228)),
+                                                    BorderRadius.circular(10),
+                                                color: const Color.fromARGB(
+                                                    255, 230, 228, 228)),
                                             child: Row(
                                               children: [
-                                                Text(statename[
-                                                        index]
-                                                    ),
+                                                Text(statename[index]),
                                                 Icon(
                                                   size: 15,
-                                                  CupertinoIcons
-                                                      .clear_circled,
+                                                  CupertinoIcons.clear_circled,
                                                   color: main_color,
                                                 )
                                               ],
@@ -607,16 +588,16 @@ List<String> cityname=[];
                                 Container(
                                   height: 50,
                                   width: width - 50,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: TextField(
-                                cursorColor: main_color,
-                  
+                                    cursorColor: main_color,
+
                                     decoration: textFiedstyle.copyWith(
                                         hintText: 'State'),
-                  
+
                                     // focusNode: countryfocus,
                                     controller: stateController,
                                     onChanged: (value) {
@@ -628,11 +609,11 @@ List<String> cityname=[];
                             ),
                           ),
                         ),
-                  
+
                   const SizedBox(
                     height: 10,
                   ),
-                  
+
                   // statefocus
                   //     ? Container(
                   //         height:
@@ -645,7 +626,7 @@ List<String> cityname=[];
                   //       )
                   //     : Container(),
                   const SizedBox(height: 20),
-                  
+
                   countryfocus || statefocus
                       ? Container()
                       : Focus(
@@ -665,41 +646,27 @@ List<String> cityname=[];
                                     (index) => GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              cityname.removeWhere(
-                                                  (element) =>
-                                                      cityname[
-                                                              index]
-                                                           ==
-                                                      element);
+                                              cityname.removeWhere((element) =>
+                                                  cityname[index] == element);
                                             });
                                           },
                                           child: Container(
-                                            margin: const EdgeInsets
-                                                    .symmetric(
-                                                vertical: 10,
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 5),
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 5),
-                                            padding: const EdgeInsets
-                                                .symmetric(horizontal: 5),
                                             height: 20,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        10),
-                                                color:
-                                                    const Color.fromARGB(
-                                                        255,
-                                                        230,
-                                                        228,
-                                                        228)),
+                                                    BorderRadius.circular(10),
+                                                color: const Color.fromARGB(
+                                                    255, 230, 228, 228)),
                                             child: Row(
                                               children: [
-                                                Text(cityname[
-                                                        index]
-                                                    ),
+                                                Text(cityname[index]),
                                                 Icon(
                                                   size: 15,
-                                                  CupertinoIcons
-                                                      .clear_circled,
+                                                  CupertinoIcons.clear_circled,
                                                   color: main_color,
                                                 )
                                               ],
@@ -709,20 +676,20 @@ List<String> cityname=[];
                                 Container(
                                   height: 50,
                                   width: width - 50,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: TextField(
-                                cursorColor: main_color,
-                  
+                                    cursorColor: main_color,
+
                                     decoration: textFiedstyle.copyWith(
                                         hintText: 'City'),
-                  
+
                                     // focusNode: countryfocus,
                                     controller: cityController,
                                     onChanged: (value) {
-                                    //  _cityonSearchChanged(value);
+                                      //  _cityonSearchChanged(value);
                                     },
                                   ),
                                 ),
@@ -736,7 +703,7 @@ List<String> cityname=[];
                   const SizedBox(
                     height: 10,
                   ),
-                  
+
                   // cityfocus
                   //     ? Container(
                   //         height:
@@ -751,7 +718,7 @@ List<String> cityname=[];
                 ],
               ),
             ),
-           
+
             // OutlinedButton(
             //   onPressed: () {},
             //   child: Padding(
@@ -782,14 +749,12 @@ List<String> cityname=[];
                       // padding:
                       //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
                       //         EdgeInsets.symmetric(vertical: 17)),
-                      shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60.0),
                       )),
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(
-                              Colors.white)),
+                          MaterialStateProperty.all<Color>(Colors.white)),
                   child: const Text(
                     "Continue",
                     style: TextStyle(
@@ -802,20 +767,22 @@ List<String> cityname=[];
                   onPressed: () {
                     print(selectedLocation);
                     for (var element in selectedCountryList) {
-                        selectedLocation[0].add(element.name.toString());
-                      }
-                      for (var element in statename) {
-                        selectedLocation[1].add(element.toString());
-                      }
-                      for (var element in cityname) {
-                        selectedLocation[2].add(element.toString());
-                      }
+                      selectedLocation[0].add(element.name.toString());
+                    }
+                    for (var element in statename) {
+                      selectedLocation[1].add(element.toString());
+                    }
+                    for (var element in cityname) {
+                      selectedLocation[2].add(element.toString());
+                    }
                     Navigator.of(context).pop(selectedLocation);
                   },
                 ),
               ),
             ),
-            SizedBox(height: 10,)
+            SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),
@@ -1007,11 +974,11 @@ List<String> cityname=[];
 //               stateController.clear();
 //               cityDataList = [];
 //               _cities = [];
-             
+
 //             }
 //             setState(() {});
 //           },
-//           // trailing: 
+//           // trailing:
 //           // selectedStateList.map((e) => e.id).contains(state.id)
 //           //     ? Icon(
 //           //         CupertinoIcons.check_mark,
@@ -1104,8 +1071,7 @@ List<String> cityname=[];
   //             cityfocus = false;
   //             cityController.clear();
   //             cityDataList = [];
-              
-             
+
   //           }
   //           setState(() {});
   //           // if (selectedCityList.contains(city)) {

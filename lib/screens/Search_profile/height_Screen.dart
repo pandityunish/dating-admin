@@ -13,8 +13,8 @@ class HeightScreens extends StatefulWidget {
 
 class _HeightScreensState extends State<HeightScreens> {
   SearchDataList sdl = SearchDataList();
-  int _minHeight = 0; 
-  int _maxHeight = 60; 
+  int _minHeight = 0;
+  int _maxHeight = 60;
   late List<DropdownMenuItem<int>> _minHeightDropdownItems;
   late List<DropdownMenuItem<int>> _maxHeightDropdownItems;
 
@@ -23,7 +23,7 @@ class _HeightScreensState extends State<HeightScreens> {
     for (int i = start; i <= end; i += 1) {
       items.add(
         DropdownMenuItem(
-          value: i *1.0,
+          value: i * 1.0,
           child: Text(sdl.Height[i]),
         ),
       );
@@ -111,9 +111,8 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               child: Text(
                                 "Min Height",
@@ -126,9 +125,8 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               child: Text(
                                 "Max Height",
@@ -175,18 +173,19 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               child: DropdownButton<double>(
-                                value: _minHeight *1.0 ,
-                                style: TextStyle(fontSize: 12,color: main_color),
+                                value: _minHeight * 1.0,
+                                style:
+                                    TextStyle(fontSize: 12, color: main_color),
                                 iconSize: 12,
+                                iconEnabledColor: main_color,
                                 items: _getDropdownItems(0, 60),
                                 onChanged: (double? value) {
                                   setState(() {
-                                    _minHeight = value!~/1;
+                                    _minHeight = value! ~/ 1;
                                     if (_maxHeight < _minHeight) {
                                       _maxHeight = _minHeight;
                                     }
@@ -199,19 +198,19 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: main_color, width: 1)),
+                              color: Colors.white,
+                            ),
                             child: Center(
                               child: DropdownButton<double>(
-                                value: _maxHeight *1.0,
-                                style: TextStyle(fontSize: 12,color: main_color),
+                                value: _maxHeight * 1.0,
+                                style:
+                                    TextStyle(fontSize: 12, color: main_color),
                                 iconSize: 12,
                                 iconEnabledColor: main_color,
                                 items: _getDropdownItems(_minHeight, 60),
                                 onChanged: (double? value) {
                                   setState(() {
-                                    _maxHeight = value!~/1;
+                                    _maxHeight = value! ~/ 1;
                                     if (_maxHeight < _minHeight) {
                                       _minHeight = _maxHeight;
                                     }

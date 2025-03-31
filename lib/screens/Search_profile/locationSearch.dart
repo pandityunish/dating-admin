@@ -99,7 +99,7 @@ class _LocationSearchState extends State<LocationSearch> {
                       fontFamily: 'Sans-serif',
                       fontWeight: FontWeight.w700,
                       fontSize: 24),
-                  child: Text("Address")),
+                  child: Text("Location")),
             )
           ],
         ),
@@ -375,24 +375,24 @@ class _LocationSearchState extends State<LocationSearch> {
                 //   ///Show only specific countries using country filter
                 //   // countryFilter: ["United States", "Canada", "Mexico"],
                 // ),
-          //       CSCPicker(
-          //         layout: Layout.vertical,
-          //         //flagState: CountryFlag.DISABLE,
-          //         onCountryChanged: (country) {
-          //           print(country);
-          //         },
-          //         onStateChanged: (state) {
-          //           print(state);
-          //         },
-          //         onCityChanged: (city) {
-          //           print(city);
-          //         },
-          //         /* countryDropdownLabel: "*Country",
-          // stateDropdownLabel: "*State",
-          // cityDropdownLabel: "*City",*/
-          //         //dropdownDialogRadius: 30,
-          //         //searchBarRadius: 30,
-          //       ),
+                //       CSCPicker(
+                //         layout: Layout.vertical,
+                //         //flagState: CountryFlag.DISABLE,
+                //         onCountryChanged: (country) {
+                //           print(country);
+                //         },
+                //         onStateChanged: (state) {
+                //           print(state);
+                //         },
+                //         onCityChanged: (city) {
+                //           print(city);
+                //         },
+                //         /* countryDropdownLabel: "*Country",
+                // stateDropdownLabel: "*State",
+                // cityDropdownLabel: "*City",*/
+                //         //dropdownDialogRadius: 30,
+                //         //searchBarRadius: 30,
+                //       ),
 
                 ///print newly selected country state and city in Text Widget
                 TextButton(
@@ -402,7 +402,7 @@ class _LocationSearchState extends State<LocationSearch> {
                       });
                     },
                     child: Text("Print Data")),
-                Text(address)
+                Text(address),
               ],
             )),
       ),

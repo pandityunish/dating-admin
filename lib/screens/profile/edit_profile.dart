@@ -208,10 +208,11 @@ class _EditProfileState extends State<EditProfile> {
               ),
               GestureDetector(
                 onLongPress: () {
-                                Clipboard.setData(ClipboardData(text: body))
-    .then((value) { //only if ->
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Copied successfully")));
-    });
+                  Clipboard.setData(ClipboardData(text: body)).then((value) {
+                    //only if ->
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Copied successfully")));
+                  });
                 },
                 child: BigText(
                   text: '$body',
@@ -274,27 +275,38 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                         child: Column(children: [
-                          const Align(
-                            alignment: FractionalOffset(0.25, 0.6),
-                            child: Text(
-                              "Manage Your Photos",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 3),
-                            child: BigText(
-                              text:
-                                  "Your Added Photo May Take 48 Hours To Verify",
-                              size: 14,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 28),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Manage Your Profile",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 3),
+                                  child: BigText(
+                                    text:
+                                        "Your Changes May Take 72 Hours To Visible",
+                                    size: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("Blur Pic"),
+                              Text("Hide Pic"),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Padding(
@@ -438,14 +450,19 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           Container(
                             child: Column(children: [
-                              Align(
-                                alignment: FractionalOffset(0.15, 0.6),
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 30, bottom: 15),
-                                  child: BigText(
-                                    text: "About Me",
-                                    size: 18,
-                                    fontWeight: FontWeight.w700,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 28),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.only(top: 30, bottom: 15),
+                                    child: BigText(
+                                      text: "About Me",
+                                      size: 18,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -508,14 +525,19 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           Container(
                             child: Column(children: [
-                              Align(
-                                alignment: FractionalOffset(0.15, 0.6),
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 30, bottom: 15),
-                                  child: BigText(
-                                    text: "My Preference",
-                                    size: 18,
-                                    fontWeight: FontWeight.w700,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 28),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.only(top: 30, bottom: 15),
+                                    child: BigText(
+                                      text: "My Preference",
+                                      size: 18,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -575,14 +597,18 @@ class _EditProfileState extends State<EditProfile> {
                             ]),
                           ),
                           Container(
-                            child: Align(
-                              alignment: FractionalOffset(0.15, 0.6),
-                              child: Container(
-                                margin: EdgeInsets.only(top: 15, bottom: 15),
-                                child: BigText(
-                                  text: "Personal Details",
-                                  size: 18,
-                                  fontWeight: FontWeight.w700,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 28),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 15, bottom: 15),
+                                  child: BigText(
+                                    text: "Personal Details",
+                                    size: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
@@ -940,8 +966,8 @@ class _EditProfileState extends State<EditProfile> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.1),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 28),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -950,7 +976,7 @@ class _EditProfileState extends State<EditProfile> {
                                             alignment: Alignment.centerLeft,
                                             // alignment: FractionalOffset(0.25, 0.6),
                                             child: Text(
-                                              "Manage Your Photos",
+                                              "Manage Your Profile",
                                               style: TextStyle(
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.w700),
@@ -960,7 +986,7 @@ class _EditProfileState extends State<EditProfile> {
                                             margin: EdgeInsets.only(top: 3),
                                             child: BigText(
                                               text:
-                                                  "Your Added Photo May Take 48 Hours To Approve",
+                                                  "Your Changes May Take 72 Hours To Visible",
                                               size: 14,
                                             ),
                                           ),
@@ -970,7 +996,7 @@ class _EditProfileState extends State<EditProfile> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text("Blur Pic"),
+                                        Text("Hide Pic"),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: Padding(
@@ -1201,16 +1227,19 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                     Container(
                                       child: Column(children: [
-                                        Align(
-                                          alignment:
-                                              FractionalOffset(0.15, 0.6),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                top: 30, bottom: 15),
-                                            child: BigText(
-                                              text: "About Me",
-                                              size: 18,
-                                              fontWeight: FontWeight.w700,
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 28),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 30, bottom: 15),
+                                              child: BigText(
+                                                text: "About Me",
+                                                size: 18,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1284,16 +1313,19 @@ class _EditProfileState extends State<EditProfile> {
                                     ),
                                     Container(
                                       child: Column(children: [
-                                        Align(
-                                          alignment:
-                                              FractionalOffset(0.15, 0.6),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                top: 30, bottom: 15),
-                                            child: BigText(
-                                              text: "My Preference",
-                                              size: 18,
-                                              fontWeight: FontWeight.w700,
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 28),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 30, bottom: 15),
+                                              child: BigText(
+                                                text: "My Preference",
+                                                size: 18,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1363,15 +1395,19 @@ class _EditProfileState extends State<EditProfile> {
                                       ]),
                                     ),
                                     Container(
-                                      child: Align(
-                                        alignment: FractionalOffset(0.15, 0.6),
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: 15, bottom: 15),
-                                          child: BigText(
-                                            text: "Personal Details",
-                                            size: 18,
-                                            fontWeight: FontWeight.w700,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 28),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 15, bottom: 15),
+                                            child: BigText(
+                                              text: "Personal Details",
+                                              size: 18,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -1434,7 +1470,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     .contains("All")
                                             ? emailContainer(
                                                 'images/icons/email.png',
-                                                "Email",
+                                                "Email ID",
                                                 "${widget.userSave.email}",
                                                 () => {
                                                       Navigator.push(
@@ -1757,14 +1793,15 @@ class _EditProfileState extends State<EditProfile> {
                           Container(
                             child: Column(children: [
                               Padding(
-                                padding: EdgeInsets.only(left: Get.width * 0.1),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 28),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "Manage Your Photos",
+                                        "Manage Your Profile",
                                         style: TextStyle(
                                             fontSize: 24,
                                             fontWeight: FontWeight.w700),
@@ -1774,7 +1811,7 @@ class _EditProfileState extends State<EditProfile> {
                                       margin: EdgeInsets.only(top: 3),
                                       child: BigText(
                                         text:
-                                            "Your Added Photo May Take 48 Hours To Verify",
+                                            "Your Changes May Take 72 Hours To Visible",
                                         size: 14,
                                       ),
                                     ),
@@ -1784,7 +1821,7 @@ class _EditProfileState extends State<EditProfile> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("Blur Pic"),
+                                  Text("Hide Pic"),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Padding(
@@ -2017,15 +2054,19 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               Container(
                                 child: Column(children: [
-                                  Align(
-                                    alignment: FractionalOffset(0.15, 0.6),
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.only(top: 30, bottom: 15),
-                                      child: BigText(
-                                        text: "About Me",
-                                        size: 18,
-                                        fontWeight: FontWeight.w700,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 28),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 30, bottom: 15),
+                                        child: BigText(
+                                          text: "About Me",
+                                          size: 18,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -2093,15 +2134,19 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               Container(
                                 child: Column(children: [
-                                  Align(
-                                    alignment: FractionalOffset(0.15, 0.6),
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.only(top: 30, bottom: 15),
-                                      child: BigText(
-                                        text: "My Preference",
-                                        size: 18,
-                                        fontWeight: FontWeight.w700,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 28),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 30, bottom: 15),
+                                        child: BigText(
+                                          text: "My Preference",
+                                          size: 18,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -2164,15 +2209,19 @@ class _EditProfileState extends State<EditProfile> {
                                 ]),
                               ),
                               Container(
-                                child: Align(
-                                  alignment: FractionalOffset(0.15, 0.6),
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.only(top: 15, bottom: 15),
-                                    child: BigText(
-                                      text: "Personal Details",
-                                      size: 18,
-                                      fontWeight: FontWeight.w700,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 28),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      margin:
+                                          EdgeInsets.only(top: 15, bottom: 15),
+                                      child: BigText(
+                                        text: "Personal Details",
+                                        size: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -2229,7 +2278,7 @@ class _EditProfileState extends State<EditProfile> {
                                               .contains("All")
                                       ? emailContainer(
                                           'images/icons/email.png',
-                                          "Email",
+                                          "Email ID",
                                           "${editdata[index].userid}",
                                           () => {
                                                 Navigator.push(
@@ -2492,6 +2541,7 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                 ),
                               ),
+
                               Text(
                                 "${editdata[index].editname}",
                                 style: const TextStyle(

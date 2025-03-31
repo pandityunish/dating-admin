@@ -83,7 +83,6 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
       try {
         croppedFile = await ImageCropper().cropImage(
           sourcePath: _image.path,
-         
           uiSettings: [
             AndroidUiSettings(
                 toolbarTitle: 'Free Rishtey Wala',
@@ -204,7 +203,6 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
     try {
       croppedFile = await ImageCropper().cropImage(
         sourcePath: xFile!.path,
-      
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: 'Free Rishtey Wala',
@@ -298,35 +296,38 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
           return (!imagepicked)
               ? (imageCount <= num)
                   ? Container(
-                      height: 90,
-                      width: 90,
+                      height: 100,
+                      width: 100,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       child: (imageUrl == "")
                           ? Container(
-                              height: 90,
-                              width: 90,
+                              height: 100,
+                              width: 100,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10)),
                               child: FloatingActionButton(
                                 heroTag: "btn$num",
                                 onPressed: onPressed,
-                                child: const Icon(Icons.add),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.grey,
+                                ),
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
-                                shape: BeveledRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                             )
                           : Container(
-                              height: 90,
-                              width: 90,
+                              height: 100,
+                              width: 100,
                               child: Stack(
                                 children: [
                                   Container(
-                                    height: 90,
-                                    width: 90,
+                                    height: 100,
+                                    width: 100,
                                     // child: Image.network(url!, fit: BoxFit.cover)
                                     decoration: new BoxDecoration(
                                       image: new DecorationImage(
@@ -358,7 +359,7 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                                           onPressed2(url);
                                         },
                                         child: Icon(
-                                          Icons.edit_square,
+                                          Icons.abc,
                                           color: Colors.white,
                                           shadows: <Shadow>[
                                             Shadow(
@@ -368,17 +369,9 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: deleteImg,
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                          shadows: <Shadow>[
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 15.0)
-                                          ],
-                                        ),
-                                      )
+                                          onTap: deleteImg,
+                                          child: Image.asset(
+                                              "images/icons/delete.png"))
                                     ],
                                   )
                                 ],
@@ -386,13 +379,13 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                             ),
                     )
                   : Container(
-                      height: 90,
-                      width: 90,
+                      height: 100,
+                      width: 100,
                       child: Stack(
                         children: [
                           Container(
-                            height: 90,
-                            width: 90,
+                            height: 100,
+                            width: 100,
                             // child: Image.network(url!, fit: BoxFit.cover)
                             decoration: new BoxDecoration(
                               image: new DecorationImage(
@@ -415,7 +408,8 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -423,28 +417,12 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                                   onTap: () {
                                     onPressed2(url);
                                   },
-                                  child: Icon(
-                                    Icons.edit_square,
-                                    color: Colors.white,
-                                    size: 18,
-                                    shadows: <Shadow>[
-                                      Shadow(
-                                          color: Colors.black, blurRadius: 15.0)
-                                    ],
-                                  ),
+                                  child: Image.asset("images/icons/edit.png"),
                                 ),
                                 GestureDetector(
-                                  onTap: deleteImg,
-                                  child: Icon(
-                                    Icons.delete,
-                                     size: 18,
-                                    color: Colors.white,
-                                    shadows: <Shadow>[
-                                      Shadow(
-                                          color: Colors.black, blurRadius: 15.0)
-                                    ],
-                                  ),
-                                )
+                                    onTap: deleteImg,
+                                    child:
+                                        Image.asset("images/icons/delete.png"))
                               ],
                             ),
                           )
@@ -508,31 +486,34 @@ class _CustomImageContainer1State extends State<CustomImageContainer1> {
           return (!imagepicked)
               ? (imageCount <= num)
                   ? Container(
-                      height: 75,
-                      width: 75,
+                      height: 100,
+                      width: 100,
                       child: (imageUrl == "")
                           ? SizedBox(
-                              height: 75,
-                              width: 75,
+                              height: 100,
+                              width: 100,
                               child: FloatingActionButton(
                                 heroTag: "btn$num",
                                 onPressed: () {},
-                                child: const Icon(Icons.add),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.grey,
+                                ),
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
-                                shape: BeveledRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                             )
                           : Container(
-                              height: 75,
-                              width: 75,
+                              height: 100,
+                              width: 100,
                               child: Stack(
                                 children: [
                                   Container(
-                                    height: 75,
-                                    width: 75,
+                                    height: 100,
+                                    width: 100,
                                     // child: Image.network(url!, fit: BoxFit.cover)
                                     decoration: new BoxDecoration(
                                       image: new DecorationImage(
@@ -560,29 +541,13 @@ class _CustomImageContainer1State extends State<CustomImageContainer1> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       GestureDetector(
-                                        onTap: () {},
-                                        child: Icon(
-                                          Icons.edit_square,
-                                          color: Colors.white,
-                                          shadows: <Shadow>[
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 15.0)
-                                          ],
-                                        ),
-                                      ),
+                                          onTap: () {},
+                                          child: Image.asset(
+                                              "images/icons/edit.png")),
                                       GestureDetector(
-                                        onTap: () {},
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                          shadows: <Shadow>[
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 15.0)
-                                          ],
-                                        ),
-                                      )
+                                          onTap: () {},
+                                          child: Image.asset(
+                                              "images/icons/delete.png"))
                                     ],
                                   )
                                 ],
@@ -590,13 +555,13 @@ class _CustomImageContainer1State extends State<CustomImageContainer1> {
                             ),
                     )
                   : Container(
-                      height: 75,
-                      width: 75,
+                      height: 100,
+                      width: 100,
                       child: Stack(
                         children: [
                           Container(
-                            height: 75,
-                            width: 75,
+                            height: 100,
+                            width: 100,
                             // child: Image.network(url!, fit: BoxFit.cover)
                             decoration: new BoxDecoration(
                               image: new DecorationImage(
@@ -620,30 +585,7 @@ class _CustomImageContainer1State extends State<CustomImageContainer1> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.edit_square,
-                                  color: Colors.white,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                        color: Colors.black, blurRadius: 15.0)
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                        color: Colors.black, blurRadius: 15.0)
-                                  ],
-                                ),
-                              )
-                            ],
+                            children: [],
                           )
                         ],
                       ),
