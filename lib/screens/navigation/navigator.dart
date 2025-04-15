@@ -873,7 +873,13 @@ class _MyProfileState extends State<MyProfile> {
                                                   element.name ==
                                                   widget.userSave.name)
                                               .isEmpty
-                                      ? Text("")
+                                      ? Text(
+                                          "Not Use",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                        )
                                       : Text(
                                           "Use (${searchhistory.where((element) => element.name == widget.userSave.name).isEmpty ? "" : searchhistory.where((element) => element.name == widget.userSave.name).length})",
                                           style: TextStyle(
@@ -978,7 +984,11 @@ class _MyProfileState extends State<MyProfile> {
                                                   element.name ==
                                                       '${widget.userSave.name} reset')
                                               .isEmpty
-                                      ? Text("")
+                                      ? Text("Not Saved",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold))
                                       : Text(
                                           "Use (${history_save_pref.where((element) => element.name == widget.userSave.name || element.name == '${widget.userSave.name} reset').length})",
                                           style: TextStyle(
@@ -1336,7 +1346,6 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ],
                         ),
-
                         SizedBox(
                           height: 15,
                         ),
@@ -1882,7 +1891,7 @@ class _MyProfileState extends State<MyProfile> {
                                                 return const AlertDialog(
                                                   content: SnackBarContent(
                                                     error_text:
-                                                        "Please Approve The User First",
+                                                        "Please Approve User First",
                                                     appreciation: "",
                                                     icon: Icons.error,
                                                     sec: 3,
@@ -2187,6 +2196,35 @@ class _MyProfileState extends State<MyProfile> {
                                                             onPressed: () async {
                                                               Navigator.pop(
                                                                   context);
+                                                              AdminService().addtosendlink(
+                                                                  email: widget
+                                                                      .userSave
+                                                                      .email,
+                                                                  value:
+                                                                      "OTP Verify");
+                                                              await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return const AlertDialog(
+                                                                      content:
+                                                                          SnackBarContent(
+                                                                        appreciation:
+                                                                            "",
+                                                                        error_text:
+                                                                            "OTP sent successfully",
+                                                                        icon: Icons
+                                                                            .check_circle,
+                                                                        sec: 2,
+                                                                      ),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      elevation:
+                                                                          0,
+                                                                    );
+                                                                  });
                                                               // logout(context: context);
                                                             },
                                                             child: Text("Yes", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
@@ -2259,21 +2297,19 @@ class _MyProfileState extends State<MyProfile> {
                                     )),
                                 DropdownMenuItem(
                                     value: '6',
-                                    enabled: false,
                                     child: GestureDetector(
                                       onTap: () {
-                                        if (listofadminpermissions!
-                                                .contains("Can Send Link") ||
-                                            listofadminpermissions!
-                                                .contains("All")) {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SendLink(
-                                                        newUserModel:
-                                                            widget.userSave,
-                                                      )));
-                                        }
+                                        // if (listofadminpermissions!
+                                        //         .contains("Can Send Link") ||
+                                        //     listofadminpermissions!
+                                        //         .contains("All")) {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) => SendLink(
+                                                      newUserModel:
+                                                          widget.userSave,
+                                                    )));
+                                        // }
                                       },
                                       child: Row(
                                         mainAxisAlignment:
@@ -2348,6 +2384,8 @@ class _MyProfileState extends State<MyProfile> {
                                               builder: (context) =>
                                                   AudioClipScreen(
                                                 isBulk: "false",
+                                                newUserModel: widget.userSave,
+                                                uid: widget.userSave.id,
                                               ),
                                             ));
                                       },
@@ -2527,7 +2565,8 @@ class _MyProfileState extends State<MyProfile> {
                                 // ),
                                 // const LogoText(),
 
-                                const Text("Log Out \n You Want to Log Out User?",
+                                const Text(
+                                    "Log Out \n You Want to Log Out User?",
                                     textAlign: TextAlign.center),
                                 const SizedBox(
                                   height: 23,

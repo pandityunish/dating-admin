@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:matrimony_admin/screens/data_collection/smoke.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:matrimony_admin/screens/profile/location_searching.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
@@ -53,7 +55,7 @@ class _SearchState extends State<Search> {
   var startValue = 0.0;
   var endValue = 0.0;
   bool searchingbool = false;
-bool ison=true;
+  bool ison = true;
   late String profileSearch = "";
   late String EmailSearch = "";
   late String NameSearch = "";
@@ -70,12 +72,13 @@ bool ison=true;
     setState(() {
       isLoading = true;
     });
-     final response = await SearchProfile().getAdminSearch(currentPage,10);
-       totalPages = response['totalPages']; 
-     List<AdminSearchModel> searches=(response['data'] as List)
-          .map((item) => AdminSearchModel.fromJson(jsonEncode(item)))
-          .toList();
-           AdminSearchModel newsearch = AdminSearchModel(
+    log("current page $currentPage");
+    final response = await SearchProfile().getAdminSearch(currentPage, 10);
+    totalPages = response['totalPages'];
+    List<AdminSearchModel> searches = (response['data'] as List)
+        .map((item) => AdminSearchModel.fromJson(jsonEncode(item)))
+        .toList();
+    AdminSearchModel newsearch = AdminSearchModel(
       adminname: "hero324",
       searchemailprofile: "",
       searchnameprofile: "",
@@ -98,21 +101,28 @@ bool ison=true;
       searchidprofile: "",
       smoke: "[]",
     );
- setState(() {
-         searches.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
-    allsearches = [newsearch, ...searches];
-        isLoading = false;
-      });
-   
-  
- 
+    setState(() {
+      searches.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+      allsearches = [newsearch, ...searches];
+      isLoading = false;
+    });
   }
- void _loadMoreData() async {
-    if (currentPage < totalPages && !isLoading) {
-      currentPage++;
-       getallsearches();
-    }
+
+  void _loadMoreData() async {
+    // if ( !isLoading) {
+    log("isloading ${isLoading}");
+    currentPage++;
+    //  getallsearches();
+    final response = await SearchProfile().getAdminSearch(currentPage, 10);
+    totalPages = response['totalPages'];
+    List<AdminSearchModel> searches = (response['data'] as List)
+        .map((item) => AdminSearchModel.fromJson(jsonEncode(item)))
+        .toList();
+    allsearches.addAll(searches);
+    setState(() {});
+    // }
   }
+
   nameContainer2(icon, String head, Function tap, List<String> val) {
     // onTap = AgeDialog();
     return Row(
@@ -949,1677 +959,801 @@ bool ison=true;
               ],
             ),
           ),
-          body:isLoading && allsearches.isEmpty // Show loading indicator only initially
-          ? Center(child: CircularProgressIndicator())
-          : allsearches.isEmpty
-              ? Center(child: Text("No data available.")): SafeArea(
-                  child: PageView.builder(
-                      controller: _pageController,
-                   onPageChanged: (index) {
-                    if (index == allsearches.length - 4) {
-                      _loadMoreData(); // Load more when reaching the last item
-                    }
-                  },
-                      itemCount: allsearches.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        List<String> result = [];
-                        print("*******");
-                        print(allsearches[index].location == "  ");
-                        if (allsearches[index].height == "[]") {
-                          print("object");
-                        } else {
-                          List<String> elements = allsearches[index]
-                              .height!
-                              .substring(
-                                  1, allsearches[index].height!.length - 1)
-                              .split(',');
+          body:
+              isLoading &&
+                      allsearches
+                          .isEmpty // Show loading indicator only initially
+                  ? Center(child: CircularProgressIndicator())
+                  : allsearches.isEmpty
+                      ? Center(child: Text("No data available."))
+                      : SafeArea(
+                          child: PageView.builder(
+                              controller: _pageController,
+                              onPageChanged: (index) {
+                                log("object ${index}");
 
-                          // Trim whitespace and convert elements to strings
-                          result = elements
-                              .map((element) => element.trim())
-                              .toList();
-                          print(result);
-                        }
+                                if (index == allsearches.length - 3) {
+                                  log("selec object ${index}");
+                                  _loadMoreData(); // Load more when reaching the last item
+                                }
+                              },
+                              itemCount: allsearches.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                List<String> result = [];
+                                print("*******");
+                                print(allsearches[index].location == "  ");
+                                if (allsearches[index].height == "[]") {
+                                  print("object");
+                                } else {
+                                  List<String> elements = allsearches[index]
+                                      .height!
+                                      .substring(1,
+                                          allsearches[index].height!.length - 1)
+                                      .split(',');
 
-                        if (allsearches[index].adminname == "hero324") {
-                          return SingleChildScrollView(
-                            child: SafeArea(
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.only(
-                                            left: 10, right: 15),
-                                        child: SingleChildScrollView(
-                                          child: Column(
+                                  // Trim whitespace and convert elements to strings
+                                  result = elements
+                                      .map((element) => element.trim())
+                                      .toList();
+                                  print(result);
+                                }
+
+                                if (allsearches[index].adminname == "hero324") {
+                                  return SingleChildScrollView(
+                                    child: SafeArea(
+                                      child: Column(
+                                        children: [
+                                          Stack(
                                             children: [
-                                              SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Profile",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 6,
-                                                            ),
-                                                           
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      _searchIDController,
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Profile Id',
-                                                                          hintStyle: TextStyle(fontSize: 12),
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchIDController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchIDController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchIDController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Profile ID",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByProfile();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Email",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      _searchEmailController,
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Email Id',
-                                                                          hintStyle: TextStyle(fontSize: 12),
-
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchEmailController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchEmailController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchEmailController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Email ID",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByEmail();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      //+9155556580544
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Contact No",
-
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      _searchphoneController,
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Contact Number',
-                                                                          hintStyle: TextStyle(fontSize: 12),
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchphoneController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchphoneController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchphoneController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Phone No.",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByPhone();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Name",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      _searchNameController,
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Name',
-                                                                          hintStyle: TextStyle(fontSize: 12),
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchNameController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchNameController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchNameController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Name",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByName();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Surname",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      _searchSurnameController,
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Suname',
-                                                                          hintStyle: TextStyle(fontSize: 12),
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchSurnameController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                print(userSave
-                                                                    .name);
-                                                                if (_searchSurnameController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchSurnameController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Surname",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      // 9801564490 susan manandar new baneshor ktm
-                                                                      searchprofile: _searchIDController.text,
-                                                                      email: userSave.email!,
-                                                                      name: userSave.name!,
-                                                                      searchemailprofile: _searchEmailController.text,
-                                                                      searchnameprofile: _searchNameController.text,
-                                                                      searchphoneprofile: _searchphoneController.text,
-                                                                      searchsurprofile: _searchSurnameController.text,
-                                                                      searchDistance: _currentSliderValue.toString(),
-                                                                      age: svp.AgeList.toString(),
-                                                                      religion: svp.ReligionList.toString(),
-                                                                      kundalidosh: svp.KundaliDoshList.toString(),
-                                                                      marital_status: svp.MaritalStatusList.toString(),
-                                                                      diet: svp.dietList.toString(),
-                                                                      smoke: svp.SmokeList.toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchBySurname();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )),
-
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 10),
-                                                    child: Text(
-                                                        "Search By Distance",
-                                                        style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none,
-                                                            color: main_color,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'Sans-serif')),
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 10),
-                                                    child: Text(
-                                                      "${_currentSliderValue} Km",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 10),
-                                                    child: Text(
-                                                      "Within",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 10,),
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text("0 km",style: TextStyle(color: main_color),),
-                                                    Text("200 km",style: TextStyle(color: main_color),)
-                                                  ],
-                                                ),
-                                              ),
-                                              Column(
-                                                children: [
-                                                  SliderTheme(
-                                                      data: SliderTheme.of(
-                                                              context)
-                                                          .copyWith(
-                                                        valueIndicatorColor: Colors
-                                                            .black, // This is what you are asking for
-                                                        // Custom Gray Color
-                                                      ),
-                                                      child: RangeSlider(
-                                                        activeColor: main_color,
-                                                        values:
-                                                            _currentRangeValues,
-                                                        max: 200,
-                                                        divisions: 10,
-                                                        onChanged: (forIos)
-                                                            ? (RangeValues
-                                                                values) {
-                                                                if (!mounted)
-                                                                  return;
-
-                                                                // Enforce a minimum range of 20
-                                                                if ((values.end -
-                                                                        values
-                                                                            .start) >=
-                                                                    20) {
-                                                                  setState(() {
-                                                                    _currentRangeValues =
-                                                                        values;
-                                                                  });
-                                                                } else {
-                                                                  setState(() {
-                                                                    _currentRangeValues =
-                                                                        RangeValues(
-                                                                      values
-                                                                          .start,
-                                                                      values.start + 20 >
-                                                                              200
-                                                                          ? 200
-                                                                          : values.start +
-                                                                              20,
-                                                                    );
-                                                                  });
-                                                                }
-                                                              }
-                                                            : null,
-                                                        labels: RangeLabels(
-                                                          _currentRangeValues
-                                                              .start
-                                                              .round()
-                                                              .toString(),
-                                                          _currentRangeValues
-                                                              .end
-                                                              .round()
-                                                              .toString(),
-                                                        ),
-                                                      )),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 5),
-                                                    child: 
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                         Container(
-                    height: 35,
-                    width: 55,
-                    decoration: BoxDecoration(
-                    
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Track
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          decoration: BoxDecoration(
-                            color: ison ?Colors.black12: main_color ,
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          width: 55,
-                          height: 28,
-                        ),
-                        // Thumb with text
-                        Align(
-                          alignment: ison
-                              ? Alignment.centerLeft:Alignment.centerRight
-                               ,
-                          child: GestureDetector(
-                            onTap: () {
-                              ison=!ison;
-                                       setState(() =>
-                                                                    forIos =
-                                                                        !forIos);
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              height: 20,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                ison ? "Off" : "On",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                                                        // Container(
-                                                        //   height: 30,
-                                                        //   width: 55,
-                                                        //   decoration:
-                                                        //       BoxDecoration(
-                                                        //     border: Border.all(
-                                                        //         color: Colors
-                                                        //             .black12),
-                                                        //     borderRadius:
-                                                        //         BorderRadius
-                                                        //             .circular(
-                                                        //                 30.0),
-                                                        //   ),
-                                                        //   child:
-                                                        //       CupertinoSwitch(
-                                                        //     // overrides the default green color of the track
-                                                        //     activeColor:
-                                                        //         Colors.white,
-                                                        //     // color of the round icon, which moves from right to left
-                                                        //     thumbColor: forIos
-                                                        //         ? main_color
-                                                        //         : Colors
-                                                        //             .black12,
-                                                        //     // when the switch is off
-                                                        //     trackColor: forIos
-                                                        //         ? Colors.white
-                                                        //         : Colors
-                                                        //             .black12,
-                                                        //     // boolean variable value
-                                                        //     value: forIos,
-                                                        //     // changes the state of the switch
-                                                        //     onChanged: (value) =>
-                                                        //         setState(() =>
-                                                        //             forIos =
-                                                        //                 value),
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 10),
-                                                child: SizedBox(
-                                                  width: Get.width,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      IconButton(
-                                                          icon: Icon(Icons
-                                                              .arrow_forward_ios),
-                                                          onPressed: () => {
-                                                                _pageController
-                                                                    .nextPage(
-                                                                  duration: Duration(
-                                                                      milliseconds:
-                                                                          500),
-                                                                  curve: Curves
-                                                                      .easeInOut,
-                                                                )
-                                                              }),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
                                               Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Search By Category",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Male",
-                                                      style: const TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                    Container(
-                                                      height: 30,
-                                                      width: 55,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.black12),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30.0),
-                                                      ),
-                                                      child: CupertinoSwitch(
-                                                        // overrides the default green color of the track
-                                                        activeColor:
-                                                            Colors.white,
-                                                        // color of the round icon, which moves from right to left
-                                                        thumbColor: forIos2
-                                                            ? main_color
-                                                            : Colors.black12,
-                                                        // when the switch is off
-                                                        trackColor: forIos2
-                                                            ? Colors.white
-                                                            : Colors.black12,
-                                                        // boolean variable value
-                                                        value: forIos2,
-                                                        // changes the state of the switch
-                                                        onChanged: (value) =>
-                                                            setState(() =>
-                                                                forIos2 =
-                                                                    value),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "Female",
-                                                      style: const TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              nameContainer2(
-                                                  'images/icons/calender.png',
-                                                  "Age",
-                                                  functions().AgeDialog,
-                                                  svp.AgeList),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/religion.png',
-                                                  "Religion",
-                                                  svp.ReligionList,
-                                                  sdl.Religion),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              (userSave.religion == "Hindu")
-                                                  ? nameContainer(
-                                                      'images/icons/kundli.png',
-                                                      "Kundli Dosh",
-                                                      svp.KundaliDoshList,
-                                                      sdl.KundaliDosh)
-                                                  : Container(),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/marital_status.png',
-                                                  "Marital Status",
-                                                  svp.MaritalStatusList,
-                                                  sdl.MaritalStatus),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/food.png',
-                                                  "Diet",
-                                                  svp.dietList,
-                                                  sdl.Diet),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/smoke.png',
-                                                  "Smoke",
-                                                  svp.SmokeList,
-                                                  sdl.Smoke),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/drink.png',
-                                                  "Drink",
-                                                  svp.DrinkList,
-                                                  sdl.Drink),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/disability.png',
-                                                  "Disability With Person",
-                                                  svp.DisabilityList,
-                                                  sdl.Disability),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainerHeight(
-                                                  'images/icons/height.png',
-                                                  "Height",
-                                                  functions().HeightDialog,
-                                                  svp.HeightList,
-                                                  sdl.Height),
-                                              // HeightList, sdl.Height),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/education.png',
-                                                  "Education",
-                                                  svp.EducationList,
-                                                  sdl.Education),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/profession_suitcase.png',
-                                                  "Profession",
-                                                  svp.ProfessionList,
-                                                  sdl.Profession),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer(
-                                                  'images/icons/hand_rupee.png',
-                                                  "Income",
-                                                  svp.IncomeList,
-                                                  sdl.Income),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer3(
-                                                  'images/icons/location.png',
-                                                  "Location",
-                                                  functions().LocationDialog,
-                                                  svp.LocatioList),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              // nameContainer2(
-                                              //     'images/icons/location.png',
-                                              //     "Location",
-                                              //     functions().LocationDialog,
-                                              //     svp.LocatioList),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      (searchingbool)
-                                          ? Container(
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Center(
-                                                      child: CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                      Color>(
-                                                                  main_color))),
-                                                ],
-                                              ),
-                                            )
-                                          : Container()
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 300,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          shadowColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.black),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            //side: BorderSide(color: Colors.black)
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.white)),
-                                      child: const Text(
-                                        "Search",
-                                        style: TextStyle(
-                                          fontFamily: 'Serif',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        SearchProfile().addtosearchprofile(
-                                            searchprofile:
-                                                _searchIDController.text,
-                                            email: userSave.email!,
-                                            name: userSave.name!,
-                                            searchemailprofile:
-                                                _searchEmailController.text,
-                                            searchnameprofile:
-                                                _searchNameController.text,
-                                            searchphoneprofile:
-                                                _searchphoneController.text,
-                                            searchsurprofile:
-                                                _searchSurnameController.text,
-                                            searchDistance:
-                                                _currentSliderValue.toString(),
-                                            age: svp.AgeList.toString(),
-                                            religion:
-                                                svp.ReligionList.toString(),
-                                            kundalidosh:
-                                                svp.KundaliDoshList.toString(),
-                                            marital_status: svp
-                                                .MaritalStatusList.toString(),
-                                            diet: svp.dietList.toString(),
-                                            smoke: svp.SmokeList.toString(),
-                                            drink: svp.DrinkList.toString(),
-                                            disability:
-                                                svp.DisabilityList.toString(),
-                                            height: svp.HeightList.toString(),
-                                            education:
-                                                svp.EducationList.toString(),
-                                            profession:
-                                                svp.ProfessionList.toString(),
-                                            income: svp.IncomeList.toString(),
-                                            location:
-                                                "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                        getProfileSearch();
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 300,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          shadowColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.black),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            //side: BorderSide(color: Colors.black)
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.white)),
-                                      child: const Text(
-                                        "Reset",
-                                        style: TextStyle(
-                                          fontFamily: 'Serif',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        SearchProfile().addtoadminnotification(
-                                            userid: userSave.uid!,
-                                            useremail: userSave.email!,
-                                            userimage:
-                                                userSave.imageUrls!.isEmpty
-                                                    ? ""
-                                                    : userSave.imageUrls![0]!,
-                                            title:
-                                                "${userSave.displayName} RESET ADMIN SEARCH PROFILE BAR ",
-                                            email: userSave.email!,
-                                            subtitle: "");
-                                        _searchEmailController.clear();
-                                        _searchIDController.clear();
-                                        _searchEmailController.clear();
-                                        _searchNameController.clear();
-                                        _searchSurnameController.clear();
-
-                                        svp.AgeList.clear();
-                                        svp.DisabilityList.clear();
-                                        svp.DrinkList.clear();
-                                        svp.EducationList.clear();
-                                        svp.HeightList.clear();
-                                        svp.IncomeList.clear();
-                                        svp.KundaliDoshList.clear();
-                                        svp.LocatioList[0].clear();
-                                        svp.LocatioList[1].clear();
-                                        svp.LocatioList[2].clear();
-                                        svp.MaritalStatusList.clear();
-                                        svp.ProfessionList.clear();
-                                        svp.ReligionList.clear();
-                                        svp.SmokeList.clear();
-                                        svp.dietList.clear();
-                                        setState(() {});
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 30),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else {
-                          return SingleChildScrollView(
-                            child: SafeArea(
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.only(
-                                            left: 10, right: 15),
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                padding: EdgeInsets.only(
+                                                    left: 10, right: 15),
+                                                child: SingleChildScrollView(
                                                   child: Column(
                                                     children: [
-                                                      
-                                                       SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Profile",
+                                                      SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Profile",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 25,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              _searchIDController,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Profile Id',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchIDController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        // if (_searchIDController
+                                                                        //             .text ==
+                                                                        //         null ||
+                                                                        //     _searchIDController
+                                                                        //             .text ==
+                                                                        //         "") {
+                                                                        //   showDialog(
+                                                                        //       context:
+                                                                        //           context,
+                                                                        //       builder:
+                                                                        //           (context) {
+                                                                        //         // Future.delayed(
+                                                                        //         //     const Duration(seconds: 1), () {
+                                                                        //         //   Navigator.of(context).pop(true);
+                                                                        //         // });
+                                                                        //         return const AlertDialog(
+                                                                        //           content:
+                                                                        //               SnackBarContent(
+                                                                        //             error_text:
+                                                                        //                 "Please Enter Profile ID",
+                                                                        //             appreciation:
+                                                                        //                 "",
+                                                                        //             icon:
+                                                                        //                 Icons.error,
+                                                                        //             sec:
+                                                                        //                 2,
+                                                                        //           ),
+                                                                        //           backgroundColor:
+                                                                        //               Colors.transparent,
+                                                                        //           elevation:
+                                                                        //               0,
+                                                                        //         );
+                                                                        //       });
+                                                                        // } else {
+                                                                        // final data= await SearchProfile().addtosearchprofile(
+                                                                        //       searchprofile:
+                                                                        //           _searchIDController
+                                                                        //               .text,
+                                                                        //       email: userSave
+                                                                        //           .email!,
+                                                                        //       name: userSave
+                                                                        //           .name!,
+                                                                        //       searchemailprofile:
+                                                                        //           _searchEmailController
+                                                                        //               .text,
+                                                                        //       searchnameprofile:
+                                                                        //           _searchNameController
+                                                                        //               .text,
+                                                                        //       searchphoneprofile:
+                                                                        //           _searchphoneController
+                                                                        //               .text,
+                                                                        //       searchsurprofile:
+                                                                        //           _searchSurnameController
+                                                                        //               .text,
+                                                                        //       searchDistance:
+                                                                        //           _currentSliderValue
+                                                                        //               .toString(),
+                                                                        //       age: svp.AgeList
+                                                                        //           .toString(),
+                                                                        //       religion: svp.ReligionList
+                                                                        //           .toString(),
+                                                                        //       kundalidosh:
+                                                                        //           svp.KundaliDoshList
+                                                                        //               .toString(),
+                                                                        //       marital_status:
+                                                                        //           svp.MaritalStatusList
+                                                                        //               .toString(),
+                                                                        //       diet: svp
+                                                                        //           .dietList
+                                                                        //           .toString(),
+                                                                        //       smoke: svp.SmokeList
+                                                                        //           .toString(),
+                                                                        //       drink: svp.DrinkList.toString(),
+                                                                        //       disability: svp.DisabilityList.toString(),
+                                                                        //       height: svp.HeightList.toString(),
+                                                                        //       education: svp.EducationList.toString(),
+                                                                        //       profession: svp.ProfessionList.toString(),
+                                                                        //       income: svp.IncomeList.toString(),
+                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                        //   getProfileSearchByProfile(data);
+                                                                        // }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Email",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 25,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              _searchEmailController,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Email Id',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchEmailController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        if (_searchEmailController.text ==
+                                                                                null ||
+                                                                            _searchEmailController.text ==
+                                                                                "") {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                // Future.delayed(
+                                                                                //     const Duration(seconds: 1), () {
+                                                                                //   Navigator.of(context).pop(true);
+                                                                                // });
+                                                                                return const AlertDialog(
+                                                                                  content: SnackBarContent(
+                                                                                    error_text: "Please Enter Email ID",
+                                                                                    appreciation: "",
+                                                                                    icon: Icons.error,
+                                                                                    sec: 2,
+                                                                                  ),
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  elevation: 0,
+                                                                                );
+                                                                              });
+                                                                        } else {
+                                                                          final data = await SearchProfile().addtosearchprofile(
+                                                                              searchprofile: _searchIDController.text,
+                                                                              email: userSave.email!,
+                                                                              name: userSave.name!,
+                                                                              searchemailprofile: _searchEmailController.text,
+                                                                              searchnameprofile: _searchNameController.text,
+                                                                              searchphoneprofile: _searchphoneController.text,
+                                                                              searchsurprofile: _searchSurnameController.text,
+                                                                              searchDistance: _currentSliderValue.toString(),
+                                                                              age: svp.AgeList.toString(),
+                                                                              religion: svp.ReligionList.toString(),
+                                                                              kundalidosh: svp.KundaliDoshList.toString(),
+                                                                              marital_status: svp.MaritalStatusList.toString(),
+                                                                              diet: svp.dietList.toString(),
+                                                                              smoke: svp.SmokeList.toString(),
+                                                                              drink: svp.DrinkList.toString(),
+                                                                              disability: svp.DisabilityList.toString(),
+                                                                              height: svp.HeightList.toString(),
+                                                                              education: svp.EducationList.toString(),
+                                                                              profession: svp.ProfessionList.toString(),
+                                                                              income: svp.IncomeList.toString(),
+                                                                              location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                          getProfileSearchByEmail(
+                                                                              data);
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              //+9155556580544
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Contact No",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                   
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              _searchphoneController,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Contact Number',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchphoneController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        if (_searchphoneController.text ==
+                                                                                null ||
+                                                                            _searchphoneController.text ==
+                                                                                "") {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                // Future.delayed(
+                                                                                //     const Duration(seconds: 1), () {
+                                                                                //   Navigator.of(context).pop(true);
+                                                                                // });
+                                                                                return const AlertDialog(
+                                                                                  content: SnackBarContent(
+                                                                                    error_text: "Please Enter Phone No.",
+                                                                                    appreciation: "",
+                                                                                    icon: Icons.error,
+                                                                                    sec: 2,
+                                                                                  ),
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  elevation: 0,
+                                                                                );
+                                                                              });
+                                                                        } else {
+                                                                          final data = await SearchProfile().addtosearchprofile(
+                                                                              searchprofile: _searchIDController.text,
+                                                                              email: userSave.email!,
+                                                                              name: userSave.name!,
+                                                                              searchemailprofile: _searchEmailController.text,
+                                                                              searchnameprofile: _searchNameController.text,
+                                                                              searchphoneprofile: _searchphoneController.text,
+                                                                              searchsurprofile: _searchSurnameController.text,
+                                                                              searchDistance: _currentSliderValue.toString(),
+                                                                              age: svp.AgeList.toString(),
+                                                                              religion: svp.ReligionList.toString(),
+                                                                              kundalidosh: svp.KundaliDoshList.toString(),
+                                                                              marital_status: svp.MaritalStatusList.toString(),
+                                                                              diet: svp.dietList.toString(),
+                                                                              smoke: svp.SmokeList.toString(),
+                                                                              drink: svp.DrinkList.toString(),
+                                                                              disability: svp.DisabilityList.toString(),
+                                                                              height: svp.HeightList.toString(),
+                                                                              education: svp.EducationList.toString(),
+                                                                              profession: svp.ProfessionList.toString(),
+                                                                              income: svp.IncomeList.toString(),
+                                                                              location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                          getProfileSearchByPhone(
+                                                                              data);
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Name",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 25,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              _searchNameController,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Name',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchNameController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        if (_searchNameController.text ==
+                                                                                null ||
+                                                                            _searchNameController.text ==
+                                                                                "") {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return const AlertDialog(
+                                                                                  content: SnackBarContent(
+                                                                                    error_text: "Please Enter Name",
+                                                                                    appreciation: "",
+                                                                                    icon: Icons.error,
+                                                                                    sec: 2,
+                                                                                  ),
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  elevation: 0,
+                                                                                );
+                                                                              });
+                                                                        } else {
+                                                                          final data = await SearchProfile().addtosearchprofile(
+                                                                              searchprofile: _searchIDController.text,
+                                                                              email: userSave.email!,
+                                                                              name: userSave.name!,
+                                                                              searchemailprofile: _searchEmailController.text,
+                                                                              searchnameprofile: _searchNameController.text,
+                                                                              searchphoneprofile: _searchphoneController.text,
+                                                                              searchsurprofile: _searchSurnameController.text,
+                                                                              searchDistance: _currentSliderValue.toString(),
+                                                                              age: svp.AgeList.toString(),
+                                                                              religion: svp.ReligionList.toString(),
+                                                                              kundalidosh: svp.KundaliDoshList.toString(),
+                                                                              marital_status: svp.MaritalStatusList.toString(),
+                                                                              diet: svp.dietList.toString(),
+                                                                              smoke: svp.SmokeList.toString(),
+                                                                              drink: svp.DrinkList.toString(),
+                                                                              disability: svp.DisabilityList.toString(),
+                                                                              height: svp.HeightList.toString(),
+                                                                              education: svp.EducationList.toString(),
+                                                                              profession: svp.ProfessionList.toString(),
+                                                                              income: svp.IncomeList.toString(),
+                                                                              location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                          getProfileSearchByName(
+                                                                              data);
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Surname",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(width: 10,),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              _searchSurnameController,
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Suname',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchSurnameController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () async {
+                                                                        print(userSave
+                                                                            .name);
+                                                                        if (_searchSurnameController.text ==
+                                                                                null ||
+                                                                            _searchSurnameController.text ==
+                                                                                "") {
+                                                                          showDialog(
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return const AlertDialog(
+                                                                                  content: SnackBarContent(
+                                                                                    error_text: "Please Enter Surname",
+                                                                                    appreciation: "",
+                                                                                    icon: Icons.error,
+                                                                                    sec: 2,
+                                                                                  ),
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  elevation: 0,
+                                                                                );
+                                                                              });
+                                                                        } else {
+                                                                          final data = await SearchProfile().addtosearchprofile(
+                                                                              // 9801564490 susan manandar new baneshor ktm
+                                                                              searchprofile: _searchIDController.text,
+                                                                              email: userSave.email!,
+                                                                              name: userSave.name!,
+                                                                              searchemailprofile: _searchEmailController.text,
+                                                                              searchnameprofile: _searchNameController.text,
+                                                                              searchphoneprofile: _searchphoneController.text,
+                                                                              searchsurprofile: _searchSurnameController.text,
+                                                                              searchDistance: _currentSliderValue.toString(),
+                                                                              age: svp.AgeList.toString(),
+                                                                              religion: svp.ReligionList.toString(),
+                                                                              kundalidosh: svp.KundaliDoshList.toString(),
+                                                                              marital_status: svp.MaritalStatusList.toString(),
+                                                                              diet: svp.dietList.toString(),
+                                                                              smoke: svp.SmokeList.toString(),
+                                                                              drink: svp.DrinkList.toString(),
+                                                                              disability: svp.DisabilityList.toString(),
+                                                                              height: svp.HeightList.toString(),
+                                                                              education: svp.EducationList.toString(),
+                                                                              profession: svp.ProfessionList.toString(),
+                                                                              income: svp.IncomeList.toString(),
+                                                                              location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                          getProfileSearchBySurname(
+                                                                              data);
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )),
+
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                                "Search By Distance",
                                                                 style: TextStyle(
                                                                     decoration:
                                                                         TextDecoration
@@ -2627,1560 +1761,2155 @@ bool ison=true;
                                                                     color:
                                                                         main_color,
                                                                     fontSize:
-                                                                        14,
+                                                                        16,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400,
                                                                     fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
+                                                                        'Sans-serif')),
+                                                          ),
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 10),
+                                                            child: Text(
+                                                              "${_currentSliderValue} Km",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color:
+                                                                      main_color,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
                                                             ),
-                                                            const SizedBox(
-                                                              width: 6,
-                                                            ),
-                                                           
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                 controller: TextEditingController(
-                                                                    text: allsearches[
-                                                                            index]
-                                                                        .searchidprofile),
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Profile Id',
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchIDController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchIDController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchIDController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Profile ID",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByProfile();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
                                                       ),
                                                      
-                                                       SizedBox(
+                                                      SizedBox(
                                                         height: 10,
                                                       ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Email",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                              controller: TextEditingController(
-                                                                    text: allsearches[
-                                                                            index]
-                                                                        .searchemailprofile),
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Email Id',
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchEmailController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchEmailController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchEmailController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Email ID",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByEmail();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 10,),
-                                                       SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By phone",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                      TextEditingController(
-                                                                    text: allsearches[
-                                                                            index]
-                                                                        .searchphoneprofile),
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Phone',
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchphoneController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchphoneController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchphoneController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        // Future.delayed(
-                                                                        //     const Duration(seconds: 1), () {
-                                                                        //   Navigator.of(context).pop(true);
-                                                                        // });
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Phone No.",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByPhone();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      //+9155556580544
-                                                       const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Name",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                     TextEditingController(
-                                                                    text: allsearches[
-                                                                            index]
-                                                                        .searchnameprofile),
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Name',
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchNameController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if (_searchNameController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchNameController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Name",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      searchprofile:
-                                                                          _searchIDController
-                                                                              .text,
-                                                                      email: userSave
-                                                                          .email!,
-                                                                      name: userSave
-                                                                          .name!,
-                                                                      searchemailprofile:
-                                                                          _searchEmailController
-                                                                              .text,
-                                                                      searchnameprofile:
-                                                                          _searchNameController
-                                                                              .text,
-                                                                      searchphoneprofile:
-                                                                          _searchphoneController
-                                                                              .text,
-                                                                      searchsurprofile:
-                                                                          _searchSurnameController
-                                                                              .text,
-                                                                      searchDistance:
-                                                                          _currentSliderValue
-                                                                              .toString(),
-                                                                      age: svp.AgeList
-                                                                          .toString(),
-                                                                      religion: svp.ReligionList
-                                                                          .toString(),
-                                                                      kundalidosh:
-                                                                          svp.KundaliDoshList
-                                                                              .toString(),
-                                                                      marital_status:
-                                                                          svp.MaritalStatusList
-                                                                              .toString(),
-                                                                      diet: svp
-                                                                          .dietList
-                                                                          .toString(),
-                                                                      smoke: svp.SmokeList
-                                                                          .toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchByName();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                       const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.89,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right:
-                                                                          10),
-                                                              child: Text(
-                                                                "Search By Surname",
-                                                                style: TextStyle(
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .none,
-                                                                    color:
-                                                                        main_color,
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontFamily:
-                                                                        'Sans-serif'),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              70)),
-                                                              child: Material(
-                                                                color: Colors
-                                                                    .white,
-                                                                child:
-                                                                    TextField(
-                                                                  controller:
-                                                                     TextEditingController(
-                                                                    text: allsearches[
-                                                                            index]
-                                                                        .searchsurprofile),
-                                                                  decoration: InputDecoration(
-                                                                      contentPadding: EdgeInsets.only(
-                                                                          top:
-                                                                              5,
-                                                                          left:
-                                                                              10),
-                                                                      hintText:
-                                                                          'Enter Suname',
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide: BorderSide(
-                                                                              color:
-                                                                                  main_color)),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              30),
-                                                                          borderSide:
-                                                                              BorderSide(color: main_color))),
-                                                                  onChanged:
-                                                                      (String) {
-                                                                    profileSearch =
-                                                                        _searchSurnameController
-                                                                            .text;
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                print(userSave
-                                                                    .name);
-                                                                if (_searchSurnameController
-                                                                            .text ==
-                                                                        null ||
-                                                                    _searchSurnameController
-                                                                            .text ==
-                                                                        "") {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return const AlertDialog(
-                                                                          content:
-                                                                              SnackBarContent(
-                                                                            error_text:
-                                                                                "Please Enter Surname",
-                                                                            appreciation:
-                                                                                "",
-                                                                            icon:
-                                                                                Icons.error,
-                                                                            sec:
-                                                                                2,
-                                                                          ),
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          elevation:
-                                                                              0,
-                                                                        );
-                                                                      });
-                                                                } else {
-                                                                  SearchProfile().addtosearchprofile(
-                                                                      // 9801564490 susan manandar new baneshor ktm
-                                                                      searchprofile: _searchIDController.text,
-                                                                      email: userSave.email!,
-                                                                      name: userSave.name!,
-                                                                      searchemailprofile: _searchEmailController.text,
-                                                                      searchnameprofile: _searchNameController.text,
-                                                                      searchphoneprofile: _searchphoneController.text,
-                                                                      searchsurprofile: _searchSurnameController.text,
-                                                                      searchDistance: _currentSliderValue.toString(),
-                                                                      age: svp.AgeList.toString(),
-                                                                      religion: svp.ReligionList.toString(),
-                                                                      kundalidosh: svp.KundaliDoshList.toString(),
-                                                                      marital_status: svp.MaritalStatusList.toString(),
-                                                                      diet: svp.dietList.toString(),
-                                                                      smoke: svp.SmokeList.toString(),
-                                                                      drink: svp.DrinkList.toString(),
-                                                                      disability: svp.DisabilityList.toString(),
-                                                                      height: svp.HeightList.toString(),
-                                                                      education: svp.EducationList.toString(),
-                                                                      profession: svp.ProfessionList.toString(),
-                                                                      income: svp.IncomeList.toString(),
-                                                                      location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                  getProfileSearchBySurname();
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color:
-                                                                        main_color),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons.search,
-                                                                  size: 30.0,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                     
-                                                    ],
-                                                  )),
-
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 10),
-                                                    child: Text(
-                                                        "Search By Distance",
-                                                        style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none,
-                                                            color: main_color,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'Sans-serif')),
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 10),
-                                                    child: Text(
-                                                      "${allsearches[index].searchDistance} Km",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 10),
-                                                    child: Text(
-                                                      "Within",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                             Column(
-                                                children: [
-                                                  SliderTheme(
-                                                      data: SliderTheme.of(
-                                                              context)
-                                                          .copyWith(
-                                                        valueIndicatorColor: Colors
-                                                            .black, // This is what you are asking for
-                                                        // Custom Gray Color
-                                                      ),
-                                                      child: RangeSlider(
-                                                        activeColor: main_color,
-                                                        values:
-                                                            _currentRangeValues,
-                                                        max: 200,
-                                                        divisions: 10,
-                                                        onChanged: (forIos)
-                                                            ? (RangeValues
-                                                                values) {
-                                                                if (!mounted)
-                                                                  return;
-
-                                                                // Enforce a minimum range of 20
-                                                                if ((values.end -
-                                                                        values
-                                                                            .start) >=
-                                                                    20) {
-                                                                  setState(() {
-                                                                    _currentRangeValues =
-                                                                        values;
-                                                                  });
-                                                                } else {
-                                                                  setState(() {
-                                                                    _currentRangeValues =
-                                                                        RangeValues(
-                                                                      values
-                                                                          .start,
-                                                                      values.start + 20 >
-                                                                              200
-                                                                          ? 200
-                                                                          : values.start +
-                                                                              20,
-                                                                    );
-                                                                  });
-                                                                }
-                                                              }
-                                                            : null,
-                                                        labels: RangeLabels(
-                                                          _currentRangeValues
-                                                              .start
-                                                              .round()
-                                                              .toString(),
-                                                          _currentRangeValues
-                                                              .end
-                                                              .round()
-                                                              .toString(),
-                                                        ),
-                                                      )),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 5),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Container(
-                                                          height: 30,
-                                                          width: 55,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black12),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30.0),
-                                                          ),
-                                                          child:
-                                                              CupertinoSwitch(
-                                                            // overrides the default green color of the track
-                                                            activeColor:
-                                                                Colors.white,
-                                                            // color of the round icon, which moves from right to left
-                                                            thumbColor: forIos
-                                                                ? main_color
-                                                                : Colors
-                                                                    .black12,
-                                                            // when the switch is off
-                                                            trackColor: forIos
-                                                                ? Colors.white
-                                                                : Colors
-                                                                    .black12,
-                                                            // boolean variable value
-                                                            value: forIos,
-                                                            // changes the state of the switch
-                                                            onChanged: (value) =>
-                                                                setState(() =>
-                                                                    forIos =
-                                                                        value),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 10),
-                                                child: SizedBox(
-                                                  width: Get.width,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      index == 0
-                                                          ? Container()
-                                                          : IconButton(
-                                                              icon: Icon(Icons
-                                                                  .arrow_back_ios),
-                                                              onPressed: () => {
+                                                       Align(
+                                                         alignment: Alignment.centerRight,
+                                                         child: GestureDetector(
+                                                                  onTap: () {
                                                                     _pageController
-                                                                        .previousPage(
+                                                                        .nextPage(
                                                                       duration: Duration(
                                                                           milliseconds:
                                                                               500),
                                                                       curve: Curves
                                                                           .easeInOut,
-                                                                    )
-                                                                  }),
-                                                      IconButton(
-                                                          icon: Icon(Icons
-                                                              .arrow_forward_ios),
-                                                          onPressed: () => {
-                                                                _pageController
-                                                                    .nextPage(
-                                                                  duration: Duration(
-                                                                      milliseconds:
-                                                                          500),
-                                                                  curve: Curves
-                                                                      .easeInOut,
-                                                                )
-                                                              }),
+                                                                    );
+                                                                  },
+                                                                  child: Icon(Icons
+                                                                      .arrow_forward_ios,color: main_color,),
+                                                                ),
+                                                       ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 10),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "0 km",
+                                                              style: TextStyle(
+                                                                 ),
+                                                            ),
+                                                            Text(
+                                                              "200 km",
+                                                              style: TextStyle(
+                                                            ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                       Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                              "Within",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color:
+                                                                      main_color,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          SliderTheme(
+                                                              data: SliderTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .copyWith(
+                                                                valueIndicatorColor:
+                                                                    Colors
+                                                                        .black, // This is what you are asking for
+                                                                // Custom Gray Color
+                                                              ),
+                                                              child:
+                                                                  RangeSlider(
+                                                                activeColor:
+                                                                    main_color,
+                                                                values:
+                                                                    _currentRangeValues,
+                                                                max: 200,
+                                                                divisions: 10,
+                                                                onChanged:
+                                                                    (forIos)
+                                                                        ? (RangeValues
+                                                                            values) {
+                                                                            if (!mounted)
+                                                                              return;
+
+                                                                            // Enforce a minimum range of 20
+                                                                            if ((values.end - values.start) >=
+                                                                                20) {
+                                                                              setState(() {
+                                                                                _currentRangeValues = values;
+                                                                              });
+                                                                            } else {
+                                                                              setState(() {
+                                                                                _currentRangeValues = RangeValues(
+                                                                                  values.start,
+                                                                                  values.start + 20 > 200 ? 200 : values.start + 20,
+                                                                                );
+                                                                              });
+                                                                            }
+                                                                          }
+                                                                        : null,
+                                                                labels:
+                                                                    RangeLabels(
+                                                                  _currentRangeValues
+                                                                      .start
+                                                                      .round()
+                                                                      .toString(),
+                                                                  _currentRangeValues
+                                                                      .end
+                                                                      .round()
+                                                                      .toString(),
+                                                                ),
+                                                              )),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right: 5),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Container(
+                                                                  height: 35,
+                                                                  width: 55,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0),
+                                                                  ),
+                                                                  child: Stack(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    children: [
+                                                                      // Track
+                                                                      AnimatedContainer(
+                                                                        duration:
+                                                                            const Duration(milliseconds: 200),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color: ison
+                                                                              ? Colors.black12
+                                                                              : main_color,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30.0),
+                                                                        ),
+                                                                        width:
+                                                                            55,
+                                                                        height:
+                                                                            28,
+                                                                      ),
+                                                                      // Thumb with text
+                                                                      Align(
+                                                                        alignment: ison
+                                                                            ? Alignment.centerLeft
+                                                                            : Alignment.centerRight,
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            ison =
+                                                                                !ison;
+                                                                            setState(() =>
+                                                                                forIos = !forIos);
+                                                                          },
+                                                                          child:
+                                                                              AnimatedContainer(
+                                                                            duration:
+                                                                                const Duration(milliseconds: 200),
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                30,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                Text(
+                                                                              ison ? "Off" : "On",
+                                                                              style: TextStyle(
+                                                                                fontSize: 10,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                // Container(
+                                                                //   height: 30,
+                                                                //   width: 55,
+                                                                //   decoration:
+                                                                //       BoxDecoration(
+                                                                //     border: Border.all(
+                                                                //         color: Colors
+                                                                //             .black12),
+                                                                //     borderRadius:
+                                                                //         BorderRadius
+                                                                //             .circular(
+                                                                //                 30.0),
+                                                                //   ),
+                                                                //   child:
+                                                                //       CupertinoSwitch(
+                                                                //     // overrides the default green color of the track
+                                                                //     activeColor:
+                                                                //         Colors.white,
+                                                                //     // color of the round icon, which moves from right to left
+                                                                //     thumbColor: forIos
+                                                                //         ? main_color
+                                                                //         : Colors
+                                                                //             .black12,
+                                                                //     // when the switch is off
+                                                                //     trackColor: forIos
+                                                                //         ? Colors.white
+                                                                //         : Colors
+                                                                //             .black12,
+                                                                //     // boolean variable value
+                                                                //     value: forIos,
+                                                                //     // changes the state of the switch
+                                                                //     onChanged: (value) =>
+                                                                //         setState(() =>
+                                                                //             forIos =
+                                                                //                 value),
+                                                                //   ),
+                                                                // ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      // Padding(
+                                                      //   padding:
+                                                      //       const EdgeInsets
+                                                      //           .symmetric(
+                                                      //           horizontal: 10,
+                                                      //           vertical: 10),
+                                                      //   child: SizedBox(
+                                                      //     width: Get.width,
+                                                      //     child: Row(
+                                                      //       mainAxisAlignment:
+                                                      //           MainAxisAlignment
+                                                      //               .end,
+                                                      //       children: [
+                                                      //         IconButton(
+                                                      //             icon: Icon(Icons
+                                                      //                 .arrow_forward_ios),
+                                                      //             onPressed:
+                                                      //                 () => {
+                                                      //                       _pageController.nextPage(
+                                                      //                         duration: Duration(milliseconds: 500),
+                                                      //                         curve: Curves.easeInOut,
+                                                      //                       )
+                                                      //                     }),
+                                                      //       ],
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              "Search By Category",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color:
+                                                                      main_color,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "Male",
+                                                              style: const TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                            Container(
+                                                              height: 30,
+                                                              width: 55,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black12),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            30.0),
+                                                              ),
+                                                              child:
+                                                                  CupertinoSwitch(
+                                                                // overrides the default green color of the track
+                                                                activeColor:
+                                                                    Colors
+                                                                        .white,
+                                                                // color of the round icon, which moves from right to left
+                                                                thumbColor: forIos2
+                                                                    ? main_color
+                                                                    : Colors
+                                                                        .black12,
+                                                                // when the switch is off
+                                                                trackColor: forIos2
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Colors
+                                                                        .black12,
+                                                                // boolean variable value
+                                                                value: forIos2,
+                                                                // changes the state of the switch
+                                                                onChanged: (value) =>
+                                                                    setState(() =>
+                                                                        forIos2 =
+                                                                            value),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "Female",
+                                                              style: const TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                      nameContainer2(
+                                                          'images/icons/calender.png',
+                                                          "Age",
+                                                          functions().AgeDialog,
+                                                          svp.AgeList),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/religion.png',
+                                                          "Religion",
+                                                          svp.ReligionList,
+                                                          sdl.Religion),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      (userSave.religion ==
+                                                              "Hindu")
+                                                          ? nameContainer(
+                                                              'images/icons/kundli.png',
+                                                              "Kundli Dosh",
+                                                              svp.KundaliDoshList,
+                                                              sdl.KundaliDosh)
+                                                          : Container(),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/marital_status.png',
+                                                          "Marital Status",
+                                                          svp.MaritalStatusList,
+                                                          sdl.MaritalStatus),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/food.png',
+                                                          "Diet",
+                                                          svp.dietList,
+                                                          sdl.Diet),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/smoke.png',
+                                                          "Smoke",
+                                                          svp.SmokeList,
+                                                          sdl.Smoke),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/drink.png',
+                                                          "Drink",
+                                                          svp.DrinkList,
+                                                          sdl.Drink),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/disability.png',
+                                                          "Disability With Person",
+                                                          svp.DisabilityList,
+                                                          sdl.Disability),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainerHeight(
+                                                          'images/icons/height.png',
+                                                          "Height",
+                                                          functions()
+                                                              .HeightDialog,
+                                                          svp.HeightList,
+                                                          sdl.Height),
+                                                      // HeightList, sdl.Height),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/education.png',
+                                                          "Education",
+                                                          svp.EducationList,
+                                                          sdl.Education),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/profession_suitcase.png',
+                                                          "Profession",
+                                                          svp.ProfessionList,
+                                                          sdl.Profession),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer(
+                                                          'images/icons/hand_rupee.png',
+                                                          "Income",
+                                                          svp.IncomeList,
+                                                          sdl.Income),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer3(
+                                                          'images/icons/location.png',
+                                                          "Location",
+                                                          functions()
+                                                              .LocationDialog,
+                                                          svp.LocatioList),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      // nameContainer2(
+                                                      //     'images/icons/location.png',
+                                                      //     "Location",
+                                                      //     functions().LocationDialog,
+                                                      //     svp.LocatioList),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Search By Category",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
+                                              (searchingbool)
+                                                  ? Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Center(
+                                                              child: CircularProgressIndicator(
+                                                                  valueColor: AlwaysStoppedAnimation<
+                                                                          Color>(
+                                                                      main_color))),
+                                                        ],
+                                                      ),
                                                     )
-                                                  ],
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Male",
-                                                      style: const TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                    Container(
-                                                      height: 30,
-                                                      width: 55,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.black12),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30.0),
-                                                      ),
-                                                      child: CupertinoSwitch(
-                                                        // overrides the default green color of the track
-                                                        activeColor:
-                                                            Colors.white,
-                                                        // color of the round icon, which moves from right to left
-                                                        thumbColor: forIos2
-                                                            ? main_color
-                                                            : Colors.black12,
-                                                        // when the switch is off
-                                                        trackColor: forIos2
-                                                            ? Colors.white
-                                                            : Colors.black12,
-                                                        // boolean variable value
-                                                        value: forIos2,
-                                                        // changes the state of the switch
-                                                        onChanged: (value) =>
-                                                            setState(() =>
-                                                                forIos2 =
-                                                                    value),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "Female",
-                                                      style: const TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              nameContainer6(
-                                                  'images/icons/calender.png',
-                                                  "Age",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].age!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/religion.png',
-                                                  "Religion",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].religion!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/kundli.png',
-                                                  "Kundli Dosh",
-                                                  functions().AgeDialog,
-                                                  allsearches[index]
-                                                      .kundlidosh!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/marital_status.png',
-                                                  "Marital Status",
-                                                  functions().AgeDialog,
-                                                  allsearches[index]
-                                                      .marital_status!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/food.png',
-                                                  "Diet",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].diet!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/smoke.png',
-                                                  "Smoke",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].smoke!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/drink.png',
-                                                  "Drink",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].drink!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/disability.png',
-                                                  "Disability With Person",
-                                                  functions().AgeDialog,
-                                                  allsearches[index]
-                                                      .disability!),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              allsearches[index].height ==
-                                                          null ||
-                                                      allsearches[index]
-                                                          .height!
-                                                          .isEmpty ||
-                                                      result.isEmpty
-                                                  ? nameContainer4(
-                                                      'images/icons/disability.png',
-                                                      "Disability With Person",
-                                                      functions().AgeDialog,
-                                                      allsearches[index]
-                                                          .height!)
-                                                  : nameContainerHeight(
-                                                      'images/icons/height.png',
-                                                      "Height",
-                                                      functions().AgeDialog,
-                                                      result,
-                                                      sdl.Height),
-                                              // HeightList, sdl.Height),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/education.png',
-                                                  "Education",
-                                                  functions().AgeDialog,
-                                                  allsearches[index]
-                                                      .education!),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/profession_suitcase.png',
-                                                  "Profession",
-                                                  functions().AgeDialog,
-                                                  allsearches[index]
-                                                      .profession!),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer4(
-                                                  'images/icons/hand_rupee.png',
-                                                  "Income",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].income!),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              nameContainer5(
-                                                  'images/icons/location.png',
-                                                  "Location",
-                                                  functions().AgeDialog,
-                                                  allsearches[index].location!),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              // nameContainer2(
-                                              //     'images/icons/location.png',
-                                              //     "Location",
-                                              //     functions().LocationDialog,
-                                              //     svp.LocatioList),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
+                                                  : Container()
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                      (searchingbool)
-                                          ? Container(
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Center(
-                                                      child: CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                      Color>(
-                                                                  main_color))),
-                                                ],
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                            width: 300,
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  shadowColor:
+                                                      MaterialStateColor
+                                                          .resolveWith(
+                                                              (states) =>
+                                                                  Colors.black),
+                                                  shape: MaterialStateProperty
+                                                      .all<RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    //side: BorderSide(color: Colors.black)
+                                                  )),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white)),
+                                              child: const Text(
+                                                "Search",
+                                                style: TextStyle(
+                                                  fontFamily: 'Serif',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
                                               ),
-                                            )
-                                          : Container()
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 300,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          shadowColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.black),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            //side: BorderSide(color: Colors.black)
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.white)),
-                                      child: const Text(
-                                        "Search",
-                                        style: TextStyle(
-                                          fontFamily: 'Serif',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        SearchProfile().addtosearchprofile(
-                                            searchprofile:
-                                                _searchIDController.text,
-                                            email: userSave.email!,
-                                            name: userSave.name!,
-                                            searchemailprofile:
-                                                _searchEmailController.text,
-                                            searchnameprofile:
-                                                _searchNameController.text,
-                                            searchphoneprofile:
-                                                _searchphoneController.text,
-                                            searchsurprofile:
-                                                _searchSurnameController.text,
-                                            searchDistance:
-                                                _currentSliderValue.toString(),
-                                            age: svp.AgeList.toString(),
-                                            religion:
-                                                svp.ReligionList.toString(),
-                                            kundalidosh:
-                                                svp.KundaliDoshList.toString(),
-                                            marital_status: svp
-                                                .MaritalStatusList.toString(),
-                                            diet: svp.dietList.toString(),
-                                            smoke: svp.SmokeList.toString(),
-                                            drink: svp.DrinkList.toString(),
-                                            disability:
-                                                svp.DisabilityList.toString(),
-                                            height: svp.HeightList.toString(),
-                                            education:
-                                                svp.EducationList.toString(),
-                                            profession:
-                                                svp.ProfessionList.toString(),
-                                            income: svp.IncomeList.toString(),
-                                            location:
-                                                "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                        getProfileSearch();
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                    width: 300,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          shadowColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.black),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                            //side: BorderSide(color: Colors.black)
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Colors.white)),
-                                      child: const Text(
-                                        "Reset",
-                                        style: TextStyle(
-                                          fontFamily: 'Serif',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        _searchEmailController.clear();
-                                        _searchIDController.clear();
-                                        _searchEmailController.clear();
-                                        _searchNameController.clear();
-                                        _searchSurnameController.clear();
+                                              onPressed: () async {
+                                                final data = await SearchProfile().addtosearchprofile(
+                                                  isSearch: forIos,
+                                                  maxDistance: forIos==true?_currentRangeValues.end.toInt():0,
+                                                  minDistance: forIos==true?_currentRangeValues.start.toInt():0,
+                                                    searchprofile:
+                                                        _searchIDController
+                                                            .text,
+                                                    email: userSave.email!,
+                                                    name: userSave.name!,
+                                                    searchemailprofile:
+                                                        _searchEmailController
+                                                            .text,
+                                                    searchnameprofile:
+                                                        _searchNameController
+                                                            .text,
+                                                    searchphoneprofile:
+                                                        _searchphoneController
+                                                            .text,
+                                                    searchsurprofile:
+                                                        _searchSurnameController
+                                                            .text,
+                                                    searchDistance:
+                                                        _currentSliderValue
+                                                            .toString(),
+                                                    age: svp.AgeList.toString(),
+                                                    religion: svp.ReligionList
+                                                        .toString(),
+                                                    kundalidosh:
+                                                        svp.KundaliDoshList
+                                                            .toString(),
+                                                    marital_status:
+                                                        svp.MaritalStatusList.toString(),
+                                                    diet: svp.dietList.toString(),
+                                                    smoke: svp.SmokeList.toString(),
+                                                    drink: svp.DrinkList.toString(),
+                                                    disability: svp.DisabilityList.toString(),
+                                                    height: svp.HeightList.toString(),
+                                                    education: svp.EducationList.toString(),
+                                                    profession: svp.ProfessionList.toString(),
+                                                    income: svp.IncomeList.toString(),
+                                                    location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                getProfileSearch(data);
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                            width: 300,
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  shadowColor:
+                                                      MaterialStateColor
+                                                          .resolveWith(
+                                                              (states) =>
+                                                                  Colors.black),
+                                                  shape: MaterialStateProperty
+                                                      .all<RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    //side: BorderSide(color: Colors.black)
+                                                  )),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white)),
+                                              child: const Text(
+                                                "Reset",
+                                                style: TextStyle(
+                                                  fontFamily: 'Serif',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                SearchProfile()
+                                                    .addtoadminnotification(
+                                                        userid: userSave.uid!,
+                                                        useremail:
+                                                            userSave.email!,
+                                                        userimage: userSave
+                                                                .imageUrls!
+                                                                .isEmpty
+                                                            ? ""
+                                                            : userSave
+                                                                .imageUrls![0]!,
+                                                        title:
+                                                            "${userSave.displayName} RESET ADMIN SEARCH PROFILE BAR ",
+                                                        email: userSave.email!,
+                                                        subtitle: "");
+                                                _searchEmailController.clear();
+                                                _searchIDController.clear();
+                                                _searchEmailController.clear();
+                                                _searchNameController.clear();
+                                                _searchSurnameController
+                                                    .clear();
 
-                                        svp.AgeList.clear();
-                                        svp.DisabilityList.clear();
-                                        svp.DrinkList.clear();
-                                        svp.EducationList.clear();
-                                        svp.HeightList.clear();
-                                        svp.IncomeList.clear();
-                                        svp.KundaliDoshList.clear();
-                                        svp.LocatioList[0].clear();
-                                        svp.LocatioList[1].clear();
-                                        svp.LocatioList[2].clear();
-                                        svp.MaritalStatusList.clear();
-                                        svp.ProfessionList.clear();
-                                        svp.ReligionList.clear();
-                                        svp.SmokeList.clear();
-                                        svp.dietList.clear();
-                                        setState(() {});
-                                      },
+                                                svp.AgeList.clear();
+                                                svp.DisabilityList.clear();
+                                                svp.DrinkList.clear();
+                                                svp.EducationList.clear();
+                                                svp.HeightList.clear();
+                                                svp.IncomeList.clear();
+                                                svp.KundaliDoshList.clear();
+                                                svp.LocatioList[0].clear();
+                                                svp.LocatioList[1].clear();
+                                                svp.LocatioList[2].clear();
+                                                svp.MaritalStatusList.clear();
+                                                svp.ProfessionList.clear();
+                                                svp.ReligionList.clear();
+                                                svp.SmokeList.clear();
+                                                svp.dietList.clear();
+                                                setState(() {});
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(height: 30),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 10,),
-                                  Text(
-                                    "Seen by ${allsearches[index].adminname} on ${ DateFormat('EEEE MMMM d y HH:mm').format(
-                                        DateTime.parse(
-                                                allsearches[index].createdAt!)
-                                            .toLocal())}",
-                                    style: const TextStyle(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Sans-serif'),
-                                  ),
-                                   Text(
-                                    "(1 Profile Found) (Seen-1)",
-                                    style:  TextStyle(
-                                        decoration: TextDecoration.none,
-                                        color: main_color,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: 'Sans-serif'),
-                                  ),
-                                  SizedBox(height: 30),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                      }),
-                )
-            // : SingleChildScrollView(
+                                  );
+                                } else {
+                                  return SingleChildScrollView(
+                                    child: SafeArea(
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                padding: EdgeInsets.only(
+                                                    left: 10, right: 15),
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    children: [
+                                                      SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Profile",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 6,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              TextEditingController(text: allsearches[index].searchidprofile),
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Profile Id',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchIDController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Email",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 25,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              TextEditingController(text: allsearches[index].searchemailprofile),
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Email Id',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchEmailController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Contact No",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              TextEditingController(text: allsearches[index].searchphoneprofile),
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Phone',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchphoneController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                      
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              //+9155556580544
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Name",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      width: 25,
+                                                                    ),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              TextEditingController(text: allsearches[index].searchnameprofile),
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Name',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchNameController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        // if (_searchNameController
+                                                                        //             .text ==
+                                                                        //         null ||
+                                                                        //     _searchNameController
+                                                                        //             .text ==
+                                                                        //         "") {
+                                                                        //   showDialog(
+                                                                        //       context:
+                                                                        //           context,
+                                                                        //       builder:
+                                                                        //           (context) {
+                                                                        //         return const AlertDialog(
+                                                                        //           content:
+                                                                        //               SnackBarContent(
+                                                                        //             error_text:
+                                                                        //                 "Please Enter Name",
+                                                                        //             appreciation:
+                                                                        //                 "",
+                                                                        //             icon:
+                                                                        //                 Icons.error,
+                                                                        //             sec:
+                                                                        //                 2,
+                                                                        //           ),
+                                                                        //           backgroundColor:
+                                                                        //               Colors.transparent,
+                                                                        //           elevation:
+                                                                        //               0,
+                                                                        //         );
+                                                                        //       });
+                                                                        // } else {
+                                                                        //   SearchProfile().addtosearchprofile(
+                                                                        //       searchprofile:
+                                                                        //           _searchIDController
+                                                                        //               .text,
+                                                                        //       email: userSave
+                                                                        //           .email!,
+                                                                        //       name: userSave
+                                                                        //           .name!,
+                                                                        //       searchemailprofile:
+                                                                        //           _searchEmailController
+                                                                        //               .text,
+                                                                        //       searchnameprofile:
+                                                                        //           _searchNameController
+                                                                        //               .text,
+                                                                        //       searchphoneprofile:
+                                                                        //           _searchphoneController
+                                                                        //               .text,
+                                                                        //       searchsurprofile:
+                                                                        //           _searchSurnameController
+                                                                        //               .text,
+                                                                        //       searchDistance:
+                                                                        //           _currentSliderValue
+                                                                        //               .toString(),
+                                                                        //       age: svp.AgeList
+                                                                        //           .toString(),
+                                                                        //       religion: svp.ReligionList
+                                                                        //           .toString(),
+                                                                        //       kundalidosh:
+                                                                        //           svp.KundaliDoshList
+                                                                        //               .toString(),
+                                                                        //       marital_status:
+                                                                        //           svp.MaritalStatusList
+                                                                        //               .toString(),
+                                                                        //       diet: svp
+                                                                        //           .dietList
+                                                                        //           .toString(),
+                                                                        //       smoke: svp.SmokeList
+                                                                        //           .toString(),
+                                                                        //       drink: svp.DrinkList.toString(),
+                                                                        //       disability: svp.DisabilityList.toString(),
+                                                                        //       height: svp.HeightList.toString(),
+                                                                        //       education: svp.EducationList.toString(),
+                                                                        //       profession: svp.ProfessionList.toString(),
+                                                                        //       income: svp.IncomeList.toString(),
+                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                        //   getProfileSearchByName();
+                                                                        // }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width *
+                                                                        0.89,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(
+                                                                          right:
+                                                                              10),
+                                                                      child:
+                                                                          Text(
+                                                                        "Search By Surname",
+                                                                        style: TextStyle(
+                                                                            decoration: TextDecoration
+                                                                                .none,
+                                                                            color:
+                                                                                main_color,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            fontFamily: 'Sans-serif'),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(width: 10,),
+                                                                    Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.4,
+                                                                      height:
+                                                                          30,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(70)),
+                                                                      child:
+                                                                          Material(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              TextEditingController(text: allsearches[index].searchsurprofile),
+                                                                          decoration: InputDecoration(
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                              hintText: 'Enter Suname',
+                                                                              hintStyle: TextStyle(fontSize: 12),
+                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
+                                                                          onChanged:
+                                                                              (String) {
+                                                                            profileSearch =
+                                                                                _searchSurnameController.text;
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        print(userSave
+                                                                            .name);
+                                                                        // if (_searchSurnameController
+                                                                        //             .text ==
+                                                                        //         null ||
+                                                                        //     _searchSurnameController
+                                                                        //             .text ==
+                                                                        //         "") {
+                                                                        //   showDialog(
+                                                                        //       context:
+                                                                        //           context,
+                                                                        //       builder:
+                                                                        //           (context) {
+                                                                        //         return const AlertDialog(
+                                                                        //           content:
+                                                                        //               SnackBarContent(
+                                                                        //             error_text:
+                                                                        //                 "Please Enter Surname",
+                                                                        //             appreciation:
+                                                                        //                 "",
+                                                                        //             icon:
+                                                                        //                 Icons.error,
+                                                                        //             sec:
+                                                                        //                 2,
+                                                                        //           ),
+                                                                        //           backgroundColor:
+                                                                        //               Colors.transparent,
+                                                                        //           elevation:
+                                                                        //               0,
+                                                                        //         );
+                                                                        //       });
+                                                                        // } else {
+                                                                        //   SearchProfile().addtosearchprofile(
+                                                                        //       // 9801564490 susan manandar new baneshor ktm
+                                                                        //       searchprofile: _searchIDController.text,
+                                                                        //       email: userSave.email!,
+                                                                        //       name: userSave.name!,
+                                                                        //       searchemailprofile: _searchEmailController.text,
+                                                                        //       searchnameprofile: _searchNameController.text,
+                                                                        //       searchphoneprofile: _searchphoneController.text,
+                                                                        //       searchsurprofile: _searchSurnameController.text,
+                                                                        //       searchDistance: _currentSliderValue.toString(),
+                                                                        //       age: svp.AgeList.toString(),
+                                                                        //       religion: svp.ReligionList.toString(),
+                                                                        //       kundalidosh: svp.KundaliDoshList.toString(),
+                                                                        //       marital_status: svp.MaritalStatusList.toString(),
+                                                                        //       diet: svp.dietList.toString(),
+                                                                        //       smoke: svp.SmokeList.toString(),
+                                                                        //       drink: svp.DrinkList.toString(),
+                                                                        //       disability: svp.DisabilityList.toString(),
+                                                                        //       height: svp.HeightList.toString(),
+                                                                        //       education: svp.EducationList.toString(),
+                                                                        //       profession: svp.ProfessionList.toString(),
+                                                                        //       income: svp.IncomeList.toString(),
+                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                        //   getProfileSearchBySurname();
+                                                                        // }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color: main_color),
+                                                                        child:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .search,
+                                                                          size:
+                                                                              30.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )),
+
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                                "Search By Distance",
+                                                                style: TextStyle(
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .none,
+                                                                    color:
+                                                                        main_color,
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontFamily:
+                                                                        'Sans-serif')),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          left: 10,
+                                                        ),
+                                                        child: SizedBox(
+                                                          width: Get.width,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              index == 0
+                                                                  ? Container()
+                                                                  : GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        _pageController
+                                                                            .previousPage(
+                                                                          duration:
+                                                                              Duration(milliseconds: 500),
+                                                                          curve:
+                                                                              Curves.easeInOut,
+                                                                        );
+                                                                      },
+                                                                      child: Icon(
+                                                                          Icons
+                                                                              .arrow_back_ios,color: main_color,),
+                                                                    ),
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  _pageController
+                                                                      .nextPage(
+                                                                    duration: Duration(
+                                                                        milliseconds:
+                                                                            500),
+                                                                    curve: Curves
+                                                                        .easeInOut,
+                                                                  );
+                                                                },
+                                                                child: Icon(Icons
+                                                                    .arrow_forward_ios,color: main_color,),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 10),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          10),
+                                                              child: Text(
+                                                                "0 Km",
+                                                                style: TextStyle(
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .none,
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontFamily:
+                                                                        'Sans-serif'),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          10),
+                                                              child: Text(
+                                                                "200 Km",
+                                                                style: TextStyle(
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .none,
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontFamily:
+                                                                        'Sans-serif'),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                              "Within",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color:
+                                                                      main_color,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          SliderTheme(
+                                                              data: SliderTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .copyWith(
+                                                                valueIndicatorColor:
+                                                                    Colors
+                                                                        .black, // This is what you are asking for
+                                                                // Custom Gray Color
+                                                              ),
+                                                              child:
+                                                                  RangeSlider(
+                                                                activeColor:
+                                                                    main_color,
+                                                                values:
+                                                                   RangeValues(
+                                                                     ( allsearches[index].minDistance??0).toDouble(),
+                                                                     ( allsearches[index].maxDistance??0).toDouble()
+                                                                    ),
+                                                                max: 200,
+                                                                divisions: 10,
+
+                                                                onChanged:
+                                                                    (allsearches[index].isSearch==true)
+                                                                        ? (RangeValues
+                                                                            values) {
+                                                                            if (!mounted)
+                                                                              return;
+
+                                                                            // Enforce a minimum range of 20
+                                                                            if ((values.end - values.start) >=
+                                                                                20) {
+                                                                              setState(() {
+                                                                                _currentRangeValues = values;
+                                                                              });
+                                                                            } else {
+                                                                              setState(() {
+                                                                                _currentRangeValues = RangeValues(
+                                                                                  values.start,
+                                                                                  values.start + 20 > 200 ? 200 : values.start + 20,
+                                                                                );
+                                                                              });
+                                                                            }
+                                                                          }
+                                                                        : null,
+                                                                labels:
+                                                                    RangeLabels(
+                                                                  _currentRangeValues
+                                                                      .start
+                                                                      .round()
+                                                                      .toString(),
+                                                                  _currentRangeValues
+                                                                      .end
+                                                                      .round()
+                                                                      .toString(),
+                                                                ),
+                                                              )),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right: 5),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                 Container(
+                                                                  height: 35,
+                                                                  width: 55,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0),
+                                                                  ),
+                                                                  child: Stack(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    children: [
+                                                                      // Track
+                                                                      AnimatedContainer(
+                                                                        duration:
+                                                                            const Duration(milliseconds: 200),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color: allsearches[index].isSearch==false  ? main_color
+                                                                              : Colors.black12
+                                                                             ,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30.0),
+                                                                        ),
+                                                                        width:
+                                                                            55,
+                                                                        height:
+                                                                            28,
+                                                                      ),
+                                                                      // Thumb with text
+                                                                      Align(
+                                                                        alignment: allsearches[index].isSearch==false
+                                                                            ? Alignment.centerRight
+                                                                            : Alignment.centerLeft,
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            // ison =
+                                                                            //     !ison;
+                                                                            // setState(() =>
+                                                                            //     forIos = !forIos);
+                                                                          },
+                                                                          child:
+                                                                              AnimatedContainer(
+                                                                            duration:
+                                                                                const Duration(milliseconds: 200),
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                30,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                Text(
+                                                                              allsearches[index].isSearch==true ? "On" : "Off",
+                                                                              style: TextStyle(
+                                                                                fontSize: 10,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                // Container(
+                                                                //   height: 30,
+                                                                //   width: 55,
+                                                                //   decoration:
+                                                                //       BoxDecoration(
+                                                                //     border: Border.all(
+                                                                //         color: Colors
+                                                                //             .black12),
+                                                                //     borderRadius:
+                                                                //         BorderRadius.circular(
+                                                                //             30.0),
+                                                                //   ),
+                                                                //   child:
+                                                                //       CupertinoSwitch(
+                                                                //     // overrides the default green color of the track
+                                                                //     activeColor:
+                                                                //         Colors
+                                                                //             .white,
+                                                                //     // color of the round icon, which moves from right to left
+                                                                //     thumbColor: forIos
+                                                                //         ? main_color
+                                                                //         : Colors
+                                                                //             .black12,
+                                                                //     // when the switch is off
+                                                                //     trackColor: forIos
+                                                                //         ? Colors
+                                                                //             .white
+                                                                //         : Colors
+                                                                //             .black12,
+                                                                //     // boolean variable value
+                                                                //     value:
+                                                                //         forIos,
+                                                                //     // changes the state of the switch
+                                                                //     onChanged: (value) =>
+                                                                //         setState(() =>
+                                                                //             forIos =
+                                                                //                 value),
+                                                                //   ),
+                                                                // ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 10),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              "Search By Category",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color:
+                                                                      main_color,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 10,
+                                                                right: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "Male",
+                                                              style: const TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                            Container(
+                                                              height: 30,
+                                                              width: 55,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black12),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            30.0),
+                                                              ),
+                                                              child:
+                                                                  CupertinoSwitch(
+                                                                // overrides the default green color of the track
+                                                                activeColor:
+                                                                    Colors
+                                                                        .white,
+                                                                // color of the round icon, which moves from right to left
+                                                                thumbColor: forIos2
+                                                                    ? main_color
+                                                                    : Colors
+                                                                        .black12,
+                                                                // when the switch is off
+                                                                trackColor: forIos2
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Colors
+                                                                        .black12,
+                                                                // boolean variable value
+                                                                value: forIos2,
+                                                                // changes the state of the switch
+                                                                onChanged: (value) =>
+                                                                    setState(() =>
+                                                                        forIos2 =
+                                                                            value),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "Female",
+                                                              style: const TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .none,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Sans-serif'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                      nameContainer6(
+                                                          'images/icons/calender.png',
+                                                          "Age",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .age!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/religion.png',
+                                                          "Religion",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .religion!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/kundli.png',
+                                                          "Kundli Dosh",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .kundlidosh!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/marital_status.png',
+                                                          "Marital Status",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .marital_status!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/food.png',
+                                                          "Diet",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .diet!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/smoke.png',
+                                                          "Smoke",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .smoke!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/drink.png',
+                                                          "Drink",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .drink!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/disability.png',
+                                                          "Disability With Person",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .disability!),
+                                                      const SizedBox(
+                                                        height: 2,
+                                                      ),
+                                                      allsearches[index]
+                                                                      .height ==
+                                                                  null ||
+                                                              allsearches[index]
+                                                                  .height!
+                                                                  .isEmpty ||
+                                                              result.isEmpty
+                                                          ? nameContainer4(
+                                                              'images/icons/disability.png',
+                                                              "Disability With Person",
+                                                              functions()
+                                                                  .AgeDialog,
+                                                              allsearches[index]
+                                                                  .height!)
+                                                          : nameContainerHeight(
+                                                              'images/icons/height.png',
+                                                              "Height",
+                                                              functions()
+                                                                  .AgeDialog,
+                                                              result,
+                                                              sdl.Height),
+                                                      // HeightList, sdl.Height),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/education.png',
+                                                          "Education",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .education!),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/profession_suitcase.png',
+                                                          "Profession",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .profession!),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer4(
+                                                          'images/icons/hand_rupee.png',
+                                                          "Income",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .income!),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      nameContainer5(
+                                                          'images/icons/location.png',
+                                                          "Location",
+                                                          functions().AgeDialog,
+                                                          allsearches[index]
+                                                              .location!),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                      // nameContainer2(
+                                                      //     'images/icons/location.png',
+                                                      //     "Location",
+                                                      //     functions().LocationDialog,
+                                                      //     svp.LocatioList),
+                                                      const SizedBox(
+                                                        height: 1,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              (searchingbool)
+                                                  ? Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Center(
+                                                              child: CircularProgressIndicator(
+                                                                  valueColor: AlwaysStoppedAnimation<
+                                                                          Color>(
+                                                                      main_color))),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container()
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                            width: 300,
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  shadowColor:
+                                                      MaterialStateColor
+                                                          .resolveWith(
+                                                              (states) =>
+                                                                  Colors.black),
+                                                  shape: MaterialStateProperty
+                                                      .all<RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    //side: BorderSide(color: Colors.black)
+                                                  )),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white)),
+                                              child: const Text(
+                                                "Search",
+                                                style: TextStyle(
+                                                  fontFamily: 'Serif',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                final data = await SearchProfile().addtosearchprofile(
+                                                  isSearch:forIos ,
+                                                    searchprofile:
+                                                        _searchIDController
+                                                            .text,
+                                                    email: userSave.email!,
+                                                    name: userSave.name!,
+                                                    searchemailprofile:
+                                                        _searchEmailController
+                                                            .text,
+                                                    searchnameprofile:
+                                                        _searchNameController
+                                                            .text,
+                                                    searchphoneprofile:
+                                                        _searchphoneController
+                                                            .text,
+                                                    searchsurprofile:
+                                                        _searchSurnameController
+                                                            .text,
+                                                    searchDistance:
+                                                        _currentSliderValue
+                                                            .toString(),
+                                                    age: svp.AgeList.toString(),
+                                                    religion: svp.ReligionList
+                                                        .toString(),
+                                                    kundalidosh:
+                                                        svp.KundaliDoshList
+                                                            .toString(),
+                                                    marital_status:
+                                                        svp.MaritalStatusList.toString(),
+                                                    diet: svp.dietList.toString(),
+                                                    smoke: svp.SmokeList.toString(),
+                                                    drink: svp.DrinkList.toString(),
+                                                    disability: svp.DisabilityList.toString(),
+                                                    height: svp.HeightList.toString(),
+                                                    education: svp.EducationList.toString(),
+                                                    profession: svp.ProfessionList.toString(),
+                                                    income: svp.IncomeList.toString(),
+                                                    location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                getProfileSearch(data);
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                            width: 300,
+                                            child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  shadowColor:
+                                                      MaterialStateColor
+                                                          .resolveWith(
+                                                              (states) =>
+                                                                  Colors.black),
+                                                  shape: MaterialStateProperty
+                                                      .all<RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    //side: BorderSide(color: Colors.black)
+                                                  )),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white)),
+                                              child: const Text(
+                                                "Reset",
+                                                style: TextStyle(
+                                                  fontFamily: 'Serif',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                _searchEmailController.clear();
+                                                _searchIDController.clear();
+                                                _searchEmailController.clear();
+                                                _searchNameController.clear();
+                                                _searchSurnameController
+                                                    .clear();
+
+                                                svp.AgeList.clear();
+                                                svp.DisabilityList.clear();
+                                                svp.DrinkList.clear();
+                                                svp.EducationList.clear();
+                                                svp.HeightList.clear();
+                                                svp.IncomeList.clear();
+                                                svp.KundaliDoshList.clear();
+                                                svp.LocatioList[0].clear();
+                                                svp.LocatioList[1].clear();
+                                                svp.LocatioList[2].clear();
+                                                svp.MaritalStatusList.clear();
+                                                svp.ProfessionList.clear();
+                                                svp.ReligionList.clear();
+                                                svp.SmokeList.clear();
+                                                svp.dietList.clear();
+                                                setState(() {});
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Seen by ${allsearches[index].adminname} on ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(allsearches[index].createdAt!).toLocal())}",
+                                            style: const TextStyle(
+                                                decoration: TextDecoration.none,
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Sans-serif'),
+                                          ),
+                                          Text(
+                                            "(${allsearches[index].profileFound} Profile Found) (Seen-${allsearches[index].profileFound})",
+                                            style: TextStyle(
+                                                decoration: TextDecoration.none,
+                                                color: main_color,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Sans-serif'),
+                                          ),
+                                          SizedBox(height: 30),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
+                        )
+          // : SingleChildScrollView(
 
           ),
     );
   }
 
-  getProfileSearchByProfile() async {
+  getProfileSearchByProfile(String id) async {
     try {
       // var a, b;
       // var fireStore = FirebaseFirestore.instance;
@@ -4209,6 +3938,8 @@ bool ison=true;
             .getuserdatabyid(puid: profileSearch, email: userSave.email!);
         setState(() {});
         if (allusers != null && allusers.isNotEmpty) {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (builder) => SlideProfile(
@@ -4247,7 +3978,7 @@ bool ison=true;
     } catch (e) {}
   }
 
-  getProfileSearchByName() async {
+  getProfileSearchByName(String id) async {
     try {
       if (NameSearch != null && _searchNameController.text != "") {
         SearchProfile().addtoadminnotification(
@@ -4263,6 +3994,8 @@ bool ison=true;
             .getuserdatabyname(name: NameSearch, email: userSave.email!);
         setState(() {});
         if (allusers != null && allusers.isNotEmpty) {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (builder) => SlideProfile(
@@ -4301,7 +4034,7 @@ bool ison=true;
     } catch (e) {}
   }
 
-  getProfileSearchByPhone() async {
+  getProfileSearchByPhone(String id) async {
     try {
       if (phoneSearch != null && _searchphoneController.text != "") {
         SearchProfile().addtoadminnotification(
@@ -4323,6 +4056,8 @@ bool ison=true;
             .getuserdatabyphone(phone: phoneSearch, email: userSave.email!);
         setState(() {});
         if (allusers != null && allusers.isNotEmpty) {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (builder) => SlideProfile(
@@ -4361,7 +4096,7 @@ bool ison=true;
     } catch (e) {}
   }
 
-  getProfileSearchBySurname() async {
+  getProfileSearchBySurname(String id) async {
     try {
       if (SurnameSearch != null && SurnameSearch != "") {
         SearchProfile().addtoadminnotification(
@@ -4378,6 +4113,8 @@ bool ison=true;
         setState(() {});
         print(allusers);
         if (allusers != null && allusers.isNotEmpty) {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (builder) => SearchSlideProfile(
@@ -4493,7 +4230,7 @@ bool ison=true;
     } catch (e) {}
   }
 
-  getProfileSearchByEmail() async {
+  getProfileSearchByEmail(String id) async {
     try {
       // var a, b;
       // var fireStore = FirebaseFirestore.instance;
@@ -4508,6 +4245,8 @@ bool ison=true;
         setState(() {});
 
         if (allusers.isNotEmpty) {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           SearchProfile().addtoadminnotification(
               userid: allusers[0].id!,
               useremail: allusers[0].email!,
@@ -4556,7 +4295,7 @@ bool ison=true;
     } catch (e) {}
   }
 
-  getProfileSearch() async {
+  getProfileSearch(String id) async {
     print(userSave.longitude);
     print(userSave.latitude);
     if (!mounted) return;
@@ -4593,9 +4332,9 @@ bool ison=true;
           svp.LocatioList[0].isNotEmpty ||
           svp.LocatioList[1].isNotEmpty ||
           svp.LocatioList[2].isNotEmpty ||
-          _currentSliderValue != 0.0) {
+          _currentRangeValues.end != 0.0) {
         List<NewUserModel> allusers = await SearchProfile().searchuserdata(
-            maxDistanceKm: _currentSliderValue.toInt(),
+            maxDistanceKm: _currentRangeValues.end.toInt(),
             lat: userSave.latitude!,
             lng: userSave.longitude!,
             gender: forIos2 == false ? "male" : "female",
@@ -4623,14 +4362,14 @@ bool ison=true;
             statelocation: svp.LocatioList[1],
             location: svp.LocatioList[0]);
         print(allusers);
-        if (_currentSliderValue != 0.0) {
+        if (_currentRangeValues.end != 0.0) {
           SearchProfile().addtoadminnotification(
               userid: userSave.uid!,
               useremail: userSave.email!,
               userimage:
                   userSave.imageUrls!.isEmpty ? "" : userSave.imageUrls![0],
               title:
-                  "${userSave.displayName} SEARCH ${forIos2 == true ? "MALE" : "FEMALE"} PROFILE BY WITHIN $_currentSliderValue KM",
+                  "${userSave.displayName} SEARCH ${forIos2 == true ? "MALE" : "FEMALE"} PROFILE BY WITHIN ${_currentRangeValues.end} KM",
               email: userSave.email!,
               subtitle: "");
         } else {
@@ -4650,6 +4389,8 @@ bool ison=true;
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => SearchProfileError()));
         } else {
+          SearchProfile()
+              .increaseSearchProfileFound(id: id, number: allusers.length);
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => SearchSlideProfile(
                     ages: svp.AgeList,
@@ -4674,7 +4415,7 @@ bool ison=true;
                     citylocation: svp.LocatioList[2],
                     statelocation: svp.LocatioList[1],
                     location: svp.LocatioList[0],
-                    currentSliderValue: _currentSliderValue.toInt(),
+                    currentSliderValue: _currentRangeValues.end.toInt(),
                     forIos: forIos2,
                     user_data: allusers,
                   )));
@@ -4726,7 +4467,7 @@ bool ison=true;
         FirebaseFirestore.instance.collection("user_data");
     // query = query.where('gender', isEqualTo: gen);
     var listUid = await LocationSearchByDistance.searchUids(
-        _currentSliderValue * 1000, query);
+        _currentRangeValues.end * 1000, query);
     Set commonData = listUid.toSet();
     if (commonData.isEmpty) {
       Navigator.of(context)

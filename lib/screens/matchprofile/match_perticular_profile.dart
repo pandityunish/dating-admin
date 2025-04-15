@@ -69,19 +69,26 @@ body: Column(
                   Expanded(
                     child: Column(
                       children: [
-                        Container(
-                          height: 50,
-                          width: 330,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 223, 223, 223))),
-                          child: TextFormField(
-                            controller: controller,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                border: InputBorder.none,
-                                hintText: "Please Enter Profile ID"),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            height: 45,
+                            width: MediaQuery.of(context).size.height * 0.6,
+                            decoration: BoxDecoration(
+                              
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 223, 223, 223))),
+                            child: TextFormField(
+                              
+                              controller: controller,
+                              cursorColor: main_color,
+                              decoration: InputDecoration(
+                                
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 7),
+                                  border: InputBorder.none,
+                                  hintText: "Please Enter Profile ID"),
+                            ),
                           ),
                         ),
                       ],
@@ -98,7 +105,7 @@ body: Column(
                               builder: (context) {
                                 return const AlertDialog(
                                   content: SnackBarContent(
-                                    error_text: "Please enter profile id",
+                                    error_text: "Please Enter Profile ID",
                                     appreciation: "",
                                     icon: Icons.error,
                                     sec: 3,
@@ -168,7 +175,7 @@ body: Column(
                                   return const AlertDialog(
                                     content: SnackBarContent(
                                       error_text:
-                                          "Please Enter Valid Profile Id",
+                                          "Please Enter Valid Profile ID",
                                       appreciation: "",
                                       icon: Icons.error,
                                       sec: 3,

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
 import 'package:matrimony_admin/screens/data_collection/disability.dart';
 import 'package:matrimony_admin/screens/navigation/navigator.dart';
 import 'package:matrimony_admin/screens/service/search_profile.dart';
@@ -65,118 +66,92 @@ class _ReligionState extends State<Invisible> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-           leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                
-              },
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                color: main_color,
-                size: 25,
-              ),
-            ),
-          middle: Container(
-            margin: EdgeInsets.only(right: 20),
-            child: DefaultTextStyle(
-                style: GoogleFonts.poppins(color: main_color, fontSize: 25),
-                child: Text("Invisible Profile             ")),
-          ),
-          previousPageTitle: "",
-        ),
-        child: Column(
+    return Scaffold(
+        appBar:CustomAppBar(title: "Invisible Profile", iconImage: "images/icons/invisible.png",height: 80,),
+       
+        body: Column(
           children: [
-            SizedBox(
-              height: 100,
-            ),
+            
             Center(
                 child: Container(
               height: MediaQuery.of(context).size.height * 0.85,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Material(
-                      child: InkWell(
-                          onTap: () {
-                              SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-  title: "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} IN ALL DATABASE", email: userSave.email!, subtitle: "");
-                            AdminService().invisibletoallprofile(value: widget.newUserModel.puid).whenComplete((){
-                               showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    content: SnackBarContent(
-                                      error_text: "Invisible To All Successfull",
-                                      appreciation: "",
-                                      icon: Icons.error,
-                                      sec: 3,
-                                    ),
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  );
-                                });
-                            }).whenComplete((){
-                                   Get.to(MyProfile(
-                                      userSave: widget.newUserModel,
-                                      profilecomp: 50));
-                                   
-                                });;
-                              
-                          },
-                          child: CustomSpecialButtom(
-                            text: "Invisible For All",
-                            bordercolor:
-                                color == false ? Colors.black : Colors.blue,
-                          )),
-                    ),
-                    Material(
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => InvisibleProfile(newUserModel: widget.newUserModel,)));
-                          },
-                          child: CustomSpecialButtom(
-                            text: "Invisible For Particular",
-                            bordercolor:
-                                color == false ? Colors.black : Colors.blue,
-                          )),
-                    ),
-                    Material(
-                      child: InkWell(
-                          onTap: () {
-                              SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-  title: "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} PROFILE TO NEARBY", email: userSave.email!, subtitle: "");
-   showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    content: SnackBarContent(
-                                      error_text: "Invisible To Nearyby Successfull",
-                                      appreciation: "",
-                                      icon: Icons.error,
-                                      sec: 3,
-                                    ),
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  );
-                                }).whenComplete((){
-                                   Get.to(MyProfile(
-                                      userSave: widget.newUserModel,
-                                      profilecomp: 50));
-                                   
-                                });
+                    InkWell(
+                        onTap: () {
+                            SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
+                      title: "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} IN ALL DATABASE", email: userSave.email!, subtitle: "");
+                          AdminService().invisibletoallprofile(value: widget.newUserModel.puid).whenComplete((){
+                             showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text: "Invisible for All Successfully",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
+                          }).whenComplete((){
+                                 Get.to(MyProfile(
+                                    userSave: widget.newUserModel,
+                                    profilecomp: 50));
+                                 
+                              });;
                             
-                          },
-                          child: CustomSpecialButtom(
-                            text: "Invisible For Nearby",
-                            bordercolor:
-                                color == false ? Colors.black : Colors.blue,
-                          )),
-                    ),
+                        },
+                        child: CustomSpecialButtom(
+                          text: "Invisible for All",
+                          bordercolor:
+                              color == false ? Colors.black : Colors.blue,
+                        )),
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => InvisibleProfile(newUserModel: widget.newUserModel,)));
+                        },
+                        child: CustomSpecialButtom(
+                          text: "Invisible for Particular",
+                          bordercolor:
+                              color == false ? Colors.black : Colors.blue,
+                        )),
+                    InkWell(
+                        onTap: () {
+                            SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
+                      title: "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} PROFILE TO NEARBY", email: userSave.email!, subtitle: "");
+                       showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text: "Invisible for Nearyby Successfully",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              }).whenComplete((){
+                                 Get.to(MyProfile(
+                                    userSave: widget.newUserModel,
+                                    profilecomp: 50));
+                                 
+                              });
+                          
+                        },
+                        child: CustomSpecialButtom(
+                          text: "Invisible for Nearby 20 Km",
+                          bordercolor:
+                              color == false ? Colors.black : Colors.blue,
+                        )),
                   ],
                 ),
               ),

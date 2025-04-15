@@ -401,7 +401,7 @@ class _ReligionState extends State<Profiles> {
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => AudioClipScreen(isBulk: "true",)));
+                                    builder: (context) => AudioClipScreen(isBulk: "true" ,)));
                                 },
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,

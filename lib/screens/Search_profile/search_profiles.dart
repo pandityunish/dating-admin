@@ -114,7 +114,7 @@ class _SlideProfileState extends State<SearchSlideProfile> {
     setuserData();
 
     // HomeService().getusersaveprefdata();
-    getConnectivity();
+    // getConnectivity();
     getallnumofunreadnoti();
     HomeService().getuserdata().whenComplete(() {
       //  AuthService().getadmin(userSave.email!);
@@ -128,7 +128,7 @@ class _SlideProfileState extends State<SearchSlideProfile> {
     //     FirebaseDatabase.instance.ref().child('user1').child(userSave.uid!);
     // _notificationsRef!.onValue.listen((event) {
     //   int count = 0;
-
+ 
     //   // Map<dynamic, dynamic> notifications =
     //   //     event.snapshot.value as Map<dynamic, dynamic>;
     //   // if (notifications != null) {
@@ -305,19 +305,19 @@ class _SlideProfileState extends State<SearchSlideProfile> {
   List<NewUserModel> allusers = [];
   final int initialPage = 0;
   final int itemsPerPage = 10;
-  getConnectivity() =>
-      subscription = Connectivity().onConnectivityChanged.listen(
-            (ConnectivityResult result) async {
-              print("Shivam is Connected");
-              isDeviceConnected =
-                  await InternetConnectionChecker().hasConnection;
-              if (!isDeviceConnected && isAlertSet == false) {
-                showDialogBox();
-                if (!mounted) return;
-                setState(() => isAlertSet = true);
-              }
-            } as void Function(List<ConnectivityResult> event)?,
-          );
+  // getConnectivity() =>
+  //     subscription = Connectivity().onConnectivityChanged.listen(
+  //           (ConnectivityResult result) async {
+  //             print("Shivam is Connected");
+  //             isDeviceConnected =
+  //                 await InternetConnectionChecker().hasConnection;
+  //             if (!isDeviceConnected && isAlertSet == false) {
+  //               showDialogBox();
+  //               if (!mounted) return;
+  //               setState(() => isAlertSet = true);
+  //             }
+  //           } as void Function(List<ConnectivityResult> event)?,
+  //         );
   getUserList() async {
     load = true;
     setState(() {});

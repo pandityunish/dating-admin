@@ -133,7 +133,7 @@ class _ProfilePageState extends State<MatchProfilePage>
       int f_minutes = int.parse(fminuteAndAmPm[0]);
       var url = Uri.parse(
           'https://api.kundali.astrotalk.com/v1/combined/match_making');
-    
+
       var payload = {
         "m_detail": {
           "day": m_day,
@@ -170,7 +170,7 @@ class _ProfilePageState extends State<MatchProfilePage>
 
       var response = await http
           .post(url, body: body, headers: {'Content-Type': 'application/json'});
-    
+
       if (response.statusCode == 200) {
         if (!mounted) return;
         setState(() {
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<MatchProfilePage>
 
       var response = await http
           .post(url, body: body, headers: {'Content-Type': 'application/json'});
-   
+
       if (response.statusCode == 200) {
         if (!mounted) return;
         setState(() {
@@ -294,7 +294,7 @@ class _ProfilePageState extends State<MatchProfilePage>
     _dbref = FirebaseDatabase.instance.ref();
     _dbref5 = FirebaseDatabase.instance.ref();
     setconnection();
-    matchValue = pm.profileMatch(widget.userSave,widget.userSave!).toString();
+    matchValue = pm.profileMatch(widget.userSave, widget.userSave!).toString();
     setState(() {
       galleryItems = (widget.userSave!.imageurls == null ||
               widget.userSave!.imageurls.isEmpty)
@@ -351,8 +351,6 @@ class _ProfilePageState extends State<MatchProfilePage>
         country = widget.userSave!.Location!
             .split(' ')[widget.userSave!.Location!.split(' ').length - 1];
       });
-
-   
     } catch (e) {
       print("error in country : $e");
       country = "India";
@@ -526,12 +524,15 @@ class _ProfilePageState extends State<MatchProfilePage>
 
   void getdistance() async {
     var dist = await getDistanceBetweenLocations(
-      widget.currentuser!.lat!,
-       widget.currentuser!.lng!,
+        widget.currentuser!.lat!,
+        widget.currentuser!.lng!,
         widget.userSave!.lat.toDouble(),
         widget.userSave!.lng.toDouble());
-    var distance1 = calculateDistance(widget.currentuser!.lat!,widget.currentuser!.lng!,
-        widget.userSave!.lat.toDouble(), widget.userSave!.lng.toDouble());
+    var distance1 = calculateDistance(
+        widget.currentuser!.lat!,
+        widget.currentuser!.lng!,
+        widget.userSave!.lat.toDouble(),
+        widget.userSave!.lng.toDouble());
     distance = distance1.toStringAsFixed(2);
     setState(() {});
   }
@@ -556,25 +557,29 @@ class _ProfilePageState extends State<MatchProfilePage>
   savedPrefCard(boxname, imgicon, defaultText) {
     // print(boxname.toString());
     return Box(
+      currentusertext: "",
+
       box_text: (boxname.isEmpty)
           ? (defaultText.length > 1)
               ? "${defaultText[0]} +${defaultText.length - 1}}"
               : defaultText[0]
           : (boxname.length > 1)
-              ?boxname.contains("Any")?"Any": "${boxname[0]} +${boxname.length - 1}"
+              ? boxname.contains("Any")
+                  ? "Any"
+                  : "${boxname[0]} +${boxname.length - 1}"
               : boxname[0],
       icon: imgicon,
     );
   }
 
   locationCard(boxname, imgicon, defaultText) {
-    print(boxname.toString()+"hello");
+    print(boxname.toString() + "hello");
     return Container(
         margin: const EdgeInsets.only(bottom: 1.5, right: 2),
-                height: MediaQuery.of(context).size.height * 0.0195,
+        height: MediaQuery.of(context).size.height * 0.0195,
 
         // width: (width == null) ? box_text.length * 8 + 32.0 : width,
-        width:  80,
+        width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(33.0),
           border: Border.all(color: main_color, width: 0.5),
@@ -594,23 +599,25 @@ class _ProfilePageState extends State<MatchProfilePage>
               SizedBox(
                 width: 5,
               ),
-            boxname.contains("1")?Text(
-                    "Any",
-                    // textScaleFactor: 1.0,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: main_color,
-                    ),
-                  ):  Text(
-                    boxname,
-                    // textScaleFactor: 1.0,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: main_color,
-                    ),
-                  )
+              boxname.contains("1")
+                  ? Text(
+                      "Any",
+                      // textScaleFactor: 1.0,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: main_color,
+                      ),
+                    )
+                  : Text(
+                      boxname,
+                      // textScaleFactor: 1.0,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: main_color,
+                      ),
+                    )
             ],
           ),
         ));
@@ -635,6 +642,8 @@ class _ProfilePageState extends State<MatchProfilePage>
   ageCard(boxname, imgicon, defaultText) {
     // print(boxname.toString());
     return Box(
+      currentusertext: "",
+
       box_text: (boxname.isEmpty)
           ? (defaultText.length > 1)
               ? "${defaultText[0]} - ${defaultText[1]} "
@@ -649,6 +658,7 @@ class _ProfilePageState extends State<MatchProfilePage>
   heightard(boxname, imgicon, defaultText) {
     // print(boxname.toString());
     return Box(
+      currentusertext: "",
       box_text: (boxname.isEmpty)
           ? (defaultText.length > 1)
               ? "${defaultText[0]} - ${defaultText[1]}  "
@@ -962,7 +972,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                               ),
                                             ),
                                           ),
-                                           const SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           Column(
@@ -997,34 +1007,31 @@ class _ProfilePageState extends State<MatchProfilePage>
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                           Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.15,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Text(
-                                      "${widget.userSave!.Location}",
-                                      textAlign: TextAlign.end,
-                                      style: const TextStyle(
-                                                        fontFamily:
-                                                            "Sans-serif",
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        // color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        shadows: <Shadow>[
-                                                          Shadow(
-                                                              color:
-                                                                  Colors.black,
-                                                              blurRadius: 5.0)
-                                                        ],
-                                                      ),
-                                    ),
-                                  ),
-                                ),
-                                         
-                                         
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.15,
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                "${widget.userSave!.Location}",
+                                                textAlign: TextAlign.end,
+                                                style: const TextStyle(
+                                                  fontFamily: "Sans-serif",
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                  // color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                  shadows: <Shadow>[
+                                                    Shadow(
+                                                        color: Colors.black,
+                                                        blurRadius: 5.0)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                           const SizedBox(
                                             width: 10,
                                           ),
@@ -1072,27 +1079,67 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                         //             "Am", "")
                                                         //         .replaceAll(
                                                         //             "Pm", "");
-                                                          DateTime dateofbirth = DateTime.fromMillisecondsSinceEpoch(widget.currentuser!.dob!);
+                                                        DateTime dateofbirth = DateTime
+                                                            .fromMillisecondsSinceEpoch(
+                                                                widget
+                                                                    .currentuser!
+                                                                    .dob!);
 
-      String m_day = dateofbirth.day.toString();
-      String m_month = dateofbirth.month.toString();
-      String m_year = dateofbirth.year.toString();
-      DateTime dateofbirth1 =
-          DateTime.fromMillisecondsSinceEpoch(widget.userSave!.dob);
-      String f_day = dateofbirth1.day.toString();
-      String f_month = dateofbirth1.month.toString();
-      String f_year = dateofbirth1.year.toString();
-      List<String> m_parts =widget. currentuser!.timeofbirth!.split(':');
-      int m_hours = int.parse(m_parts[0]);
+                                                        String m_day =
+                                                            dateofbirth.day
+                                                                .toString();
+                                                        String m_month =
+                                                            dateofbirth.month
+                                                                .toString();
+                                                        String m_year =
+                                                            dateofbirth.year
+                                                                .toString();
+                                                        DateTime dateofbirth1 =
+                                                            DateTime
+                                                                .fromMillisecondsSinceEpoch(
+                                                                    widget
+                                                                        .userSave!
+                                                                        .dob);
+                                                        String f_day =
+                                                            dateofbirth1.day
+                                                                .toString();
+                                                        String f_month =
+                                                            dateofbirth1.month
+                                                                .toString();
+                                                        String f_year =
+                                                            dateofbirth1.year
+                                                                .toString();
+                                                        List<String> m_parts =
+                                                            widget.currentuser!
+                                                                .timeofbirth!
+                                                                .split(':');
+                                                        int m_hours = int.parse(
+                                                            m_parts[0]);
 
-      List<String> minuteAndAmPm = m_parts[1].split(' ');
-      int m_minutes = int.parse(minuteAndAmPm[0]);
-      List<String> f_parts = widget.userSave!.timeofbirth.split(':');
-    
-      int f_hours = int.parse(f_parts[0]);
+                                                        List<String>
+                                                            minuteAndAmPm =
+                                                            m_parts[1]
+                                                                .split(' ');
+                                                        int m_minutes =
+                                                            int.parse(
+                                                                minuteAndAmPm[
+                                                                    0]);
+                                                        List<String> f_parts =
+                                                            widget.userSave!
+                                                                .timeofbirth
+                                                                .split(':');
 
-      List<String> fminuteAndAmPm = f_parts[1].split(' ');
-      int f_minutes = int.parse(fminuteAndAmPm[0]);
+                                                        int f_hours = int.parse(
+                                                            f_parts[0]);
+
+                                                        List<String>
+                                                            fminuteAndAmPm =
+                                                            f_parts[1]
+                                                                .split(' ');
+                                                        int f_minutes =
+                                                            int.parse(
+                                                                fminuteAndAmPm[
+                                                                    0]);
                                                         // Get.to(KundaliMatchData3Screen(
                                                         //     boydob: boydob,
                                                         //     boytob:
@@ -1120,35 +1167,68 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                         //             [
                                                         //             'received_points']
                                                         //         .toString()));
-                                                        Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (builder) =>
-                                          KundaliMatchDataScreen1(
-                                            m_name: widget.currentuser!.name,
-                                            f_name: widget
-                                                                .userSave!.name,
-                                            m_month: m_month,
-                                            f_month: f_month,
-                                            m_day: m_day,
-                                            f_day: f_day,
-                                            m_year: m_year,
-                                            f_year: f_year,
-                                            m_hour: m_hours,
-                                            f_hour: f_hours,
-                                            m_min: m_minutes,
-                                            f_min: f_minutes,
-                                            m_place: widget.currentuser!.Location,
-                                            f_place: widget.userSave!.Location,
-                                            m_gender: "Male",
-                                            f_gender: "Female",
-                                            m_lat: widget.currentuser!.lat,
-                                            m_lon: widget.currentuser!.lng,
-                                            f_lat: widget.userSave!.lat,
-                                            f_lon: widget.userSave!.lng,
-                                            m_sec: 0,
-                                            f_sec: 0,
-                                            m_tzone: "5.5",
-                                            f_tzone: "5.5",
-                                          )));
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (builder) =>
+                                                                        KundaliMatchDataScreen1(
+                                                                          m_name: widget
+                                                                              .currentuser!
+                                                                              .name,
+                                                                          f_name: widget
+                                                                              .userSave!
+                                                                              .name,
+                                                                          m_month:
+                                                                              m_month,
+                                                                          f_month:
+                                                                              f_month,
+                                                                          m_day:
+                                                                              m_day,
+                                                                          f_day:
+                                                                              f_day,
+                                                                          m_year:
+                                                                              m_year,
+                                                                          f_year:
+                                                                              f_year,
+                                                                          m_hour:
+                                                                              m_hours,
+                                                                          f_hour:
+                                                                              f_hours,
+                                                                          m_min:
+                                                                              m_minutes,
+                                                                          f_min:
+                                                                              f_minutes,
+                                                                          m_place: widget
+                                                                              .currentuser!
+                                                                              .Location,
+                                                                          f_place: widget
+                                                                              .userSave!
+                                                                              .Location,
+                                                                          m_gender:
+                                                                              "Male",
+                                                                          f_gender:
+                                                                              "Female",
+                                                                          m_lat: widget
+                                                                              .currentuser!
+                                                                              .lat,
+                                                                          m_lon: widget
+                                                                              .currentuser!
+                                                                              .lng,
+                                                                          f_lat: widget
+                                                                              .userSave!
+                                                                              .lat,
+                                                                          f_lon: widget
+                                                                              .userSave!
+                                                                              .lng,
+                                                                          m_sec:
+                                                                              0,
+                                                                          f_sec:
+                                                                              0,
+                                                                          m_tzone:
+                                                                              "5.5",
+                                                                          f_tzone:
+                                                                              "5.5",
+                                                                        )));
                                                       },
                                                       child: Container(
                                                         width: 35,
@@ -1321,12 +1401,17 @@ class _ProfilePageState extends State<MatchProfilePage>
                                     ),
                                   ),
                                   InkWell(
-                                       onLongPress: () {
-                                                Clipboard.setData(ClipboardData(text: widget.userSave!.puid))
-    .then((value) { //only if ->
-       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Copied successfully")));
-    });
-                                              },
+                                    onLongPress: () {
+                                      Clipboard.setData(ClipboardData(
+                                              text: widget.userSave!.puid))
+                                          .then((value) {
+                                        //only if ->
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Copied successfully")));
+                                      });
+                                    },
                                     child: Container(
                                       margin: const EdgeInsets.only(right: 4),
                                       child: Text(
@@ -1370,7 +1455,6 @@ class _ProfilePageState extends State<MatchProfilePage>
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-
                                               // Navigator.of(context).push(
                                               //     MaterialPageRoute(
                                               //         builder: (builder) =>
@@ -1397,6 +1481,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                               // await player.play(tempFile.path);
                                             },
                                             child: Box(
+                                              currentusertext: widget.currentuser!.religion,
                                                 // width: userSave.religion!.length * 15.5,
                                                 box_text:
                                                     widget.userSave!.religion,
@@ -1405,8 +1490,11 @@ class _ProfilePageState extends State<MatchProfilePage>
                                           ),
                                           (widget.userSave!.religion == "Hindu")
                                               ? Box(
+                                              currentusertext: widget.currentuser!.KundaliDosh,
+
                                                   box_text:
-                                                      userSave.KundaliDosh??"",
+                                                    widget.  userSave?.KundaliDosh ??
+                                                          "",
                                                   icon:
                                                       'images/icons/kundli.png',
                                                 )
@@ -1415,29 +1503,35 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                 ),
                                           Box(
                                             // width: userSave.MartialStatus!.length * 15.5,
+                                              currentusertext: widget.currentuser!.MartialStatus,
+
                                             box_text:
                                                 widget.userSave!.MartialStatus,
                                             icon:
                                                 'images/icons/marital_status.png',
                                           ),
                                           Box(
+                                              currentusertext: widget.currentuser!.Height??"",
+
                                             // width: userSave.Height!.length * 15.5,
                                             box_text: widget.userSave!.Height,
                                             icon: 'images/icons/height.png',
                                           ),
                                           Box(
+                                            currentusertext: widget.currentuser!.Diet??"",
                                             // width: userSave.Diet!.length * 15.5,
                                             box_text: widget.userSave!.Diet,
                                             icon: 'images/icons/food.png',
                                           ),
                                           Box(
-                                            // width: userSave.Education!.length * 15.5,
+                                            currentusertext: widget.currentuser!.Education??"",
                                             box_text:
                                                 widget.userSave!.Education,
                                             icon: 'images/icons/education.png',
                                           ),
                                           Box(
                                             // width: userSave.Profession!.length * 15.5,
+                                            currentusertext: widget.currentuser!.Profession??"",
                                             box_text:
                                                 widget.userSave!.Profession,
                                             icon:
@@ -1465,11 +1559,13 @@ class _ProfilePageState extends State<MatchProfilePage>
                                           Box(
                                             // width: userSave.Profession!.length * 15.5,
                                             box_text: widget.userSave!.Drink,
+                                            currentusertext: widget.currentuser!.Drink??"",
                                             icon: 'images/icons/drink.png',
                                           ),
                                           Box(
                                             // width: userSave.Profession!.length * 15.5,
                                             box_text: widget.userSave!.Smoke,
+                                            currentusertext: widget.currentuser!.Smoke??"",
                                             icon: 'images/icons/smoke.png',
                                           ),
                                           (widget.userSave!.Disability ==
@@ -1477,6 +1573,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                               ? Container(width: 0)
                                               : Box(
                                                   // width: userSave.Profession!.length * 15.5,
+                                                  currentusertext: widget.currentuser!.Disability??"",
                                                   box_text: widget
                                                       .userSave!.Disability,
                                                   icon:
@@ -1484,6 +1581,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                 ),
                                           Box(
                                             // width: userSave.Profession!.length * 15.5,
+                                            currentusertext: widget.currentuser!.Income??"",
                                             box_text: widget.userSave!.Income,
                                             icon: 'images/icons/hand_rupee.png',
                                           ),
@@ -1620,14 +1718,26 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                   savedPrefCard([],
                                                       'images/icons/profession_suitcase.png',
                                                       defaultSp.ProfessionList),
-                                                newSavePrefModel==null?locationCard(
-                                                 "Any",
-                                                  'images/icons/location.png',
-                                                  defaultSp.LocatioList):   locationCard(
-                                                  newSavePrefModel!.location.isEmpty&&newSavePrefModel!.statelocation.isEmpty&&newSavePrefModel!.citylocation.isEmpty?"Any":  
-                                                  "${newSavePrefModel!.location .join(', ')+","}, ${newSavePrefModel!.statelocation .join(', ')+","} ${newSavePrefModel!.citylocation .join(', ')}",
-                                                    'images/icons/location.png',
-                                                    defaultSp.LocatioList),
+                                                  newSavePrefModel == null
+                                                      ? locationCard(
+                                                          "Any",
+                                                          'images/icons/location.png',
+                                                          defaultSp.LocatioList)
+                                                      : locationCard(
+                                                          newSavePrefModel!
+                                                                      .location
+                                                                      .isEmpty &&
+                                                                  newSavePrefModel!
+                                                                      .statelocation
+                                                                      .isEmpty &&
+                                                                  newSavePrefModel!
+                                                                      .citylocation
+                                                                      .isEmpty
+                                                              ? "Any"
+                                                              : "${newSavePrefModel!.location.join(', ') + ","}, ${newSavePrefModel!.statelocation.join(', ') + ","} ${newSavePrefModel!.citylocation.join(', ')}",
+                                                          'images/icons/location.png',
+                                                          defaultSp
+                                                              .LocatioList),
                                                   savedPrefCard([],
                                                       'images/icons/drink.png',
                                                       defaultSp.DrinkList),

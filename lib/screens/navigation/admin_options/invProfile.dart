@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
+import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
 import 'package:matrimony_admin/screens/data_collection/disability.dart';
 import 'package:matrimony_admin/screens/navigation/navigator.dart';
 
@@ -65,157 +66,123 @@ class _ReligionState extends State<InvisibleProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: main_color,
-              size: 25,
-            ),
-          ),
-          middle: Container(
-            margin: EdgeInsets.only(right: 20),
-            child: DefaultTextStyle(
-                style: GoogleFonts.poppins(color: main_color, fontSize: 25),
-                child: Text("Invisible Profile             ")),
-          ),
-          previousPageTitle: "",
+    return Scaffold(
+        appBar: CustomAppBar(
+          title: "Invisible Profile",
+          iconImage: "images/icons/invisible.png",
+          height: 80,
         ),
-        child: Column(
+        body: Column(
           children: [
-            SizedBox(
-              height: 100,
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: Get.width * 0.9,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 223, 223, 223))),
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(
+                            left: 20,
+                          ),
+                          border: InputBorder.none,
+                          hintText: "Please Enter Profile ID"),
+                    ),
+                  ),
+                
+                ],
+              ),
             ),
-            Center(
-                child: Container(
-              height: MediaQuery.of(context).size.height * 0.85,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Material(
-                      child: Container(
-                        height: 50,
-                        width: 330,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                                color: Color.fromARGB(255, 223, 223, 223))),
-                        child: TextFormField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10),
-                              border: InputBorder.none,
-                              hintText: "Please Enter Profile ID"),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 500,
-                    ),
-                    Material(
-                      child: InkWell(
-                          onTap: () async {
-                            if (controller.text.isEmpty) {
+              InkWell(
+                      onTap: () async {
+                        if (controller.text.isEmpty) {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text: "Please enter profile id",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
+                        } else {
+                          NewUserModel newUserModel = await SearchProfile()
+                              .searchuserdatabyid(puid: controller.text);
+                          if (newUserModel.gender == widget.newUserModel.gender) {
+                            Get.showSnackbar(const GetSnackBar(
+                              title: "Same gender",
+                              message: "Same gender cannot be added",
+                              duration: Duration(seconds: 2),
+                            ));
+                          } else if (userSave.puid == controller.text) {
+                            Get.showSnackbar(const GetSnackBar(
+                              title: "Same uid",
+                              message: "Same uid cannot be added",
+                              duration: Duration(seconds: 2),
+                            ));
+                          } else {
+                            SearchProfile().addtoadminnotification(
+                                userid: widget.newUserModel.id!,
+                                useremail: widget.newUserModel.email!,
+                                userimage: widget.newUserModel.imageurls!.isEmpty
+                                    ? ""
+                                    : widget.newUserModel!.imageurls![0],
+                                title:
+                                    "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid}",
+                                email: userSave.email!,
+                                subtitle: "");
+                            AdminService()
+                                .invisibletouser(
+                                    value: widget.newUserModel.id,
+                                    puid: controller.text)
+                                .whenComplete(() {
                               showDialog(
                                   barrierDismissible: false,
                                   context: context,
                                   builder: (context) {
-                                    return const AlertDialog(
+                                    return AlertDialog(
                                       content: SnackBarContent(
-                                        error_text: "Please enter profile id",
+                                        error_text: "Invisible  Successfull",
                                         appreciation: "",
-                                        icon: Icons.error,
+                                        icon: Icons.done,
                                         sec: 3,
                                       ),
                                       backgroundColor: Colors.transparent,
                                       elevation: 0,
                                     );
-                                  });
-                            } else {
-                              NewUserModel newUserModel = await SearchProfile()
-                                  .searchuserdatabyid(puid: controller.text);
-                              if (newUserModel.gender ==
-                                  widget.newUserModel.gender) {
-                                Get.showSnackbar(const GetSnackBar(
-                                  title: "Same gender",
-                                  message: "Same gender cannot be added",
-                                  duration: Duration(seconds: 2),
-                                ));
-                              } else if (userSave.puid == controller.text) {
-                                Get.showSnackbar(const GetSnackBar(
-                                  title: "Same uid",
-                                  message: "Same uid cannot be added",
-                                  duration: Duration(seconds: 2),
-                                ));
-                              } else {
-                                SearchProfile().addtoadminnotification(
-                                    userid: widget.newUserModel!.id!,
-                                    useremail: widget.newUserModel!.email!,
-                                    userimage: widget
-                                            .newUserModel!.imageurls!.isEmpty
-                                        ? ""
-                                        : widget.newUserModel!.imageurls![0],
-                                    title:
-                                        "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid}",
-                                    email: userSave.email!,
-                                    subtitle: "");
-                                AdminService()
-                                    .invisibletouser(
-                                        value: widget.newUserModel.id,
-                                        puid: controller.text)
-                                    .whenComplete(() {
-                                  showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: SnackBarContent(
-                                            error_text:
-                                                "Invisible  Successfull",
-                                            appreciation: "",
-                                            icon: Icons.done,
-                                            sec: 3,
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        );
-                                      }).whenComplete((){
-                                        Get.to(MyProfile(
-                                      userSave: widget.newUserModel,
-                                      profilecomp: 50));
-                                      });
-                                }).whenComplete(() {
-                                  
-                                });
-                              }
-                            }
-                          },
-                          child: CustomSpecialButtom(
-                            text: "Invisible",
-                            bordercolor:
-                                color == false ? Colors.black : Colors.blue,
-                          )),
-                    ),
-                    Material(
-                      child: InkWell(
-                          onTap: () {
-                            /*Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => BoostProfile()));*/
-                          },
-                          child: CustomSpecialButtom(
-                            text: "Cancel",
-                            bordercolor:
-                                color == false ? Colors.black : Colors.blue,
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-            ))
+                                  }).whenComplete(() {
+                                Get.to(MyProfile(
+                                    userSave: widget.newUserModel,
+                                    profilecomp: 50));
+                              });
+                            }).whenComplete(() {});
+                          }
+                        }
+                      },
+                      child: CustomSpecialButtom(
+                        text: "Invisible",
+                        bordercolor: color == false ? Colors.black : Colors.blue,
+                      )),
+                  InkWell(
+                      onTap: () {
+                        /*Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BoostProfile()));*/
+                      },
+                      child: CustomSpecialButtom(
+                        text: "Cancel",
+                        bordercolor: color == false ? Colors.black : Colors.blue,
+                      )),
           ],
         ));
   }

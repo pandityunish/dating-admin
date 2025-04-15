@@ -4,6 +4,8 @@ import 'dart:convert';
 class AdsModel {
   final String image;
    final String createdAt;
+   final int seen;
+   final int clicked;
    final String adsid;
    final String id;
    final String description;
@@ -14,6 +16,8 @@ class AdsModel {
     required this.image,
     required this.isActive,
     required this.createdAt,
+    required this. seen,
+    required this. clicked,
     required this.adsid,
     required this.id,
     required this.description,
@@ -35,6 +39,8 @@ class AdsModel {
     return AdsModel(
       image: map['image'] as String,
       createdAt: map['createdAt'] as String,
+      seen: map['seen'] as int,
+      clicked: map['clicked'] as int,
       adsid: map['adsid'] as String,
       isActive: map['isActive'] as bool,
       id:map['_id']as String,

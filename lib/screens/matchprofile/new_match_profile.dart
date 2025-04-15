@@ -60,6 +60,7 @@ class _ReligionState extends State<NewMatchProfile> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:CustomAppBar(title: "Match Profile", iconImage: "images/person.png",height: 80,),
@@ -101,9 +102,9 @@ class _ReligionState extends State<NewMatchProfile> {
                                               builder: (context) {
                                                 return AlertDialog(
                                                   content: SnackBarContent(
-                                                    error_text: "User Doesn't have Save Preference",
+                                                    error_text: "Preference Required",
                                                     appreciation: "",
-                                                    icon: Icons.done,
+                                                    icon: Icons.check_circle,
                                                     sec: 3,
                                                   ),
                                                   backgroundColor: Colors.transparent,

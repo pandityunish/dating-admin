@@ -34,8 +34,10 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
   List<Map<dynamic, dynamic>> tempactivitylist = [];
   List<Map<dynamic, dynamic>> user1activitylist = [];
   List<Map<dynamic, dynamic>> user2activitylist = [];
+  String ?adminEmail;
   NotifyModel temp = NotifyModel();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController2 = RefreshController(initialRefresh: false);
   var type;
   DateTime? selectedDate = DateTime.now();
   List<AdminModel> alladmins = [];
@@ -95,9 +97,11 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
   }
 
   int page = 1;
+  int adminpage = 1;
   int perPage = 10;
   bool isLoading = false;
   List<AdminNotificationModel> allnotifications = [];
+  List<AdminNotificationModel> alladminnotifications = [];
   setdata({bool isRefresh = false}) async {
     setState(() {
       isLoading = true;
@@ -122,7 +126,30 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
       isLoading = false;
     });
   }
+ setadmindata({bool isRefresh = false}) async {
+    setState(() {
+      isLoading = true;
+    });
 
+    if (isRefresh) {
+      adminpage = 1;
+      alladminnotifications.clear();
+    }
+
+    List<AdminNotificationModel> notifications = await HomeService().getalladminnotification(adminpage,adminEmail??"");
+
+    alladminnotifications.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    if (alladminnotifications.isNotEmpty) {
+      setState(() {
+        alladminnotifications.addAll(notifications);
+        adminpage++;
+      });
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
   late List<AdminNotificationModel> _searchResults = [];
   TextEditingController _searchController = TextEditingController();
 
@@ -161,8 +188,8 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
   }
 
   void getalladminnotifications(String email) async {
-    allnotifications.clear();
-    allnotifications = await HomeService().getalladminnotification(email);
+    alladminnotifications.clear();
+    alladminnotifications = await HomeService().getalladminnotification(adminpage,email);
     setState(() {});
   }
 
@@ -228,7 +255,15 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
     await setdata();
     _refreshController.loadComplete();
   }
+  void _onadminRefresh() async {
+    await setadmindata(isRefresh: true);
+    _refreshController2.refreshCompleted();
+  }
 
+  void _onadminLoading() async {
+    await setadmindata();
+    _refreshController2.loadComplete();
+  }
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
@@ -330,6 +365,11 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
                                         email: userSave.email??"",
                                         subtitle: "",
                                       );
+                                      adminEmail=value.email;
+                                      allnotifications.clear();
+                                      setState(() {
+                                        
+                                      });
                                       if ((value.username == "admin" &&
                                               listofadminpermissions!.contains("Can see main admin activities")) ||
                                           listofadminpermissions!.contains("All")) {
@@ -402,7 +442,7 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
-                Expanded(
+            alladminnotifications.isEmpty?    Expanded(
                   child: SmartRefresher(
                     controller: _refreshController,
                     enablePullDown: true,
@@ -429,6 +469,43 @@ class _NavHomeState extends State<NavHome> with TickerProviderStateMixin {
                               if (index < allnotifications.length) {
                                 return NotificationWidget2(
                                   notiData: allnotifications[index],
+                                );
+                              } else if (_searchResults.length > 1) {
+                                return NotificationWidget2(
+                                  notiData: _searchResults[index],
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                  ),
+                ): Expanded(
+                  child: SmartRefresher(
+                    controller: _refreshController2,
+                    enablePullDown: true,
+                    enablePullUp: true,
+                    onRefresh: _onadminRefresh,
+                    onLoading: _onadminLoading,
+                    header: const WaterDropHeader(),
+                    footer: const ClassicFooter(),
+                    child: alladminnotifications.isEmpty && _searchResults.isEmpty
+                        ? ListView.builder(
+                            itemCount: widget.newUserModel!.activities!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: NotificationWidget3(
+                                  notiData: widget.newUserModel!.activities![index],
+                                ),
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            itemCount: _searchResults.isEmpty ? alladminnotifications.length : _searchResults.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index < alladminnotifications.length) {
+                                return NotificationWidget2(
+                                  notiData: alladminnotifications[index],
                                 );
                               } else if (_searchResults.length > 1) {
                                 return NotificationWidget2(

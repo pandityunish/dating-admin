@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:matrimony_admin/Auth/auth.dart';
@@ -644,26 +645,27 @@ class HomeService extends GetxController {
   }
 
   Future<List<AdminNotificationModel>> getalladminnotification(
+    int page,
       String email) async {
     List<AdminNotificationModel> getAdminNotificationsData = [];
     try {
       final response = await http.post(
         Uri.parse(getadminnotificationurl),
-        body: jsonEncode({"adminemail": email}),
+        body: jsonEncode({"adminemail": email,"page": page}),
         headers: {'Content-Type': 'application/json'},
       );
-      print(response.body);
+        log("${jsonDecode(response.body)["data"]}");
 
       if (response.statusCode == 200) {
-        for (var i = 0; i < jsonDecode(response.body).length; i++) {
+        for (var i = 0; i < jsonDecode(response.body)["data"].length; i++) {
           getAdminNotificationsData.add(AdminNotificationModel.fromJson(
-              jsonEncode(jsonDecode(response.body)[i])));
+              jsonEncode(jsonDecode(response.body)["data"][i])));
         }
       } else {
         print("Something went wrong");
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return getAdminNotificationsData;
   }

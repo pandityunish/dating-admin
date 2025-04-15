@@ -468,7 +468,7 @@ log("message ${searchemail}");
   try {
     final url = Uri.parse('$getadminsearchurl?page=$page&limit=$limit');
     final response = await http.get(url, headers: {'Content-Type': 'application/json'});
-
+log("message ${response.body}");
     if (response.statusCode == 200) {
       return jsonDecode(response.body); // Decode the entire JSON response
     } else {
@@ -496,7 +496,7 @@ log("message ${searchemail}");
     }
   }
 
-  void addtosearchprofile(
+  Future<String> addtosearchprofile(
       {required String searchprofile,
       required String searchDistance,
       required String age,
@@ -517,9 +517,11 @@ log("message ${searchemail}");
       required String education,
       required String profession,
       required String income,
+      bool? isSearch,
+      int?minDistance,
+      int? maxDistance,
       required String location}) async {
     try {
-      print(searchsurprofile);
       http.Response res = await http.post(Uri.parse(addtoadminsearchurl),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode({
@@ -544,7 +546,32 @@ log("message ${searchemail}");
             "email": email,
             "adminname": name,
             "location": location,
-            "userid": userSave.uid
+            "userid": userSave.uid,
+            "isSearch": isSearch??false,
+            "minDistance": minDistance??0,
+            "maxDistance": maxDistance??0
+          }));
+      log("updated search" + res.body);
+      if (res.statusCode == 200) {
+        final data=jsonDecode(res.body);
+        return data["_id"];
+      }
+    } catch (e) {
+      
+      print(e.toString());
+    }
+    return '';
+  }
+void increaseSearchProfileFound(
+      {required String id,
+      required int number}) async {
+    try {
+    
+      http.Response res = await http.post(Uri.parse(increaseProfileFoundurl),
+          headers: {'Content-Type': 'Application/json'},
+          body: jsonEncode({
+           'id': id,
+           'incrementBy':number
           }));
       print(res.body);
       if (res.statusCode == 200) {
@@ -554,7 +581,6 @@ log("message ${searchemail}");
       print(e.toString());
     }
   }
-
   Future<void> addtoadminnotification(
       {required String userid,
       required String useremail,

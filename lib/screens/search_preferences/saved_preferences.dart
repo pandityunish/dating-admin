@@ -65,7 +65,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             children: [
               ImageIcon(
                 AssetImage(icon),
-                size: 25,
+                size: 20,
                 color: main_color,
               ),
               Container(
@@ -75,7 +75,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                   style: GoogleFonts.poppins(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400),
                 ),
               )
@@ -162,7 +162,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             children: [
               ImageIcon(
                 AssetImage(icon),
-                size: 25,
+                size: 20,
                 color: main_color,
               ),
               Container(
@@ -172,7 +172,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -192,7 +192,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -236,7 +236,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             children: [
               ImageIcon(
                 AssetImage(icon),
-                size: 25,
+                size: 20,
                 color: main_color,
               ),
               Container(
@@ -246,7 +246,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -340,7 +340,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             children: [
               ImageIcon(
                 AssetImage(icon),
-                size: 25,
+                size: 20,
                 color: main_color,
               ),
               Container(
@@ -350,7 +350,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -444,7 +444,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             children: [
               ImageIcon(
                 AssetImage(icon),
-                size: 25,
+                size: 20,
                 color: main_color,
               ),
               Container(
@@ -454,7 +454,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                   style: const TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Sans-serif'),
                 ),
@@ -599,7 +599,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
           body: SafeArea(
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(left: 10, right: 15),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: (index) {
@@ -889,7 +889,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                             error_text:
                                                 "Preference Save Successfully",
                                             appreciation: "",
-                                            icon: Icons.check,
+                                            icon: Icons.check_circle,
                                             sec: 3,
                                           ),
                                           backgroundColor: Colors.transparent,
@@ -1041,110 +1041,108 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          nameContainer2(
-                              'images/icons/calender.png',
-                              "Age",
-                              functions().AgeDialog,
-                              widget.history_save_pref[index].ageList),
-                          nameContainer(
-                              'images/icons/religion.png',
-                              "Religion",
-                              widget.history_save_pref[index].religionList,
-                              sdl.Religion),
-                          nameContainer(
-                              'images/icons/kundli.png',
-                              "Kundli Dosh",
-                              widget.history_save_pref[index].kundaliDoshList,
-                              sdl.KundaliDosh),
-
-                          nameContainer(
-                              'images/icons/marital_status.png',
-                              "Marital Status",
-                              widget.history_save_pref[index].maritalStatusList,
-                              sdl.MaritalStatus),
-                          nameContainer(
-                              'images/icons/food.png',
-                              "Diet",
-                              widget.history_save_pref[index].dietList,
-                              sdl.Diet),
-                          nameContainer(
-                              'images/icons/smoke.png',
-                              "Smoke",
-                              widget.history_save_pref[index].smokeList,
-                              sdl.Smoke),
-                          nameContainer(
-                              'images/icons/drink.png',
-                              "Drink",
-                              widget.history_save_pref[index].drinkList,
-                              sdl.Drink),
-                          nameContainer(
-                              'images/icons/disability.png',
-                              "Disability With Person",
-                              widget.history_save_pref[index].disabilityList,
-                              sdl.Disability),
-                          nameContainer2(
-                              'images/icons/height.png',
-                              "Height",
-                              functions().HeightDialog,
-                              widget.history_save_pref[index].heightList),
-                          nameContainer(
-                              'images/icons/education.png',
-                              "Education",
-                              widget.history_save_pref[index].educationList,
-                              sdl.Education),
-                          nameContainer(
-                              'images/icons/profession_suitcase.png',
-                              "Profession",
-                              widget.history_save_pref[index].professionList,
-                              sdl.Profession),
-                          nameContainer(
-                              'images/icons/hand_rupee.png',
-                              "Income",
-                              widget.history_save_pref[index].incomeList,
-                              sdl.Income),
-                          nameContainer5(
-                              'images/icons/location.png',
-                              "Location",
-                              functions().LocationDialog,
-                              "${widget.history_save_pref[index].citylocation.isEmpty ? "" : "${widget.history_save_pref[index].citylocation[0]} ${widget.history_save_pref[index].citylocation.length > 1 ? "+${widget.history_save_pref[index].citylocation.length - 1}" : ""}"}${widget.history_save_pref[index].statelocation.isEmpty ? "" : ",${widget.history_save_pref[index].statelocation[0]} ${widget.history_save_pref[index].statelocation.length > 1 ? "+${widget.history_save_pref[index].statelocation.length - 1}" : ""}"}${widget.history_save_pref[index].location.isEmpty ? "" : ",${widget.history_save_pref[index].location[0]}${widget.history_save_pref[index].location.length > 1 ? "+${widget.history_save_pref[index].location.length - 1}" : ""} "}"),
-                          //  nameContainer5(
-                          //           'images/icons/location.png',
-                          //           "Location",
-                          //          functions().AgeDialog, widget.searchs[index].location!),
-                          // SizedBox(
-                          //   height: 100,
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: SizedBox(
-                              width: Get.width,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                      icon: Icon(Icons.arrow_back_ios),
-                                      onPressed: () => {
-                                            _pageController.previousPage(
+                          Row(
+                            children: [
+                         GestureDetector(
+                          onTap: () {
+                             _pageController.previousPage(
                                               duration:
                                                   Duration(milliseconds: 500),
                                               curve: Curves.easeInOut,
-                                            )
-                                          }),
-                                  IconButton(
-                                      icon: Icon(Icons.arrow_forward_ios),
-                                      onPressed: () => {
-                                            _pageController.nextPage(
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            )
-                                          }),
-                                ],
+                                            );
+                          },
+                          child: Icon(Icons.arrow_back_ios,color: main_color,)),
+                                   
+                              SizedBox(
+                                width: Get.width * 0.82,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    nameContainer2(
+                                        'images/icons/calender.png',
+                                        "Age",
+                                        functions().AgeDialog,
+                                        widget.history_save_pref[index].ageList),
+                                    nameContainer(
+                                        'images/icons/religion.png',
+                                        "Religion",
+                                        widget.history_save_pref[index].religionList,
+                                        sdl.Religion),
+                                    nameContainer(
+                                        'images/icons/kundli.png',
+                                        "Kundli Dosh",
+                                        widget
+                                            .history_save_pref[index].kundaliDoshList,
+                                        sdl.KundaliDosh),
+                                    nameContainer(
+                                        'images/icons/marital_status.png',
+                                        "Marital Status",
+                                        widget.history_save_pref[index]
+                                            .maritalStatusList,
+                                        sdl.MaritalStatus),
+                                    nameContainer(
+                                        'images/icons/food.png',
+                                        "Diet",
+                                        widget.history_save_pref[index].dietList,
+                                        sdl.Diet),
+                                    nameContainer(
+                                        'images/icons/smoke.png',
+                                        "Smoke",
+                                        widget.history_save_pref[index].smokeList,
+                                        sdl.Smoke),
+                                    nameContainer(
+                                        'images/icons/drink.png',
+                                        "Drink",
+                                        widget.history_save_pref[index].drinkList,
+                                        sdl.Drink),
+                                    nameContainer(
+                                        'images/icons/disability.png',
+                                        "Disability With Person",
+                                        widget
+                                            .history_save_pref[index].disabilityList,
+                                        sdl.Disability),
+                                    nameContainer2(
+                                        'images/icons/height.png',
+                                        "Height",
+                                        functions().HeightDialog,
+                                        widget.history_save_pref[index].heightList),
+                                    nameContainer(
+                                        'images/icons/education.png',
+                                        "Education",
+                                        widget.history_save_pref[index].educationList,
+                                        sdl.Education),
+                                    nameContainer(
+                                        'images/icons/profession_suitcase.png',
+                                        "Profession",
+                                        widget
+                                            .history_save_pref[index].professionList,
+                                        sdl.Profession),
+                                    nameContainer(
+                                        'images/icons/hand_rupee.png',
+                                        "Income",
+                                        widget.history_save_pref[index].incomeList,
+                                        sdl.Income),
+                                    nameContainer5(
+                                        'images/icons/location.png',
+                                        "Location",
+                                        functions().LocationDialog,
+                                        "${widget.history_save_pref[index].citylocation.isEmpty ? "" : "${widget.history_save_pref[index].citylocation[0]} ${widget.history_save_pref[index].citylocation.length > 1 ? "+${widget.history_save_pref[index].citylocation.length - 1}" : ""}"}${widget.history_save_pref[index].statelocation.isEmpty ? "" : ",${widget.history_save_pref[index].statelocation[0]} ${widget.history_save_pref[index].statelocation.length > 1 ? "+${widget.history_save_pref[index].statelocation.length - 1}" : ""}"}${widget.history_save_pref[index].location.isEmpty ? "" : ",${widget.history_save_pref[index].location[0]}${widget.history_save_pref[index].location.length > 1 ? "+${widget.history_save_pref[index].location.length - 1}" : ""} "}"),
+                                  ],
+                                ),
                               ),
-                            ),
+                                GestureDetector(
+                                  onTap: () {
+                                      _pageController.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 500),
+                                              curve: Curves.easeInOut,
+                                            );
+                                  },
+                                  child: Icon(Icons.arrow_forward_ios,color: main_color)),
+                                    
+                            ],
                           ),
+                         
                           Container(
                             margin: const EdgeInsets.only(top: 30),
                             child: SizedBox(
@@ -1217,41 +1215,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                onPressed: () async {
-                                  // NotificationFunction.setNotification(
-                                  //   "admin",
-                                  //   "${userSave.name!.substring(0, 1)} ${userSave.surname} ${userSave.uid?.substring(userSave!.uid!.length - 5)} RESET PREFERENCE",
-                                  //   'resetpreference',
-                                  // );
-                                  // NotificationFunction.setNotification(
-                                  //   "user1",
-                                  //   "PREFERENCE RESET SUCCESSFULLY ",
-                                  //   'resetpreference',
-                                  // );
-                                  // setState(() {
-                                  //   svp = SavedPref();
-                                  // });
-                                  // saveData();
-                                  // await showDialog(
-                                  //     context: context,
-                                  //     builder: (context) {
-                                  //       return AlertDialog(
-                                  //         content: SnackBarContent(
-                                  //           error_text: "Preference Reset Successfully",
-                                  //           appreciation: "",
-                                  //           icon: Icons.check,
-                                  //           sec: 3,
-                                  //         ),
-                                  //         backgroundColor: Colors.transparent,
-                                  //         elevation: 0,
-                                  //       );
-                                  //     });
-
-                                  // Navigator.of(context).pushAndRemoveUntil(
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => SlideProfile()),
-                                  //     (route) => false);
-                                },
+                                onPressed: () async {},
                               ),
                             ),
                           ),

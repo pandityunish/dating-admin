@@ -962,19 +962,19 @@ class _UserSearchState extends State<UserSearch> {
                                                 //+9155556580544
                                               ],
                                             )),
-
+Divider(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(left: 10),
+                                              margin: EdgeInsets.only(left: 5),
                                               child: Text("Search By Distance",
                                                   style: TextStyle(
                                                       decoration:
                                                           TextDecoration.none,
                                                       color: main_color,
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       fontFamily:
@@ -1003,7 +1003,6 @@ class _UserSearchState extends State<UserSearch> {
                                                       style: TextStyle(
                                                           decoration:
                                                               TextDecoration.none,
-                                                          color: main_color,
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
@@ -1018,7 +1017,6 @@ class _UserSearchState extends State<UserSearch> {
                                                       style: TextStyle(
                                                           decoration:
                                                               TextDecoration.none,
-                                                          color: main_color,
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
@@ -1502,51 +1500,11 @@ class _UserSearchState extends State<UserSearch> {
                                             ],
                                           )),
 
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-
-                                      // Padding(
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 10, vertical: 10),
-                                      //   child: SizedBox(
-                                      //     width: Get.width,
-                                      //     child: Row(
-                                      //       mainAxisAlignment:
-                                      //           MainAxisAlignment.spaceBetween,
-                                      //       children: [
-                                      //         index == 0
-                                      //             ? Container()
-                                      //             : IconButton(
-                                      //                 icon: Icon(
-                                      //                     Icons.arrow_back_ios),
-                                      //                 onPressed: () => {
-                                      //                       _pageController
-                                      //                           .previousPage(
-                                      //                         duration: Duration(
-                                      //                             milliseconds:
-                                      //                                 500),
-                                      //                         curve: Curves
-                                      //                             .easeInOut,
-                                      //                       )
-                                      //                     }),
-                                      //         IconButton(
-                                      //             icon: Icon(
-                                      //                 Icons.arrow_forward_ios),
-                                      //             onPressed: () => {
-                                      //                   _pageController
-                                      //                       .nextPage(
-                                      //                     duration: Duration(
-                                      //                         milliseconds:
-                                      //                             500),
-                                      //                     curve:
-                                      //                         Curves.easeInOut,
-                                      //                   )
-                                      //                 }),
-                                      //       ],
-                                      //     ),
-                                      //   ),
+                                      // const SizedBox(
+                                      //   height: 10,
                                       // ),
+Divider(),
+                                    
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1558,7 +1516,7 @@ class _UserSearchState extends State<UserSearch> {
                                                     decoration:
                                                         TextDecoration.none,
                                                     color: main_color,
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily: 'Sans-serif')),
                                           ),
@@ -1592,7 +1550,6 @@ class _UserSearchState extends State<UserSearch> {
                                                       style: TextStyle(
                                                           decoration:
                                                               TextDecoration.none,
-                                                          color: main_color,
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),
@@ -1607,7 +1564,6 @@ class _UserSearchState extends State<UserSearch> {
                                                       style: TextStyle(
                                                           decoration:
                                                               TextDecoration.none,
-                                                          color: main_color,
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: 'Sans-serif'),

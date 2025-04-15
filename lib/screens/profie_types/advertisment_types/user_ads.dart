@@ -68,6 +68,8 @@ class _AdvertisementDetailsState extends State<ShowUserAds> {
         isActive: false,
         createdAt: "",
         adsid: "",
+        clicked: 0,
+        seen: 0,
         id: "",
         description: "",
         video: "",
@@ -174,6 +176,8 @@ class _AdvertisementDetailsState extends State<ShowUserAds> {
                               createdAt: allads[index].createdAt,
                               adsid: allads[index].adsid,
                               id: allads[index].id,
+                              clicked: allads[index].clicked,
+                              seen: allads[index].seen,
                               description: allads[index].description,
                               video: allads[index].video,
                               name: allads[index].name));

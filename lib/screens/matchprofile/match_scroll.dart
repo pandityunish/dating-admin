@@ -10,9 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:matrimony_admin/Assets/defaultAlgo/profileMatch.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/models/filterusermodel.dart';
+import 'package:matrimony_admin/models/new_save_pref.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
+import 'package:matrimony_admin/screens/data_collection/LetsStart.dart';
 import 'package:matrimony_admin/screens/matchprofile/match_profile_page.dart';
+import 'package:matrimony_admin/screens/navigation/navigator.dart';
+import 'package:matrimony_admin/screens/notification/navHome.dart';
+import 'package:matrimony_admin/screens/profie_types/sortprofile.dart';
+import 'package:matrimony_admin/screens/profile/filter.dart';
+import 'package:matrimony_admin/screens/profile/profile_service.dart';
+import 'package:matrimony_admin/screens/search.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
+import 'package:matrimony_admin/screens/service/search_profile.dart';
+import 'package:matrimony_admin/sendUtils/notiFunction.dart';
 import '../../Assets/box.dart';
 
 import '../../globalVars.dart' as glb;
@@ -61,6 +71,33 @@ class _SlideProfileState extends State<MatchSlideProfile> {
   bool nodata = false;
   cloud.QueryDocumentSnapshot? lastDocument;
   HomeService homeservice=Get.put(HomeService());
+    var profilePercentage = 50;
+  Future<int> profileComplete() async {
+    NewSavePrefModel? newSavePrefModel =
+        await HomeService().getusersaveprefdata1(widget.userSave!.email);
+
+    if (widget.userSave!.About_Me != null || widget.userSave!.About_Me != "") {
+      profilePercentage += 5;
+    }
+    if (widget.userSave!.Partner_Prefs != null ||
+        widget.userSave!.Partner_Prefs != "") {
+      profilePercentage += 5;
+    }
+    if (widget.userSave!.imageurls.isNotEmpty) {
+      profilePercentage += 10;
+    }
+    if (widget.userSave!.status == "approved") {
+      profilePercentage += 10;
+    }
+    if (newSavePrefModel != null) {
+      profilePercentage += 5;
+    }
+    if (widget.userSave!.verifiedstatus == "verified") {
+      profilePercentage += 15;
+    }
+    setState(() {});
+    return profilePercentage;
+  }
 void getalluserlists()async{
 
 if(widget.user_list==null || widget.user_list.isEmpty){
@@ -158,7 +195,7 @@ setState(() {
 
   @override
   void initState() {
-     
+     getallnumofunreadnoti();
 setState(() {
   load=true;
 });
@@ -170,7 +207,7 @@ setState(() {
    } );   
  
   
-  
+  profileComplete();
   }
 
   
@@ -207,6 +244,11 @@ setState(() {
   //     });
   //   });
   // }
+    int numofnoti = 0;
+  void getallnumofunreadnoti() async {
+    numofnoti = await HomeService().getthenumberofunread();
+    setState(() {});
+  }
 int currentPage = 0;
 bool _ispageLoading=false;
    PageController controller = PageController(initialPage: 0,);
@@ -407,124 +449,277 @@ bool _ispageLoading=false;
         //                   // itemCount: newuserlists.length+1,
         //                 ),
                   
-              (widget.notiPage)
-                  ? Positioned(
-                      left: MediaQuery.of(context).size.width * 0.05,
-                      top: MediaQuery.of(context).size.height * 0.04,
+          
+                   Positioned(
+                      left: MediaQuery.of(context).size.width * 0.009,
+                      top: MediaQuery.of(context).size.height * 0.09,
                       child: IconButton(
                         icon: Icon(
                           // Icons.more_vert_outlined,//for three dots
                           Icons.arrow_back_ios, //for three lines
                           size: 25,
-                          color: main_color,
+                  color: Colors.white,
+
+                          shadows: <Shadow>[
+                    Shadow(color: Colors.black, blurRadius: 15.0)
+                  ],
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
-                    )
-                  : Positioned(
-                      left: MediaQuery.of(context).size.width * 0.05,
-                      top: MediaQuery.of(context).size.height * 0.04,
-                      child: IconButton(
-                        icon: const Icon(
-                          // Icons.more_vert_outlined,//for three dots
-                          Icons.menu, //for three lines
-                          size: 20,
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            Shadow(color: Colors.black, blurRadius: 15.0)
-                          ],
-                        ),
-                        onPressed: ()async {
-                          
-//  Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) =>  MyProfile(profilepercentage: profilepercentage,)));
-                         
-                          // builder: (context) => const CallSample()));
+                    ),
+                  
+             
+            Positioned(
+              left: MediaQuery.of(context).size.width * 0.0006,
+              top: MediaQuery.of(context).size.height * 0.04,
+              child: IconButton(
+                icon: const Icon(
+                  // Icons.more_vert_outlined,//for three dots
+                  Icons.menu, //for three lines
+                  size: 20,
+                  color: Colors.white,
+                  shadows: <Shadow>[
+                    Shadow(color: Colors.black, blurRadius: 15.0)
+                  ],
+                ),
+                onPressed: () {
+                  numofnoti = 0;
+                  setState(() {});
+                  if (listofadminpermissions!.contains("Can See left menu") ||
+                      listofadminpermissions!
+                          .contains("Can See user’s full name") ||
+                      listofadminpermissions!.contains("All")) {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "",
+                        userimage: "",
+                        title:
+                            "${userSave.displayName} CLICK ON THE LEFT MENU ",
+                        email: userSave.email!,
+                        subtitle: "");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyProfile(
+                                  profilecomp: profilePercentage,
+                                  userSave: widget.userSave!,
+                                  isDelete:
+                                     false,
+                                )));
+                  }
 
-                          // Get.to(() => const MyProfile(),
-                          //     transition: Transition.zoom);
-                        },
+                  // Get.to(() => const MyProfile(),
+                  //     transition: Transition.zoom);
+                },
+              ),
+            ),
+            Positioned(
+              right: MediaQuery.of(context).size.width * 0.004,
+              top: MediaQuery.of(context).size.height * 0.04,
+              child: IconButton(
+                icon: Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      child: const Icon(
+                        // Icons.more_vert_outlined,//for three dots
+                        FontAwesomeIcons.bell, //for three lines
+                        size: 22,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(color: Colors.black, blurRadius: 15.0)
+                        ],
                       ),
                     ),
-              (widget.notiPage)
-                  ? Positioned(
-                      child: Container(
-                      width: 0,
-                      height: 0,
-                    ))
-                  : Positioned(
-                      right: MediaQuery.of(context).size.width * 0.05,
-                      top: MediaQuery.of(context).size.height * 0.04,
-                      child: IconButton(
-                        icon: Stack(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(3),
-                              child: const Icon(
-                                // Icons.more_vert_outlined,//for three dots
-                                FontAwesomeIcons.bell, //for three lines
-                                size: 25,
-                                color: Colors.white,
-                                shadows: <Shadow>[
-                                  Shadow(color: Colors.black, blurRadius: 15.0)
-                                ],
-                              ),
-                            ),
-                            if (_unreadCount >= 0)
-                              Positioned(
-                                right: 6,
-                                top: 5.0,
-                                child: Container(
-                                  height: 5,
-                                  width: 5,
-                                  // padding: EdgeInsets.all(2.0),
-                                  decoration: BoxDecoration(
-                                    color: main_color,
-                                    borderRadius: BorderRadius.circular(9.0),
-                                  ),
-                                  constraints: BoxConstraints(
-                                    minWidth: 8.0,
-                                    minHeight: 8.0,
+                    if (_unreadCount >= 0)
+                      Positioned(
+                        // right: 2.0,
+                        // top: 1.0,
+                        right: 1.0,
+                        top: 1.0,
+                        child: numofnoti == 0
+                            ? const Text("")
+                            : Container(
+                                padding: const EdgeInsets.all(4.0),
+                                decoration: BoxDecoration(
+                                    color: main_color, shape: BoxShape.circle),
+                                child: Center(
+                                  child: Text(
+                                    '$numofnoti',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 6.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                          ],
-                        ),
-                        onPressed: () {
-        //                   NotificationService().addtoadminnotification(
-        //   userid: userSave.uid!,
-        //  useremail: userSave.email!,
-        //   userimage: userSave.imageUrls!.isEmpty?"":userSave.imageUrls![0],
-        //   title:  "${userSave.name!.substring(0, 1)} ${userSave.surname!.toUpperCase()} ${userSave.puid} SEEN NOTIFICATIONS");
-        //                   NotificationFunction.setNotification(
-        //                     "admin",
-        //                     "${userSave.name!.substring(0, 1)} ${userSave.surname!.toUpperCase()} ${userSave.puid} SEEN NOTIFICATIONS",
-        //                     'notificationbell',
-        //                   );
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const NavHome()));
-                        },
                       ),
-                    ),
-              /*Positioned(
-                  right: MediaQuery.of(context).size.width * 0.05,
-                  top: MediaQuery.of(context).size.height * 0.08,
-                  child: IconButton(
-                    FontAwesomeIcons.bell,
-                    size: 20,
+                  ],
+                ),
+                onPressed: () {
+                  if (listofadminpermissions!
+                          .contains("Can see main admin activities") ||
+                      listofadminpermissions!
+                          .contains("Can see sub admin activities") ||
+                      listofadminpermissions!.contains("All")) {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "",
+                        userimage: "",
+                        title: "${userSave.displayName} SEEN NOTIFICATION",
+                        email: userSave.email!,
+                        subtitle: "");
+                    NotificationFunction.setNotification(
+                      "admin",
+                      "${userSave.name!.substring(0, 1)} ${userSave.surname} ${userSave.uid?.substring(userSave.uid!.length - 5)} SEEN NOTIFICATIONS",
+                      'notificationbell',
+                    );
+                    NotiService().updatenoti();
+                    // numofnoti = 0;
+                    setState(() {});
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NavHome(
+                                  newUserModel: widget.userSave,
+                                )));
+                  }
+                },
+              ),
+            ),
+              Positioned(
+                right: 15.0,
+                top: 90.0,
+                child: GestureDetector(
+                  onTap: () {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "lksjflajk",
+                        userimage: "",
+                        title: "${userSave.displayName} CLICK ON RIGHT MENU",
+                        email: userSave.email!,
+                        subtitle: "");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FilterC()));
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.filter,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
-    //
                   ),
-                ),*/
+                )),
+            Positioned(
+                right: 15.0,
+                top: 220,
+                child: GestureDetector(
+                  onTap: () {
+                    if (listofadminpermissions!.contains("Can See Sort") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title: "${userSave.displayName} CLICK ON SORT",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SortProfileScreen()));
+                    }
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.sort,
+                    color: Colors.white,
+                    size: 18,
+                    shadows: <Shadow>[
+                      Shadow(color: Colors.black, blurRadius: 10.0)
+                    ],
+                  ),
+                )),
+            Positioned(
+                right: 15.0,
+                top: 130.0,
+                child: GestureDetector(
+                  onTap: () {
+                    print(listofadminpermissions);
+                    if (listofadminpermissions!
+                            .contains("Can See Search Bar") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON ADMIN SEARCH BAR ",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Search()));
+                    }
+
+                    // Get.to(() => const MyProfile(),
+                    //     transition: Transition.zoom);
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.search,
+                    color: Colors.white,
+                    size: 18,
+                    shadows: <Shadow>[
+                      Shadow(color: Colors.black, blurRadius: 10.0)
+                    ],
+                  ),
+                )),
+            Positioned(
+                right: 15.0,
+                top: 170.0,
+                child: GestureDetector(
+                  onTap: () {
+                    if (listofadminpermissions!
+                            .contains("Can Create Profile") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON PROFILE CREATE BY ADMIN",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LetsStart()));
+                    }
+                    // Get.to(() => const MyProfile(),
+                    //     transition: Transition.zoom);
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.userEdit,
+                    color: Colors.white,
+                    size: 18,
+                    shadows: <Shadow>[
+                      Shadow(color: Colors.black, blurRadius: 10.0)
+                    ],
+                  ),
+                )),
             ],
           ),
         ),

@@ -23,6 +23,10 @@ class AdminSearchModel {
   String? location;
   String? createdAt;
   String? adminname;
+  bool? isSearch;
+  int? profileFound;
+  int? maxDistance;
+  int? minDistance;
 
   AdminSearchModel({
     this.searchemailprofile,
@@ -36,6 +40,8 @@ class AdminSearchModel {
     this.religion,
     this.kundlidosh,
     this.marital_status,
+    this.maxDistance,
+    this.minDistance,
     this.diet,
     this.smoke,
     this.drink,
@@ -46,6 +52,8 @@ class AdminSearchModel {
     this.income,
     this.location,
     this.createdAt,
+    this.profileFound,
+    this.isSearch
   });
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -64,7 +72,11 @@ class AdminSearchModel {
       'profession': profession,
       'income': income,
       'location': location,
-      'createdAt': createdAt
+      'maxDistance': maxDistance,
+      'minDistance': minDistance,
+      'createdAt': createdAt,
+      'profileFound':profileFound,
+      'isSearch':isSearch
     };
   }
 
@@ -79,8 +91,17 @@ class AdminSearchModel {
       searchnameprofile: map['searchnameprofile'] != null
           ? map['searchnameprofile'] as String
           : null,
+          maxDistance: map['maxDistance'] != null
+          ? map['maxDistance'] as int
+          : null,
+          minDistance: map['minDistance'] != null
+          ? map['minDistance'] as int
+          : null,
       searchphoneprofile: map['searchphoneprofile'] != null
           ? map['searchphoneprofile'] as String
+          : null,
+          isSearch: map['isSearch'] != null
+          ? map['isSearch'] as bool
           : null,
       searchsurprofile: map['searchsurnameprofile'] != null
           ? map['searchsurnameprofile'] as String
@@ -108,6 +129,7 @@ class AdminSearchModel {
       income: map['income'] != null ? map['income'] as String : null,
       location: map['location'] != null ? map['location'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
+      profileFound: map['profileFound'] != null ? map['profileFound'] as int : null,
     );
   }
 

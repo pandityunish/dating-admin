@@ -16,6 +16,7 @@ import 'package:matrimony_admin/Assets/ayushWidget/big_text.dart';
 import 'package:matrimony_admin/screens/profile/edit_email.dart';
 import 'package:matrimony_admin/screens/service/auth_service.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
+import 'package:ticker_text/ticker_text.dart';
 
 import '../../Assets/Error.dart';
 import '../../Assets/ImageDart/images.dart';
@@ -112,7 +113,65 @@ class _EditProfileState extends State<EditProfile> {
       });
     }
   }
-
+sliderContiner(String image, String title,String subtitle){
+  return   Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    ImageIcon(
+                                      AssetImage(image),
+                                      color: main_color,
+                                    ),
+                                    Container(
+                                        margin: EdgeInsets.only(left: 5),
+                                        child: BigText(text: title)),
+                                  ],
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  child: TickerText(
+                                    // default values
+                                    scrollDirection: Axis.horizontal,
+                                    speed: 20,
+                                    startPauseDuration:
+                                        const Duration(seconds: 1),
+                                    endPauseDuration:
+                                        const Duration(seconds: 1),
+                                    returnDuration:
+                                        const Duration(milliseconds: 800),
+                                    primaryCurve: Curves.linear,
+                                    returnCurve: Curves.easeOut,
+                                    child: Text(
+                                     subtitle,
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                  ),
+                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(right: 5),
+                                //   child: Container(
+                                //     width:
+                                //         MediaQuery.of(context).size.width * 0.4,
+                                //     child: SingleChildScrollView(
+                                //       scrollDirection: Axis.horizontal,
+                                //       reverse: true,
+                                //       child: Text(
+                                //         "${userSave.placeofbirth}",
+                                //         textAlign: TextAlign.end,
+                                //         style: TextStyle(fontSize: 15),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          );
+}
   nameContainer(icon, String head, String body) {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25),
@@ -617,18 +676,20 @@ class _EditProfileState extends State<EditProfile> {
                           // child:
                           Column(
                             children: [
-                              nameContainer('images/icons/name.png', "Latitude",
+                              nameContainer('images/icons/latitude.png', "Latitude",
                                   "${widget.userSave.adminlng}"),
                               const SizedBox(
                                 height: 2,
                               ),
-                              nameContainer('images/icons/name.png',
+                              nameContainer('images/icons/latitude.png',
                                   "Longitude", "${widget.userSave.adminlat}"),
                               const SizedBox(
                                 height: 2,
                               ),
-                              nameContainer('images/icons/name.png', "City",
-                                  "${widget.userSave.city}"),
+                              // nameContainer('images/icons/name.png', "City",
+                              //     "${widget.userSave.city}"),
+                                  sliderContiner("images/icons/location.png","L&L city",
+                                  "${widget.userSave.city},"),
                               const SizedBox(
                                 height: 2,
                               ),
@@ -1417,50 +1478,67 @@ class _EditProfileState extends State<EditProfile> {
                                     Column(
                                       children: [
                                         nameContainer(
-                                            'images/icons/name.png',
+                                            'images/icons/latitude.png',
                                             "Latitude",
                                             "${widget.userSave.adminlng}"),
                                         const SizedBox(
                                           height: 2,
                                         ),
                                         nameContainer(
-                                            'images/icons/name.png',
+                                            'images/icons/latitude.png',
                                             "Longitude",
                                             "${widget.userSave.adminlat}"),
                                         const SizedBox(
                                           height: 2,
                                         ),
-                                        nameContainer('images/icons/name.png',
-                                            "City", "${widget.userSave.city}"),
+                                        // nameContainer('images/icons/location.png',
+                                        //     "L&L city", "${widget.userSave.city}"),
+                                          sliderContiner("images/icons/location.png","L&L city",
+                                  "${widget.userSave.city},${widget.userSave.state},${widget.userSave.country}"),
                                         const SizedBox(
                                           height: 2,
                                         ),
-                                        nameContainer(
-                                            'images/icons/name.png',
-                                            "Country",
-                                            "${widget.userSave.country}"),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                        nameContainer(
-                                            'images/icons/name.png',
-                                            "State",
-                                            "${widget.userSave.state}"),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
+                                        // nameContainer(
+                                        //     'images/icons/name.png',
+                                        //     "Country",
+                                        //     "${widget.userSave.country}"),
+                                        // const SizedBox(
+                                        //   height: 2,
+                                        // ),
+                                        // nameContainer(
+                                        //     'images/icons/name.png',
+                                        //     "State",
+                                        //     "${widget.userSave.state}"),
+                                        // const SizedBox(
+                                        //   height: 2,
+                                        // ),
                                         listofadminpermissions!.contains(
                                                     "Can See Full Name") ||
                                                 listofadminpermissions!
                                                     .contains("All")
-                                            ? nameContaineblue(
-                                                'images/icons/name.png',
+                                            ? nameContainer(
+                                                'images/icons/newname.png',
                                                 "Name",
-                                                "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}")
-                                            : nameContaineblue(
-                                                'images/icons/name.png',
+                                                "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ")
+                                            : nameContainer(
+                                                'images/icons/newname.png',
                                                 "Name",
                                                 "${widget.userSave.name[0]} ${widget.userSave.surname}"),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                          listofadminpermissions!.contains(
+                                                    "Can See Full Name") ||
+                                                listofadminpermissions!
+                                                    .contains("All")
+                                            ? nameContainer(
+                                                'images/icons/newname.png',
+                                                "Surname",
+                                                " ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}")
+                                            : nameContainer(
+                                                'images/icons/newname.png',
+                                                "Surname",
+                                                "${widget.userSave.surname}"),
                                         const SizedBox(
                                           height: 2,
                                         ),
@@ -1494,8 +1572,8 @@ class _EditProfileState extends State<EditProfile> {
                                                 listofadminpermissions!
                                                     .contains("All")
                                             ? nameContaineblue(
-                                                'images/icons/name.png',
-                                                "Phone No.",
+                                                'images/icons/newcontact.png',
+                                                "Contact No.",
                                                 "${widget.userSave.phone.substring(0, 3)}-${widget.userSave.phone.substring(3)}")
                                             : Container(),
                                         const SizedBox(
@@ -1507,65 +1585,21 @@ class _EditProfileState extends State<EditProfile> {
                                           height: 2,
                                         ),
                                         nameContainer(
-                                            'images/icons/calender.png',
+                                            'images/icons/dob.png',
                                             "Date of Birth",
                                             dob),
                                         SizedBox(
                                           height: 2,
                                         ),
                                         nameContainer(
-                                            'images/icons/calender.png',
+                                            'images/icons/dob.png',
                                             "Time of Birth",
                                             widget.userSave.timeofbirth!),
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  ImageIcon(
-                                                    AssetImage(
-                                                        'images/icons/location.png'),
-                                                    color: main_color,
-                                                  ),
-                                                  Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 5),
-                                                      child: BigText(
-                                                          text:
-                                                              "Place of birth")),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 5),
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    reverse: true,
-                                                    child: Text(
-                                                      "${widget.userSave.placeofbirth}",
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                          fontSize: 15),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        sliderContiner("images/icons/location.png", "Place of birth", widget.userSave.placeofbirth),
+                                       
                                         SizedBox(
                                           height: 2,
                                         ),
@@ -1653,50 +1687,8 @@ class _EditProfileState extends State<EditProfile> {
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              left: 25, right: 25),
-                                          margin: EdgeInsets.only(bottom: 5),
-                                          child: Column(children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    ImageIcon(
-                                                      AssetImage(
-                                                          'images/icons/location.png'),
-                                                      color: main_color,
-                                                    ),
-                                                    Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 5),
-                                                        child: BigText(
-                                                            text: "Address")),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    child: Text(
-                                                      "${widget.userSave.Location},${widget.userSave.state},${widget.userSave.country}",
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                          fontSize: 15),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ]),
-                                        )
+                                        sliderContiner("images/icons/location.png", "Location",  "${widget.userSave.Location},${widget.userSave.state},${widget.userSave.country}"),
+                                      
                                       ],
                                     ),
                                     // ),
@@ -2230,45 +2222,36 @@ class _EditProfileState extends State<EditProfile> {
                               // child:
                               Column(
                                 children: [
-                                  nameContainer('images/icons/name.png',
+                                  nameContainer('images/icons/latitude.png',
                                       "Latitude", "${editdata[index].lat}"),
                                   const SizedBox(
                                     height: 2,
                                   ),
-                                  nameContainer('images/icons/name.png',
+                                  nameContainer('images/icons/latitude.png',
                                       "Longitude", "${editdata[index].lng}"),
                                   const SizedBox(
                                     height: 2,
                                   ),
-                                  nameContainer('images/icons/name.png', "City",
-                                      "${editdata[index].city}"),
-
+                                    sliderContiner("images/icons/location.png","L&L city",
+                                  "${editdata[index].city},${editdata[index].state},${editdata[index].country}"),
+                               
                                   const SizedBox(
                                     height: 2,
                                   ),
 
-                                  nameContainer('images/icons/name.png',
-                                      "Country", "${editdata[index].country}"),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                  nameContainer('images/icons/name.png',
-                                      "State", "${editdata[index].state}"),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
+                                
                                   listofadminpermissions!.contains(
                                               "Can See user’s full name") ||
                                           listofadminpermissions!
                                               .contains("All")
                                       ? nameContaineblue(
-                                          'images/icons/name.png',
+                                          'images/icons/newname.png',
                                           "Name",
-                                          " ${editdata[index].name[0].toUpperCase() + editdata[index].name!.substring(1)} ${editdata[index].surname![0].toUpperCase() + editdata[index].surname!.substring(1)}")
+                                          " ${editdata[index].name[0].toUpperCase() + editdata[index].name!.substring(1)} ")
                                       : nameContaineblue(
-                                          'images/icons/name.png',
+                                          'images/icons/newname.png',
                                           "Name",
-                                          " ${editdata[index].name[0].toUpperCase()} ${editdata[index].surname![0].toUpperCase() + editdata[index].surname!.substring(1)}"),
+                                          "  ${editdata[index].surname![0].toUpperCase() + editdata[index].surname!.substring(1)}"),
                                   const SizedBox(
                                     height: 2,
                                   ),
@@ -2300,7 +2283,7 @@ class _EditProfileState extends State<EditProfile> {
                                           listofadminpermissions!
                                               .contains("All")
                                       ? nameContaineblue(
-                                          'images/icons/name.png',
+                                          'images/icons/phone.png',
                                           "Phone No.",
                                           "${editdata[index].phone.substring(0, 3)}-${editdata[index].phone.substring(3)}")
                                       : Container(),
@@ -2312,61 +2295,20 @@ class _EditProfileState extends State<EditProfile> {
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  nameContainer('images/icons/calender.png',
+                                  nameContainer('images/icons/dob.png',
                                       "Date of Birth", dateofbirthofuser),
                                   SizedBox(
                                     height: 2,
                                   ),
                                   nameContainer(
-                                      'images/icons/calender.png',
+                                      'images/icons/dob.png',
                                       "Time of Birth",
                                       editdata[index].timeofbirth!),
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            ImageIcon(
-                                              AssetImage(
-                                                  'images/icons/location.png'),
-                                              color: main_color,
-                                            ),
-                                            Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 5),
-                                                child: BigText(
-                                                    text: "Place of birth")),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 5),
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.4,
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              reverse: true,
-                                              child: Text(
-                                                "${editdata[index].placeofbirth}",
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  sliderContiner("images/icons/location.png", "Place of birth",  "${editdata[index].placeofbirth}"),
+                                 
                                   SizedBox(
                                     height: 2,
                                   ),
@@ -2444,47 +2386,8 @@ class _EditProfileState extends State<EditProfile> {
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(left: 25, right: 25),
-                                    margin: EdgeInsets.only(bottom: 5),
-                                    child: Column(children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              ImageIcon(
-                                                AssetImage(
-                                                    'images/icons/location.png'),
-                                                color: main_color,
-                                              ),
-                                              Container(
-                                                  margin:
-                                                      EdgeInsets.only(left: 5),
-                                                  child:
-                                                      BigText(text: "Address")),
-                                            ],
-                                          ),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.4,
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                "${editdata[index].location1},${editdata[index].state},${editdata[index].country}",
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ]),
-                                  )
+                                  sliderContiner('images/icons/location.png', "Location",  "${editdata[index].location1},${editdata[index].state},${editdata[index].country}"),
+                                 
                                 ],
                               ),
                               // ),

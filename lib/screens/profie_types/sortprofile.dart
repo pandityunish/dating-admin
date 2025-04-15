@@ -6,6 +6,7 @@ import 'package:matrimony_admin/models/new_user_model.dart';
 import 'package:matrimony_admin/screens/profie_types/data_of_profiletypes.dart';
 import 'package:matrimony_admin/screens/profie_types/profileservice.dart';
 import 'package:matrimony_admin/screens/profie_types/sort_profile.dart';
+import 'package:matrimony_admin/screens/profie_types/sort_search.dart';
 
 
 import '../../Assets/ayushWidget/big_text.dart';
@@ -44,7 +45,15 @@ class SortProfileScreen extends StatelessWidget {
             ),
 
            
-trailing: Icon(Icons.search,color: main_color,),
+trailing: GestureDetector(
+  onTap: () {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => SortSearch(
+          
+        )
+    ));
+  },
+  child: Icon(Icons.search,color: main_color,)),
             previousPageTitle: "",
           ),
           child: SingleChildScrollView(

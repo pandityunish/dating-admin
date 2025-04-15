@@ -1,4 +1,4 @@
-package com.freerishteywala.android
+package com.example.matrimony_admin
 
 import io.flutter.embedding.android.FlutterActivity
 

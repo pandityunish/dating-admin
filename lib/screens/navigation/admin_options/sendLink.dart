@@ -7,6 +7,7 @@ import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
 import 'package:matrimony_admin/models/send_link_model.dart';
+import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/service/admin_service.dart';
 
 import '../../service/search_profile.dart';
@@ -398,7 +399,7 @@ class _ReligionState extends State<SendLink> {
                     content: const SnackBarContent(
                       error_text: "Send link successfully",
                       appreciation: "",
-                      icon: Icons.check,
+                      icon: Icons.check_circle,
                       sec: 2,
                     ),
                     margin: EdgeInsets.only(
@@ -436,7 +437,7 @@ class _ReligionState extends State<SendLink> {
                   content: const SnackBarContent(
                     error_text: "Send link successfully",
                     appreciation: "",
-                    icon: Icons.check,
+                    icon: Icons.check_circle,
                     sec: 2,
                   ),
                   margin: EdgeInsets.only(
@@ -489,307 +490,290 @@ class _ReligionState extends State<SendLink> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CupertinoNavigationBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: main_color,
-              size: 25,
-            ),
-          ),
-          middle: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(right: 20),
-                child: DefaultTextStyle(
-                    style: GoogleFonts.poppins(color: main_color, fontSize: 25),
-                    child: Text("Send Link")),
-              )
-            ],
-          ),
-          previousPageTitle: "",
-        ),
+      appBar: CustomAppBar(title: "Send Link", iconImage: "images/icons/link.png"),
+        // appBar: CupertinoNavigationBar(
+        //   leading: GestureDetector(
+        //     onTap: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     child: Icon(
+        //       Icons.arrow_back_ios_new,
+        //       color: main_color,
+        //       size: 25,
+        //     ),
+        //   ),
+        //   middle: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Container(
+        //         margin: EdgeInsets.only(right: 20),
+        //         child: DefaultTextStyle(
+        //             style: GoogleFonts.poppins(color: main_color, fontSize: 25),
+        //             child: Text("Send Link")),
+        //       )
+        //     ],
+        //   ),
+        //   previousPageTitle: "",
+        // ),
         body: PageView.builder(
             controller: _pageController,
             onPageChanged: (index) {},
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
               if (data[index].aboutme == 34343434) {
-                return Column(
-                children: [
-                  Center(
-                      child: Container(
-                    height: MediaQuery.of(context).size.height * 0.85,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Improve About Me ($aboutme)", 1)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Improve About Partner Preference ($patnerpref)",
-                                  2)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Success Story", 3)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Video ($video)", 4)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Preference ($savepref)", 5)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Learn How To Use App ($useapp)", 6)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Profession Manually ($professionmanualy)",
-                                  7)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Education Manually ($educationmanualy)",
-                                  8)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Ask Rating ($askRating)", 9)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Photo ($uploadPhoto)", 10)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Download Biodata ($biodata)", 11)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Share App ($shareapp)", 12)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Show Support Reply ($support)", 13)),
-                                 data.length>1?  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                      child: SizedBox(
-                        width: Get.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                                IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
-                                  _pageController.nextPage( duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,)
-                                }),
-                          ],
-                        ),
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                    
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Improve About Me ($aboutme)", 1)),
+                      SizedBox(
+                        height: 5,
                       ),
-                    )
-                    :Center(),
-                        ],
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Improve About Partner Preference ($patnerpref)",
+                              2)),
+                      SizedBox(
+                        height: 5,
                       ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Upload Success Story", 3)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Upload Video ($video)", 4)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Save Preference ($savepref)", 5)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Learn How To Use App ($useapp)", 6)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Save Profession Manually ($professionmanualy)",
+                              7)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Save Education Manually ($educationmanualy)",
+                              8)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Ask Rating ($askRating)", 9)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Upload Photo ($uploadPhoto)", 10)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Download Biodata ($biodata)", 11)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Share App ($shareapp)", 12)),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: CustomRadioButton(
+                              "To Show Support Reply ($support)", 13)),
+                             data.length>1?  Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                            IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
+                              _pageController.nextPage( duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,)
+                            }),
+                      ],
                     ),
-                  ))
-                ],
-              );
+                  ),
+                )
+                :Center(),
+                    ],
+                  ),
+                );
               }
-              return Column(
-                children: [
-                  Center(
-                      child: Container(
-                    height: MediaQuery.of(context).size.height * 0.85,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Improve About Me (${data[index].aboutme})", 1)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Improve About Partner Preference (${data[index].patnerpref})",
-                                  2)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Success Story", 3)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Video (${data[index].video})", 4)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Preference (${data[index].savepref})", 5)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Learn How To Use App (${data[index].useapp})", 6)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Profession Manually (${data[index].professionManually})",
-                                  7)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Save Education Manually (${data[index].educationManually})",
-                                  8)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Ask Rating (${data[index].rating})", 9)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Upload Photo (${data[index].photo})", 10)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Download Biodata (${data[index].biodata})", 11)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Share App (${data[index].share})", 12)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: CustomRadioButton(
-                                  "To Show Support Reply (${data[index].support})", 13)),
-                                   Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                      child: SizedBox(
-                        width: Get.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                   index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
-                                  _pageController.previousPage( duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,)
-                                }),              
-                                IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
-                                  _pageController.nextPage( duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,)
-                                }),
-                          ],
-                        ),
-                      ),
-                    ),
-                                  SizedBox(height: 10,),
-                                     Text(data[index].status,style:  TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color:data[index].status=="Pending"?Colors.red: main_color,
-                                  ),),
-                                    Text("Created By ${data[index].name}",style:  TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),),
-                        Text( DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(data[index].createdAt).toLocal()),style: TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),),
-
-                        ],
-                      ),
-                    ),
-                  ))
-                ],
+              return SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Improve About Me (${data[index].aboutme})", 1)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Improve About Partner Preference (${data[index].patnerpref})",
+                                            2)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Upload Success Story", 3)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Upload Video (${data[index].video})", 4)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Save Preference (${data[index].savepref})", 5)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Learn How To Use App (${data[index].useapp})", 6)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Save Profession Manually (${data[index].professionManually})",
+                                            7)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Save Education Manually (${data[index].educationManually})",
+                                            8)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Ask Rating (${data[index].rating})", 9)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Upload Photo (${data[index].photo})", 10)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Download Biodata (${data[index].biodata})", 11)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Share App (${data[index].share})", 12)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width * 0.9,
+                                        child: CustomRadioButton(
+                                            "To Show Support Reply (${data[index].support})", 13)),
+                                             Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                                child: SizedBox(
+                                  width: Get.width,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                                   index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
+                                            _pageController.previousPage( duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,)
+                                          }),              
+                                          IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
+                                            _pageController.nextPage( duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,)
+                                          }),
+                                    ],
+                                  ),
+                                ),
+              ),
+                                            SizedBox(height: 10,),
+                                               Text(data[index].status,style:  TextStyle(
+                                              fontFamily: 'Serif',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color:data[index].status=="Pending"?Colors.red: main_color,
+                                            ),),
+                                              Text("Created By ${data[index].name}",style:  TextStyle(
+                                              fontFamily: 'Serif',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                            ),),
+                                  Text( DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(data[index].createdAt).toLocal()),style: TextStyle(
+                                              fontFamily: 'Serif',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                            ),),
+                                
+                                  ],
+                                ),
               );
               
             }));

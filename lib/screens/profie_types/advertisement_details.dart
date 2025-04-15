@@ -59,28 +59,29 @@ class _AdvertisementDetailsState extends State<AdvertisementDetails> {
   }
 
   List<AdsModel> allads = [];
-  void getthedetails() async {
-    allads = await AdsService().getallusers(adsid: widget.id);
-    var firstInactiveAd = allads.firstWhere(
-  (item) => item.isActive == false,
-  
-);
+ void getthedetails() async {
+  allads = await AdsService().getallusers(adsid: widget.id);
 
-  
-    if (firstInactiveAd.isActive==false) {
-      AdsModel adsModel = AdsModel(
-          image: "image",
-          isActive: false,
-          createdAt: "",
-          adsid: "",
-          id: "",
-          description: "",
-          video: "",
-          name: "");
-      allads = [adsModel, ...allads];
-    }
-    setState(() {});
+  // Check if there’s at least one inactive ad
+  if (allads.any((item) => item.isActive == false)) {
+    var firstInactiveAd = allads.firstWhere((item) => item.isActive == false);
+    AdsModel adsModel = AdsModel(
+      image: "image",
+      isActive: false,
+      createdAt: "",
+      clicked: 0,
+      seen: 0,
+      adsid: "",
+      id: "",
+      description: "",
+      video: "",
+      name: "",
+    );
+    allads = [adsModel, ...allads];
   }
+
+  setState(() {});
+}
 
   @override
   void initState() {

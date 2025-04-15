@@ -385,7 +385,7 @@ class _ReligionState extends State<MainProfilesTypes> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const AudioClipScreen(
+                                                     AudioClipScreen(
                                                       isBulk: "true",
                                                     )));
                                       }
