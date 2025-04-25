@@ -11,7 +11,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:matrimony_admin/screens/data_collection/religion.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart';
 import 'package:matrimony_admin/screens/service/auth_service.dart';
-// import '../../Assets/calender.dart'; 
+// import '../../Assets/calender.dart';
 import '../../Assets/Error.dart';
 import '../../Assets/caldener.dart';
 import '../../Assets/countryModel/country_state_city_picker.dart';
@@ -19,7 +19,6 @@ import '../../Assets/tpage.dart';
 import '../../globalVars.dart';
 import '../../models/shared_pref.dart';
 import '../service/search_profile.dart';
-
 
 List<String> list1 = <String>[
   'Year',
@@ -191,11 +190,70 @@ List<String> list7 = <String>[
 ];
 List<String> minutes = <String>[
   'Minute',
- "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"
+  "00",
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+  "24",
+  "25",
+  "26",
+  "27",
+  "28",
+  "29",
+  "30",
+  "31",
+  "32",
+  "33",
+  "34",
+  "35",
+  "36",
+  "37",
+  "38",
+  "39",
+  "40",
+  "41",
+  "42",
+  "43",
+  "44",
+  "45",
+  "46",
+  "47",
+  "48",
+  "49",
+  "50",
+  "51",
+  "52",
+  "53",
+  "54",
+  "55",
+  "56",
+  "57",
+  "58",
+  "59"
 ];
 
-String selectedhours="Hour";
-String selectedminutes="Minute";
+String selectedhours = "Hour";
+String selectedminutes = "Minute";
 List<String> hours = <String>[
   'Hour',
   '01',
@@ -210,11 +268,9 @@ List<String> hours = <String>[
   '10',
   '11',
   '12',
-  
 ];
-List<String> ampm=[
-  'Am','Pm'
-];
+List<String> ampm = ['Am', 'Pm'];
+
 class DataLocation {
   final String countryname;
   final String countrycity;
@@ -225,7 +281,8 @@ class DataLocation {
     required this.countrystate,
   });
 }
-String selectedampm="Am";
+
+String selectedampm = "Am";
 List<String> list8 = <String>['Date'];
 
 class LetsStart extends StatefulWidget {
@@ -240,7 +297,7 @@ class _LetsStartState extends State<LetsStart> {
   TextEditingController surname = TextEditingController();
   TextEditingController Phone = TextEditingController();
   TextEditingController useremail = TextEditingController();
-    TextEditingController placeofbirthcontroller = TextEditingController();
+  TextEditingController placeofbirthcontroller = TextEditingController();
 
   SharedPref sharedPref = SharedPref();
   int? dob_timestamp;
@@ -267,10 +324,11 @@ class _LetsStartState extends State<LetsStart> {
   DateDuration? dateOfBirth;
 
   DateTime? dateTime;
-   void getalllocation() async {
+  void getalllocation() async {
     alllocations = await Searchservice().getData();
     setState(() {});
   }
+
   updateMaleDate(var date, var month, var year) {
     // print("update male date called");
     // print("$date  $month $year");
@@ -278,17 +336,18 @@ class _LetsStartState extends State<LetsStart> {
     // mmonth = month;
     // myear = year;
     DateTime birthday = DateTime(year, month, date);
-      
+
     duration = AgeCalculator.age(birthday);
     print(duration.years);
-    age=duration.years.toString();
-    
+    age = duration.years.toString();
+
     setState(() {
       dob = duration.toString();
       dob_timestamp = birthday.millisecondsSinceEpoch;
     });
   }
-    List<DataLocation> alllist = [];
+
+  List<DataLocation> alllist = [];
   List<LocationModel> alllocations = [];
   List<String> allcities = [];
   var height_suggest1 = 0.0;
@@ -314,7 +373,8 @@ class _LetsStartState extends State<LetsStart> {
     }
     setState(() {});
   }
-    void _onSelectedPlace1(DataLocation prediction) async {
+
+  void _onSelectedPlace1(DataLocation prediction) async {
     if (!mounted) return;
     setState(() {
       _searchController.text = prediction.countrycity;
@@ -325,14 +385,16 @@ class _LetsStartState extends State<LetsStart> {
       // landmarkssug.clear();
     });
   }
-bool isGmailValid(String email) {
-  if (EmailValidator.validate(email)) {
-    if (email.contains("@gmail.com")) {
-      return true;
+
+  bool isGmailValid(String email) {
+    if (EmailValidator.validate(email)) {
+      if (email.contains("@gmail.com")) {
+        return true;
+      }
     }
+    return false;
   }
-  return false;
-}
+
   TextEditingController dateInput = TextEditingController();
   @override
   void initState() {
@@ -340,8 +402,7 @@ bool isGmailValid(String email) {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
     print("initState running ???");
-     _scrollController = ScrollController();
-   
+    _scrollController = ScrollController();
   }
 
   final _focusNode1 = FocusNode();
@@ -352,7 +413,7 @@ bool isGmailValid(String email) {
   void dispose() {
     _focusNode1.dispose();
     _focusNode2.dispose();
-     _scrollController.dispose();
+    _scrollController.dispose();
     _focusNode3.dispose();
     super.dispose();
   }
@@ -368,7 +429,8 @@ bool isGmailValid(String email) {
     }
     // });
   }
-UserService service=Get.put(UserService());
+
+  UserService service = Get.put(UserService());
   void onpressed() async {
     if (User_Name == null || User_Name == "") {
       setState(() {
@@ -409,8 +471,8 @@ UserService service=Get.put(UserService());
             });
       });
       print(duration.years);
-    } else if(User_email==null){
-setState(() {
+    } else if (User_email == null) {
+      setState(() {
         error = "Please Enter email id";
         showDialog(
             barrierDismissible: false,
@@ -428,8 +490,8 @@ setState(() {
               );
             });
       });
-    }  else if(!isGmailValid(User_email)){
-setState(() {
+    } else if (!isGmailValid(User_email)) {
+      setState(() {
         error = "Please Enter Contact Number";
         showDialog(
             barrierDismissible: false,
@@ -437,7 +499,7 @@ setState(() {
             builder: (context) {
               return AlertDialog(
                 content: SnackBarContent(
-                  error_text: "Please Enter Valid Email ID" ,
+                  error_text: "Please Enter Valid Email ID",
                   appreciation: "",
                   icon: Icons.error,
                   sec: 1,
@@ -447,8 +509,7 @@ setState(() {
               );
             });
       });
-    } 
-    else if (phone_num == null || phone_num.toString().length < 8) {
+    } else if (phone_num == null || phone_num.toString().length < 8) {
       setState(() {
         error = "Please Enter Contact Number";
         showDialog(
@@ -457,7 +518,7 @@ setState(() {
             builder: (context) {
               return AlertDialog(
                 content: SnackBarContent(
-                  error_text: "Please Enter Contact Number" ,
+                  error_text: "Please Enter Contact Number",
                   appreciation: "",
                   icon: Icons.error,
                   sec: 1,
@@ -505,7 +566,7 @@ setState(() {
               );
             });
       });
-    }else if (selectedhours == "Hours") {
+    } else if (selectedhours == "Hours") {
       setState(() {
         error = "";
         showDialog(
@@ -562,8 +623,8 @@ setState(() {
               );
             });
       });
-    } else if(selectedhours=="Hours" || selectedminutes=="Minutes"){
-setState(() {
+    } else if (selectedhours == "Hours" || selectedminutes == "Minutes") {
+      setState(() {
         error = "";
         showDialog(
             barrierDismissible: false,
@@ -581,8 +642,8 @@ setState(() {
               );
             });
       });
-    } else if( birthPlaceController.text.isEmpty){
-     setState(() {
+    } else if (birthPlaceController.text.isEmpty) {
+      setState(() {
         error = "";
         showDialog(
             barrierDismissible: false,
@@ -599,8 +660,8 @@ setState(() {
                 elevation: 0,
               );
             });
-      }); 
-    }else if (dob == null || dob == "") {
+      });
+    } else if (dob == null || dob == "") {
       setState(() {
         error = "Please Enter Your Date of Birth";
         showDialog(
@@ -619,7 +680,7 @@ setState(() {
               );
             });
       });
-    } 
+    }
     //  else   if(!landmarkssug.contains(birthPlaceController.text)){
     //                         setState(() {
     //     error = "";
@@ -638,18 +699,36 @@ setState(() {
     //             elevation: 0,
     //           );
     //         });
-    //   }); 
+    //   });
     // }
     else {
-       SearchProfile().addtoadminnotification(userid: "12324", useremail:userSave.email!, userimage:"", 
-  title: "${userSave.displayName} TRIED TO CREATE PROFILE WITH ${User_email}", email: userSave.email!, subtitle: "");
+      SearchProfile().addtoadminnotification(
+          userid: "12324",
+          useremail: userSave.email!,
+          userimage: "",
+          title:
+              "${userSave.displayName} TRIED TO CREATE PROFILE WITH ${User_email}",
+          email: userSave.email!,
+          subtitle: "");
       setState(() {
         color_done2 = true;
         error = "";
       });
       print(age);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Religion(User_Name: User_Name, User_SurName: User_SurName, age: age!,
-     timeofbirth: "$selectedhours:$selectedminutes $selectedampm", phone_num: phone_num, placeofbirth: birthPlaceController.text, gender: gender, dob:dob_timestamp!, email: User_email),));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Religion(
+                User_Name: User_Name,
+                User_SurName: User_SurName,
+                age: age!,
+                timeofbirth: "$selectedhours:$selectedminutes $selectedampm",
+                phone_num: phone_num,
+                placeofbirth: birthPlaceController.text,
+                gender: gender,
+                dob: dob_timestamp!,
+                email: User_email),
+          ));
 //   UserService().createappuser(aboutme: "",
 //  diet: "'", disability: "'",
 //  context: context,
@@ -663,29 +742,27 @@ setState(() {
 //         martialstatus: "'", profession: "'",
 //          location: "", city: "", state: "",
 //           imageurls: [], blocklists: [],
-      
+
 //            reportlist: [], shortlist: [],
 //             country: "", token: "'", age: "'", lat: 33.5471303,
-//              lng: 68.4221352, timeofbirth: "$selectedhours:$selectedminutes $selectedampm", placeofbirth: birthPlaceController.text, 
+//              lng: 68.4221352, timeofbirth: "$selectedhours:$selectedminutes $selectedampm", placeofbirth: birthPlaceController.text,
 //              puid: "'", dob: 32323).whenComplete((){
 
 //              });
-     
-                
     }
   }
-   late ScrollController _scrollController;
-    TextEditingController birthPlaceController = TextEditingController();
-      final _searchController = TextEditingController();
-      String? location;
+
+  late ScrollController _scrollController;
+  TextEditingController birthPlaceController = TextEditingController();
+  final _searchController = TextEditingController();
+  String? location;
   //   List<Prediction> _predictions = [];
   //     var height_suggest1 = 0.0;
-       List<String> landmarkssug=[];
+  List<String> landmarkssug = [];
   //  GoogleMapsPlaces _places =
   //     GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
   //      void _onSelectedPlace(Prediction prediction) async {
   //   var placeDetail = await _places.getDetailsByPlaceId(prediction.placeId!);
- 
 
   //   // TODO: Use the lat/lng to display the selected place on the map or save it to your database
   //   if (!mounted) return;
@@ -709,7 +786,7 @@ setState(() {
 //         landmarkssug.add(_predictions[i].description!);
 //       }
 //       setState(() {
-        
+
 //       });
 //     }
 //   }
@@ -755,7 +832,6 @@ setState(() {
                 ),
               ],
             ),
-         
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
@@ -763,7 +839,6 @@ setState(() {
               controller: _scrollController,
               child: Column(
                 children: [
-                
                   // DefaultTextStyle(
                   //     style: GoogleFonts.poppins(
                   //         color: Colors.black,
@@ -776,45 +851,52 @@ setState(() {
                   //           "Let's Start",
                   //           style: TextStyle(fontSize: 24),
                   //         ))),
-              
+
                   //namesubmission
-                  
-                  Card(
-                      elevation: 3,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                    child: Container(
-                      height: 50,
-                      child: CupertinoTextField(
-                        // height: 20.0,
-                        maxLength: 12,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
-                        ],
-                        maxLengthEnforcement:
-                            MaxLengthEnforcement.enforced, // show error message
-                        // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
-                        placeholder: "Enter Name",
-                        focusNode: _focusNode1,
-                        controller: name,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: _focusNode1.hasFocus
-                                ? main_color
-                                : Colors.white,
+
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 50,
+                        child: CupertinoTextField(
+                          // height: 20.0,
+                          maxLength: 12,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp("[a-zA-Z]")), // Allow only alphabets
+                          ],
+                          maxLengthEnforcement: MaxLengthEnforcement
+                              .enforced, // show error message
+                          // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
+                          placeholder: "Enter Name",
+                          cursorColor: main_color,
+                          cursorWidth: 2,
+                          focusNode: _focusNode1,
+                          controller: name,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _focusNode1.hasFocus
+                                  ? main_color
+                                  : Colors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          borderRadius: BorderRadius.circular(30),
+                          textInputAction: TextInputAction.next,
+                          onChanged: (name) => {
+                            setState(() {
+                              this.User_Name = name;
+                            })
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                        onChanged: (name) => {
-                          setState(() {
-                            this.User_Name = name;
-                          })
-                        },
                       ),
                     ),
                   ),
-                 
+
                   // Card(
                   //   elevation: 4,
                   //   shape: RoundedRectangleBorder(
@@ -835,145 +917,154 @@ setState(() {
                   //         contentPadding: EdgeInsets.all(20)),
                   //   ),
                   // ),
-              
-                  Card(
-                      elevation: 3,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                    child: Container(
-                      height: 50,
-                      child: CupertinoTextField(
-                        maxLength: 12,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
-                        ],
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        placeholder: "Enter Surname",
-                        focusNode: _focusNode2,
-                        controller: surname,
-                        
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: _focusNode2.hasFocus
-                                ? main_color
-                                : Colors.white,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onChanged: (surname) => {
-                          setState(() {
-                            this.User_SurName = surname;
-                          })
-                        },
-                      ),
-                    ),
-                  ),
-                  Card(
-                      elevation: 3,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                    child: Container(
-                      height: 50,
-                      child: CupertinoTextField(
-                        // height: 20.0,
-                        maxLength: 100,
-                        //               inputFormatters: [
-                        //   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
-                        // ],
-                        maxLengthEnforcement:
-                            MaxLengthEnforcement.enforced, // show error message
-                        // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
-                        placeholder: "Enter Email ID",
-                        focusNode: _focusNode3,
-                        controller: useremail,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: _focusNode3.hasFocus
-                                ? main_color
-                                : Colors.white,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onChanged: (name) => {
-                          setState(() {
-                            this.User_email = name;
-                          })
-                        },
-                      ),
-                    ),
-                  ),
-                
-                   Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 3, horizontal: 10),
-                          child: Container(
-                              child: IntlPhoneField(
-                            focusNode: _focusNode,
-                            flagsButtonPadding:
-                                const EdgeInsets.only(top: 20, bottom: 0),
-                            controller: Phone,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9]')),
-                            ],
-                          
-                            decoration: InputDecoration(
-                              focusColor: main_color,
-                              hoverColor: main_color,
-                          
-                              //decoration for Input Field
-                              contentPadding: EdgeInsets.only(
-                                top: 25,
-                                left: 20,
-                                right: 20,
-                              ),
-                              // labelText: 'Phone Number',
-                          
-                              hintText: "Enter Contact Number",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none,
-                              errorStyle: TextStyle(
-                                // Add padding to the error text
-                          
-                                // You can also customize the text style as needed
-                                color: Colors.red, // Error text color
-                                fontSize: 14.0, // Error text font size
-                              ),
-                              // border: OutlineInputBorder(
-                              //     borderSide: BorderSide(color: main_color),
-                              //     borderRadius: BorderRadius.circular(60)),
-                              // focusedBorder: OutlineInputBorder(
-                              //     borderSide: BorderSide(color: main_color),
-                              //     borderRadius: BorderRadius.circular(60)),
+
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 50,
+                        child: CupertinoTextField(
+                          maxLength: 12,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp("[a-zA-Z]")), // Allow only alphabets
+                          ],
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          placeholder: "Enter Surname",
+                          focusNode: _focusNode2,
+                          controller: surname,
+                          cursorColor: main_color,
+                          cursorWidth: 2,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _focusNode2.hasFocus
+                                  ? main_color
+                                  : Colors.white,
                             ),
-                            // validator: (p0) {
-                          
-                            // },
-                            onCountryChanged: (value) {
-                              phone_num = "";
-                              Phone.clear();
-                              print(phone_num);
-                              setState(() {});
-                            },
-                            initialCountryCode:
-                                'IN', //default contry code, NP for Nepal
-                            onChanged: (phone) {
-                              //when phone number country code is changed
-                              // print(phone.completeNumber); //get complete number
-                              // print(phone.countryCode); // get country code only
-                              // print(phone.number); // only phone number
-                          
-                              setState(() {
-                                phone_num = phone.countryCode + phone.number;
-                               
-                              });
-                            },
-                            onSubmitted: (phone_num) =>
-                                print('Submitted $phone_num'),
-                          )),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          onChanged: (surname) => {
+                            setState(() {
+                              this.User_SurName = surname;
+                            })
+                          },
                         ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 50,
+                        child: CupertinoTextField(
+                          // height: 20.0,
+                          maxLength: 100,
+                          //               inputFormatters: [
+                          //   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
+                          // ],
+                          maxLengthEnforcement: MaxLengthEnforcement
+                              .enforced, // show error message
+                          // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
+                          placeholder: "Enter Email ID",
+                          cursorColor: main_color,
+                          cursorWidth: 2,
+                          focusNode: _focusNode3,
+                          controller: useremail,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _focusNode3.hasFocus
+                                  ? main_color
+                                  : Colors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          onChanged: (name) => {
+                            setState(() {
+                              this.User_email = name;
+                            })
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    child: Container(
+                        child: IntlPhoneField(
+                      focusNode: _focusNode,
+                      flagsButtonPadding:
+                          const EdgeInsets.only(top: 20, bottom: 0),
+                      controller: Phone,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ],
+
+                      decoration: InputDecoration(
+                        focusColor: main_color,
+                        hoverColor: main_color,
+
+                        //decoration for Input Field
+                        contentPadding: EdgeInsets.only(
+                          top: 25,
+                          left: 20,
+                          right: 20,
+                        ),
+                        // labelText: 'Phone Number',
+
+                        hintText: "Enter Contact Number",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                        errorStyle: TextStyle(
+                          // Add padding to the error text
+
+                          // You can also customize the text style as needed
+                          color: Colors.red, // Error text color
+                          fontSize: 14.0, // Error text font size
+                        ),
+                        // border: OutlineInputBorder(
+                        //     borderSide: BorderSide(color: main_color),
+                        //     borderRadius: BorderRadius.circular(60)),
+                        // focusedBorder: OutlineInputBorder(
+                        //     borderSide: BorderSide(color: main_color),
+                        //     borderRadius: BorderRadius.circular(60)),
+                      ),
+                      // validator: (p0) {
+
+                      // },
+                      onCountryChanged: (value) {
+                        phone_num = "";
+                        Phone.clear();
+                        print(phone_num);
+                        setState(() {});
+                      },
+                      initialCountryCode:
+                          'IN', //default contry code, NP for Nepal
+                      onChanged: (phone) {
+                        //when phone number country code is changed
+                        // print(phone.completeNumber); //get complete number
+                        // print(phone.countryCode); // get country code only
+                        // print(phone.number); // only phone number
+
+                        setState(() {
+                          phone_num = phone.countryCode + phone.number;
+                        });
+                      },
+                      onSubmitted: (phone_num) => print('Submitted $phone_num'),
+                    )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
@@ -984,7 +1075,7 @@ setState(() {
                           width: 150,
                           child: ElevatedButton(
                               onPressed: () {
-                  _focusNode.unfocus();
+                                _focusNode.unfocus();
                                 setState(() {
                                   male_gender = !male_gender;
                                   female_gender = false;
@@ -1014,8 +1105,7 @@ setState(() {
                                   style: TextStyle(
                                     fontFamily: 'Sans-serif',
                                     fontWeight: FontWeight.w400,
-                                    color:
-                                        male_gender ? main_color : textColor,
+                                    color: male_gender ? main_color : textColor,
                                     fontSize: 14,
                                   ))),
                         ),
@@ -1024,7 +1114,7 @@ setState(() {
                           height: 46,
                           child: ElevatedButton(
                               onPressed: () {
-                  _focusNode.unfocus();
+                                _focusNode.unfocus();
                                 setState(() {
                                   female_gender = !female_gender;
                                   male_gender = false;
@@ -1054,9 +1144,8 @@ setState(() {
                                   style: TextStyle(
                                     fontFamily: 'Sans-serif',
                                     fontWeight: FontWeight.w400,
-                                    color: female_gender
-                                        ? main_color
-                                        : textColor,
+                                    color:
+                                        female_gender ? main_color : textColor,
                                     fontSize: 14,
                                   ))),
                         )
@@ -1090,7 +1179,7 @@ setState(() {
                     useTwentyOneYears: male_gender,
                     setdate: updateMaleDate,
                   ),
-              
+
                   DefaultTextStyle(
                       style: TextStyle(
                         fontFamily: 'Sans-serif',
@@ -1098,9 +1187,8 @@ setState(() {
                         fontSize: 20,
                       ),
                       child: Text("$dob")),
-                 
-                
-               Container(
+
+                  Container(
                     margin: EdgeInsets.only(left: 20, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -1119,173 +1207,182 @@ setState(() {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-             Card(
-      elevation: 4,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: SizedBox(
-        height: 46,
-        width: MediaQuery.of(context).size.width * 0.29,
-        child: Center(
-          child: DropdownButton<String>(
-            alignment: AlignmentDirectional.center,
-            underline: Container(color: Colors.white),
-            value: selectedhours,
-            items: hours.map((value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: TextStyle(color: textColor),
-                ),
-              );
-            }).toList(),
-            onChanged: (newValue) {
-              setState(() {
-                selectedhours = newValue!;
-                print('Selected hours: $selectedhours');
-                // _updateDaysInMonth(); // Uncomment if you need this
-              });
-            },
-          ),
-        ),
-      ),
-    ),
-                 Card(
-              elevation: 4,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: SizedBox(
-                height: 46,
-                width: MediaQuery.of(context).size.width * 0.29,
-                child: Center(
-                  child: DropdownButton<String>(
-                    alignment: AlignmentDirectional.center,
-                    underline: Container(
-                      color: Colors.white,
-                    ),
-                    value: selectedminutes,
-                    items: minutes.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value,style: TextStyle(color: textColor),),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedminutes = newValue!;
-                        // _updateDaysInMonth();
-                      });
-                    },
-                  ),
-                ),
-              ),
-                          ),
-                         
-                          Card(
-              elevation: 4,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: SizedBox(
-                height: 46,
-                width: MediaQuery.of(context).size.width * 0.29,
-                child: Center(
-                  child: DropdownButton<String>(
-                    alignment: AlignmentDirectional.center,
-                    underline: Container(
-                      color: Colors.white,
-                    ),
-                    value: selectedampm,
-                    items: ampm.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value,style: TextStyle(color: textColor),),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedampm = newValue!;
-                        // _updateDaysInMonth();
-                      });
-                    },
-                  ),
-                ),
-              ),
-                          ),
-              ],
-                  ),
-                  SizedBox(height: 5,),
-                  Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 3),
-                          child: Card(
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            child: TextFormField(
-                              controller: birthPlaceController,
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.name,
-                              onChanged: (value) {
-                                _fileterlocation(value);
-                                _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent,
-                                  duration: const Duration(seconds: 1),
-                                  curve: Curves.easeOut,
+                    children: [
+                      Card(
+                        elevation: 4,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: SizedBox(
+                          height: 46,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          child: Center(
+                            child: DropdownButton<String>(
+                              alignment: AlignmentDirectional.center,
+                              underline: Container(color: Colors.white),
+                              value: selectedhours,
+                              items: hours.map((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: textColor),
+                                  ),
                                 );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedhours = newValue!;
+                                  print('Selected hours: $selectedhours');
+                                  // _updateDaysInMonth(); // Uncomment if you need this
+                                });
                               },
-                              onTap: () {
-                                _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent,
-                                  duration: const Duration(seconds: 1),
-                                  curve: Curves.easeOut,
-                                );
-                              },
-                              focusNode: _focusNode4,
-                              decoration:  InputDecoration(
-                                  hintText: "Enter Place of Birth",
-                                  hintStyle: TextStyle(color: newtextColor),
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.all(10)),
                             ),
                           ),
                         ),
-                        Stack(
-                          children: [
-                            const SizedBox(height: 1),
-                            SizedBox(
-                              height: height_suggest1,
-                              child: Card(
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: alllist.length,
-                                  itemBuilder: (context, index) {
-                                    var data = alllist[index];
-                                    return SingleChildScrollView(
-                                      child: ListTile(
-                                          title: Text(
-                                              "${data.countrycity},${data.countrystate},${data.countryname}"),
-                                          onTap: () {
-                                            _onSelectedPlace1(data);
-                  
-                                            setState(() {
-                                              height_suggest1 = 0.0;
-                                            });
-                                          }),
-                                    );
-                                  },
-                                ),
+                      ),
+                      Card(
+                        elevation: 4,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        child: SizedBox(
+                          height: 46,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          child: Center(
+                            child: DropdownButton<String>(
+                              alignment: AlignmentDirectional.center,
+                              underline: Container(
+                                color: Colors.white,
                               ),
+                              value: selectedminutes,
+                              items: minutes.map((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedminutes = newValue!;
+                                  // _updateDaysInMonth();
+                                });
+                              },
                             ),
-                          ],
+                          ),
                         ),
-                   const SizedBox(
-                    height: 10,
+                      ),
+                      Card(
+                        elevation: 4,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        child: SizedBox(
+                          height: 46,
+                          width: MediaQuery.of(context).size.width * 0.29,
+                          child: Center(
+                            child: DropdownButton<String>(
+                              alignment: AlignmentDirectional.center,
+                              underline: Container(
+                                color: Colors.white,
+                              ),
+                              value: selectedampm,
+                              items: ampm.map((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedampm = newValue!;
+                                  // _updateDaysInMonth();
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: TextFormField(
+                        cursorColor: main_color,
+                        cursorWidth: 2,
+                        controller: birthPlaceController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                        onChanged: (value) {
+                          _fileterlocation(value);
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeOut,
+                          );
+                        },
+                        onTap: () {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeOut,
+                          );
+                        },
+                        focusNode: _focusNode4,
+                        decoration: InputDecoration(
+                            hintText: "Enter Place of Birth",
+                            hintStyle: TextStyle(color: newtextColor),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(10)),
+                      ),
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      const SizedBox(height: 1),
+                      SizedBox(
+                        height: height_suggest1,
+                        child: Card(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: alllist.length,
+                            itemBuilder: (context, index) {
+                              var data = alllist[index];
+                              return SingleChildScrollView(
+                                child: ListTile(
+                                    title: Text(
+                                        "${data.countrycity},${data.countrystate},${data.countryname}"),
+                                    onTap: () {
+                                      _onSelectedPlace1(data);
+
+                                      setState(() {
+                                        height_suggest1 = 0.0;
+                                      });
+                                    }),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.11,
                   ),
                   Container(
                     // margin: EdgeInsets.only(left: 15),
@@ -1296,7 +1393,9 @@ setState(() {
                                 (states) => Colors.black),
                             padding:
                                 MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    EdgeInsets.symmetric(vertical: 17)),
+                                    EdgeInsets.symmetric(
+                              vertical: 15,
+                            )),
                             shape: MaterialStateProperty
                                 .all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
@@ -1330,7 +1429,7 @@ setState(() {
                   const SizedBox(
                     height: 20,
                   ),
-              
+
                   // Text(
                   //   error,
                   //   textAlign: TextAlign.center,

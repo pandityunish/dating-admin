@@ -10,7 +10,8 @@ import 'package:matrimony_admin/Assets/countryModel/country_state_city_picker.da
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/screens/data_collection/LetsStart.dart';
 import 'package:matrimony_admin/screens/data_collection/aboutMe.dart';
-import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart' show Searchservice;
+import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart'
+    show Searchservice;
 import 'package:matrimony_admin/screens/service/auth_service.dart';
 import '../../Assets/Error.dart';
 import '../../Assets/G_Sign.dart';
@@ -41,20 +42,23 @@ class _LocationState extends State<Location> {
   var lng;
   bool locate = false;
 
-@override
+  @override
   void initState() {
     getalllocation();
     super.initState();
   }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-    void getalllocation() async {
+
+  void getalllocation() async {
     alllocations = await Searchservice().getData();
     setState(() {});
   }
+
   List<DataLocation> alllist = [];
   List<LocationModel> alllocations = [];
 
@@ -158,7 +162,7 @@ class _LocationState extends State<Location> {
     //     _predictions.clear();
     //   });
     // }
- void onSelectedPlace1(DataLocation prediction) async {
+    void onSelectedPlace1(DataLocation prediction) async {
       // lat =prediction.lat;
       // lng =prediction.lng;
       String somelocation =
@@ -198,6 +202,7 @@ class _LocationState extends State<Location> {
         alllist.clear();
       });
     }
+
     @override
     void dispose() {
       _searchController.dispose();
@@ -209,7 +214,8 @@ class _LocationState extends State<Location> {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
-        appBar: CustomAppBar(title: "I Live In", iconImage: 'images/icons/location_home.png'), 
+        appBar: CustomAppBar(
+            title: "I Live In", iconImage: 'images/icons/location_home.png'),
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -225,97 +231,76 @@ class _LocationState extends State<Location> {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height * 0.4,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                            
                               Container(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.9,
-                                    height: 43,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                height: 43,
                                 decoration: BoxDecoration(
-                                    color: Colors.black12,
-                                    borderRadius: BorderRadius.circular(10)),
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: TextField(
+                                  cursorColor: main_color,
+                                  cursorWidth: 2,
                                   controller: _searchController,
                                   decoration: InputDecoration(
-                                      hintText: 'Search for location',
-                                      contentPadding: EdgeInsets.only(top: 10),
-                                      prefixIcon: Icon(
-                                        Icons.search,
-                                        color: main_color,
-                                      ),
-                                      border: InputBorder.none),
+                                    hintText: 'Search for location',
+                                    contentPadding: EdgeInsets.only(top: 10),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: main_color,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
                                   onChanged: (value) {
-                                    
-                                    // _onSearchChanged(value);
                                     _fileterlocation(value);
-                                  }
-                                      // _onSearchChanged(value),
+                                  },
                                 ),
                               ),
-                                 SizedBox(
-                                  height: heightSuggest1,
+                              const SizedBox(height: 5),
+                              // Use Flexible or SizedBox with a clamped height
+                              if (heightSuggest1 > 0)
+                                SizedBox(
+                                  height: heightSuggest1.clamp(0,
+                                      MediaQuery.of(context).size.height * 0.3),
                                   child: ListView.builder(
                                     padding: EdgeInsets.zero,
                                     itemCount: alllist.length,
                                     itemBuilder: (context, index) {
                                       var data = alllist[index];
-                                      return SingleChildScrollView(
-                                        child: ListTile(
-                                            title: Text(
-                                                "${data.countrycity},${data.countrystate},${data.countryname}"),
-                                            onTap: () {
-                                              setState(() {
-                                                heightSuggest1 = 0.0;
-                                              });
-                                              onSelectedPlace1(data);
-                                              // filteredPersons.clear();
-                                              // _onSelectedPlace3(
-                                              //     filteredPersons[index]);
-                                              // if (!mounted) return;
-                                              print(heightSuggest1);
-                                            }),
+                                      return ListTile(
+                                        title: Text(
+                                            "${data.countrycity}, ${data.countrystate}, ${data.countryname}"),
+                                        onTap: () {
+                                          setState(() {
+                                            heightSuggest1 = 0.0;
+                                          });
+                                          onSelectedPlace1(data);
+                                          print(heightSuggest1);
+                                        },
                                       );
                                     },
-                                  )
-                          
-                                  // }),
                                   ),
-                              // Expanded(
-                              //   child: ListView.builder(
-                              //     itemCount: _predictions.length,
-                              //     itemBuilder: (context, index) {
-                              //       return ListTile(
-                              //           title: Text(
-                              //               _predictions[index].description!),
-                              //           onTap: () {
-                              //             _onSelectedPlace(
-                              //                 _predictions[index]);
-                              //           });
-                              //     },
-                              //   ),
-                              // ),
+                                ),
                             ],
                           ),
                         ),
                       ),
-                      (locate)
-                          ? CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(main_color),
-                              color: main_color,
-                            )
-                          : (_currentAddress != null)
-                              ? Text(_currentAddress!,
-                                  style: TextStyle(
-                                      fontFamily: 'Sans-serif',
-                                      decoration: TextDecoration.none,
-                                      color: Colors.black,
-                                      fontSize: 20))
-                              : Container(),
-                      SizedBox(
-                        height: 30,
-                      ),
+                      if (locate)
+                        CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(main_color),
+                        )
+                      else if (_currentAddress != null)
+                        Text(
+                          _currentAddress!,
+                          style: TextStyle(
+                            fontFamily: 'Sans-serif',
+                            decoration: TextDecoration.none,
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      const SizedBox(height: 30),
                     ],
                   ),
                   // SizedBox(
@@ -556,4 +541,3 @@ class _LocationState extends State<Location> {
 
 //   await docUser.update(json).catchError((error) => print(error));
 // }
-
