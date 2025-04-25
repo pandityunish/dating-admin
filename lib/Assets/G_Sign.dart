@@ -222,13 +222,49 @@ Future<dynamic> signup(BuildContext context) async {
           barrierDismissible: false,
           context: context,
           builder: (context) {
-            return const AlertDialog(
-              content: SnackBarContent(
-                error_text: "OTP Send Successfully",
-                appreciation: "",
-                icon: Icons.check_circle_rounded,
-                sec: 2,
+            return  AlertDialog(
+              content:Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          padding: EdgeInsets.all(16),
+          height: MediaQuery.of(context).size.height * 0.3,
+          width: MediaQuery.of(context).size.width * 0.8,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(12))),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+               
+                    Icon(
+                     Icons.check_circle,
+                      size: 55.0,
+                      color: main_color,
+                    ),
+                    SizedBox(height: 5),
+                   
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Email Send Successfully \n Please Verify",
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
+      ],
+    ),
               backgroundColor: Colors.transparent,
               elevation: 0,
             );

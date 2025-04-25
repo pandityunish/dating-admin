@@ -266,7 +266,7 @@ class _ReligionState extends State<FilterC> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Are You Sure You Want ${ison == true ? "Stop" : "Run"} Platform?",
+                                              "Are You Sure You Want ${ison == true ? "Stop" : "Start"} Platform?",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 14),
                                             ),
@@ -330,7 +330,7 @@ class _ReligionState extends State<FilterC> {
                                                     Navigator.pop(context);
                                                     // logout(context: context);
                                                   },
-                                                  child: Text("Start",
+                                                  child: Text("Yes",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 16,
@@ -374,7 +374,7 @@ class _ReligionState extends State<FilterC> {
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  child: Text("Stop", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
+                                                  child: Text("No", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
                                             ),
                                           ],
                                         ),

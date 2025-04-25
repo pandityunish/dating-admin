@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
+import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
 import 'package:matrimony_admin/screens/data_collection/disability.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/service/admin_service.dart';
 import 'package:matrimony_admin/screens/navigation/navigator.dart';
@@ -67,23 +68,50 @@ class _ReligionState extends State<ShareProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: main_color,
-              size: 25,
+        appBar:PreferredSize(
+          preferredSize: const Size.fromHeight(80), // Adjust AppBar height
+          child: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: main_color,
+                size: 25,
+              ),
+            ),
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20), // Adjust padding for alignment
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      //FontAwesomeIcons.bolt,
+                      Icons.ios_share_sharp,
+                      color: main_color,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        color: main_color,
+                        fontFamily: 'Sans-serif',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                      child: Text("Share Profile"),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-          
-          title: DefaultTextStyle(
-              style: GoogleFonts.poppins(color: main_color, fontSize: 25),
-              child: Text("Share Profile")),
-         
         ),
+     
         body: Column(
           children: [
            
@@ -93,126 +121,34 @@ class _ReligionState extends State<ShareProfile> {
                             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Material(
-                    child: Container(
-                      height: 50,
-                      width: 330,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                              color: Color.fromARGB(255, 223, 223, 223))),
-                      child: TextFormField(
-                        controller: controller,
-                      cursorColor: main_color,
-                        onFieldSubmitted: (value) async {
-                          int status;
-                          status = await AdminService().findprofile(value);
-                          if (status == 200) {
-                            NewUserModel newUserModel = await SearchProfile()
-                                .searchuserdatabyid(puid: value);
-                            if (newUserModel.gender ==
-                                widget.userSave.gender) {
-                                  SearchProfile().addtoadminnotification(
-                                userid: widget.userSave!.id!,
-                                useremail: widget.userSave!.email!,
-                                userimage: widget.userSave!.imageurls!.isEmpty
-                                    ? ""
-                                    : widget.userSave!.imageurls![0],
-                                title:
-                                    '${userSave.displayName} TRIED TO SHARE  ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid} (Error)',
-                                email: userSave.email!,
-                                subtitle: "");
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: SizedBox(
-                                        child: SnackBarContent(
-                                          error_text:
-                                              "Same Gender Can't Be Added",
-                                          appreciation: "",
-                                          icon: Icons.error,
-                                          sec: 3,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else if (widget.userSave.puid == value) {
-                              SearchProfile().addtoadminnotification(
-                                userid: widget.userSave!.id!,
-                                useremail: widget.userSave!.email!,
-                                userimage: widget.userSave!.imageurls!.isEmpty
-                                    ? ""
-                                    : widget.userSave!.imageurls![0],
-                                title:
-                                    '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
-                                email: userSave.email!,
-                                subtitle: "");
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: SizedBox(
-                                        child: SnackBarContent(
-                                          error_text:
-                                              "Same uid Cannot Be Added",
-                                          appreciation: "",
-                                          icon: Icons.error,
-                                          sec: 3,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else if (newUserModel.status != "approved") {
-                              SearchProfile().addtoadminnotification(
-                                userid: widget.userSave!.id!,
-                                useremail: widget.userSave!.email!,
-                                userimage: widget.userSave!.imageurls!.isEmpty
-                                    ? ""
-                                    : widget.userSave!.imageurls![0],
-                                title:
-                                    '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
-                                email: userSave.email!,
-                                subtitle: "");
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: SizedBox(
-                                        child: SnackBarContent(
-                                          error_text: "User is Not approved",
-                                          appreciation: "",
-                                          icon: Icons.error,
-                                          sec: 3,
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else {
-                              profileid.add(value);
-                              setState(() {});
-                              controller.clear();
-                            }
-                          } else {
-                             SearchProfile().addtoadminnotification(
-                                userid: widget.userSave!.id!,
-                                useremail: widget.userSave!.email!,
-                                userimage: widget.userSave!.imageurls!.isEmpty
-                                    ? ""
-                                    : widget.userSave!.imageurls![0],
-                                title:
-                                    '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
-                                email: userSave.email!,
-                                subtitle: "");
+                  Container(
+                    height: 50,
+                    width:  MediaQuery.of(context).size.width * 0.9,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 223, 223, 223))),
+                    child: TextFormField(
+                      controller: controller,
+                    cursorColor: main_color,
+                      onFieldSubmitted: (value) async {
+                        int status;
+                        status = await AdminService().findprofile(value);
+                        if (status == 200) {
+                          NewUserModel newUserModel = await SearchProfile()
+                              .searchuserdatabyid(puid: value);
+                          if (newUserModel.gender ==
+                              widget.userSave.gender) {
+                                SearchProfile().addtoadminnotification(
+                              userid: widget.userSave!.id!,
+                              useremail: widget.userSave!.email!,
+                              userimage: widget.userSave!.imageurls!.isEmpty
+                                  ? ""
+                                  : widget.userSave!.imageurls![0],
+                              title:
+                                  '${userSave.displayName} TRIED TO SHARE  ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid} (Error)',
+                              email: userSave.email!,
+                              subtitle: "");
                             showDialog(
                                 context: context,
                                 barrierDismissible: false,
@@ -220,7 +156,8 @@ class _ReligionState extends State<ShareProfile> {
                                   return AlertDialog(
                                     content: SizedBox(
                                       child: SnackBarContent(
-                                        error_text: "User Not Found",
+                                        error_text:
+                                            "Same Gender Can't Be Added",
                                         appreciation: "",
                                         icon: Icons.error,
                                         sec: 3,
@@ -230,13 +167,103 @@ class _ReligionState extends State<ShareProfile> {
                                     elevation: 0,
                                   );
                                 });
+                          } else if (widget.userSave.puid == value) {
+                            SearchProfile().addtoadminnotification(
+                              userid: widget.userSave!.id!,
+                              useremail: widget.userSave!.email!,
+                              userimage: widget.userSave!.imageurls!.isEmpty
+                                  ? ""
+                                  : widget.userSave!.imageurls![0],
+                              title:
+                                  '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
+                              email: userSave.email!,
+                              subtitle: "");
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: SizedBox(
+                                      child: SnackBarContent(
+                                        error_text:
+                                            "Same uid Cannot Be Added",
+                                        appreciation: "",
+                                        icon: Icons.error,
+                                        sec: 3,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                  );
+                                });
+                          } else if (newUserModel.status != "approved") {
+                            SearchProfile().addtoadminnotification(
+                              userid: widget.userSave!.id!,
+                              useremail: widget.userSave!.email!,
+                              userimage: widget.userSave!.imageurls!.isEmpty
+                                  ? ""
+                                  : widget.userSave!.imageurls![0],
+                              title:
+                                  '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
+                              email: userSave.email!,
+                              subtitle: "");
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: SizedBox(
+                                      child: SnackBarContent(
+                                        error_text: "User is Not approved",
+                                        appreciation: "",
+                                        icon: Icons.error,
+                                        sec: 3,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                  );
+                                });
+                          } else {
+                            profileid.add(value);
+                            setState(() {});
+                            controller.clear();
                           }
-                        },
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(10),
-                            border: InputBorder.none,
-                            hintText: "Enter Profile ID"),
-                      ),
+                        } else {
+                           SearchProfile().addtoadminnotification(
+                              userid: widget.userSave!.id!,
+                              useremail: widget.userSave!.email!,
+                              userimage: widget.userSave!.imageurls!.isEmpty
+                                  ? ""
+                                  : widget.userSave!.imageurls![0],
+                              title:
+                                  '${userSave.displayName} TRIED TO SHARE PROFILE OF ${value} PROFILES TO ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname.toLowerCase()} ${widget.userSave!.puid}',
+                              email: userSave.email!,
+                              subtitle: "");
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    child: SnackBarContent(
+                                      error_text: "User Not Found",
+                                      appreciation: "",
+                                      icon: Icons.error,
+                                      sec: 3,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
+                        }
+                      },
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          border: InputBorder.none,
+                          
+                          hintText: "Enter Profile ID"),
                     ),
                   ),
                   GridView.builder(
@@ -308,7 +335,7 @@ class _ReligionState extends State<ShareProfile> {
                                        return AlertDialog(
                                          content: SizedBox(
                                            child: SnackBarContent(
-                                             error_text: "Please Enter Profile Id",
+                                             error_text: "Please Enter Profile ID",
                                              appreciation: "",
                                              icon: Icons.error,
                                              sec: 3,

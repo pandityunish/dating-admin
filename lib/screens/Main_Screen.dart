@@ -1,6 +1,9 @@
 // ignore: file_names
 import 'dart:async';
 import 'dart:io';
+import 'package:get/get.dart';
+import 'package:matrimony_admin/Assets/G_Sign.dart';
+import 'package:matrimony_admin/common/widgets2/social_button.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -153,7 +156,112 @@ class _FirstScreenState extends State<FirstScreen> {
     data = await UserService().getbubbles();
     setState(() {});
   }
-
+ showsigindialog() {
+    Get.dialog(Dialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+                onTap: () {
+                  signup(context);
+                },
+                child: const SocialButton(
+                    image: "images/google.png", name: "Continue With Google")),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: SnackBarContent(
+                          error_text: "Please Continue With Google",
+                          appreciation: "",
+                          icon: Icons.error,
+                          sec: 2,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      );
+                    });
+              },
+              child: const SocialButton(
+                  image: "images/facebook.png", name: "Continue With Facebook"),
+            ),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: SnackBarContent(
+                          error_text: "Please Continue With Google",
+                          appreciation: "",
+                          icon: Icons.error,
+                          sec: 2,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      );
+                    });
+              },
+              child: const SocialButton(
+                  image: "images/instagram.png",
+                  name: "Continue With Instagram"),
+            ),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: SnackBarContent(
+                          error_text: "Please Continue With Google",
+                          appreciation: "",
+                          icon: Icons.error,
+                          sec: 2,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      );
+                    });
+              },
+              child: const SocialButton(
+                  image: "images/twitter.png", name: "Continue With Twitter"),
+            ),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return const AlertDialog(
+                        content: SnackBarContent(
+                          error_text: "Please Continue With Google",
+                          appreciation: "",
+                          icon: Icons.error,
+                          sec: 2,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      );
+                    });
+              },
+              child: const SocialButton(
+                  image: "images/linkedin.png", name: "Continue With Linkedin"),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
   @override
   void initState() {
     Timer.run(() {
@@ -508,7 +616,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                 });
                               }),
                           const Text(
-                            "I agree with FREERISHTEYWALA's",
+                            "I agree with Free Rishtey Wala's",
                             style: TextStyle(fontSize: 12),
                           ),
                           GestureDetector(
@@ -576,20 +684,16 @@ class _FirstScreenState extends State<FirstScreen> {
                                 //   MaterialPageRoute(
                                 //       builder: (context) => handleAuthState()),
                                 // );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          // (userSave.email == null ||
-                                          //         userSave.email == "")
-                                          //     ?
-                                          SignInScreen()
-                                      // : (userSave.Location != null &&
-                                      //         userSave.Location != "")
-                                      //     ? SlideProfile()
-                                      //     : LetsStart()
-                                      ),
-                                );
+                                showsigindialog();
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                        
+                                //           SignInScreen()
+                                    
+                                //       ),
+                                // );
                               }
                             },
                             child: Text(

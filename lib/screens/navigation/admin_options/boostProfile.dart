@@ -52,13 +52,55 @@ class _ReligionState extends State<BoostProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
- appBar:CustomAppBar(title: "Boot Profile", iconImage: "images/icons/boost.png",height: 80,),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80), // Adjust AppBar height
+          child: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: main_color,
+                size: 25,
+              ),
+            ),
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20), // Adjust padding for alignment
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      //FontAwesomeIcons.bolt,
+                      Icons.offline_bolt_outlined,
+                      color: main_color,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        color: main_color,
+                        fontFamily: 'Sans-serif',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                      child: Text("Boost Profile"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
         // navigationBar: CupertinoNavigationBar(
-            
+
         //       leading: GestureDetector(
         //       onTap: () {
         //         Navigator.of(context).pop();
-             
+
         //       },
         //       child: Icon(
         //         Icons.arrow_back_ios_new,
@@ -76,7 +118,6 @@ class _ReligionState extends State<BoostProfile> {
         // ),
         body: Column(
           children: [
-          
             Center(
                 child: Container(
               height: MediaQuery.of(context).size.height * 0.85,
@@ -87,9 +128,9 @@ class _ReligionState extends State<BoostProfile> {
                       children: [
                         Container(
                           height: 50,
-                          width: 330,
+                          width: MediaQuery.of(context).size.width * 0.95,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(30),
                               border: Border.all(
                                   color: Color.fromARGB(255, 223, 223, 223))),
                           child: TextFormField(
@@ -103,10 +144,8 @@ class _ReligionState extends State<BoostProfile> {
                       ],
                     ),
                   ),
-                 
                   InkWell(
                       onTap: () async {
-                       
                         if (controller.text.isEmpty) {
                           showDialog(
                               barrierDismissible: false,
@@ -124,14 +163,12 @@ class _ReligionState extends State<BoostProfile> {
                                 );
                               });
                         } else {
-                      
                           int status;
-                          status = await AdminService()
-                              .findprofile(controller.text);
+                          status =
+                              await AdminService().findprofile(controller.text);
                           if (status == 200) {
-                            NewUserModel newUserModel =
-                                await SearchProfile().searchuserdatabyid(
-                                    puid: controller.text);
+                            NewUserModel newUserModel = await SearchProfile()
+                                .searchuserdatabyid(puid: controller.text);
                             if (newUserModel.gender ==
                                 widget.newUserModel.gender) {
                               showDialog(
@@ -140,8 +177,7 @@ class _ReligionState extends State<BoostProfile> {
                                   builder: (context) {
                                     return const AlertDialog(
                                       content: SnackBarContent(
-                                        error_text:
-                                            "Please Enter Valid Gender",
+                                        error_text: "Please Enter Valid Gender",
                                         appreciation: "",
                                         icon: Icons.error,
                                         sec: 3,
@@ -150,15 +186,15 @@ class _ReligionState extends State<BoostProfile> {
                                       elevation: 0,
                                     );
                                   });
-                            } else if (widget.newUserModel.puid == controller.text) {
+                            } else if (widget.newUserModel.puid ==
+                                controller.text) {
                               showDialog(
                                   barrierDismissible: false,
                                   context: context,
                                   builder: (context) {
                                     return const AlertDialog(
                                       content: SnackBarContent(
-                                        error_text:
-                                            "Please Enter Different ID",
+                                        error_text: "Please Enter Different ID",
                                         appreciation: "",
                                         icon: Icons.error,
                                         sec: 3,
@@ -167,8 +203,8 @@ class _ReligionState extends State<BoostProfile> {
                                       elevation: 0,
                                     );
                                   });
-                            } else if(newUserModel.status!="approved"){
-                    showDialog(
+                            } else if (newUserModel.status != "approved") {
+                              showDialog(
                                   barrierDismissible: false,
                                   context: context,
                                   builder: (context) {
@@ -184,23 +220,22 @@ class _ReligionState extends State<BoostProfile> {
                                       elevation: 0,
                                     );
                                   });
-                            }
-                            else {
-                  
+                            } else {
                               SearchProfile().addtoadminnotification(
                                   userid: widget.newUserModel!.id!,
                                   useremail: widget.newUserModel!.email!,
-                                  userimage: widget
-                                          .newUserModel!.imageurls!.isEmpty
-                                      ? ""
-                                      : widget.newUserModel!.imageurls![0],
+                                  userimage:
+                                      widget.newUserModel!.imageurls!.isEmpty
+                                          ? ""
+                                          : widget.newUserModel!.imageurls![0],
                                   title:
                                       "${userSave.displayName} BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid}",
                                   email: userSave.email!,
                                   subtitle: "");
-                                 
-                                  if(widget.newUserModel.boostprofile!.contains(controller.text)){
-                                       showDialog(
+
+                              if (widget.newUserModel.boostprofile!
+                                  .contains(controller.text)) {
+                                showDialog(
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (context) {
@@ -215,36 +250,37 @@ class _ReligionState extends State<BoostProfile> {
                                         elevation: 0,
                                       );
                                     });
-                                  }else{
-                   AdminService()
-                                  .boosttouser(
-                                      puid: widget.newUserModel.puid,
-                                      value: newUserModel.id)
-                                  .whenComplete(() {
-                                showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialog(
-                                        content: SnackBarContent(
-                                          error_text: "Boost Successfull",
-                                          appreciation: "",
-                                          icon: Icons.done,
-                                          sec: 3,
-                                        ),
-                                        backgroundColor: Colors.transparent,
-                                        elevation: 0,
-                                      );
-                                    });
-                              });
-                              Navigator.push(context,                                   MaterialPageRoute(
-                              builder: (context) => MyProfile(
-                                profilecomp: 50,
-                                    userSave: widget.newUserModel!,
-                                    isDelete:false,
-                                  )));
-                                  }
-                             
+                              } else {
+                                AdminService()
+                                    .boosttouser(
+                                        puid: widget.newUserModel.puid,
+                                        value: newUserModel.id)
+                                    .whenComplete(() {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialog(
+                                          content: SnackBarContent(
+                                            error_text: "Boost Successfull",
+                                            appreciation: "",
+                                            icon: Icons.done,
+                                            sec: 3,
+                                          ),
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                        );
+                                      });
+                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyProfile(
+                                              profilecomp: 50,
+                                              userSave: widget.newUserModel!,
+                                              isDelete: false,
+                                            )));
+                              }
                             }
                           } else {
                             showDialog(
@@ -254,7 +290,7 @@ class _ReligionState extends State<BoostProfile> {
                                   return const AlertDialog(
                                     content: SnackBarContent(
                                       error_text:
-                                          "Please Enter Valid Profile Id",
+                                          "Please Enter Valid Profile ID",
                                       appreciation: "",
                                       icon: Icons.error,
                                       sec: 3,
@@ -271,18 +307,18 @@ class _ReligionState extends State<BoostProfile> {
                         bordercolor:
                             color == false ? Colors.black : Colors.blue,
                       )),
-                  InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => BoostProfile(
-                                  newUserModel: widget.newUserModel,
-                                )));
-                      },
-                      child: CustomSpecialButtom(
-                        text: "Cancel",
-                        bordercolor:
-                            color == false ? Colors.black : Colors.blue,
-                      )),
+                  // InkWell(
+                  //     onTap: () {
+                  //       Navigator.of(context).push(MaterialPageRoute(
+                  //           builder: (context) => BoostProfile(
+                  //                 newUserModel: widget.newUserModel,
+                  //               )));
+                  //     },
+                  //     child: CustomSpecialButtom(
+                  //       text: "Cancel",
+                  //       bordercolor:
+                  //           color == false ? Colors.black : Colors.blue,
+                  //     )),
                 ],
               ),
             ))

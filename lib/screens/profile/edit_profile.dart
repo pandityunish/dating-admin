@@ -2488,7 +2488,7 @@ sliderContiner(String image, String title,String subtitle){
           builder: (context) {
             return const AlertDialog(
               content: SnackBarContent(
-                error_text: "Please Update Data",
+                error_text: "Please Make Some Changes",
                 appreciation: "",
                 icon: Icons.error,
                 sec: 2,

@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/service/search_service.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/user_search/circle_bar.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:matrimony_admin/screens/profile/location_searching.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
@@ -1359,7 +1360,6 @@ class _SearchState extends State<Search> {
                                                                             fontFamily: 'Sans-serif'),
                                                                       ),
                                                                     ),
-                                                                   
                                                                     Container(
                                                                       width: MediaQuery.of(context)
                                                                               .size
@@ -1631,7 +1631,9 @@ class _SearchState extends State<Search> {
                                                                             fontFamily: 'Sans-serif'),
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 10,),
+                                                                    SizedBox(
+                                                                      width: 10,
+                                                                    ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
                                                                               .size
@@ -1793,27 +1795,31 @@ class _SearchState extends State<Search> {
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                     
+
                                                       SizedBox(
                                                         height: 10,
                                                       ),
-                                                       Align(
-                                                         alignment: Alignment.centerRight,
-                                                         child: GestureDetector(
-                                                                  onTap: () {
-                                                                    _pageController
-                                                                        .nextPage(
-                                                                      duration: Duration(
-                                                                          milliseconds:
-                                                                              500),
-                                                                      curve: Curves
-                                                                          .easeInOut,
-                                                                    );
-                                                                  },
-                                                                  child: Icon(Icons
-                                                                      .arrow_forward_ios,color: main_color,),
-                                                                ),
-                                                       ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            _pageController
+                                                                .nextPage(
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                              curve: Curves
+                                                                  .easeInOut,
+                                                            );
+                                                          },
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            color: main_color,
+                                                          ),
+                                                        ),
+                                                      ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -1826,18 +1832,18 @@ class _SearchState extends State<Search> {
                                                           children: [
                                                             Text(
                                                               "0 km",
-                                                              style: TextStyle(
-                                                                 ),
+                                                              style:
+                                                                  TextStyle(),
                                                             ),
                                                             Text(
                                                               "200 km",
-                                                              style: TextStyle(
-                                                            ),
+                                                              style:
+                                                                  TextStyle(),
                                                             )
                                                           ],
                                                         ),
                                                       ),
-                                                       Row(
+                                                      Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
@@ -1866,57 +1872,75 @@ class _SearchState extends State<Search> {
                                                       ),
                                                       Column(
                                                         children: [
-                                                          SliderTheme(
-                                                              data: SliderTheme
-                                                                      .of(
-                                                                          context)
-                                                                  .copyWith(
-                                                                valueIndicatorColor:
-                                                                    Colors
-                                                                        .black, // This is what you are asking for
-                                                                // Custom Gray Color
-                                                              ),
+                                                          Material(
+                                                              color:
+                                                                  Colors.white,
                                                               child:
-                                                                  RangeSlider(
-                                                                activeColor:
-                                                                    main_color,
-                                                                values:
-                                                                    _currentRangeValues,
-                                                                max: 200,
-                                                                divisions: 10,
-                                                                onChanged:
-                                                                    (forIos)
-                                                                        ? (RangeValues
-                                                                            values) {
-                                                                            if (!mounted)
-                                                                              return;
+                                                                  SliderTheme(
+                                                                data: SliderTheme.of(
+                                                                        context)
+                                                                    .copyWith(
+                                                                  rangeThumbShape:
+                                                                       CircleThumbShape(
+                                                                        thumbColor:forIos? main_color:Colors.black12 ,
+                                                                    thumbRadius:
+                                                                        8.0, // Size of the thumb
+                                                                  ),
+                                                                  thumbColor: Colors
+                                                                      .transparent, // Transparent fill for hollow center
+                                                                  overlayColor:
+                                                                      Colors
+                                                                          .transparent, // No overlay when thumb is pressed
+                                                                  activeTrackColor:
+                                                                      main_color, // Track color for selected range
+                                                                  inactiveTrackColor:
+                                                                      main_color
+                                                                          .withOpacity(
+                                                                              0.3), // Track color for unselected range
+                                                                  trackHeight:
+                                                                      4.0, // Thickness of the track
+                                                                ),
+                                                                child:
+                                                                    RangeSlider(
+                                                                  activeColor:
+                                                                      main_color,
+                                                                  values:
+                                                                      _currentRangeValues,
+                                                                  max: 200,
+                                                                  divisions: 10,
+                                                                  onChanged:
+                                                                      (forIos)
+                                                                          ? (RangeValues
+                                                                              values) {
+                                                                              if (!mounted)
+                                                                                return;
 
-                                                                            // Enforce a minimum range of 20
-                                                                            if ((values.end - values.start) >=
-                                                                                20) {
-                                                                              setState(() {
-                                                                                _currentRangeValues = values;
-                                                                              });
-                                                                            } else {
-                                                                              setState(() {
-                                                                                _currentRangeValues = RangeValues(
-                                                                                  values.start,
-                                                                                  values.start + 20 > 200 ? 200 : values.start + 20,
-                                                                                );
-                                                                              });
+                                                                              // Enforce a minimum range of 20
+                                                                              if ((values.end - values.start) >= 20) {
+                                                                                setState(() {
+                                                                                  _currentRangeValues = values;
+                                                                                });
+                                                                              } else {
+                                                                                setState(() {
+                                                                                  _currentRangeValues = RangeValues(
+                                                                                    values.start,
+                                                                                    values.start + 20 > 200 ? 200 : values.start + 20,
+                                                                                  );
+                                                                                });
+                                                                              }
                                                                             }
-                                                                          }
-                                                                        : null,
-                                                                labels:
-                                                                    RangeLabels(
-                                                                  _currentRangeValues
-                                                                      .start
-                                                                      .round()
-                                                                      .toString(),
-                                                                  _currentRangeValues
-                                                                      .end
-                                                                      .round()
-                                                                      .toString(),
+                                                                          : null,
+                                                                  labels:
+                                                                      RangeLabels(
+                                                                    _currentRangeValues
+                                                                        .start
+                                                                        .round()
+                                                                        .toString(),
+                                                                    _currentRangeValues
+                                                                        .end
+                                                                        .round()
+                                                                        .toString(),
+                                                                  ),
                                                                 ),
                                                               )),
                                                           Padding(
@@ -2359,7 +2383,7 @@ class _SearchState extends State<Search> {
                                                       MaterialStateProperty.all<
                                                           Color>(Colors.white)),
                                               child: const Text(
-                                                "Search",
+                                                "Search Profile",
                                                 style: TextStyle(
                                                   fontFamily: 'Serif',
                                                   fontWeight: FontWeight.w700,
@@ -2369,9 +2393,17 @@ class _SearchState extends State<Search> {
                                               ),
                                               onPressed: () async {
                                                 final data = await SearchProfile().addtosearchprofile(
-                                                  isSearch: forIos,
-                                                  maxDistance: forIos==true?_currentRangeValues.end.toInt():0,
-                                                  minDistance: forIos==true?_currentRangeValues.start.toInt():0,
+                                                    isSearch: forIos,
+                                                    maxDistance: forIos == true
+                                                        ? _currentRangeValues
+                                                            .end
+                                                            .toInt()
+                                                        : 0,
+                                                    minDistance: forIos == true
+                                                        ? _currentRangeValues
+                                                            .start
+                                                            .toInt()
+                                                        : 0,
                                                     searchprofile:
                                                         _searchIDController
                                                             .text,
@@ -2393,13 +2425,10 @@ class _SearchState extends State<Search> {
                                                         _currentSliderValue
                                                             .toString(),
                                                     age: svp.AgeList.toString(),
-                                                    religion: svp.ReligionList
-                                                        .toString(),
-                                                    kundalidosh:
-                                                        svp.KundaliDoshList
-                                                            .toString(),
-                                                    marital_status:
-                                                        svp.MaritalStatusList.toString(),
+                                                    religion:
+                                                        svp.ReligionList.toString(),
+                                                    kundalidosh: svp.KundaliDoshList.toString(),
+                                                    marital_status: svp.MaritalStatusList.toString(),
                                                     diet: svp.dietList.toString(),
                                                     smoke: svp.SmokeList.toString(),
                                                     drink: svp.DrinkList.toString(),
@@ -2565,7 +2594,7 @@ class _SearchState extends State<Search> {
                                                                               TextEditingController(text: allsearches[index].searchidprofile),
                                                                           decoration: InputDecoration(
                                                                               contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Profile Id',
+                                                                              hintText: 'Enter Profile ID',
                                                                               hintStyle: TextStyle(fontSize: 12),
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
@@ -2580,9 +2609,7 @@ class _SearchState extends State<Search> {
                                                                     ),
                                                                     GestureDetector(
                                                                       onTap:
-                                                                          () {
-                                                                        
-                                                                      },
+                                                                          () {},
                                                                       child:
                                                                           Container(
                                                                         decoration: BoxDecoration(
@@ -2673,9 +2700,7 @@ class _SearchState extends State<Search> {
                                                                     ),
                                                                     GestureDetector(
                                                                       onTap:
-                                                                          () {
-                                                                        
-                                                                      },
+                                                                          () {},
                                                                       child:
                                                                           Container(
                                                                         decoration: BoxDecoration(
@@ -2727,7 +2752,6 @@ class _SearchState extends State<Search> {
                                                                             fontFamily: 'Sans-serif'),
                                                                       ),
                                                                     ),
-                                                                    
                                                                     Container(
                                                                       width: MediaQuery.of(context)
                                                                               .size
@@ -2763,9 +2787,7 @@ class _SearchState extends State<Search> {
                                                                     ),
                                                                     GestureDetector(
                                                                       onTap:
-                                                                          () {
-                                                                      
-                                                                      },
+                                                                          () {},
                                                                       child:
                                                                           Container(
                                                                         decoration: BoxDecoration(
@@ -2986,7 +3008,9 @@ class _SearchState extends State<Search> {
                                                                             fontFamily: 'Sans-serif'),
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 10,),
+                                                                    SizedBox(
+                                                                      width: 10,
+                                                                    ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
                                                                               .size
@@ -3164,9 +3188,13 @@ class _SearchState extends State<Search> {
                                                                               Curves.easeInOut,
                                                                         );
                                                                       },
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .arrow_back_ios,color: main_color,),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .arrow_back_ios,
+                                                                        color:
+                                                                            main_color,
+                                                                      ),
                                                                     ),
                                                               GestureDetector(
                                                                 onTap: () {
@@ -3179,8 +3207,12 @@ class _SearchState extends State<Search> {
                                                                         .easeInOut,
                                                                   );
                                                                 },
-                                                                child: Icon(Icons
-                                                                    .arrow_forward_ios,color: main_color,),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .arrow_forward_ios,
+                                                                  color:
+                                                                      main_color,
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
@@ -3281,37 +3313,44 @@ class _SearchState extends State<Search> {
                                                                   RangeSlider(
                                                                 activeColor:
                                                                     main_color,
-                                                                values:
-                                                                   RangeValues(
-                                                                     ( allsearches[index].minDistance??0).toDouble(),
-                                                                     ( allsearches[index].maxDistance??0).toDouble()
-                                                                    ),
+                                                                values: RangeValues(
+                                                                    (allsearches[index].minDistance ??
+                                                                            0)
+                                                                        .toDouble(),
+                                                                    (allsearches[index].maxDistance ??
+                                                                            0)
+                                                                        .toDouble()),
                                                                 max: 200,
                                                                 divisions: 10,
+                                                                onChanged: (allsearches[index]
+                                                                            .isSearch ==
+                                                                        true)
+                                                                    ? (RangeValues
+                                                                        values) {
+                                                                        if (!mounted)
+                                                                          return;
 
-                                                                onChanged:
-                                                                    (allsearches[index].isSearch==true)
-                                                                        ? (RangeValues
-                                                                            values) {
-                                                                            if (!mounted)
-                                                                              return;
-
-                                                                            // Enforce a minimum range of 20
-                                                                            if ((values.end - values.start) >=
-                                                                                20) {
-                                                                              setState(() {
-                                                                                _currentRangeValues = values;
-                                                                              });
-                                                                            } else {
-                                                                              setState(() {
-                                                                                _currentRangeValues = RangeValues(
-                                                                                  values.start,
-                                                                                  values.start + 20 > 200 ? 200 : values.start + 20,
-                                                                                );
-                                                                              });
-                                                                            }
-                                                                          }
-                                                                        : null,
+                                                                        // Enforce a minimum range of 20
+                                                                        if ((values.end -
+                                                                                values.start) >=
+                                                                            20) {
+                                                                          setState(
+                                                                              () {
+                                                                            _currentRangeValues =
+                                                                                values;
+                                                                          });
+                                                                        } else {
+                                                                          setState(
+                                                                              () {
+                                                                            _currentRangeValues =
+                                                                                RangeValues(
+                                                                              values.start,
+                                                                              values.start + 20 > 200 ? 200 : values.start + 20,
+                                                                            );
+                                                                          });
+                                                                        }
+                                                                      }
+                                                                    : null,
                                                                 labels:
                                                                     RangeLabels(
                                                                   _currentRangeValues
@@ -3334,7 +3373,7 @@ class _SearchState extends State<Search> {
                                                                   MainAxisAlignment
                                                                       .end,
                                                               children: [
-                                                                 Container(
+                                                                Container(
                                                                   height: 35,
                                                                   width: 55,
                                                                   decoration:
@@ -3354,9 +3393,9 @@ class _SearchState extends State<Search> {
                                                                             const Duration(milliseconds: 200),
                                                                         decoration:
                                                                             BoxDecoration(
-                                                                          color: allsearches[index].isSearch==false  ? main_color
-                                                                              : Colors.black12
-                                                                             ,
+                                                                          color: allsearches[index].isSearch == false
+                                                                              ? main_color
+                                                                              : Colors.black12,
                                                                           borderRadius:
                                                                               BorderRadius.circular(30.0),
                                                                         ),
@@ -3367,7 +3406,8 @@ class _SearchState extends State<Search> {
                                                                       ),
                                                                       // Thumb with text
                                                                       Align(
-                                                                        alignment: allsearches[index].isSearch==false
+                                                                        alignment: allsearches[index].isSearch ==
+                                                                                false
                                                                             ? Alignment.centerRight
                                                                             : Alignment.centerLeft,
                                                                         child:
@@ -3396,7 +3436,7 @@ class _SearchState extends State<Search> {
                                                                                 Alignment.center,
                                                                             child:
                                                                                 Text(
-                                                                              allsearches[index].isSearch==true ? "On" : "Off",
+                                                                              allsearches[index].isSearch == true ? "On" : "Off",
                                                                               style: TextStyle(
                                                                                 fontSize: 10,
                                                                                 fontWeight: FontWeight.bold,
@@ -3772,7 +3812,7 @@ class _SearchState extends State<Search> {
                                               ),
                                               onPressed: () async {
                                                 final data = await SearchProfile().addtosearchprofile(
-                                                  isSearch:forIos ,
+                                                    isSearch: forIos,
                                                     searchprofile:
                                                         _searchIDController
                                                             .text,

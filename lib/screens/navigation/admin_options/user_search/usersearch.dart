@@ -10,6 +10,7 @@ import 'package:matrimony_admin/screens/ERRORs/search_profile_error.dart';
 import 'package:matrimony_admin/screens/Search_profile/functionSearch.dart';
 import 'package:matrimony_admin/screens/Search_profile/search_dynamic_pages.dart';
 import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/user_search/circle_bar.dart';
 import 'package:matrimony_admin/screens/profile/profileScroll.dart';
 
 import '../../../../Assets/ayushWidget/big_text.dart';
@@ -737,6 +738,7 @@ class _UserSearchState extends State<UserSearch> {
 
   final PageController _pageController = PageController(initialPage: 0);
   bool forIos2 = false;
+
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
@@ -810,7 +812,8 @@ class _UserSearchState extends State<UserSearch> {
                                         SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
@@ -962,7 +965,7 @@ class _UserSearchState extends State<UserSearch> {
                                                 //+9155556580544
                                               ],
                                             )),
-Divider(),
+                                        Divider(),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -980,7 +983,6 @@ Divider(),
                                                       fontFamily:
                                                           'Sans-serif')),
                                             ),
-                                          
                                           ],
                                         ),
                                         const SizedBox(
@@ -989,119 +991,202 @@ Divider(),
                                         Padding(
                                           padding: EdgeInsets.only(left: 10),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                    margin:
-                                                        EdgeInsets.only(right: 10),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 10),
                                                     child: Text(
                                                       "${_currentSliderValue} Km",
-                                                      textAlign: TextAlign.start,
+                                                      textAlign:
+                                                          TextAlign.start,
                                                       style: TextStyle(
                                                           decoration:
-                                                              TextDecoration.none,
+                                                              TextDecoration
+                                                                  .none,
                                                           fontSize: 18,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontFamily: 'Sans-serif'),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'Sans-serif'),
                                                     ),
                                                   ),
-                                                   Container(
-                                                    margin:
-                                                        EdgeInsets.only(right: 10),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 10),
                                                     child: Text(
                                                       "200 Km",
-                                                      textAlign: TextAlign.start,
+                                                      textAlign:
+                                                          TextAlign.start,
                                                       style: TextStyle(
                                                           decoration:
-                                                              TextDecoration.none,
+                                                              TextDecoration
+                                                                  .none,
                                                           fontSize: 18,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontFamily: 'Sans-serif'),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'Sans-serif'),
                                                     ),
                                                   ),
-                                              ],
-                                            ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                               
-                                                child: Text(
-                                                  "Within",
-                                                  style: TextStyle(
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      color: main_color,
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
-                                                      fontFamily: 'Sans-serif'),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      "Within",
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .none,
+                                                          color: main_color,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              'Sans-serif'),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
                                         Column(
                                           children: [
-                                            //               Material(
-                                            //                 child:SliderTheme(
-                                            // data: SliderTheme.of(context).copyWith(
-                                            //   valueIndicatorColor: Colors.black, // This is what you are asking for
-                                            //   // Custom Gray Color
-
-                                            // ),child: Slider(
-                                            //                   activeColor: main_color,
-                                            //                   value: _currentSliderValue,
-                                            //                   max: 200,
-                                            //                   divisions: 10,
-                                            //                   label:
-                                            //                       _currentSliderValue.round().toString(),
-                                            //                   onChanged: (forIos)
-                                            //                       ? (double value) {
-                                            //                           if (!mounted) return;
-                                            //                           setState(() {
-                                            //                             _currentSliderValue = value;
-                                            //                           });
-                                            //                         }
-                                            //                       : null,
-                                            //                 )),
-                                            //               ),
-                                            SliderTheme(
-                                              data: SliderTheme.of(context)
-                                                  .copyWith(
-                                                valueIndicatorColor: Colors
-                                                    .black, // Custom Gray Color
-                                              ),
-                                              child: RangeSlider(
-                                                activeColor: main_color,
-                                                values: _currentRangeValues,
-                                                min: 0,
-                                                max: 200,
-                                                divisions: 10,
-                                                labels: RangeLabels(
-                                                  _currentRangeValues.start
-                                                      .round()
-                                                      .toString(),
-                                                  _currentRangeValues.end
-                                                      .round()
-                                                      .toString(),
+                                            Material(
+                                              color: Colors.white,
+                                              child: SliderTheme(
+                                                data: SliderTheme.of(context)
+                                                    .copyWith(
+                                                  rangeThumbShape:
+                                                      const CircleThumbShape(
+                                                    thumbRadius:
+                                                        8.0, // Size of the thumb
+                                                  ),
+                                                  thumbColor: Colors
+                                                      .transparent, // Transparent fill for hollow center
+                                                  overlayColor: Colors
+                                                      .transparent, // No overlay when thumb is pressed
+                                                  activeTrackColor:
+                                                      main_color, // Track color for selected range
+                                                  inactiveTrackColor:
+                                                      main_color.withOpacity(
+                                                          0.3), // Track color for unselected range
+                                                  trackHeight:
+                                                      4.0, // Thickness of the track
                                                 ),
-                                                onChanged: (forIos)
-                                                    ? (RangeValues values) {
-                                                        if (!mounted) return;
-                                                        setState(() {
-                                                          _currentRangeValues =
-                                                              values;
-                                                        });
-                                                      }
-                                                    : null,
+                                                child: RangeSlider(
+                                                  activeColor: main_color,
+                                                  values: _currentRangeValues,
+                                                  min: 0,
+                                                  max: 200,
+                                                  divisions: 10,
+                                                  labels: RangeLabels(
+                                                    _currentRangeValues.start
+                                                        .round()
+                                                        .toString(),
+                                                    _currentRangeValues.end
+                                                        .round()
+                                                        .toString(),
+                                                  ),
+                                                  onChanged: forIos
+                                                      ? (RangeValues values) {
+                                                          if (!mounted) return;
+
+                                                          setState(() {
+                                                            // Adjust values to maintain a minimum gap of 20
+                                                            double newStart =
+                                                                values.start;
+                                                            double newEnd =
+                                                                values.end;
+
+                                                            // If the range is less than 20, adjust the appropriate thumb
+                                                            if (newEnd -
+                                                                    newStart <
+                                                                20) {
+                                                              // If the user is moving the start thumb
+                                                              if ((values.start -
+                                                                          _currentRangeValues
+                                                                              .start)
+                                                                      .abs() >
+                                                                  (values.end -
+                                                                          _currentRangeValues
+                                                                              .end)
+                                                                      .abs()) {
+                                                                newEnd =
+                                                                    newStart +
+                                                                        20;
+                                                                if (newEnd >
+                                                                    200) {
+                                                                  newEnd = 200;
+                                                                  newStart =
+                                                                      200 - 20;
+                                                                }
+                                                              }
+                                                              // If the user is moving the end thumb
+                                                              else {
+                                                                newStart =
+                                                                    newEnd - 20;
+                                                                if (newStart <
+                                                                    0) {
+                                                                  newStart = 0;
+                                                                  newEnd = 20;
+                                                                }
+                                                              }
+                                                            }
+
+                                                            _currentRangeValues =
+                                                                RangeValues(
+                                                                    newStart,
+                                                                    newEnd);
+                                                          });
+                                                        }
+                                                      : null,
+                                                ),
                                               ),
                                             ),
+                                            // SliderTheme(
+                                            //   data: SliderTheme.of(context)
+                                            //       .copyWith(
+                                            //     valueIndicatorColor: Colors
+                                            //         .black, // Custom Gray Color
+                                            //   ),
+                                            //   child: RangeSlider(
+                                            //     activeColor: main_color,
+                                            //     values: _currentRangeValues,
+                                            //     min: 0,
+                                            //     max: 200,
+                                            //     divisions: 10,
+                                            //     labels: RangeLabels(
+                                            //       _currentRangeValues.start
+                                            //           .round()
+                                            //           .toString(),
+                                            //       _currentRangeValues.end
+                                            //           .round()
+                                            //           .toString(),
+                                            //     ),
+                                            //     onChanged: (forIos)
+                                            //         ? (RangeValues values) {
+                                            //             if (!mounted) return;
+                                            //             setState(() {
+                                            //               _currentRangeValues =
+                                            //                   values;
+                                            //             });
+                                            //           }
+                                            //         : null,
+                                            //   ),
+                                            // ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
@@ -1503,8 +1588,8 @@ Divider(),
                                       // const SizedBox(
                                       //   height: 10,
                                       // ),
-Divider(),
-                                    
+                                      Divider(),
+
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1538,39 +1623,38 @@ Divider(),
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                       Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                    margin:
-                                                        EdgeInsets.only(right: 10),
-                                                    child: Text(
-                                                      "${_currentSliderValue} Km",
-                                                      textAlign: TextAlign.start,
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration.none,
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontFamily: 'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                   Container(
-                                                    margin:
-                                                        EdgeInsets.only(right: 10),
-                                                    child: Text(
-                                                      "200 Km",
-                                                      textAlign: TextAlign.start,
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration.none,
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontFamily: 'Sans-serif'),
-                                                    ),
-                                                  ),
-                                              ],
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              "${_currentSliderValue} Km",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Sans-serif'),
                                             ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              "200 Km",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Sans-serif'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1593,22 +1677,46 @@ Divider(),
                                       Column(
                                         children: [
                                           Material(
+                                            color: Colors.white,
                                             child: SliderTheme(
                                               data: SliderTheme.of(context)
                                                   .copyWith(
-                                                valueIndicatorColor: Colors
-                                                    .black, // Custom Gray Color
+                                                rangeThumbShape:
+                                                    CircleThumbShape(
+                                                  thumbColor: forIos
+                                                      ? main_color
+                                                      : Colors.black12,
+                                                  thumbRadius:
+                                                      8.0, // Size of the thumb
+                                                ),
+                                                thumbColor: Colors
+                                                    .transparent, // Transparent fill for hollow center
+                                                overlayColor: Colors
+                                                    .transparent, // No overlay when thumb is pressed
+                                                activeTrackColor:
+                                                    main_color, // Track color for selected range
+                                                inactiveTrackColor:
+                                                    main_color.withOpacity(
+                                                        0.3), // Track color for unselected range
+                                                trackHeight:
+                                                    4.0, // Thickness of the track
                                               ),
                                               child: RangeSlider(
                                                 activeColor: main_color,
+                                                // values: _currentRangeValues,
                                                 values: RangeValues(
                                                     double.parse(widget
                                                         .searchs[index]
                                                         .searchDistance
                                                         .toString()),
                                                     80),
+                                                min: 0,
                                                 max: 200,
                                                 divisions: 10,
+                                                // labels: RangeLabels(
+                                                //   _currentRangeValues.start.round().toString(),
+                                                //   _currentRangeValues.end.round().toString(),
+                                                // ),
                                                 labels: RangeLabels(
                                                     double.parse(widget
                                                             .searchs[index]
@@ -1617,10 +1725,90 @@ Divider(),
                                                         .round()
                                                         .toString(),
                                                     "200"),
-                                                onChanged: null,
+                                                onChanged: forIos
+                                                    ? (RangeValues values) {
+                                                        if (!mounted) return;
+
+                                                        setState(() {
+                                                          // Adjust values to maintain a minimum gap of 20
+                                                          double newStart =
+                                                              values.start;
+                                                          double newEnd =
+                                                              values.end;
+
+                                                          // If the range is less than 20, adjust the appropriate thumb
+                                                          if (newEnd -
+                                                                  newStart <
+                                                              20) {
+                                                            // If the user is moving the start thumb
+                                                            if ((values.start -
+                                                                        _currentRangeValues
+                                                                            .start)
+                                                                    .abs() >
+                                                                (values.end -
+                                                                        _currentRangeValues
+                                                                            .end)
+                                                                    .abs()) {
+                                                              newEnd =
+                                                                  newStart + 20;
+                                                              if (newEnd >
+                                                                  200) {
+                                                                newEnd = 200;
+                                                                newStart =
+                                                                    200 - 20;
+                                                              }
+                                                            }
+                                                            // If the user is moving the end thumb
+                                                            else {
+                                                              newStart =
+                                                                  newEnd - 20;
+                                                              if (newStart <
+                                                                  0) {
+                                                                newStart = 0;
+                                                                newEnd = 20;
+                                                              }
+                                                            }
+                                                          }
+
+                                                          _currentRangeValues =
+                                                              RangeValues(
+                                                                  newStart,
+                                                                  newEnd);
+                                                        });
+                                                      }
+                                                    : null,
                                               ),
                                             ),
                                           ),
+                                          // Material(
+                                          //   child: SliderTheme(
+                                          //     data: SliderTheme.of(context)
+                                          //         .copyWith(
+                                          //       valueIndicatorColor: Colors
+                                          //           .black, // Custom Gray Color
+                                          //     ),
+                                          //     child: RangeSlider(
+                                          //       activeColor: main_color,
+                                          //       values: RangeValues(
+                                          //           double.parse(widget
+                                          //               .searchs[index]
+                                          //               .searchDistance
+                                          //               .toString()),
+                                          //           80),
+                                          //       max: 200,
+                                          //       divisions: 10,
+                                          //       labels: RangeLabels(
+                                          //           double.parse(widget
+                                          //                   .searchs[index]
+                                          //                   .searchDistance
+                                          //                   .toString())
+                                          //               .round()
+                                          //               .toString(),
+                                          //           "200"),
+                                          //       onChanged: null,
+                                          //     ),
+                                          //   ),
+                                          // ),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
@@ -1897,28 +2085,18 @@ Divider(),
                           //   ),
                           // ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Text(
-                            "Search by ${widget.searchs[index].name!}",
+                            "Search by ${widget.searchs[index].name!} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(widget.searchs[index].createdAt!).toLocal())}",
                             style: const TextStyle(
                                 decoration: TextDecoration.none,
                                 color: Colors.black,
-                                fontSize: 22,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'Sans-serif'),
                           ),
-                          Text(
-                            DateFormat('EEEE MMMM d y HH:mm').format(
-                                DateTime.parse(widget.searchs[index].createdAt!)
-                                    .toLocal()),
-                            style: const TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Sans-serif'),
-                          ),
+
                           SizedBox(height: 30),
                         ],
                       ),

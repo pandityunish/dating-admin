@@ -9,7 +9,7 @@ final double? height;
   const CustomAppBar({
     Key? key,
     required this.title,
-this.height=110,
+this.height=75,
     this.onBackButtonPressed, required this.iconImage,
   }) : super(key: key);
 
@@ -19,7 +19,7 @@ this.height=110,
   @override
   Widget build(BuildContext context) {
     return  PreferredSize(
-  preferredSize: const Size.fromHeight(100), // Adjust AppBar height
+  preferredSize: const Size.fromHeight(10), // Adjust AppBar height
   child: AppBar(
     leading: GestureDetector(
       onTap: () {
@@ -30,9 +30,9 @@ this.height=110,
         color: main_color,
         size: 25,
       ),
-    ),
+    ), 
     flexibleSpace: Padding(
-      padding: const EdgeInsets.only(top: 0), // Adjust padding for alignment
+      padding: const EdgeInsets.only(top: 20), // Adjust padding for alignment
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

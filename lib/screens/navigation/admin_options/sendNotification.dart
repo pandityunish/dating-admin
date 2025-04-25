@@ -429,142 +429,97 @@ print(allnotification);
           }
            return Column(
               children: [
-                Center(
-                   child: Container(
-                 height: MediaQuery.of(context).size.height * 0.85,
-                 child: SingleChildScrollView(
-                   child: Column(
-                     children: [
+                Expanded(
+                  child: Column(
+                    children: [
                        Container(
-                         margin: EdgeInsets.only(left: 15, right: 15),
-                         child: TextFormField(
-                                                        initialValue: allnotification[index].heading,
-          
-                           minLines: 3,
-                           maxLines: 5,
-                           maxLength: 50,
-                           style:
-                               TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
-                           decoration: InputDecoration(
-                             hintText: "Enter Headline here",
-                             border: OutlineInputBorder(
-                                 borderSide: new BorderSide(color: main_color)),
-                             focusedBorder: OutlineInputBorder(
-                                 borderSide: new BorderSide(color: main_color)),
-                             // labelText: 'Write Here',
-                           ),
-                         ),
-                       ),
-                       SizedBox(
-                         height: 10,
-                       ),
-                       Container(
-                         margin: EdgeInsets.only(left: 15, right: 15),
-                         child: TextFormField(
-                           initialValue: allnotification[index].title,
-                           minLines: 3,
-                           maxLines: 5,
-                           maxLength: 50,
-                           style:
-                               TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
-                           decoration: InputDecoration(
-                             hintText: "Enter Notification Here",
-                             border: OutlineInputBorder(
-                                 borderSide: new BorderSide(color: main_color)),
-                             focusedBorder: OutlineInputBorder(
-                                 borderSide: new BorderSide(color: main_color)),
-                             // labelText: 'Write Here',
-                           ),
-                         ),
-                       ),
-                       Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                    child: SizedBox(
-                      width: Get.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                 index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
-                                _pageController.previousPage( duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,)
-                              }),              
-                              IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
-                                _pageController.nextPage( duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,)
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                       SizedBox(
-                         height: 20,
-                       ),
-                       SizedBox(
-                         width: 300,
-                         height: 50,
-                         child: ElevatedButton(
-                           style: ButtonStyle(
-                               shadowColor: MaterialStateColor.resolveWith(
-                                   (states) => Colors.black),
-                               padding: MaterialStateProperty.all<
-                                       EdgeInsetsGeometry?>(
-                                   EdgeInsets.symmetric(vertical: 13)),
-                               shape: MaterialStateProperty.all<
-                                       RoundedRectangleBorder>(
-                                   RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(60.0),
-                                 // side: BorderSide(
-                                 //   color: (value == false)
-                                 //       ? Colors.white
-                                 //       : main_color,
-                                 // )
-                               )),
-                               backgroundColor: MaterialStateProperty.all<Color>(
-                                   Colors.white)),
-                           child: Text(
-                             "Send Notification",
-                             style: TextStyle(
-                               fontSize: 20,
-                               color: Colors.black,
-                             ),
-                           ),
-                           onPressed: () async {
+                        margin: EdgeInsets.only(left: 15, right: 15),
+                        child: TextFormField(
+                                                       initialValue: allnotification[index].heading,
                             
-                
-                             // }else{
-                
-                             // }
-                           },
-                         ),
-                       ),
-                       Text(allnotification[index].status,style:  TextStyle(
-                             fontFamily: 'Serif',
-                             fontSize: 20,
-                             fontWeight: FontWeight.w700,
-                             color:allnotification[index].status=="Received"? main_color:Colors.red,
-                           ),),
-                 Text("Send by:${allnotification[index].name}",style:  TextStyle(
-                             fontFamily: 'Serif',
-                             fontSize: 20,
-                             fontWeight: FontWeight.w700,
-                             color: Colors.black,
-                           ),),
-                            Text("Particular",style:  TextStyle(
-                             fontFamily: 'Serif',
-                             fontSize: 20,
-                             fontWeight: FontWeight.w700,
-                             color: Colors.black,
-                           ),),
-                              Text( DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(allnotification[index].createdAt).toLocal()),style: TextStyle(
-                             fontFamily: 'Serif',
-                             fontSize: 20,
-                             fontWeight: FontWeight.w700,
-                             color: Colors.black,
-                           ),)
-                     ],
+                          minLines: 3,
+                          maxLines: 5,
+                          maxLength: 50,
+                          style:
+                              TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
+                          decoration: InputDecoration(
+                            hintText: "Enter Headline here",
+                            border: OutlineInputBorder(
+                                borderSide: new BorderSide(color: main_color)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: new BorderSide(color: main_color)),
+                            // labelText: 'Write Here',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15, right: 15),
+                        child: TextFormField(
+                          initialValue: allnotification[index].title,
+                          minLines: 3,
+                          maxLines: 5,
+                          maxLength: 50,
+                          style:
+                              TextStyle(fontFamily: 'Sans-serif', fontSize: 17),
+                          decoration: InputDecoration(
+                            hintText: "Enter Notification Here",
+                            border: OutlineInputBorder(
+                                borderSide: new BorderSide(color: main_color)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: new BorderSide(color: main_color)),
+                            // labelText: 'Write Here',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                   child: SizedBox(
+                     width: Get.width,
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                                   index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
+                               _pageController.previousPage( duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,)
+                             }),              
+                             IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: ()=>{
+                               _pageController.nextPage( duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,)
+                             }),
+                       ],
+                     ),
                    ),
-                 ),
-               )),
+                                    ),
+                    ],
+                  ),
+                ),
+                Text(allnotification[index].status,style:  TextStyle(
+                      fontFamily: 'Serif',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color:allnotification[index].status=="Received"? main_color:Colors.red,
+                    ),),
+                             Text("Send by:${allnotification[index].name}",style:  TextStyle(
+                      fontFamily: 'Serif',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),),
+                     Text("Particular",style:  TextStyle(
+                      fontFamily: 'Serif',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),),
+                       Text( DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(allnotification[index].createdAt).toLocal()),style: TextStyle(
+                      fontFamily: 'Serif',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),),
                  
               ],
             );

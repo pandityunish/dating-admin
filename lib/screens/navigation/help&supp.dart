@@ -461,10 +461,11 @@ class _HelpSupportState extends State<HelpSupport> {
                                       
                                       scrollPhysics:AlwaysScrollableScrollPhysics(),
                                       controller: descController,
-                                      
+                                      cursorColor: main_color,
                                       // scrollController: ScrollController(),
                                       decoration: InputDecoration(
                                         focusColor: main_color,
+                                        
                                         focusedBorder:  OutlineInputBorder(
               borderSide: BorderSide(color: main_color),
                                         borderRadius: BorderRadius.circular(20),
@@ -607,18 +608,22 @@ void sendPushMessage(
         
         sendPushMessage("Query Resolved Successfully","",
         widget.newUserModel.id,"/",widget.newUserModel.token,sound: "",userName: widget.newUserModel.name);
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: SnackBarContent2(
-                error_text:
-                    "Your Message Has Been Sent Successfully ",
-                icon: Icons.check),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          );
-        }).whenComplete((){
+  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          content: SnackBarContent(
+                                            error_text:
+                                                "Query Resolved Successfully",
+                                            appreciation: "",
+                                            icon: Icons.check,
+                                            sec: 3,
+                                          ),
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                        );
+                                      }).whenComplete((){
   Get.off(MyProfile(
                                        profilecomp: 50,
                                        userSave: widget.newUserModel,

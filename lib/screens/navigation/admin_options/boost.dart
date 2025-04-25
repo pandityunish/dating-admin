@@ -58,29 +58,52 @@ class _ReligionState extends State<Boost> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:CustomAppBar(title: "Boot Profile", iconImage: "images/icons/boost.png",height: 80,),
-        //  CupertinoNavigationBar(
-        //    leading: GestureDetector(
-        //       onTap: () {
-        //         Navigator.of(context).pop();
-                
-        //       },
-        //       child: Icon(
-        //         Icons.arrow_back_ios_new,
-        //         color: main_color,
-        //         size: 25,
-        //       ),
-        //     ),
-        //   middle: Container(
-        //     margin: EdgeInsets.only(right: 20),
-        //     child: DefaultTextStyle(
-        //         style: GoogleFonts.poppins(color: main_color, fontSize: 25),
-        //         child: Text("Boost Profile             ")),
-        //   ),
-        //   previousPageTitle: "",
-        // ),
+        appBar:PreferredSize(
+          preferredSize: const Size.fromHeight(80), // Adjust AppBar height
+          child: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: main_color,
+                size: 25,
+              ),
+            ),
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20), // Adjust padding for alignment
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      //FontAwesomeIcons.bolt,
+                      Icons.offline_bolt_outlined,
+                      color: main_color,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        color: main_color,
+                        fontFamily: 'Sans-serif',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                      child: Text("Boost Profile"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
         body: Column(
           children: [
            
@@ -181,6 +204,7 @@ class _ReligionState extends State<Boost> {
                                 return AlertDialog(
                                   content: SnackBarContent(
                                     error_text: "Boost To Save Preference Successfully",
+                                    
                                     appreciation: "",
                                     icon: Icons.check_circle_sharp,
                                     sec: 3,

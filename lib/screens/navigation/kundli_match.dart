@@ -398,27 +398,40 @@ String getMonthName(int monthNumber) {
       child: Scaffold(
          appBar: CustomAppBar(title: 'Kundli Match', iconImage: 'images/icons/kundli.png') ,
         body:  widget.allkundali.isEmpty?Center(
+          
           child:Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
+            child: Text("No Kundli Found",style: TextStyle(color: main_color,fontSize: 20),),
+          ), 
+        ): Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:PageView.builder(
+                            controller: _pageController,
+                            onPageChanged: (index) {},
+                            itemCount: widget.allkundali.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if(widget.allkundali[index].userid=="12345"){
+                                return SingleChildScrollView(
                 child: Container(
                   child: Column(
-                    
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                 
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Groom's Information",
-                              style: TextStyle(
-                                decoration: TextDecoration.none,
-                                fontFamily: 'Sans-serif',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                            
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8, right: 8),
+                              child: Text(
+                                "Groom Information",
+                                style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'Sans-serif',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                             Card(
@@ -435,8 +448,9 @@ String getMonthName(int monthNumber) {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
-                                    hintText: "Groom's Name",
+                                decoration:  InputDecoration(
+                                    hintText: "Enter Groom's Name",
+                                    hintStyle: TextStyle(color: newtextColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.all(10)),
                               ),
@@ -444,29 +458,29 @@ String getMonthName(int monthNumber) {
                             // SizedBox(
                             //   height: 10,
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8, right: 8),
                               child: Text(
-                                "Date of Birth",
+                                "Date Of Birth",
                                 style: TextStyle(
                                   decoration: TextDecoration.none,
                                   fontFamily: 'Sans-serif',
-                                  color: Colors.black,
+                                  color: Color(0xFF333333),
                                   fontWeight: FontWeight.w400,
                                   fontSize: 20,
                                 ),
                               ),
                             ),
-                
+
                             Calender(
                               useTwentyOneYears: true,
                               setdate: updateMaleDate,
                             ),
-                
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8, right: 8),
                               child: Text(
-                                "Birth Time",
+                                "Time Of Birth",
                                 style: TextStyle(
                                   decoration: TextDecoration.none,
                                   fontFamily: 'Sans-serif',
@@ -485,27 +499,58 @@ String getMonthName(int monthNumber) {
                                       borderRadius: BorderRadius.circular(30)),
                                   child: SizedBox(
                                     height: 46,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.29,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.29,
                                     child: Center(
                                       child: DropdownButton<String>(
                                         underline: Container(
                                           color: Colors.white,
                                         ),
+                                        value: mselectedHour,
+                                        iconEnabledColor: newtextColor,
+
+                                        hint:  Text(
+                                          "Hour",
+                                          style: TextStyle(color: newtextColor),
+                                        ),
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             mselectedHour = value!;
                                             saveSelectedValues();
                                           });
                                         },
                                         items: List.generate(12, (int index) {
-                                          String hour = (index + 1).toString();
+                                          String minute =
+                                              index.toString().padLeft(2, '0');
                                           return DropdownMenuItem<String>(
-                                            value: hour,
-                                            child: Text(hour),
+                                            value: minute,
+                                            child: Text(minute),
                                           );
                                         }),
                                       ),
+                                      //  DropdownButton<String>(
+                                      //   underline: Container(
+                                      //     color: Colors.white,
+                                      //   ),
+                                      //   value: mselectedHour,
+                                      //   onChanged: (value) {
+                                      //     if (!mounted) return;
+                                      //     setState(() {
+                                      //       mselectedHour = value!;
+                                      //       saveSelectedValues();
+                                      //     });
+                                      //   },
+                                      //   items: List.generate(60, (int index) {
+
+                                      //      String hour =
+                                      //         index.toString().padLeft(2, '0');
+                                      //     return DropdownMenuItem<String>(
+                                      //       value: hour,
+                                      //       child: Text(hour),
+                                      //     );
+                                      //   }),
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -524,7 +569,13 @@ String getMonthName(int monthNumber) {
                                           color: Colors.white,
                                         ),
                                         value: mselectedMinute,
+                                        iconEnabledColor: newtextColor,
+                                        hint:  Text(
+                                          "Minute",
+                                          style: TextStyle(color: newtextColor),
+                                        ),
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             mselectedMinute = value!;
                                             saveSelectedValues();
@@ -548,31 +599,35 @@ String getMonthName(int monthNumber) {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Container(
                                     height: 46,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.29,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.29,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     child: Center(
                                       child: DropdownButton<String>(
                                         underline: Container(
                                           color: Colors.white,
                                         ),
                                         value: mselectedAMPM,
+                                        iconEnabledColor: newtextColor,
+
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             mselectedAMPM = value!;
                                             saveSelectedValues();
                                           });
                                         },
                                         items: <DropdownMenuItem<String>>[
-                                          DropdownMenuItem<String>(
+                                           DropdownMenuItem<String>(
                                             value: "AM",
-                                            child: Text("AM"),
+                                            child: Text("AM",style: TextStyle(color: newtextColor),),
                                           ),
-                                          DropdownMenuItem<String>(
+                                           DropdownMenuItem<String>(
                                             value: "PM",
-                                            child: Text("PM"),
+                                            child: Text("PM",style: TextStyle(color: newtextColor),),
                                           ),
                                         ],
                                       ),
@@ -584,50 +639,55 @@ String getMonthName(int monthNumber) {
                             // SizedBox(
                             //   height: 10,
                             // ),
-                            // Card(
-                            //   elevation: 4,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(30)),
-                            //   child: TextFormField(
-                            //     // controller: birthPlaceController,
-                            //     textInputAction: TextInputAction.next,
-                            //     keyboardType: TextInputType.name,
-                            //     onChanged: (value) {
-                            //       _onSearchChanged(value);
-                            //     },
-                            //     focusNode: _focusNode,
-                            //     validator: (value) {
-                            //       if (value!.isEmpty) {
-                            //         setState(() {
-                            //           height_suggest1 = 0.0;
-                            //         });
-                            //         return "Enter your name";
-                            //       }
-                            //       return location;
-                            //     },
-                            //     decoration: const InputDecoration(
-                            //         hintText: "Birth place",
-                            //         border: InputBorder.none,
-                            //         contentPadding: EdgeInsets.all(10)),
-                            //   ),
-                            // ),
+                            Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: TextFormField(
+                                controller: birthPlaceController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.name,
+                                onChanged: (value) {
+                                  // _onSearchChanged(value);
+                                  // _fileterlocation(value);
+                                  setState(() {});
+                                },
+                                focusNode: _focusNode,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    setState(() {
+                                      height_suggest1 = 0.0;
+                                    });
+                                    return "Enter your name";
+                                  }
+                                  return location;
+                                },
+                                decoration:  InputDecoration(
+                                    hintText: "Enter Place of Birth",
+                                    border: InputBorder.none,
+                                        hintStyle: TextStyle(color: newtextColor),
+
+                                    contentPadding: EdgeInsets.all(10)),
+                              ),
+                            ),
                             // Stack(
                             //   children: [
-                            //     SizedBox(height: 1),
+                            //     const SizedBox(height: 1),
                             //     Container(
                             //       height: height_suggest1,
                             //       child: Card(
                             //         child: ListView.builder(
                             //           padding: EdgeInsets.zero,
-                            //           itemCount: _predictions.length,
+                            //           itemCount: alllist.length,
                             //           itemBuilder: (context, index) {
                             //             return SingleChildScrollView(
                             //               child: ListTile(
-                            //                   title: Text(_predictions[index]
-                            //                       .description!),
+                            //                   title: Text(
+                            //                       "${alllist[index].countrycity},${alllist[index].countrystate ?? ""},${alllist[index].countryname}"),
                             //                   onTap: () {
-                            //                     _onSelectedPlace(
-                            //                         _predictions[index]);
+                            //                     _onSelectedPlace3(
+                            //                         alllist[index]);
+                            //                     if (!mounted) return;
                             //                     setState(() {
                             //                       height_suggest1 = 0.0;
                             //                     });
@@ -635,19 +695,45 @@ String getMonthName(int monthNumber) {
                             //             );
                             //           },
                             //         ),
+                            //         // }
+                            //         // }),
                             //       ),
                             //     ),
                             //   ],
                             // ),
-                
-                            Text(
-                              "Bride's Information",
-                              style: TextStyle(
-                                decoration: TextDecoration.none,
-                                fontFamily: 'Sans-serif',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
+  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10,),
+                      child: SizedBox(
+                        width: Get.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                   index==0?Center():     IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: ()=>{
+                                  _pageController.previousPage( duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,)
+                                }),              
+                              GestureDetector(
+                                onTap: () {
+                                     _pageController.nextPage( duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,);
+                                },
+                                child: Icon(Icons.arrow_forward_ios)),
+                          ],
+                        ),
+                      ),
+                    ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 8, right: 8),
+                              // padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Bride Information",
+                                style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'Sans-serif',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                             Card(
@@ -664,15 +750,18 @@ String getMonthName(int monthNumber) {
                                   }
                                   return null;
                                 },
-                                decoration: const InputDecoration(
-                                    hintText: "Bride's Name",
+                                decoration:  InputDecoration(
+                                    hintText: "Enter Bride's Name",
                                     border: InputBorder.none,
+                                        hintStyle: TextStyle(color: newtextColor),
+
                                     contentPadding: EdgeInsets.all(10)),
                               ),
                             ),
-                
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+
+                            const Padding(
+                              // padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.only(left: 8, right: 8),
                               child: Text(
                                 "Date of Birth",
                                 style: TextStyle(
@@ -688,10 +777,11 @@ String getMonthName(int monthNumber) {
                               useTwentyOneYears: false,
                               setdate: updateFemaleDate,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              // padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.only(left: 8, right: 8),
                               child: Text(
-                                "Birth Time",
+                                "Time of Birth",
                                 style: TextStyle(
                                   decoration: TextDecoration.none,
                                   fontFamily: 'Sans-serif',
@@ -701,7 +791,7 @@ String getMonthName(int monthNumber) {
                                 ),
                               ),
                             ),
-                
+
                             Row(
                               children: [
                                 Card(
@@ -711,26 +801,31 @@ String getMonthName(int monthNumber) {
                                       borderRadius: BorderRadius.circular(30)),
                                   child: SizedBox(
                                     height: 46,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.29,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.29,
                                     child: Center(
                                       child: DropdownButton<String>(
                                         underline: Container(
                                           color: Colors.white,
                                         ),
-                      hint: Text("Hours",style: TextStyle(color: Colors.black),),
-                                        
+                                        value: fselectedHour,
+                                        hint:  Text(
+                                          "Hour",
+                                          style: TextStyle(color: newtextColor),
+                                        ),
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             fselectedHour = value!;
                                             fsaveSelectedValues();
                                           });
                                         },
                                         items: List.generate(12, (int index) {
-                                          String hour = (index + 1).toString();
+                                          String minute =
+                                              index.toString().padLeft(2, '0');
                                           return DropdownMenuItem<String>(
-                                            value: hour,
-                                            child: Text(hour),
+                                            value: minute,
+                                            child: Text(minute),
                                           );
                                         }),
                                       ),
@@ -752,9 +847,12 @@ String getMonthName(int monthNumber) {
                                           color: Colors.white,
                                         ),
                                         value: fselectedMinute,
-                      hint: Text("Minutes",style: TextStyle(color: Colors.black),),
-
+                                        hint: Text(
+                                          "Minute",
+                                          style: TextStyle(color: newtextColor),
+                                        ),
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             fselectedMinute = value!;
                                             fsaveSelectedValues();
@@ -778,11 +876,12 @@ String getMonthName(int monthNumber) {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Container(
                                     height: 46,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.29,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.29,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     child: Center(
                                       child: DropdownButton<String>(
                                         underline: Container(
@@ -790,19 +889,20 @@ String getMonthName(int monthNumber) {
                                         ),
                                         value: fselectedAMPM,
                                         onChanged: (value) {
+                                          if (!mounted) return;
                                           setState(() {
                                             fselectedAMPM = value!;
                                             fsaveSelectedValues();
                                           });
                                         },
                                         items: <DropdownMenuItem<String>>[
-                                          DropdownMenuItem<String>(
+                                           DropdownMenuItem<String>(
                                             value: "AM",
-                                            child: Text("AM"),
+                                            child: Text("AM",style: TextStyle(color: newtextColor),),
                                           ),
-                                          DropdownMenuItem<String>(
+                                           DropdownMenuItem<String>(
                                             value: "PM",
-                                            child: Text("PM"),
+                                            child: Text("PM",style: TextStyle(color: newtextColor),),
                                           ),
                                         ],
                                       ),
@@ -811,906 +911,85 @@ String getMonthName(int monthNumber) {
                                 ),
                               ],
                             ),
-                            // Card(
-                            //   elevation: 4,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(30)),
-                            //   child: TextFormField(
-                            //     // controller: birthPlaceController2,
-                                
-                            //     textInputAction: TextInputAction.next,
-                            //     keyboardType: TextInputType.name,
-                            //     onChanged: (value) {
-                            //       _onSearchChanged2(value);
-                            //     },
-                            //     focusNode: _focusNode2,
-                            //     validator: (value) {
-                            //       if (value!.isEmpty) {
-                            //         setState(() {
-                            //           height_suggest2 = 0.0;
-                            //         });
-                            //         return "Enter your birth place";
-                            //       }
-                            //       return location2;
-                            //     },
-                            //     decoration: const InputDecoration(
-                            //         hintText: "Birth place",
-                            //         border: InputBorder.none,
-                            //         contentPadding: EdgeInsets.all(10)),
-                            //   ),
-                            // ),
-                            // Stack(
-                            //   children: [
-                            //     SizedBox(
-                            //       height: 1,
-                            //     ),
-                            //     Container(
-                            //       height: height_suggest2,
-                            //       child: Card(
-                            //         child: ListView.builder(
-                            //           padding: EdgeInsets.zero,
-                            //           itemCount: _predictions2.length,
-                            //           itemBuilder: (context, index) {
-                            //             return SingleChildScrollView(
-                            //               child: ListTile(
-                            //                   title: Text(_predictions2[index]
-                            //                       .description!),
-                            //                   onTap: () {
-                            //                     _onSelectedPlace2(
-                            //                         _predictions2[index]);
-                            //                     setState(() {
-                            //                       height_suggest2 = 0.0;
-                            //                     });
-                            //                   }),
-                            //             );
-                            //           },
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                          ]),
-                      Container(
-                        margin: const EdgeInsets.only(top: 2),
-                        child: Center(
-                          child: SizedBox(
-                            width: 300,
-                            height: 46,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  shadowColor: MaterialStateColor.resolveWith(
-                                      (states) => Colors.black),
-                                  // padding:
-                                  //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                  //         EdgeInsets.symmetric(vertical: 17)),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(60.0),
-                                  )),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white)),
-                              child: const Text(
-                                "Save",
-                                style: TextStyle(
-                                  fontFamily: 'Serif',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              onPressed: () {
-                                if (groomnamecontroller.text != null &&
-                                    groomnamecontroller.text != '' &&
-                                    bridenamecontroller.text != null &&
-                                    bridenamecontroller.text != '' &&
-                                    mmonth != null &&
-                                    mmonth != '' &&
-                                    fmonth != null &&
-                                    fmonth != '' &&
-                                    mdate != null &&
-                                    mdate != '' &&
-                                    fdate != null &&
-                                    fdate != '' &&
-                                    myear != null &&
-                                    myear != '' &&
-                                    fyear != null &&
-                                    fyear != '' &&
-                                    mselectedHour != null &&
-                                    mselectedHour != '' &&
-                                    fselectedHour != null &&
-                                    fselectedHour != '' &&
-                                    mselectedMinute != null &&
-                                    mselectedMinute != '' &&
-                                    fselectedMinute != null &&
-                                    fselectedMinute != '' &&
-                                    location != null &&
-                                    location != '' &&
-                                    location2 != null &&
-                                    location2 != '' &&
-                                    latm != null &&
-                                    latm != '' &&
-                                    lngm != null &&
-                                    lngm != '' &&
-                                    latf != null &&
-                                    latf != '' &&
-                                    lngf != null &&
-                                    lngf != '') {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (builder) =>
-                                          KundaliMatchDataScreen1(
-                                            m_name: groomnamecontroller.text,
-                                            f_name: bridenamecontroller.text,
-                                            m_month: mmonth,
-                                            f_month: fmonth,
-                                            m_day: mdate,
-                                            f_day: fdate,
-                                            m_year: myear,
-                                            f_year: fyear,
-                                            m_hour: mselectedHour,
-                                            f_hour: fselectedHour,
-                                            m_min: mselectedMinute,
-                                            f_min: fselectedMinute,
-                                            m_place: location,
-                                            f_place: location2,
-                                            m_gender: "Male",
-                                            f_gender: "Female",
-                                            m_lat: latm,
-                                            m_lon: lngm,
-                                            f_lat: latf,
-                                            f_lon: lngf,
-                                            m_sec: 0,
-                                            f_sec: 0,
-                                            m_tzone: "5.5",
-                                            f_tzone: "5.5",
-                                          )));
-                                } else {
-                                  setState(() {
-                                    // var error = "Please Enter All Details";
-                                    showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: SnackBarContent(
-                                              error_text:
-                                                  "Please Enter All Details",
-                                              appreciation: "",
-                                              icon: Icons.error,
-                                              sec: 1,
-                                            ),
-                                            backgroundColor: Colors.transparent,
-                                            elevation: 0,
-                                          );
+                            Card(
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                    top: 1.0,
+                                    left: 1.0,
+                                    right: 1.0,
+                                  ),
+                                  child: TextFormField(
+                                    scrollPadding: EdgeInsets.only(
+                                        bottom:  40.0),
+                                    controller: birthPlaceController2,
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.name,
+                                    onChanged: (value) {
+                                      // _fileterlocation2(value);
+                                      setState(() {});
+                                    },
+                                    focusNode: _focusNode2,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        setState(() {
+                                          height_suggest2 = 0.0;
                                         });
-                                  });
-                                }
-                                // print(object)
-                              },
+                                        return "Enter your birth place";
+                                      }
+                                      return location2;
+                                    },
+                                    decoration:  InputDecoration(
+                                        hintText: "Enter Place of Birth",
+                                        hintStyle: TextStyle(color: newtextColor),
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(10)),
+                                  ),
+                                )),
+                            Stack(
+                              children: [
+                                const SizedBox(
+                                  height: 1,
+                                ),
+                                // SizedBox(
+                                //   height: height_suggest2,
+                                //   child: Card(
+                                //     child: ListView.builder(
+                                //       padding: EdgeInsets.zero,
+                                //       itemCount: alllist.length,
+                                //       itemBuilder: (context, index) {
+                                //         return SingleChildScrollView(
+                                //           child: ListTile(
+                                //               title: Text(
+                                //                   "${alllist[index].countrycity},${alllist[index].countrystate ?? ""},${alllist[index].countryname}"),
+                                //               onTap: () {
+                                //                 _onSelectedPlace4(
+                                //                     alllist[index]);
+                                //                 if (!mounted) return;
+                                //                 setState(() {
+                                //                   height_suggest2 = 0.0;
+                                //                 });
+                                //               }),
+                                //         );
+                                //       },
+                                //     ),
+                                //     // }
+                                //     // }),
+                                //   ),
+                                // ),
+                              ],
                             ),
-                          ),
-                
-                        ),
-                      ),
-                      
+
+                            // SizedBox(height: _animation.value),
+                          ]),
+                      // SizedBox(height:10,),
+                     
                     ],
                   ),
                 ),
-              ),
-          ), 
-        ): Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:PageView.builder(
-                            controller: _pageController,
-                            onPageChanged: (index) {},
-                            itemCount: widget.allkundali.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              if(widget.allkundali[index].userid=="12345"){
-                                return Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                     
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Groom's Information",
-                                style: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Sans-serif',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: TextFormField(
-                                  controller: groomnamecontroller,
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Enter your name";
-                                    }
-                                    return null;
-                                  },
-                                  decoration: const InputDecoration(
-                                      hintText: "Groom's Name",
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10)),
-                                ),
-                              ),
-                              // SizedBox(
-                              //   height: 10,
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Date of Birth",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'Sans-serif',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                                    
-                              Calender(
-                                useTwentyOneYears: true,
-                                setdate: updateMaleDate,
-                              ),
-                                    
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Birth Time",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'Sans-serif',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Card(
-                                    elevation: 4,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)),
-                                    child: SizedBox(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.29,
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value:mselectedHour,
-                      hint: Text("Hours",style: TextStyle(color: Colors.black),),
-
-                                          onChanged: (value) {
-                                            setState(() {
-                                              mselectedHour = value!;
-                                              saveSelectedValues();
-                                            });
-                                          },
-                                          items: List.generate(12, (int index) {
-                                            String hour = (index + 1).toString();
-                                            return DropdownMenuItem<String>(
-                                              value: hour,
-                                              child: Text(index < 9 ? '0$hour' : '$hour'),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Card(
-                                    elevation: 4,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)),
-                                    child: SizedBox(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.3,
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value: mselectedMinute,
-                      hint: Text("Minutes",style: TextStyle(color: Colors.black),),
-
-                                          onChanged: (value) {
-                                            setState(() {
-                                              mselectedMinute = value!;
-                                              saveSelectedValues();
-                                            });
-                                          },
-                                          items: List.generate(60, (int index) {
-                                            String minute =
-                                                index.toString().padLeft(2, '0');
-                                            return DropdownMenuItem<String>(
-                                              value: minute,
-                                              child: Text(minute),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Card(
-                                    elevation: 4,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
-                                    child: Container(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.29,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value: mselectedAMPM,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              mselectedAMPM = value!;
-                                              saveSelectedValues();
-                                            });
-                                          },
-                                          items: <DropdownMenuItem<String>>[
-                                            DropdownMenuItem<String>(
-                                              value: "AM",
-                                              child: Text("AM"),
-                                            ),
-                                            DropdownMenuItem<String>(
-                                              value: "PM",
-                                              child: Text("PM"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // SizedBox(
-                              //   height: 10,
-                              // ),
-                              Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: TextFormField(
-                                  controller: birthPlaceController,
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  onChanged: (value) {
-                                    // _onSearchChanged(value);
-                                  },
-                                  focusNode: _focusNode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      setState(() {
-                                        height_suggest1 = 0.0;
-                                      });
-                                      return "Enter your name";
-                                    }
-                                    return location;
-                                  },
-                                  decoration: const InputDecoration(
-                                      hintText: "Birth place",
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10)),
-                                ),
-                              ),
-                              // Stack(
-                              //   children: [
-                              //     SizedBox(height: 1),
-                              //     Container(
-                              //       height: height_suggest1,
-                              //       child: Card(
-                              //         child: ListView.builder(
-                              //           padding: EdgeInsets.zero,
-                              //           itemCount: _predictions.length,
-                              //           itemBuilder: (context, index) {
-                              //             return SingleChildScrollView(
-                              //               child: ListTile(
-                              //                   title: Text(_predictions[index]
-                              //                       .description!),
-                              //                   onTap: () {
-                              //                     _onSelectedPlace(
-                              //                         _predictions[index]);
-                              //                     setState(() {
-                              //                       height_suggest1 = 0.0;
-                              //                     });
-                              //                   }),
-                              //             );
-                              //           },
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 0),
-                        child: SizedBox(
-                          width: Get.width,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                          
-                                  IconButton(icon: Icon(Icons.arrow_forward_ios),onPressed: (){
-                                      SearchProfile().addtoadminnotification(userid: widget.newusermode!.id!, useremail:widget.newusermode!.email!, userimage:widget.newusermode!.imageurls!.isEmpty?"":widget.newusermode!.imageurls![0], 
-  title: "${userSave.displayName} SEEN ${widget.newusermode!.name.substring(0, 1).toUpperCase()} ${widget.newusermode!.surname..toLowerCase()} ${widget.newusermode!.puid} KUNDLI MATCH", email: userSave.email!, subtitle: "");
-                                    _pageController.nextPage( duration: Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,);
-                                  }),
-                            ],
-                          ),
-                        ),
-                      ),
-                              Text(
-                                "Bride's Information",
-                                style: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Sans-serif',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: TextFormField(
-                                  controller: bridenamecontroller,
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Enter your name";
-                                    }
-                                    return null;
-                                  },
-                                  decoration: const InputDecoration(
-                                      hintText: "Bride's Name",
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10)),
-                                ),
-                              ),
-                                    
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Date of Birth",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'Sans-serif',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              Calender(
-                                useTwentyOneYears: false,
-                                setdate: updateFemaleDate,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Birth Time",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'Sans-serif',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                                    
-                              Row(
-                                children: [
-                                  Card(
-                                    elevation: 4,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)),
-                                    child: SizedBox(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.29,
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value:fselectedHour,
-                      hint: Text("Hours",style: TextStyle(color: Colors.black),),
-
-                                          onChanged: (value) {
-                                            setState(() {
-                                              fselectedHour = value!;
-                                              fsaveSelectedValues();
-                                            });
-                                          },
-                                          items: List.generate(12, (int index) {
-                                            String hour = (index + 1).toString();
-                                            return DropdownMenuItem<String>(
-                                              value: hour,
-                                          child: Text(index < 9 ? '0$hour' : '$hour'),
-
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Card(
-                                    elevation: 4,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)),
-                                    child: SizedBox(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.3,
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value: fselectedMinute,
-                      hint: Text("Minutes",style: TextStyle(color: Colors.black),),
-
-                                          onChanged: (value) {
-                                            setState(() {
-                                              fselectedMinute = value!;
-                                              fsaveSelectedValues();
-                                            });
-                                          },
-                                          items: List.generate(60, (int index) {
-                                            String minute =
-                                                index.toString().padLeft(2, '0');
-                                            return DropdownMenuItem<String>(
-                                              value: minute,
-                                              child: Text(minute),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Card(
-                                    elevation: 4,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
-                                    child: Container(
-                                      height: 46,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.29,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: DropdownButton<String>(
-                                          underline: Container(
-                                            color: Colors.white,
-                                          ),
-                                          value: fselectedAMPM,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              fselectedAMPM = value!;
-                                              fsaveSelectedValues();
-                                            });
-                                          },
-                                          items: <DropdownMenuItem<String>>[
-                                            DropdownMenuItem<String>(
-                                              value: "AM",
-                                              child: Text("AM"),
-                                            ),
-                                            DropdownMenuItem<String>(
-                                              value: "PM",
-                                              child: Text("PM"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Card(
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: TextFormField(
-                                  controller: birthPlaceController2,
-                                  
-                                  textInputAction: TextInputAction.next,
-                                  keyboardType: TextInputType.name,
-                                  onChanged: (value) {
-                                    // _onSearchChanged2(value);
-                                  },
-                                  focusNode: _focusNode2,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      setState(() {
-                                        height_suggest2 = 0.0;
-                                      });
-                                      return "Enter your birth place";
-                                    }
-                                    return location2;
-                                  },
-                                  decoration: const InputDecoration(
-                                      hintText: "Birth place",
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10)),
-                                ),
-                              ),
-                              // Stack(
-                              //   children: [
-                              //     SizedBox(
-                              //       height: 1,
-                              //     ),
-                              //     Container(
-                              //       height: height_suggest2,
-                              //       child: Card(
-                              //         child: ListView.builder(
-                              //           padding: EdgeInsets.zero,
-                              //           itemCount: _predictions2.length,
-                              //           itemBuilder: (context, index) {
-                              //             return SingleChildScrollView(
-                              //               child: ListTile(
-                              //                   title: Text(_predictions2[index]
-                              //                       .description!),
-                              //                   onTap: () {
-                              //                     _onSelectedPlace2(
-                              //                         _predictions2[index]);
-                              //                     setState(() {
-                              //                       height_suggest2 = 0.0;
-                              //                     });
-                              //                   }),
-                              //             );
-                              //           },
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                            ]),
-                        Container(
-                          margin: const EdgeInsets.only(top: 2),
-                          child: Center(
-                            child: SizedBox(
-                              width:MediaQuery.of(context).size.width,
-                              height: 46,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    shadowColor: MaterialStateColor.resolveWith(
-                                        (states) => Colors.black),
-                                    // padding:
-                                    //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    //         EdgeInsets.symmetric(vertical: 17)),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(60.0),
-                                    )),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white)),
-                                child: const Text(
-                                  "Save",
-                                  style: TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                onPressed: () async{
-                                  if (groomnamecontroller.text != null &&
-                                      groomnamecontroller.text != '' &&
-                                      bridenamecontroller.text != null &&
-                                      bridenamecontroller.text != '' &&
-                                      mmonth != null &&
-                                      mmonth != '' &&
-                                      fmonth != null &&
-                                      fmonth != '' &&
-                                      mdate != null &&
-                                      mdate != '' &&
-                                      fdate != null &&
-                                      fdate != '' &&
-                                      myear != null &&
-                                      myear != '' &&
-                                      fyear != null &&
-                                      fyear != '' &&
-                                      mselectedHour != null &&
-                                      mselectedHour != '' &&
-                                      fselectedHour != null &&
-                                      fselectedHour != '' &&
-                                      mselectedMinute != null &&
-                                      mselectedMinute != '' &&
-                                      fselectedMinute != null &&
-                                      fselectedMinute != '' &&
-                                      location != null &&
-                                      location != '' &&
-                                      location2 != null &&
-                                      location2 != '' &&
-                                      latm != null &&
-                                      latm != '' &&
-                                      lngm != null &&
-                                      lngm != '' &&
-                                      latf != null &&
-                                      latf != '' &&
-                                      lngf != null &&
-                                      lngf != '') {
-                                        var data;
-                                  var url = Uri.parse(
-                                      'https://api.kundali.astrotalk.com/v1/combined/match_making');
-                                
-                                  var payload = {
-                                    "m_detail": {
-                                      "day": mdate,
-                                      "hour": mselectedHour,
-                                      "lat": latm,
-                                      "lon": lngm,
-                                      "min": mselectedMinute,
-                                      "month": mmonth,
-                                      "name": groomnamecontroller.text,
-                                      "tzone": "5.5",
-                                      "year": myear,
-                                      "gender": "male",
-                                      "place": location,
-                                      "sec": 0
-                                    },
-                                    "f_detail": {
-                                      "day": fdate,
-                                      "hour": fselectedHour,
-                                      "lat": latf,
-                                      "lon": lngf,
-                                      "min": fselectedMinute,
-                                      "month": fmonth,
-                                      "name": bridenamecontroller.text,
-                                      "tzone": "5.5",
-                                      "year": fyear,
-                                      "gender": "female",
-                                      "place": location2,
-                                      "sec": 0
-                                    },
-                                    "languageId": 1
-                                  };
-
-                                  var body = json.encode(payload);
-
-                                  var response = await http.post(url,
-                                      body: body,
-                                      headers: {
-                                        'Content-Type': 'application/json'
-                                      });
-                                  print("*********************");
-                                  print(response.body);
-                                  print("*********************");
-                                  if (response.statusCode == 200) {
-                                    if (!mounted) return;
-                                    setState(() {
-                                      data = json.decode(response.body);
-                                    });
-                                    print(data["ashtkoot"]["varna"]
-                                        ["description"]);
-                                  } else {
-                                    print(
-                                        'Request failed with status: ${response.statusCode}.');
-                                  }
-                                        AdminService().addtokundaliprofile(gname: groomnamecontroller.text,
-                                           bam:fselectedAMPM ,
-                                      gam: mselectedAMPM,
-                                      name: userSave.name!,
-                                       bkundli: data['manglik']
-                                                  ['male_manglik_dosha'] ==
-                                              false
-                                          ? "Non- Manglik".toUpperCase()
-                                          : "Manglik".toUpperCase(),
-                                      gkundli: data['manglik']
-                                                  ['female_manglik_dosha'] ==
-                                              false
-                                          ? "Non- Manglik".toUpperCase()
-                                          : "Manglik".toUpperCase(),
-                                      uid: widget.newusermode.id,
-                                         gday: mdate.toString(), gmonth: mmonth.toString(), gyear: myear.toString(),
-                                          ghour: mselectedHour!, gplace: location!, gsec: mselectedMinute!,
-                                           bname: bridenamecontroller.text, bday: fdate.toString(), bmonth: fmonth.toString(),
-                                            byear: fyear.toString(), bhour: fselectedHour!, bsec: fselectedMinute!,
-                                             bplace: location2!, totalgun:
-                                              data['ashtkoot']['total']
-                                              ['received_points'].toString()
-                                              );
-                                                SearchProfile().addtoadminnotification(userid: userSave!.uid!, useremail:userSave.email!, userimage:userSave!.imageUrls!.isEmpty?"":userSave!.imageUrls![0], 
-  title: "${userSave.displayName} USES KUNDLI MATCH", email: userSave.email!, subtitle: "KU");
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (builder) =>
-                                            KundaliMatchDataScreen1(
-                                              m_name: groomnamecontroller.text,
-                                              f_name: bridenamecontroller.text,
-                                              m_month: mmonth,
-                                              f_month: fmonth,
-                                              m_day: mdate,
-                                              f_day: fdate,
-                                              m_year: myear,
-                                              f_year: fyear,
-                                              m_hour: mselectedHour,
-                                              f_hour: fselectedHour,
-                                              m_min: mselectedMinute,
-                                              f_min: fselectedMinute,
-                                              m_place: location,
-                                              f_place: location2,
-                                              m_gender: "Male",
-                                              f_gender: "Female",
-                                              m_lat: latm,
-                                              m_lon: lngm,
-                                              f_lat: latf,
-                                              f_lon: lngf,
-                                              m_sec: 0,
-                                              f_sec: 0,
-                                              m_tzone: "5.5",
-                                              f_tzone: "5.5",
-                                            )));
-
-                                  } else {
-                                    setState(() {
-                                      // var error = "Please Enter All Details";
-                                      showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              content: SnackBarContent(
-                                                error_text:
-                                                    "Please Enter All Details",
-                                                appreciation: "",
-                                                icon: Icons.error,
-                                                sec: 1,
-                                              ),
-                                              backgroundColor: Colors.transparent,
-                                              elevation: 0,
-                                            );
-                                          });
-                                    });
-                                  }
-                                  // print(object)
-                                },
-                              ),
-                            ),
-                                    
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                );
+              );
                               }
                              return  Container(
             width: MediaQuery.of(context).size.width,

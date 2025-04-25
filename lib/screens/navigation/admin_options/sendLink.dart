@@ -88,7 +88,7 @@ class _ReligionState extends State<SendLink> {
     super.initState();
   }
 
-  Widget CustomRadioButton(String text, int index) {
+  Widget CustomRadioButton(String text,String newtext, int index) {
     return ElevatedButton(
       onPressed: () {
         if (index == 1) {
@@ -467,7 +467,7 @@ class _ReligionState extends State<SendLink> {
         });
       },
       child: Text(
-        text,
+        newtext,
         style: TextStyle(
           fontSize: 12,
           color: (value == index) ? main_color : Colors.black,
@@ -528,14 +528,14 @@ class _ReligionState extends State<SendLink> {
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Improve About Me ($aboutme)", 1)),
+                              "To Improve About Me","To Improve About Me ($aboutme)", 1)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Improve About Partner Preference ($patnerpref)",
+                              "To Improve About Partner Preference","To Improve About Partner Preference ($patnerpref)",
                               2)),
                       SizedBox(
                         height: 5,
@@ -543,35 +543,35 @@ class _ReligionState extends State<SendLink> {
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Upload Success Story", 3)),
+                              "To Upload Success Story","To Upload Success Story", 3)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Upload Video ($video)", 4)),
+                              "To Upload Video","To Upload Video ($video)", 4)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Save Preference ($savepref)", 5)),
+                              "To Save Preference","To Save Preference ($savepref)", 5)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Learn How To Use App ($useapp)", 6)),
+                              "To Learn How To Use App","To Learn How To Use App ($useapp)", 6)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Save Profession Manually ($professionmanualy)",
+                              "To Save Profession Manually", "To Save Profession Manually ($professionmanualy)",
                               7)),
                       SizedBox(
                         height: 5,
@@ -579,7 +579,7 @@ class _ReligionState extends State<SendLink> {
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Save Education Manually ($educationmanualy)",
+                              "To Save Education Manually","To Save Education Manually ($educationmanualy)",
                               8)),
                       SizedBox(
                         height: 5,
@@ -587,35 +587,35 @@ class _ReligionState extends State<SendLink> {
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Ask Rating ($askRating)", 9)),
+                              "To Ask Rating","To Ask Rating ($askRating)", 9)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Upload Photo ($uploadPhoto)", 10)),
+                              "To Upload Photo","To Upload Photo ($uploadPhoto)", 10)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Download Biodata ($biodata)", 11)),
+                              "To Download Biodata","To Download Biodata ($biodata)", 11)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Share App ($shareapp)", 12)),
+                              "To Share App","To Share App ($shareapp)", 12)),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: CustomRadioButton(
-                              "To Show Support Reply ($support)", 13)),
+                              "To Show Support Reply", "To Show Support Reply ($support)", 13)),
                              data.length>1?  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                   child: SizedBox(
@@ -645,13 +645,14 @@ class _ReligionState extends State<SendLink> {
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Improve About Me (${data[index].aboutme})", 1)),
+                                            "To Improve About Me","To Improve About Me (${data[index].aboutme})", 1)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
+                                            "To Improve About Partner Preference",
                                             "To Improve About Partner Preference (${data[index].patnerpref})",
                                             2)),
                                     SizedBox(
@@ -660,34 +661,35 @@ class _ReligionState extends State<SendLink> {
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Upload Success Story", 3)),
+                                            "To Upload Success Story","To Upload Success Story", 3)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Upload Video (${data[index].video})", 4)),
+                                            "To Upload Video", "To Upload Video (${data[index].video})", 4)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Save Preference (${data[index].savepref})", 5)),
+                                            "To Save Preference","To Save Preference (${data[index].savepref})", 5)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Learn How To Use App (${data[index].useapp})", 6)),
+                                            "To Learn How To Use App","To Learn How To Use App (${data[index].useapp})", 6)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
+                                            "To Save Profession Manually",
                                             "To Save Profession Manually (${data[index].professionManually})",
                                             7)),
                                     SizedBox(
@@ -696,6 +698,7 @@ class _ReligionState extends State<SendLink> {
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
+                                            "To Save Education Manually",
                                             "To Save Education Manually (${data[index].educationManually})",
                                             8)),
                                     SizedBox(
@@ -704,35 +707,35 @@ class _ReligionState extends State<SendLink> {
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Ask Rating (${data[index].rating})", 9)),
+                                            "To Ask Rating","To Ask Rating (${data[index].rating})", 9)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Upload Photo (${data[index].photo})", 10)),
+                                            "To Upload Photo","To Upload Photo (${data[index].photo})", 10)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Download Biodata (${data[index].biodata})", 11)),
+                                            "To Download Biodata","To Download Biodata (${data[index].biodata})", 11)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Share App (${data[index].share})", 12)),
+                                            "To Share App","To Share App (${data[index].share})", 12)),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width * 0.9,
                                         child: CustomRadioButton(
-                                            "To Show Support Reply (${data[index].support})", 13)),
+                                            "To Show Support Reply", "To Show Support Reply (${data[index].support})", 13)),
                                              Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                                 child: SizedBox(

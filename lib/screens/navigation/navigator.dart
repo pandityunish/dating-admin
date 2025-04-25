@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:matrimony_admin/common/global.dart';
 import 'package:matrimony_admin/models/history_save_pref.dart';
@@ -246,7 +247,8 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   deleteAccount() {
-    Navigator.push(
+    if(widget.isDelete == true){
+        Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DeleteConfirm(
@@ -254,6 +256,8 @@ class _MyProfileState extends State<MyProfile> {
                   delete: widget.isDelete == false ? "false" : "true",
                   newusermode: widget.userSave,
                 )));
+    }
+  
   }
 
   List<NewUserModel> allonlineusers = [];
@@ -355,233 +359,527 @@ class _MyProfileState extends State<MyProfile> {
               )
             : Column(
                 children: [
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 35, bottom: 12),
+                  //   padding: EdgeInsets.only(
+                  //     left: 1,
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       SizedBox(
+                  //         width: Get.width,
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(
+                  //             right: 20,
+                  //           ),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: [
+                  //               SizedBox(
+                  //                 width: Get.width * 0.9,
+                  //                 child: Row(
+                  //                   mainAxisAlignment:
+                  //                       MainAxisAlignment.spaceBetween,
+                  //                   children: [
+                  //                     GestureDetector(
+                  //                         onTap: () async {
+                  //                           // print("profile clicked");
+                  //                           // SharedPref sharedPref = SharedPref();
+
+                  //                           // usr.User? userSave = usr.User.fromJson(
+                  //                           //     await sharedPref.read("user"));
+
+                  //                           // Navigator.push(
+                  //                           //     context,
+                  //                           //     MaterialPageRoute(
+                  //                           //         builder: (context) => ProfilePage(
+                  //                           //               userSave: userSave,
+                  //                           //               type: "personal",
+                  //                           //             )));
+                  //                         },
+                  //                         child: Container(
+                  //                           child: Row(
+                  //                             mainAxisAlignment:
+                  //                                 MainAxisAlignment
+                  //                                     .spaceBetween,
+                  //                             children: [
+                  //                               IconButton(
+                  //                                 onPressed: () {
+                  //                                   Navigator.of(context).pop();
+                  //                                 },
+                  //                                 icon: Icon(
+                  //                                   Icons.arrow_back_ios_new,
+                  //                                   color: main_color,
+                  //                                 ),
+                  //                               ),
+                  //                               Container(
+                  //                                 width: 45,
+                  //                                 height: 45,
+                  //                                 decoration: BoxDecoration(
+                  //                                     shape: BoxShape.circle,
+                  //                                     border: (widget.userSave
+                  //                                                     .imageurls ==
+                  //                                                 null ||
+                  //                                             widget
+                  //                                                 .userSave
+                  //                                                 .imageurls
+                  //                                                 .isEmpty)
+                  //                                         ? Border.all(
+                  //                                             width: 1,
+                  //                                             color: main_color)
+                  //                                         : Border.all(
+                  //                                             width: 2,
+                  //                                             color:
+                  //                                                 Colors.white),
+                  //                                     color: Colors.white,
+                  //                                     image: DecorationImage(
+                  //                                         fit: BoxFit.cover,
+                  //                                         image: (userprofile !=
+                  //                                                 null)
+                  //                                             ? NetworkImage(
+                  //                                                 userprofile!)
+                  //                                             : (widget
+                  //                                                     .userSave
+                  //                                                     .imageurls
+                  //                                                     .isEmpty)
+                  //                                                 ? const NetworkImage(
+                  //                                                     "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/impImage%2FnavImageError.png?alt=media&token=49f90276-0a97-4f1f-910f-28e95f1ac29c")
+
+                  //                                                 // "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/Images%2F70.png?alt=media&token=05816459-b75e-44ee-8ca6-a6b9b4d9cbf8")
+                  //                                                 : NetworkImage(widget
+                  //                                                     .userSave
+                  //                                                     .imageurls[0]))),
+                  //                               ),
+                  //                               Column(
+                  //                                 crossAxisAlignment:
+                  //                                     CrossAxisAlignment.start,
+                  //                                 children: [
+                  //                                   Row(
+                  //                                     mainAxisAlignment:
+                  //                                         MainAxisAlignment
+                  //                                             .spaceBetween,
+                  //                                     children: [
+                  //                                       listofadminpermissions!
+                  //                                                   .contains(
+                  //                                                       "Can See Full Name") ||
+                  //                                               listofadminpermissions!
+                  //                                                   .contains(
+                  //                                                       "All")
+                  //                                           ? Container(
+                  //                                               margin:
+                  //                                                   const EdgeInsets
+                  //                                                       .only(
+                  //                                                       left:
+                  //                                                           5),
+                  //                                               // width: textWidth,
+
+                  //                                               child: SizedBox(
+                  //                                                 width:
+                  //                                                     Get.width *
+                  //                                                         0.3,
+                  //                                                 child:
+                  //                                                     SingleChildScrollView(
+                  //                                                   scrollDirection:
+                  //                                                       Axis.horizontal,
+                  //                                                   child:
+                  //                                                       BigText(
+                  //                                                     text: (widget.userSave.name ==
+                  //                                                             null)
+                  //                                                         ? "Ghanshyam Ramayiyavasta"
+                  //                                                         : "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}",
+                  //                                                     size: 14,
+                  //                                                     fontWeight:
+                  //                                                         FontWeight
+                  //                                                             .w700,
+                  //                                                   ),
+                  //                                                 ),
+                  //                                               ),
+                  //                                             )
+                  //                                           : Container(
+                  //                                               margin:
+                  //                                                   const EdgeInsets
+                  //                                                       .only(
+                  //                                                       left:
+                  //                                                           5),
+                  //                                               // width: textWidth,
+
+                  //                                               child:
+                  //                                                   SingleChildScrollView(
+                  //                                                 scrollDirection:
+                  //                                                     Axis.horizontal,
+                  //                                                 child:
+                  //                                                     SizedBox(
+                  //                                                   width:
+                  //                                                       Get.width *
+                  //                                                           0.3,
+                  //                                                   child:
+                  //                                                       BigText(
+                  //                                                     text: (userSave.name ==
+                  //                                                             null)
+                  //                                                         ? "Ghanshyam Ramayiyavasta"
+                  //                                                         : "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${userSave.surname![0].toUpperCase() + userSave.surname!.substring(1)}",
+                  //                                                     size: 14,
+                  //                                                     fontWeight:
+                  //                                                         FontWeight
+                  //                                                             .w700,
+                  //                                                   ),
+                  //                                                 ),
+                  //                                               ),
+                  //                                             ),
+                  //                                       Column(
+                  //                                         children: [
+                  //                                           (widget.userSave
+                  //                                                       .verifiedstatus ==
+                  //                                                   "verified")
+                  //                                               ? Icon(
+                  //                                                   Icons
+                  //                                                       .verified_user,
+                  //                                                   color:
+                  //                                                       main_color,
+                  //                                                   size: 18,
+                  //                                                 )
+                  //                                               : Text(""),
+                  //                                           SizedBox(
+                  //                                             height: 4,
+                  //                                           )
+                  //                                         ],
+                  //                                       )
+                  //                                     ],
+                  //                                   ),
+                  //                                   Container(
+                  //                                     margin: EdgeInsets.only(
+                  //                                         left: 5),
+                  //                                     child: BigText(
+                  //                                       // text: uid.toString().substring(uid.length()-5),
+                  //                                       text: (widget.userSave
+                  //                                                   .puid !=
+                  //                                               null)
+                  //                                           ? widget
+                  //                                               .userSave.puid!
+                  //                                           : "",
+                  //                                       size: 13,
+                  //                                       color: main_color,
+                  //                                     ),
+                  //                                   ),
+                  //                                 ],
+                  //                               ),
+                  //                             ],
+                  //                           ),
+                  //                         )),
+                  //                     ElevatedButton(
+                  //                       style: ElevatedButton.styleFrom(
+                  //                           side: BorderSide(
+                  //                             width: 2.0,
+                  //                             color: main_color,
+                  //                           ),
+                  //                           backgroundColor: Colors.white,
+                  //                           minimumSize: Size(60, 35),
+                  //                           elevation: 0,
+                  //                           shape: const RoundedRectangleBorder(
+                  //                             borderRadius: BorderRadius.all(
+                  //                                 Radius.circular(50)),
+                  //                           )),
+                  //                       child: BigText(
+                  //                         text: "Edit Profile",
+                  //                         size: 12,
+                  //                         color: main_color,
+                  //                       ),
+                  //                       onPressed: () async {
+                  //                         if (listofadminpermissions!
+                  //                                 .contains("Can Edit menu") ||
+                  //                             listofadminpermissions!.contains(
+                  //                                 "Can See Full Name") ||
+                  //                             listofadminpermissions!
+                  //                                 .contains("Can See Email") ||
+                  //                             listofadminpermissions!
+                  //                                 .contains("Can See Phone") ||
+                  //                             listofadminpermissions!
+                  //                                 .contains("All")) {
+                  //                           SearchProfile().addtoadminnotification(
+                  //                               userid: widget.userSave!.id!,
+                  //                               useremail:
+                  //                                   widget.userSave!.email!,
+                  //                               userimage: widget.userSave!
+                  //                                       .imageurls!.isEmpty
+                  //                                   ? ""
+                  //                                   : widget.userSave!
+                  //                                       .imageurls![0],
+                  //                               title:
+                  //                                   "${userSave.displayName} CLICK ON EDIT PROFILE  ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname..toLowerCase()} ${widget.userSave!.puid} LEFT MENU",
+                  //                               email: userSave.email!,
+                  //                               subtitle: "");
+                  //                           final data = await Navigator.push(
+                  //                               context,
+                  //                               MaterialPageRoute(
+                  //                                   builder: (context) =>
+                  //                                       EditProfile(
+                  //                                         userSave:
+                  //                                             widget.userSave,
+                  //                                       )));
+                  //                           //                                if (data != null ) {
+                  //                           setState(() {
+                  //                             userprofile = data;
+                  //                           });
+                  //                           // }
+                  //                           print(data);
+                  //                         }
+                  //                       },
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               // Container(
+                  //               //   height: 8,
+                  //               //   width: MediaQuery.of(context).size.width * 0.7,
+                  //               //   decoration: BoxDecoration(
+                  //               //       borderRadius: BorderRadius.circular(5),
+                  //               //       border: Border.all(
+                  //               //         color: main_color,
+                  //               //       )),
+                  //               //   child: Row(
+                  //               //     children: [
+                  //               //       Container(
+                  //               //         height: 8,
+                  //               //         width: MediaQuery.of(context).size.width *
+                  //               //             0.7 *
+                  //               //             profilePercentage /
+                  //               //             100,
+                  //               //         decoration: BoxDecoration(
+                  //               //           color: main_color,
+                  //               //           borderRadius: BorderRadius.circular(3),
+                  //               //         ),
+                  //               //       ),
+                  //               //     ],
+                  //               //   ),
+                  //               // ),
+                  //               // SizedBox(
+                  //               //   height: 10,
+                  //               // ),
+                  //               // Text(
+                  //               //   "Profile completion ${profilePercentage}%",
+                  //               // ),
+                  //               // Divider(
+                  //               //   color: Colors.grey,
+                  //               //   thickness: 1,
+                  //               // ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding:
+                  //             const EdgeInsets.only(left: 10, top: 5, right: 0),
+                  //         child: Container(
+                  //           height: 8,
+                  //           width: MediaQuery.of(context).size.width * 0.77,
+                  //           decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(5),
+                  //               border: Border.all(
+                  //                 color: main_color,
+                  //               )),
+                  //           child: Row(
+                  //             children: [
+                  //               Container(
+                  //                 height: 8,
+                  //                 width: MediaQuery.of(context).size.width *
+                  //                     0.77 *
+                  //                     widget.profilecomp /
+                  //                     100,
+                  //                 decoration: BoxDecoration(
+                  //                   color: main_color,
+                  //                   borderRadius: BorderRadius.circular(3),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         height: 10,
+                  //       ),
+                  //       Text(
+                  //         "Profile Completion ${widget.profilecomp}%",
+                  //       ),
+                  //       Divider(
+                  //         color: Colors.grey,
+                  //         thickness: 1,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
-                    margin: EdgeInsets.only(top: 35, bottom: 12),
-                    padding: EdgeInsets.only(
-                      left: 1,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: Get.width,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              right: 20,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: Get.width * 0.9,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () async {
-                                            // print("profile clicked");
-                                            // SharedPref sharedPref = SharedPref();
-
-                                            // usr.User? userSave = usr.User.fromJson(
-                                            //     await sharedPref.read("user"));
-
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) => ProfilePage(
-                                            //               userSave: userSave,
-                                            //               type: "personal",
-                                            //             )));
-                                          },
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                IconButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.arrow_back_ios_new,
-                                                    color: main_color,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 45,
-                                                  height: 45,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      border: (widget.userSave
+                margin: const EdgeInsets.only(top: 35, bottom: 15),
+                padding: const EdgeInsets.only(left: 1),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {},
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      // Navigator.pop(context);
+                                         Navigator.of(context).pop();
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios_new,
+                                      color: main_color,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      border:
+                                         (widget.userSave
                                                                       .imageurls ==
                                                                   null ||
                                                               widget
                                                                   .userSave
                                                                   .imageurls
                                                                   .isEmpty)
-                                                          ? Border.all(
-                                                              width: 1,
-                                                              color: main_color)
-                                                          : Border.all(
-                                                              width: 2,
-                                                              color:
-                                                                  Colors.white),
-                                                      color: Colors.white,
-                                                      image: DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: (userprofile !=
+                                              ? Border.all(
+                                                width: 1,
+                                                color: main_color,
+                                              )
+                                              : Border.all(
+                                                width: 2,
+                                                color: Colors.white,
+                                              ),
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                        image:
+                                            (widget.userSave.imageurls == null ||
+                                                   widget. userSave.imageurls!.isEmpty)
+                                                ? const NetworkImage(
+                                                  "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/impImage%2FnavImageError.png?alt=media&token=49f90276-0a97-4f1f-910f-28e95f1ac29c",
+                                                )
+                                                // "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/Images%2F70.png?alt=media&token=05816459-b75e-44ee-8ca6-a6b9b4d9cbf8")
+                                                : NetworkImage(
+                                                 widget. userSave.imageurls[0],
+                                                ),
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                  left: 5,
+                                                ),
+
+                                                // width: textWidth,
+                                                child: SizedBox(
+                                                  width: Get.width * 0.33,
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    child: BigText(
+                                                      text:
+                                                          (widget.userSave.name ==
                                                                   null)
-                                                              ? NetworkImage(
-                                                                  userprofile!)
-                                                              : (widget
-                                                                      .userSave
-                                                                      .imageurls
-                                                                      .isEmpty)
-                                                                  ? const NetworkImage(
-                                                                      "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/impImage%2FnavImageError.png?alt=media&token=49f90276-0a97-4f1f-910f-28e95f1ac29c")
-
-                                                                  // "https://firebasestorage.googleapis.com/v0/b/couplematch-47708.appspot.com/o/Images%2F70.png?alt=media&token=05816459-b75e-44ee-8ca6-a6b9b4d9cbf8")
-                                                                  : NetworkImage(widget
-                                                                      .userSave
-                                                                      .imageurls[0]))),
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        listofadminpermissions!
-                                                                    .contains(
-                                                                        "Can See Full Name") ||
-                                                                listofadminpermissions!
-                                                                    .contains(
-                                                                        "All")
-                                                            ? Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            5),
-                                                                // width: textWidth,
-
-                                                                child: SizedBox(
-                                                                  width:
-                                                                      Get.width *
-                                                                          0.3,
-                                                                  child:
-                                                                      SingleChildScrollView(
-                                                                    scrollDirection:
-                                                                        Axis.horizontal,
-                                                                    child:
-                                                                        BigText(
-                                                                      text: (widget.userSave.name ==
-                                                                              null)
-                                                                          ? "Ghanshyam Ramayiyavasta"
-                                                                          : "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}",
-                                                                      size: 14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            : Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            5),
-                                                                // width: textWidth,
-
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                  scrollDirection:
-                                                                      Axis.horizontal,
-                                                                  child:
-                                                                      SizedBox(
-                                                                    width:
-                                                                        Get.width *
-                                                                            0.3,
-                                                                    child:
-                                                                        BigText(
-                                                                      text: (userSave.name ==
-                                                                              null)
-                                                                          ? "Ghanshyam Ramayiyavasta"
-                                                                          : "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${userSave.surname![0].toUpperCase() + userSave.surname!.substring(1)}",
-                                                                      size: 14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                        Column(
-                                                          children: [
-                                                            (widget.userSave
-                                                                        .verifiedstatus ==
-                                                                    "verified")
-                                                                ? Icon(
-                                                                    Icons
-                                                                        .verified_user,
-                                                                    color:
-                                                                        main_color,
-                                                                    size: 18,
-                                                                  )
-                                                                : Text(""),
-                                                            SizedBox(
-                                                              height: 4,
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
+                                                              ? "Ghanshyam Ramayiyavasta"
+                                                              : "${widget.userSave.name![0].toUpperCase() +widget. userSave.name!.substring(1)} ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}",
+                                                      size: 14,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 5),
-                                                      child: BigText(
-                                                        // text: uid.toString().substring(uid.length()-5),
-                                                        text: (widget.userSave
-                                                                    .puid !=
-                                                                null)
-                                                            ? widget
-                                                                .userSave.puid!
+                                                  ),
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Clipboard.setData(ClipboardData(
+                                                text:widget. userSave.puid??""))
+                                            .then((value) {
+                                          //only if ->
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Copied successfully")));
+                                        });
+                                                },
+                                                child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 5),
+                                                  child: BigText(
+                                                    // text: uid.toString().substring(uid.length()-5),
+                                                    text:
+                                                        (widget.userSave.puid != null)
+                                                            ? widget.userSave.puid!
                                                             : "",
-                                                        size: 13,
-                                                        color: main_color,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                            color: main_color,
+                                                    size: 12,
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
-                                          )),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            side: BorderSide(
-                                              width: 2.0,
-                                              color: main_color,
-                                            ),
-                                            backgroundColor: Colors.white,
-                                            minimumSize: Size(60, 35),
-                                            elevation: 0,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(50)),
-                                            )),
-                                        child: BigText(
-                                          text: "Edit Profile",
-                                          size: 12,
-                                          color: main_color,
-                                        ),
-                                        onPressed: () async {
-                                          if (listofadminpermissions!
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              (widget.userSave.verifiedstatus ==
+                                                          "verified" &&
+                                                     widget. userSave
+                                                          .imageurls!
+                                                          .isNotEmpty)
+                                                  ? Icon(
+                                                    Icons.verified_user,
+                                                    color: main_color,
+                                                    size: 35,
+                                                  )
+                                                  : const Text(""),
+                                              const SizedBox(height: 4),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.01,
+                            ),
+                            alignment: Alignment.bottomRight,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                side: BorderSide(width: 2.0, color: main_color),
+                                backgroundColor: Colors.white,
+                                minimumSize: const Size(40, 35),
+                                elevation: 0,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(50),
+                                  ),
+                                ),
+                              ),
+                              child: BigText(
+                                text: "Edit Profile",
+                                size: 15,
+                                color: main_color,
+                              ),
+                              onPressed: ()async {
+                                if (listofadminpermissions!
                                                   .contains("Can Edit menu") ||
                                               listofadminpermissions!.contains(
                                                   "Can See Full Name") ||
@@ -619,90 +917,51 @@ class _MyProfileState extends State<MyProfile> {
                                             // }
                                             print(data);
                                           }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Container(
-                                //   height: 8,
-                                //   width: MediaQuery.of(context).size.width * 0.7,
-                                //   decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(5),
-                                //       border: Border.all(
-                                //         color: main_color,
-                                //       )),
-                                //   child: Row(
-                                //     children: [
-                                //       Container(
-                                //         height: 8,
-                                //         width: MediaQuery.of(context).size.width *
-                                //             0.7 *
-                                //             profilePercentage /
-                                //             100,
-                                //         decoration: BoxDecoration(
-                                //           color: main_color,
-                                //           borderRadius: BorderRadius.circular(3),
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "Profile completion ${profilePercentage}%",
-                                // ),
-                                // Divider(
-                                //   color: Colors.grey,
-                                //   thickness: 1,
-                                // ),
-                              ],
+                               
+                              },
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10, top: 5, right: 0),
-                          child: Container(
-                            height: 8,
-                            width: MediaQuery.of(context).size.width * 0.77,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: main_color,
-                                )),
-                            child: Row(
-                              children: [
-                                Container(
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 18, top: 5),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          height: 8,
+                          width: MediaQuery.of(context).size.width * 0.82,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: main_color),
+                          ),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Container(
                                   height: 8,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.77 *
-                                      widget.profilecomp /
+                                  width:
+                                      MediaQuery.of(context).size.width *
+                                      0.82 *
+                                       widget.profilecomp /
                                       100,
                                   decoration: BoxDecoration(
                                     color: main_color,
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Profile Completion ${widget.profilecomp}%",
-                        ),
-                        Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    Text("Profile Completion ${widget.profilecomp}%"),
+                    const Divider(color: Colors.grey, thickness: 1),
+                  ],
+                ),
+              ),
                   Container(
                     // margin: EdgeInsets.only(left: 10),
                     padding: EdgeInsetsDirectional.only(
@@ -752,40 +1011,7 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ],
                         ),
-                        // TextButton.icon(
-                        //   onPressed: () {
-                        //     Navigator.push(context,
-                        //         MaterialPageRoute(builder: (context) => prViewed()));
-                        //   },
-                        //   icon: Icon(
-                        //     Icons.attractions_sharp,
-                        //     color: main_color,
-                        //   ),
-                        //   label: Text(
-                        //     "Activities",
-                        //     style: TextStyle(
-                        //         color: Colors.black,
-                        //         fontWeight: FontWeight.normal,
-                        //         fontSize: 18),
-                        //   ),
-                        // ),
-                        // TextButton.icon(
-                        //   onPressed: () {
-                        //     Navigator.push(context,
-                        //         MaterialPageRoute(builder: (context) => Search()));
-                        //   },
-                        //   icon: ImageIcon(AssetImage('images/icons/search.png'),
-                        //       // Icons.search_rounded,
-                        //       color: main_color,
-                        //       size: 20),
-                        //   label: Text(
-                        //     "Search Profile",
-                        //     style: TextStyle(
-                        //         color: Colors.black,
-                        //         fontWeight: FontWeight.normal,
-                        //         fontSize: 18),
-                        //   ),
-                        // ),
+                   
                         SizedBox(
                           height: 15,
                         ),
@@ -1191,31 +1417,7 @@ class _MyProfileState extends State<MyProfile> {
                                             FreeMatchmakingScreen(
                                               profileDetail: widget.userSave,
                                             )));
-                                // if (userSave.verifiedStatus == "verified") {
-                                //   Navigator.push(
-                                //       context,
-                                //       MaterialPageRoute(
-                                //           builder: (context) => FreeMatch()));
-                                // } else {
-                                //   showDialog(
-                                //       context: context,
-                                //       barrierDismissible: false,
-                                //       builder: (context) {
-                                //         return AlertDialog(
-                                //           content: SizedBox(
-                                //             child: SnackBarContent(
-                                //               error_text:
-                                //                   "Please Verify Your Profile \n To Get \n Free Personalized MatchMaking",
-                                //               appreciation: "",
-                                //               icon: Icons.error_outline_sharp,
-                                //               sec: 3,
-                                //             ),
-                                //           ),
-                                //           backgroundColor: Colors.transparent,
-                                //           elevation: 0,
-                                //         );
-                                //       });
-                                // }
+                           
                               },
                               child: Row(
                                 children: [
@@ -1256,39 +1458,7 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ],
                         ),
-                        // TextButton.icon(
-                        //   onPressed: () {
-                        //     // showDialog(
-                        //     //     context: context,
-                        //     //     builder: (context) {
-                        //     //       Future.delayed(Duration(seconds: 1), () {
-                        //     //         Navigator.of(context).pop(true);
-                        //     //       });
-                        //     //       return AlertDialog(
-                        //     //         content: SnackBarContent(
-                        //     //             error_text: "Term & Conditions is not marked",
-                        //     //             appreciation: "",
-                        //     //             icon: Icons.error),
-                        //     //         backgroundColor: Colors.transparent,
-                        //     //         elevation: 0,
-                        //     //       );
-                        //     //     });
-                        //     Navigator.of(context).push(
-                        //         MaterialPageRoute(builder: (builder) => MyApp()));
-                        //   },
-                        //   icon: ImageIcon(
-                        //     AssetImage('images/icons/chat.png'),
-                        //     size: 20,
-                        //     color: main_color,
-                        //   ),
-                        //   label: Text(
-                        //     "Chat Now",
-                        //     style: TextStyle(
-                        //         color: Colors.black,
-                        //         fontWeight: FontWeight.normal,
-                        //         fontSize: 18),
-                        //   ),
-                        // ),
+                   
                         SizedBox(
                           height: 15,
                         ),
@@ -1813,7 +1983,7 @@ class _MyProfileState extends State<MyProfile> {
                                           ? Text("")
                                           : supprotdata[0]["isAdmin"]
                                               ? Text(
-                                                  "Replied",
+                                                  "Replied (${supprotdata.length})",
                                                   style: TextStyle(
                                                       color: main_color,
                                                       fontSize: 10,
@@ -1821,7 +1991,7 @@ class _MyProfileState extends State<MyProfile> {
                                                           FontWeight.bold),
                                                 )
                                               : Text(
-                                                  "Pending",
+                                                  "Pending (${supprotdata.length})",
                                                   style: TextStyle(
                                                       color: Colors.red,
                                                       fontSize: 10,
@@ -2002,7 +2172,7 @@ class _MyProfileState extends State<MyProfile> {
                                                   return AlertDialog(
                                                     content: SnackBarContent(
                                                       error_text:
-                                                          "Approve The User First",
+                                                          "Please Approve User First",
                                                       appreciation: "",
                                                       icon: Icons.error,
                                                       sec: 3,

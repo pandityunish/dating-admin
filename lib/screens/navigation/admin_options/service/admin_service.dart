@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/common/api_routes.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/models/bio_data_model.dart';
@@ -421,13 +423,28 @@ class AdminService {
     }
   }
 
-  Future invisibletoallprofile({required String value}) async {
+  Future invisibletoallprofile({required String value, required BuildContext context}) async {
     try {
       http.Response res = await http.post(Uri.parse(invisibletoalluserurl),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode({"id": value}));
       if (res.statusCode == 200) {
         print(res.body);
+          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text: "Invisible for All Successfully",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 2,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
       } else {
         print(res.body);
       }

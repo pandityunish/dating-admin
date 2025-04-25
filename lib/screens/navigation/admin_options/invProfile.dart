@@ -174,15 +174,7 @@ class _ReligionState extends State<InvisibleProfile> {
                         text: "Invisible",
                         bordercolor: color == false ? Colors.black : Colors.blue,
                       )),
-                  InkWell(
-                      onTap: () {
-                        /*Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => BoostProfile()));*/
-                      },
-                      child: CustomSpecialButtom(
-                        text: "Cancel",
-                        bordercolor: color == false ? Colors.black : Colors.blue,
-                      )),
+                
           ],
         ));
   }

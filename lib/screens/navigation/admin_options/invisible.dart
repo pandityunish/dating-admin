@@ -82,28 +82,9 @@ class _ReligionState extends State<Invisible> {
                         onTap: () {
                             SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
                       title: "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} IN ALL DATABASE", email: userSave.email!, subtitle: "");
-                          AdminService().invisibletoallprofile(value: widget.newUserModel.puid).whenComplete((){
-                             showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  content: SnackBarContent(
-                                    error_text: "Invisible for All Successfully",
-                                    appreciation: "",
-                                    icon: Icons.error,
-                                    sec: 3,
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                );
-                              });
-                          }).whenComplete((){
-                                 Get.to(MyProfile(
-                                    userSave: widget.newUserModel,
-                                    profilecomp: 50));
-                                 
-                              });;
+                          AdminService().invisibletoallprofile(value: widget.newUserModel.puid, context: context);
+                               
+                            
                             
                         },
                         child: CustomSpecialButtom(

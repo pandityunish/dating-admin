@@ -70,7 +70,7 @@ class _SnackBarContentState extends State<SnackBarContent> {
                         children: [
                           Text(
                             widget.error_text,
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 13, color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
                         ]),
