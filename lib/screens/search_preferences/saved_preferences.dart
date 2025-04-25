@@ -59,6 +59,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Left side with icon and heading
         Container(
           padding: const EdgeInsets.only(left: 8),
           child: Row(
@@ -73,15 +74,18 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                 child: Text(
                   head,
                   style: GoogleFonts.poppins(
-                      decoration: TextDecoration.none,
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400),
+                    decoration: TextDecoration.none,
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
+
+        // Right side with values and arrow
         GestureDetector(
           onTap: () async {
             var ds = await Navigator.of(context).push(MaterialPageRoute(
@@ -91,10 +95,12 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                     options: options,
                     selectedopt: val)));
             if (ds != "cancel") {
+              if (!mounted) return;
               setState(() {
                 val.clear();
               });
               for (var i = 0; i < ds.length; i++) {
+                if (!mounted) return;
                 setState(() {
                   val.add(ds[i]);
                 });
@@ -103,50 +109,54 @@ class _SearchPreferencesState extends State<SearchPreferences> {
           },
           child: Row(
             children: [
-              (val.isEmpty)
-                  ? Text(
-                      "Add",
-                      style: GoogleFonts.poppins(
+              // Value display container
+              Container(
+                width: 100,
+                child: (val.isEmpty)
+                    ? Text(
+                        "Add",
+                        style: GoogleFonts.poppins(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
                           fontSize: 18,
-                          fontWeight: FontWeight.w400),
-                    )
-                  : val.contains("Any")
-                      ? Text(
-                          "Any",
-                          style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      )
+                    : val.contains("Any")
+                        ? Text(
+                            "Any",
+                            style: GoogleFonts.poppins(
                               decoration: TextDecoration.none,
                               color: Colors.black38,
                               fontSize: 20,
-                              fontWeight: FontWeight.w400),
-                        )
-                      : SizedBox(
-                          width: 80,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    val.toString().substring(
-                                        1, val.toString().length - 1),
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              )),
-                        ),
-              const Icon(
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Text(
+                              val.join(
+                                  ', '), // Better formatting than toString()
+                              style: GoogleFonts.poppins(
+                                decoration: TextDecoration.none,
+                                color: Colors.black38,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+              ),
+
+              // Arrow icon
+              Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
                 size: 20,
-              )
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -299,7 +309,6 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                               )),
                         )
                       : SizedBox(
-                          width: 65,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -771,7 +780,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                             margin: const EdgeInsets.only(top: 30),
                             child: SizedBox(
                               width: 300,
-                              height: 40,
+                              height: 50,
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                     shadowColor: MaterialStateColor.resolveWith(
@@ -907,7 +916,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                             margin: const EdgeInsets.only(top: 10),
                             child: SizedBox(
                               width: 300,
-                              height: 40,
+                              height: 50,
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                     shadowColor: MaterialStateColor.resolveWith(
@@ -1043,16 +1052,17 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                         children: [
                           Row(
                             children: [
-                         GestureDetector(
-                          onTap: () {
-                             _pageController.previousPage(
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            );
-                          },
-                          child: Icon(Icons.arrow_back_ios,color: main_color,)),
-                                   
+                              GestureDetector(
+                                  onTap: () {
+                                    _pageController.previousPage(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: main_color,
+                                  )),
                               SizedBox(
                                 width: Get.width * 0.82,
                                 child: Column(
@@ -1062,17 +1072,19 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                         'images/icons/calender.png',
                                         "Age",
                                         functions().AgeDialog,
-                                        widget.history_save_pref[index].ageList),
+                                        widget
+                                            .history_save_pref[index].ageList),
                                     nameContainer(
                                         'images/icons/religion.png',
                                         "Religion",
-                                        widget.history_save_pref[index].religionList,
+                                        widget.history_save_pref[index]
+                                            .religionList,
                                         sdl.Religion),
                                     nameContainer(
                                         'images/icons/kundli.png',
                                         "Kundli Dosh",
-                                        widget
-                                            .history_save_pref[index].kundaliDoshList,
+                                        widget.history_save_pref[index]
+                                            .kundaliDoshList,
                                         sdl.KundaliDosh),
                                     nameContainer(
                                         'images/icons/marital_status.png',
@@ -1083,44 +1095,50 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                     nameContainer(
                                         'images/icons/food.png',
                                         "Diet",
-                                        widget.history_save_pref[index].dietList,
+                                        widget
+                                            .history_save_pref[index].dietList,
                                         sdl.Diet),
                                     nameContainer(
                                         'images/icons/smoke.png',
                                         "Smoke",
-                                        widget.history_save_pref[index].smokeList,
+                                        widget
+                                            .history_save_pref[index].smokeList,
                                         sdl.Smoke),
                                     nameContainer(
                                         'images/icons/drink.png',
                                         "Drink",
-                                        widget.history_save_pref[index].drinkList,
+                                        widget
+                                            .history_save_pref[index].drinkList,
                                         sdl.Drink),
                                     nameContainer(
                                         'images/icons/disability.png',
                                         "Disability With Person",
-                                        widget
-                                            .history_save_pref[index].disabilityList,
+                                        widget.history_save_pref[index]
+                                            .disabilityList,
                                         sdl.Disability),
                                     nameContainer2(
                                         'images/icons/height.png',
                                         "Height",
                                         functions().HeightDialog,
-                                        widget.history_save_pref[index].heightList),
+                                        widget.history_save_pref[index]
+                                            .heightList),
                                     nameContainer(
                                         'images/icons/education.png',
                                         "Education",
-                                        widget.history_save_pref[index].educationList,
+                                        widget.history_save_pref[index]
+                                            .educationList,
                                         sdl.Education),
                                     nameContainer(
                                         'images/icons/profession_suitcase.png',
                                         "Profession",
-                                        widget
-                                            .history_save_pref[index].professionList,
+                                        widget.history_save_pref[index]
+                                            .professionList,
                                         sdl.Profession),
                                     nameContainer(
                                         'images/icons/hand_rupee.png',
                                         "Income",
-                                        widget.history_save_pref[index].incomeList,
+                                        widget.history_save_pref[index]
+                                            .incomeList,
                                         sdl.Income),
                                     nameContainer5(
                                         'images/icons/location.png',
@@ -1130,19 +1148,17 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                   ],
                                 ),
                               ),
-                                GestureDetector(
+                              GestureDetector(
                                   onTap: () {
-                                      _pageController.nextPage(
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            );
+                                    _pageController.nextPage(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.easeInOut,
+                                    );
                                   },
-                                  child: Icon(Icons.arrow_forward_ios,color: main_color)),
-                                    
+                                  child: Icon(Icons.arrow_forward_ios,
+                                      color: main_color)),
                             ],
                           ),
-                         
                           Container(
                             margin: const EdgeInsets.only(top: 30),
                             child: SizedBox(

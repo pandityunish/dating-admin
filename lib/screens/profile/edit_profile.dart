@@ -113,65 +113,63 @@ class _EditProfileState extends State<EditProfile> {
       });
     }
   }
-sliderContiner(String image, String title,String subtitle){
-  return   Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    ImageIcon(
-                                      AssetImage(image),
-                                      color: main_color,
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.only(left: 5),
-                                        child: BigText(text: title)),
-                                  ],
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: TickerText(
-                                    // default values
-                                    scrollDirection: Axis.horizontal,
-                                    speed: 20,
-                                    startPauseDuration:
-                                        const Duration(seconds: 1),
-                                    endPauseDuration:
-                                        const Duration(seconds: 1),
-                                    returnDuration:
-                                        const Duration(milliseconds: 800),
-                                    primaryCurve: Curves.linear,
-                                    returnCurve: Curves.easeOut,
-                                    child: Text(
-                                     subtitle,
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  ),
-                                ),
-                                // Padding(
-                                //   padding: const EdgeInsets.only(right: 5),
-                                //   child: Container(
-                                //     width:
-                                //         MediaQuery.of(context).size.width * 0.4,
-                                //     child: SingleChildScrollView(
-                                //       scrollDirection: Axis.horizontal,
-                                //       reverse: true,
-                                //       child: Text(
-                                //         "${userSave.placeofbirth}",
-                                //         textAlign: TextAlign.end,
-                                //         style: TextStyle(fontSize: 15),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          );
-}
+
+  sliderContiner(String image, String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              ImageIcon(
+                AssetImage(image),
+                color: main_color,
+              ),
+              Container(
+                  margin: EdgeInsets.only(left: 5),
+                  child: BigText(text: title)),
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: TickerText(
+              // default values
+              scrollDirection: Axis.horizontal,
+              speed: 20,
+              startPauseDuration: const Duration(seconds: 1),
+              endPauseDuration: const Duration(seconds: 1),
+              returnDuration: const Duration(milliseconds: 800),
+              primaryCurve: Curves.linear,
+              returnCurve: Curves.easeOut,
+              child: Text(
+                subtitle,
+                textAlign: TextAlign.end,
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 5),
+          //   child: Container(
+          //     width:
+          //         MediaQuery.of(context).size.width * 0.4,
+          //     child: SingleChildScrollView(
+          //       scrollDirection: Axis.horizontal,
+          //       reverse: true,
+          //       child: Text(
+          //         "${userSave.placeofbirth}",
+          //         textAlign: TextAlign.end,
+          //         style: TextStyle(fontSize: 15),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+
   nameContainer(icon, String head, String body) {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25),
@@ -265,21 +263,29 @@ sliderContiner(String image, String title,String subtitle){
                       child: BigText(text: head)),
                 ],
               ),
-              GestureDetector(
-                onLongPress: () {
-                  Clipboard.setData(ClipboardData(text: body)).then((value) {
-                    //only if ->
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Copied successfully")));
-                  });
-                },
-                child: BigText(
-                  text: '$body',
-                  color: main_color,
-                  size: 15,
-                ),
-              ),
-              Icon(Icons.arrow_forward_ios)
+              Row(
+                children: [
+                  GestureDetector(
+                    onLongPress: () {
+                      Clipboard.setData(ClipboardData(text: body))
+                          .then((value) {
+                        //only if ->
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Copied successfully")));
+                      });
+                    },
+                    child: BigText(
+                      text: '$body',
+                      color: main_color,
+                      size: 15,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                  )
+                ],
+              )
             ],
           )
         ]),
@@ -365,7 +371,7 @@ sliderContiner(String image, String title,String subtitle){
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("Hide Pic"),
+                              Text("Hide Pics"),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Padding(
@@ -676,8 +682,8 @@ sliderContiner(String image, String title,String subtitle){
                           // child:
                           Column(
                             children: [
-                              nameContainer('images/icons/latitude.png', "Latitude",
-                                  "${widget.userSave.adminlng}"),
+                              nameContainer('images/icons/latitude.png',
+                                  "Latitude", "${widget.userSave.adminlng}"),
                               const SizedBox(
                                 height: 2,
                               ),
@@ -688,8 +694,8 @@ sliderContiner(String image, String title,String subtitle){
                               ),
                               // nameContainer('images/icons/name.png', "City",
                               //     "${widget.userSave.city}"),
-                                  sliderContiner("images/icons/location.png","L&L city",
-                                  "${widget.userSave.city},"),
+                              sliderContiner("images/icons/location.png",
+                                  "L&L city", "${widget.userSave.city},"),
                               const SizedBox(
                                 height: 2,
                               ),
@@ -1057,7 +1063,7 @@ sliderContiner(String image, String title,String subtitle){
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text("Hide Pic"),
+                                        Text("Hide Pics"),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: Padding(
@@ -1076,47 +1082,65 @@ sliderContiner(String image, String title,String subtitle){
                                                     BorderRadius.circular(30.0),
                                               ),
                                               child: CupertinoSwitch(
-                                                // overrides the default green color of the track
                                                 activeColor: Colors.white,
-                                                // color of the round icon, which moves from right to left
-                                                thumbColor: forIos
-                                                    ? main_color
-                                                    : Colors.black12,
-                                                // when the switch is off
-                                                trackColor: forIos
-                                                    ? Colors.white
-                                                    : Colors.black12,
-                                                // boolean variable value
-                                                value: forIos,
-                                                // changes the state of the switch
+                                                thumbColor: widget.userSave!
+                                                        .imageurls!.isNotEmpty
+                                                    ? (forIos
+                                                        ? main_color
+                                                        : Colors.black12)
+                                                    : Colors.grey,
+                                                trackColor: widget.userSave!
+                                                        .imageurls!.isNotEmpty
+                                                    ? (forIos
+                                                        ? Colors.white
+                                                        : Colors.black12)
+                                                    : Colors.grey,
+                                                value: widget.userSave!
+                                                        .imageurls!.isNotEmpty
+                                                    ? forIos
+                                                    : false,
                                                 onChanged: (value) {
+                                                  if (widget.userSave!
+                                                      .imageurls!.isEmpty) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                          content: Text(
+                                                              "Add photos first to hide them")),
+                                                    );
+                                                    return;
+                                                  }
+
                                                   setState(() {
                                                     forIos = value;
                                                   });
+
                                                   SearchProfile()
                                                       .addtoadminnotification(
-                                                          userid: widget
-                                                              .userSave!.id!,
-                                                          useremail:
-                                                              widget.userSave!
-                                                                  .email!,
-                                                          userimage: widget
-                                                                  .userSave!
-                                                                  .imageurls!
-                                                                  .isEmpty
-                                                              ? ""
-                                                              : widget.userSave!
-                                                                      .imageurls![
-                                                                  0],
-                                                          title:
-                                                              "${userSave.displayName} ${value == false ? "LOCKED" : "UNLOCKED"} ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname..toLowerCase()} ${widget.userSave!.puid} PROFILE PICTURE",
-                                                          email:
-                                                              userSave.email!,
-                                                          subtitle: "");
+                                                    userid:
+                                                        widget.userSave!.id!,
+                                                    useremail:
+                                                        widget.userSave!.email!,
+                                                    userimage: widget.userSave!
+                                                            .imageurls!.isEmpty
+                                                        ? ""
+                                                        : widget.userSave!
+                                                            .imageurls![0],
+                                                    title:
+                                                        "${userSave.displayName} ${value ? "UNLOCKED" : "LOCKED"} "
+                                                        "${widget.userSave!.name.substring(0, 1).toUpperCase()} "
+                                                        "${widget.userSave!.surname.toLowerCase()} "
+                                                        "${widget.userSave!.puid} PROFILE PICTURE",
+                                                    email: userSave.email!,
+                                                    subtitle: "",
+                                                  );
+
                                                   HomeService().updateblur(
-                                                      email:
-                                                          widget.userSave.email,
-                                                      isblur: value);
+                                                    email:
+                                                        widget.userSave!.email,
+                                                    isblur: value,
+                                                  );
                                                 },
                                               ),
                                             ),
@@ -1493,8 +1517,10 @@ sliderContiner(String image, String title,String subtitle){
                                         ),
                                         // nameContainer('images/icons/location.png',
                                         //     "L&L city", "${widget.userSave.city}"),
-                                          sliderContiner("images/icons/location.png","L&L city",
-                                  "${widget.userSave.city},${widget.userSave.state},${widget.userSave.country}"),
+                                        sliderContiner(
+                                            "images/icons/location.png",
+                                            "L&L city",
+                                            "${widget.userSave.city},${widget.userSave.state},${widget.userSave.country}"),
                                         const SizedBox(
                                           height: 2,
                                         ),
@@ -1527,7 +1553,7 @@ sliderContiner(String image, String title,String subtitle){
                                         const SizedBox(
                                           height: 2,
                                         ),
-                                          listofadminpermissions!.contains(
+                                        listofadminpermissions!.contains(
                                                     "Can See Full Name") ||
                                                 listofadminpermissions!
                                                     .contains("All")
@@ -1584,10 +1610,8 @@ sliderContiner(String image, String title,String subtitle){
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        nameContainer(
-                                            'images/icons/dob.png',
-                                            "Date of Birth",
-                                            dob),
+                                        nameContainer('images/icons/dob.png',
+                                            "Date of Birth", dob),
                                         SizedBox(
                                           height: 2,
                                         ),
@@ -1598,8 +1622,11 @@ sliderContiner(String image, String title,String subtitle){
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        sliderContiner("images/icons/location.png", "Place of birth", widget.userSave.placeofbirth),
-                                       
+                                        sliderContiner(
+                                            "images/icons/location.png",
+                                            "Place of birth",
+                                            widget.userSave.placeofbirth),
+
                                         SizedBox(
                                           height: 2,
                                         ),
@@ -1687,8 +1714,10 @@ sliderContiner(String image, String title,String subtitle){
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        sliderContiner("images/icons/location.png", "Location",  "${widget.userSave.Location},${widget.userSave.state},${widget.userSave.country}"),
-                                      
+                                        sliderContiner(
+                                            "images/icons/location.png",
+                                            "Location",
+                                            "${widget.userSave.Location},${widget.userSave.state},${widget.userSave.country}"),
                                       ],
                                     ),
                                     // ),
@@ -1813,7 +1842,7 @@ sliderContiner(String image, String title,String subtitle){
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("Hide Pic"),
+                                  Text("Hide Pics"),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Padding(
@@ -2232,14 +2261,15 @@ sliderContiner(String image, String title,String subtitle){
                                   const SizedBox(
                                     height: 2,
                                   ),
-                                    sliderContiner("images/icons/location.png","L&L city",
-                                  "${editdata[index].city},${editdata[index].state},${editdata[index].country}"),
-                               
+                                  sliderContiner(
+                                      "images/icons/location.png",
+                                      "L&L city",
+                                      "${editdata[index].city},${editdata[index].state},${editdata[index].country}"),
+
                                   const SizedBox(
                                     height: 2,
                                   ),
 
-                                
                                   listofadminpermissions!.contains(
                                               "Can See user’s full name") ||
                                           listofadminpermissions!
@@ -2261,7 +2291,7 @@ sliderContiner(String image, String title,String subtitle){
                                               .contains("All")
                                       ? emailContainer(
                                           'images/icons/email.png',
-                                          "Email ID",
+                                          "Email IDs",
                                           "${editdata[index].userid}",
                                           () => {
                                                 Navigator.push(
@@ -2307,8 +2337,11 @@ sliderContiner(String image, String title,String subtitle){
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  sliderContiner("images/icons/location.png", "Place of birth",  "${editdata[index].placeofbirth}"),
-                                 
+                                  sliderContiner(
+                                      "images/icons/location.png",
+                                      "Place of birth",
+                                      "${editdata[index].placeofbirth}"),
+
                                   SizedBox(
                                     height: 2,
                                   ),
@@ -2386,8 +2419,10 @@ sliderContiner(String image, String title,String subtitle){
                                   SizedBox(
                                     height: 2,
                                   ),
-                                  sliderContiner('images/icons/location.png', "Location",  "${editdata[index].location1},${editdata[index].state},${editdata[index].country}"),
-                                 
+                                  sliderContiner(
+                                      'images/icons/location.png',
+                                      "Location",
+                                      "${editdata[index].location1},${editdata[index].state},${editdata[index].country}"),
                                 ],
                               ),
                               // ),

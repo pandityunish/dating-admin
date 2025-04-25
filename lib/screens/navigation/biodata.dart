@@ -88,7 +88,9 @@ class _BioDataState extends State<BioData> {
               //   ),
               // ),
               // resume_design()
-              PdfDesign(userSave:widget.newUserModel,)
+              PdfDesign(
+                userSave: widget.newUserModel,
+              )
             ],
           ),
         ),
