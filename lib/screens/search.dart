@@ -3299,68 +3299,83 @@ class _SearchState extends State<Search> {
                                                       ),
                                                       Column(
                                                         children: [
-                                                          SliderTheme(
-                                                              data: SliderTheme
-                                                                      .of(
-                                                                          context)
-                                                                  .copyWith(
-                                                                valueIndicatorColor:
-                                                                    Colors
-                                                                        .black, // This is what you are asking for
-                                                                // Custom Gray Color
-                                                              ),
+                                                         
+                                                           Material(
+                                                              color:
+                                                                  Colors.white,
                                                               child:
-                                                                  RangeSlider(
-                                                                activeColor:
-                                                                    main_color,
-                                                                values: RangeValues(
-                                                                    (allsearches[index].minDistance ??
-                                                                            0)
+                                                                  SliderTheme(
+                                                                data: SliderTheme.of(
+                                                                        context)
+                                                                    .copyWith(
+                                                                  rangeThumbShape:
+                                                                       CircleThumbShape(
+                                                                        thumbColor:forIos? main_color:Colors.black12 ,
+                                                                    thumbRadius:
+                                                                        8.0, // Size of the thumb
+                                                                  ),
+                                                                  thumbColor: Colors
+                                                                      .transparent, // Transparent fill for hollow center
+                                                                  overlayColor:
+                                                                      Colors
+                                                                          .transparent, // No overlay when thumb is pressed
+                                                                  activeTrackColor:
+                                                                      main_color, // Track color for selected range
+                                                                  inactiveTrackColor:
+                                                                      main_color
+                                                                          .withOpacity(
+                                                                              0.3), // Track color for unselected range
+                                                                  trackHeight:
+                                                                      4.0, // Thickness of the track
+                                                                ),
+                                                                child:
+                                                                    RangeSlider(
+                                                                  activeColor:
+                                                                      main_color,
+                                                                  values:
+                                                                      RangeValues(
+                                                                        (allsearches[index].minDistance ??
+                                                                            10)
                                                                         .toDouble(),
                                                                     (allsearches[index].maxDistance ??
-                                                                            0)
-                                                                        .toDouble()),
-                                                                max: 200,
-                                                                divisions: 10,
-                                                                onChanged: (allsearches[index]
-                                                                            .isSearch ==
-                                                                        true)
-                                                                    ? (RangeValues
-                                                                        values) {
-                                                                        if (!mounted)
-                                                                          return;
+                                                                            200)
+                                                                        .toDouble()
+                                                                      ),
+                                                                  max: 200,
+                                                                  divisions: 10,
+                                                                  onChanged:
+                                                                      (forIos)
+                                                                          ? (RangeValues
+                                                                              values) {
+                                                                              if (!mounted)
+                                                                                return;
 
-                                                                        // Enforce a minimum range of 20
-                                                                        if ((values.end -
-                                                                                values.start) >=
-                                                                            20) {
-                                                                          setState(
-                                                                              () {
-                                                                            _currentRangeValues =
-                                                                                values;
-                                                                          });
-                                                                        } else {
-                                                                          setState(
-                                                                              () {
-                                                                            _currentRangeValues =
-                                                                                RangeValues(
-                                                                              values.start,
-                                                                              values.start + 20 > 200 ? 200 : values.start + 20,
-                                                                            );
-                                                                          });
-                                                                        }
-                                                                      }
-                                                                    : null,
-                                                                labels:
-                                                                    RangeLabels(
-                                                                  _currentRangeValues
-                                                                      .start
-                                                                      .round()
-                                                                      .toString(),
-                                                                  _currentRangeValues
-                                                                      .end
-                                                                      .round()
-                                                                      .toString(),
+                                                                              // Enforce a minimum range of 20
+                                                                              if ((values.end - values.start) >= 20) {
+                                                                                setState(() {
+                                                                                  _currentRangeValues = values;
+                                                                                });
+                                                                              } else {
+                                                                                setState(() {
+                                                                                  _currentRangeValues = RangeValues(
+                                                                                    values.start,
+                                                                                    values.start + 20 > 200 ? 200 : values.start + 20,
+                                                                                  );
+                                                                                });
+                                                                              }
+                                                                            }
+                                                                          : null,
+                                                                  labels:
+                                                                      RangeLabels(
+                                                                    _currentRangeValues
+                                                                        .start
+                                                                        .round()
+                                                                        .toString(),
+                                                                    _currentRangeValues
+                                                                        .end
+                                                                        .round()
+                                                                        .toString(),
+                                                                  ),
                                                                 ),
                                                               )),
                                                           Padding(

@@ -454,60 +454,82 @@ class _SlideProfileState extends State<SearchSlideProfile> {
                         },
                         itemCount: allusers.length,
                       ),
-            Positioned(
-                right: 30.0,
-                top: 100.0,
+             Positioned(
+                right: 15.0,
+                top: 90.0,
                 child: GestureDetector(
                   onTap: () {
-                    if (listofadminpermissions!
-                            .contains("Can See right menu") ||
-                        listofadminpermissions!.contains("All")) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FilterC()));
-                    }
-
-                    // Get.to(() => const MyProfile(),
-                    //     transition: Transition.zoom);
-                  },
-                  child: Icon(
-                    FontAwesomeIcons.filter,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(color: Colors.black, blurRadius: 10.0)
-                    ],
-                  ),
-                )),
-            Positioned(
-                right: 30.0,
-                top: 250,
-                child: GestureDetector(
-                  onTap: () {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "lksjflajk",
+                        userimage: "",
+                        title: "${userSave.displayName} CLICK ON RIGHT MENU",
+                        email: userSave.email!,
+                        subtitle: "");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SortProfileScreen()));
-
-                    // Get.to(() => const MyProfile(),
-                    //     transition: Transition.zoom);
+                            builder: (context) => const FilterC()));
                   },
-                  child: Icon(
-                    FontAwesomeIcons.sort,
+                  child: const Icon(
+                    FontAwesomeIcons.filter,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
                   ),
                 )),
             Positioned(
-                right: 30.0,
-                top: 150.0,
+                right: 15.0,
+                top: 220,
                 child: GestureDetector(
                   onTap: () {
-                    if (listofadminpermissions!
-                            .contains("Can search profiles") ||
+                    if (listofadminpermissions!.contains("Can See Sort") ||
                         listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title: "${userSave.displayName} CLICK ON SORT",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SortProfileScreen()));
+                    }
+                  },
+                  child: const Icon(
+                    FontAwesomeIcons.sort,
+                    color: Colors.white,
+                    size: 18,
+                    shadows: <Shadow>[
+                      Shadow(color: Colors.black, blurRadius: 10.0)
+                    ],
+                  ),
+                )),
+            Positioned(
+                right: 15.0,
+                top: 130.0,
+                child: GestureDetector(
+                  onTap: () {
+                    print(listofadminpermissions);
+                    if (listofadminpermissions!
+                            .contains("Can See Search Bar") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON ADMIN SEARCH BAR ",
+                          email: userSave.email!,
+                          subtitle: "");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -517,30 +539,45 @@ class _SlideProfileState extends State<SearchSlideProfile> {
                     // Get.to(() => const MyProfile(),
                     //     transition: Transition.zoom);
                   },
-                  child: Icon(
+                  child: const Icon(
                     FontAwesomeIcons.search,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
                   ),
                 )),
             Positioned(
-                right: 30.0,
-                top: 200.0,
+                right: 15.0,
+                top: 170.0,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LetsStart()));
-
+                    if (listofadminpermissions!
+                            .contains("Can Create Profile") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON PROFILE CREATE BY ADMIN",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LetsStart()));
+                    }
                     // Get.to(() => const MyProfile(),
                     //     transition: Transition.zoom);
                   },
-                  child: Icon(
+                  child: const Icon(
                     FontAwesomeIcons.userEdit,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
