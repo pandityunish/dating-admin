@@ -1070,7 +1070,10 @@ class _UserSearchState extends State<UserSearch> {
                                                 data: SliderTheme.of(context)
                                                     .copyWith(
                                                   rangeThumbShape:
-                                                      const CircleThumbShape(
+                                                       CircleThumbShape(
+                                                         thumbColor: forIos
+                                                      ? main_color
+                                                      : Colors.black12,
                                                     thumbRadius:
                                                         8.0, // Size of the thumb
                                                   ),

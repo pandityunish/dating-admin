@@ -49,16 +49,16 @@ class AdminService {
   }
 
   Future<List<SendLinkModel>> getsendlink(String email) async {
-    List<SendLinkModel> alllinks=[];
+    List<SendLinkModel> alllinks = [];
     try {
       http.Response res = await http.post(Uri.parse(getsendlinkurl),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode({"email": email}));
- 
+
       if (res.statusCode == 200) {
         for (var i = 0; i < jsonDecode(res.body).length; i++) {
-          alllinks.add(SendLinkModel.fromJson(
-              jsonEncode(jsonDecode(res.body)[i])));
+          alllinks
+              .add(SendLinkModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
         }
       }
     } catch (e) {
@@ -105,8 +105,8 @@ class AdminService {
             "email": email,
             "aboutme": aboutme,
             "patnerpref": patnerpref,
-            "name":userSave.displayName,
-            "status":"Pending",
+            "name": userSave.displayName,
+            "status": "Pending",
             "success": success,
             "video": video,
             "savepref": savepref,
@@ -535,17 +535,18 @@ class AdminService {
     }
     return getallusersdata;
   }
- Future<List<VerifyUserModel>> getverifyuser({required String id}) async {
+
+  Future<List<VerifyUserModel>> getverifyuser({required String id}) async {
     List<VerifyUserModel> getallusersdata = [];
     try {
       http.Response response = await http.post(Uri.parse(getverifyuserurl),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode({"userid": id}));
- print(response.body);
+      print(response.body);
       if (response.statusCode == 200) {
         for (var i = 0; i < jsonDecode(response.body).length; i++) {
-          getallusersdata.add(
-              VerifyUserModel.fromJson(jsonEncode(jsonDecode(response.body)[i])));
+          getallusersdata.add(VerifyUserModel.fromJson(
+              jsonEncode(jsonDecode(response.body)[i])));
         }
       } else {
         print("Something went wrong");
@@ -555,6 +556,7 @@ class AdminService {
     }
     return getallusersdata;
   }
+
   Future<void> createbiodataprofile({
     required String editname,
     required String userid,
@@ -668,8 +670,8 @@ class AdminService {
             "gam": gam,
             "gmonth": gmonth,
             "gyear": gyear,
-            "gkundli":gkundli,
-            "bkundli":bkundli,
+            "gkundli": gkundli,
+            "bkundli": bkundli,
             "ghour": ghour,
             "gsec": gsec,
             "bname": bname,

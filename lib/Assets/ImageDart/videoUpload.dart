@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
@@ -291,11 +292,19 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  AspectRatio(
-                    
-                    aspectRatio: _videoPlayerController.value.aspectRatio,
-                    child: VideoPlayer(_videoPlayerController),
-                  ),
+               SizedBox(
+  height: 200,
+  width: Get.width * 0.9,
+  child: FittedBox(
+    fit: BoxFit.fitHeight, // or BoxFit.fill depending on how you want it
+    child: SizedBox(
+      width: _videoPlayerController.value.size.width,
+      height: _videoPlayerController.value.size.height,
+      child: VideoPlayer(_videoPlayerController),
+    ),
+  ),
+),
+
                   if (!_isPlaying)
                     // Icon(
                     //   Icons.play_arrow,

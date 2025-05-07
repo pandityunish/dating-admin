@@ -873,7 +873,131 @@ class _VerifyState extends State<Verify> {
                                 color: Colors.black,
                               ),
                             ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                         if (widget.userSave.status != "") {
+                                if ((widget.userSave.verifiedstatus !=
+                                    "verified")) {
+                                  widget.userSave.verifiedstatus = "verified";
+                                  SearchProfile().addtoadminnotification(
+                                      userid: widget.userSave!.id!,
+                                      useremail: widget.userSave!.email!,
+                                      userimage:
+                                          widget.userSave!.imageurls!.isEmpty
+                                              ? ""
+                                              : widget.userSave!.imageurls![0],
+                                      title:
+                                          "${userSave.displayName} VERIFIED ${widget.userSave.name[0]} ${widget.userSave.surname} ${widget.userSave.puid}",
+                                      email: userSave.email!,
+                                      subtitle: "");
+                                  HomeService()
+                                      .verifyuser(email: widget.userSave.email);
+                                  SearchProfile().addtonotification(
+                                    email: widget.userSave.email,
+                                    title:
+                                        "PROFILE HAS BEEN VERIFIED SUCCESSFULLY",
+                                  );
+                                  HomeService().createverifieduser(
+                                      editname: "Verified By ${userSave.name}",
+                                      videolink: widget.userSave.videolink,
+                                      useremail: widget.userSave.email);
+
+                                  sendPushMessagetoallusers(
+                                      "PROFILE HAS BEEN VERIFIED SUCCESSFULLY",
+                                      "Free Rishtey Wala",
+                                      widget.userSave.id,
+                                      widget.userSave.name,
+                                      widget.userSave.token);
+                                  setState(() {});
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(seconds: 1),
+                                      content: SnackBarContent(
+                                        error_text:
+                                            "Profile Verified Successfully",
+                                        appreciation: "Congratulations",
+                                        icon: Icons.check,
+                                        sec: 2,
+                                      ),
+                                      margin: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.25,
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.06),
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    ),
+                                  );
+                                } else {
+                                  widget.userSave.verifiedstatus = "unverified";
+                                  SearchProfile().addtoadminnotification(
+                                      userid: widget.userSave!.id!,
+                                      useremail: widget.userSave!.email!,
+                                      userimage:
+                                          widget.userSave!.imageurls!.isEmpty
+                                              ? ""
+                                              : widget.userSave!.imageurls![0],
+                                      title:
+                                          "${userSave.displayName} DELETE UPLOADED VIDEO BY ${widget.userSave.name[0]} ${widget.userSave.surname} ${widget.userSave.puid}",
+                                      email: userSave.email!,
+                                      subtitle: "");
+                                  HomeService().unverifyuser(
+                                      email: widget.userSave.email);
+                                  HomeService().createverifieduser(
+                                      editname:
+                                          "UnVerified By ${userSave.name}",
+                                      videolink: widget.userSave.videolink,
+                                      useremail: widget.userSave.email);
+
+                                  setState(() {});
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(seconds: 1),
+                                      content: SnackBarContent(
+                                        error_text:
+                                            "Profile Unverified Successfully",
+                                        appreciation: "Congratulations",
+                                        icon: Icons.check,
+                                        sec: 2,
+                                      ),
+                                      margin: EdgeInsets.only(
+                                          bottom: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.25,
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.06),
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    ),
+                                  );
+                                }
+                              } else {
+                                await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        content: SnackBarContent(
+                                          error_text:
+                                              "Please Approve The User First",
+                                          appreciation: "",
+                                          icon: Icons.error,
+                                          sec: 3,
+                                        ),
+                                        backgroundColor: Colors.transparent,
+                                        elevation: 0,
+                                      );
+                                    });
+                              }
+                      },
                     ),
                   ),
                   SizedBox(
@@ -911,7 +1035,32 @@ class _VerifyState extends State<Verify> {
                                 color: Colors.black,
                               ),
                             ),
-                      onPressed: () {},
+                      onPressed: () {
+                                HomeService().createverifieduser(
+                                  editname: "Rejected By ${userSave.name}",
+                                  videolink: widget.userSave.videolink,
+                                  useremail: widget.userSave.email);
+                              _deleteVideo();
+                              sendPushMessagetoallusers(
+                                  "PROFILE HAS BEEN REJECTED PLEASE REUPLOAD VIDEO ",
+                                  "Free Rishtey Wala",
+                                  widget.userSave.id,
+                                  widget.userSave.name,
+                                  widget.userSave.token);
+
+                              SearchProfile().addtoadminnotification(
+                                  userid: widget.userSave!.id!,
+                                  useremail: widget.userSave!.email!,
+                                  userimage: widget.userSave!.imageurls!.isEmpty
+                                      ? ""
+                                      : widget.userSave!.imageurls![0],
+                                  title:
+                                      "${userSave.displayName} REJECT VIDEO OF ${widget.userSave.name[0]} ${widget.userSave.surname} ${widget.userSave.puid}",
+                                  email: userSave.email!,
+                                  subtitle: "");
+                            
+                          
+                      },
                     ),
                   ),
                   SizedBox(

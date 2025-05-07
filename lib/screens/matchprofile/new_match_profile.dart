@@ -104,7 +104,7 @@ class _ReligionState extends State<NewMatchProfile> {
                                                   content: SnackBarContent(
                                                     error_text: "Preference Required",
                                                     appreciation: "",
-                                                    icon: Icons.check_circle,
+                                                    icon: Icons.error,
                                                     sec: 3,
                                                   ),
                                                   backgroundColor: Colors.transparent,

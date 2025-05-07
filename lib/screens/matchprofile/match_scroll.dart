@@ -452,12 +452,12 @@ bool _ispageLoading=false;
           
                    Positioned(
                       left: MediaQuery.of(context).size.width * 0.009,
-                      top: MediaQuery.of(context).size.height * 0.09,
+                      top: MediaQuery.of(context).size.height * 0.085,
                       child: IconButton(
-                        icon: Icon(
+                        icon:const Icon(
                           // Icons.more_vert_outlined,//for three dots
                           Icons.arrow_back_ios, //for three lines
-                          size: 25,
+                          size: 20,
                   color: Colors.white,
 
                           shadows: <Shadow>[

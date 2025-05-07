@@ -4,8 +4,9 @@ import 'package:matrimony_admin/globalVars.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBackButtonPressed;
-final String iconImage;
-final double? height;
+  final String iconImage;
+  final double? height;
+
   const CustomAppBar({
     Key? key,
     required this.title,
@@ -14,7 +15,7 @@ this.height=75,
   }) : super(key: key);
 
   @override
-  Size get preferredSize =>  Size.fromHeight(height??110); // Customize height here
+  Size get preferredSize => Size.fromHeight(height ?? 110);
 
   @override
   Widget build(BuildContext context) {

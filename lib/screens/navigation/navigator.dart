@@ -2726,7 +2726,7 @@ class _MyProfileState extends State<MyProfile> {
                           data: MediaQuery.of(context)
                               .copyWith(textScaleFactor: 1.0),
                           child: SizedBox(
-                            height: 244,
+                            height: 180,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

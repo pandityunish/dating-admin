@@ -21,6 +21,7 @@ import 'package:matrimony_admin/screens/navigation/kundli_match_data.dart';
 import 'package:matrimony_admin/screens/profile/buttons.dart';
 import 'package:matrimony_admin/screens/profile/imageslider.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
+import 'package:ticker_text/ticker_text.dart';
 
 import '../../Assets/Error.dart';
 import '../../Assets/box.dart';
@@ -1007,16 +1008,51 @@ class _ProfilePageState extends State<MatchProfilePage>
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          // Container(
+                                          //   width: MediaQuery.of(context)
+                                          //           .size
+                                          //           .width *
+                                          //       0.15,
+                                          //   child: SingleChildScrollView(
+                                          //     scrollDirection: Axis.horizontal,
+                                          //     child: Text(
+                                          //       "${widget.userSave!.Location}",
+                                          //       textAlign: TextAlign.end,
+                                          //       style: const TextStyle(
+                                          //         fontFamily: "Sans-serif",
+                                          //         fontSize: 14,
+                                          //         color: Colors.white,
+                                          //         // color: Colors.white,
+                                          //         fontWeight: FontWeight.w400,
+                                          //         shadows: <Shadow>[
+                                          //           Shadow(
+                                          //               color: Colors.black,
+                                          //               blurRadius: 5.0)
+                                          //         ],
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                            SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
                                                 0.15,
-                                            child: SingleChildScrollView(
+                                            child: TickerText(
+                                              // default values
                                               scrollDirection: Axis.horizontal,
+                                              speed: 20,
+                                              startPauseDuration:
+                                                  const Duration(seconds: 1),
+                                              endPauseDuration:
+                                                  const Duration(seconds: 1),
+                                              returnDuration: const Duration(
+                                                  milliseconds: 800),
+                                              primaryCurve: Curves.linear,
+
+                                              returnCurve: Curves.easeOut,
                                               child: Text(
-                                                "${widget.userSave!.Location}",
-                                                textAlign: TextAlign.end,
+                                                "${widget.userSave!.city},${widget.userSave!.state},${widget.userSave!.country}",
                                                 style: const TextStyle(
                                                   fontFamily: "Sans-serif",
                                                   fontSize: 14,
@@ -1389,7 +1425,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(left: 28),
+                                    margin: const EdgeInsets.only(left: 10),
                                     child: Text(
                                       "About ${widget.userSave!.name.substring(0, 1).toUpperCase()} ${widget.userSave!.surname!.substring(0, 1).toUpperCase() + widget.userSave!.surname!.substring(1).toLowerCase()}",
                                       style: TextStyle(
@@ -1438,7 +1474,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                     Container(
                                       // width: MediaQuery.of(context).size.width * 1,
                                       margin: const EdgeInsets.only(
-                                        left: 28,
+                                        left: 10,
                                         right: 0,
                                       ),
                                       child: Wrap(
@@ -1600,7 +1636,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                               BoxShadow(blurRadius: 0.05)
                                             ]),
                                         margin: const EdgeInsets.only(
-                                          left: 28,
+                                          left: 10,
                                           right: 0,
                                         ),
                                         padding: const EdgeInsets.only(
@@ -1641,7 +1677,7 @@ class _ProfilePageState extends State<MatchProfilePage>
 
                               //interested in marraige with
                               Container(
-                                margin: const EdgeInsets.only(left: 28),
+                                margin: const EdgeInsets.only(left: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -1669,7 +1705,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                       width:
                                           MediaQuery.of(context).size.width * 1,
                                       margin: const EdgeInsets.only(
-                                        left: 28,
+                                        left: 10,
                                         right: 0,
                                       ),
                                       child: newSavePrefModel == null
@@ -1856,7 +1892,7 @@ class _ProfilePageState extends State<MatchProfilePage>
                                             BoxShadow(blurRadius: 0.05)
                                           ]),
                                       margin: const EdgeInsets.only(
-                                        left: 28,
+                                        left: 10,
                                         right: 0,
                                       ),
                                       padding: const EdgeInsets.only(

@@ -2,8 +2,7 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class EditProfileModel {
-  final  String userid;
-
+  final String userid;
   final String? aboutme;
   final String? diet;
   final String? disability;
@@ -30,10 +29,10 @@ class EditProfileModel {
   final String location1;
   final String city;
   final String state;
- final List<dynamic> images;
- final bool isBlur;
-final String createdAt;
-final String? editname;
+  final List<dynamic> images;
+  final bool isBlur;
+  final String createdAt;
+  final String? editname;
   EditProfileModel({
     required this.userid,
     this.aboutme,
@@ -48,7 +47,7 @@ final String? editname;
     this.editname,
     this.patnerpref,
     required this.lng,
-  required this.createdAt,
+    required this.createdAt,
     required this.religion,
     required this.name,
     required this.surname,
@@ -81,7 +80,7 @@ final String? editname;
       'height': height,
       'income': income,
       'patnerpref': patnerpref,
-   'dateofbith':dateofbirth,
+      'dateofbith': dateofbirth,
       'religion': religion,
       'name': name,
       'surname': surname,
@@ -108,17 +107,19 @@ final String? editname;
       userid: map['userid'] as String,
       lng: map['lng'] as double,
       aboutme: map['aboutme'] != null ? map['aboutme'] as String : null,
-      patnerpref: map['patnerpref'] != null ? map['patnerpref'] as String : null,
+      patnerpref:
+          map['patnerpref'] != null ? map['patnerpref'] as String : null,
       diet: map['diet'] != null ? map['diet'] as String : null,
-      disability: map['disability'] != null ? map['disability'] as String : null,
-      dateofbirth: map['dateofbirth'] != null ? map['dateofbirth'] as String : null,
+      disability:
+          map['disability'] != null ? map['disability'] as String : null,
+      dateofbirth:
+          map['dateofbirth'] != null ? map['dateofbirth'] as String : null,
       drink: map['drink'] != null ? map['drink'] as String : null,
       editname: map['editname'] != null ? map['editname'] as String : null,
       education: map['education'] != null ? map['education'] as String : null,
       puid: map['puid'] as String,
       height: map['height'] != null ? map['height'] as String : null,
       income: map['income'] != null ? map['income'] as String : null,
-     
       religion: map['religion'] as String,
       name: map['name'] as String,
       surname: map['surname'] as String,
@@ -142,5 +143,6 @@ final String? editname;
 
   String toJson() => json.encode(toMap());
 
-  factory EditProfileModel.fromJson(String source) => EditProfileModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory EditProfileModel.fromJson(String source) =>
+      EditProfileModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

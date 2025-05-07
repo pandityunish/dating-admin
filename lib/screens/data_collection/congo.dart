@@ -14,12 +14,12 @@ class Congo extends StatefulWidget {
 }
 
 class _ReligionState extends State<Congo> {
-    HomeService homeservice=Get.put(HomeService());
+  HomeService homeservice = Get.put(HomeService());
 
   @override
   void initState() {
     homeservice.getuserdata();
-    
+
     // print("Name ${userSave}");
     // NotificationFunction.setNotification(
     //   "admin",
@@ -36,9 +36,9 @@ class _ReligionState extends State<Congo> {
     //   "KNOW HOW TO USE APP",
     //   'knowHow',
     // );
-
   }
- UserService userService=Get.put(UserService());
+
+  UserService userService = Get.put(UserService());
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -66,7 +66,6 @@ class _ReligionState extends State<Congo> {
               body: Center(
                 child: SingleChildScrollView(
                   child: Column(
-                    
                     children: [
                       Container(
                         margin: EdgeInsets.only(left: 20),
@@ -98,20 +97,20 @@ class _ReligionState extends State<Congo> {
                             ),
                           ),
                           Text(
-                            "free",
+                            "Free",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                           ),
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           Text(
-                            "RisteyWala",
+                            "RishteyWala",
                             style: TextStyle(
-                                color: main_color,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                               ),
+                              color: main_color,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ],
                       ),
@@ -122,7 +121,7 @@ class _ReligionState extends State<Congo> {
                         // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            "You have successfully registered",
+                            "You Have Successfully Registered",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -145,18 +144,18 @@ class _ReligionState extends State<Congo> {
                                 const Text(
                                   " Free",
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                   ),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
                                 ),
                                 Text(
-                                  "RisteyWala",
+                                  "RishteyWala",
                                   style: TextStyle(
-                                      color: main_color,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      ),
+                                    color: main_color,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ],
                             ),
@@ -184,16 +183,16 @@ class _ReligionState extends State<Congo> {
                           Text(
                             " Free",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                ),
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
                           ),
                           Text(
-                            "RisteyWala",
+                            "RishteyWala",
                             style: TextStyle(
-                                color: main_color,
-                                fontSize: 16,
-                               ),
+                              color: main_color,
+                              fontSize: 16,
+                            ),
                           ),
                           Text(
                             " ID is ${userService.userdata["puid"]}",

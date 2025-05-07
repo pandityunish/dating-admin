@@ -76,7 +76,7 @@ body: Column(
                             width: MediaQuery.of(context).size.height * 0.6,
                             decoration: BoxDecoration(
                               
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
                                     color: Color.fromARGB(255, 223, 223, 223))),
                             child: TextFormField(

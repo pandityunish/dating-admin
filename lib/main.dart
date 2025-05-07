@@ -7,7 +7,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/Assets/notification_pop.dart';
 import 'package:matrimony_admin/Auth/auth.dart';
-import 'package:matrimony_admin/network_connectivity.dart';
 import 'package:matrimony_admin/screens/Main_Screen.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';

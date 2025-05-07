@@ -360,8 +360,8 @@ Future<XFile> pickCropImage(String image)async{
             return const AlertDialog(
               content: SnackBarContent(
                 appreciation: "",
-                error_text: "Multiple Bubble Chnage Successfully",
-                icon: Icons.check,
+                error_text: "Multiple Bubble Pic Chnage Successfully",
+                icon: Icons.check_circle_sharp,
                 sec: 2,
               ),
               backgroundColor: Colors.transparent,
@@ -378,6 +378,7 @@ Future<XFile> pickCropImage(String image)async{
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Scaffold(
           appBar: CupertinoNavigationBar(
+            backgroundColor: Colors.white,
             leading: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -404,7 +405,7 @@ Future<XFile> pickCropImage(String image)async{
             middle: Row(
               children: [
                 BigText(
-                  text: "Manage Bubbles",
+                  text: "Manage Bubbles Pics",
                   size: 20,
                   color: main_color,
                   fontWeight: FontWeight.w700,
@@ -920,7 +921,7 @@ Future<XFile> pickCropImage(String image)async{
                                                       appreciation: "",
                                                       error_text:
                                                           "Please Make Changes",
-                                                      icon: Icons.check_circle,
+                                                      icon: Icons.error,
                                                       sec: 2,
                                                     ),
                                                     backgroundColor:
@@ -979,7 +980,7 @@ Future<XFile> pickCropImage(String image)async{
                           index == 0
                               ? Center()
                               : Text(
-                                  "Updated pic 3 By admin ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(indianTime.toString()).toLocal())}",
+                                  "Updated pic ${index} By admin ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(indianTime.toString()).toLocal())}",
                                   style: const TextStyle(
                                       decoration: TextDecoration.none,
                                       color: Colors.black,
