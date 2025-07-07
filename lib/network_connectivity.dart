@@ -19,14 +19,13 @@ class NetworkController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus as void
-        Function(List<ConnectivityResult> event)?);
+    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  void _updateConnectionStatus(ConnectivityResult connectivityResult) async {
-    if (connectivityResult == ConnectivityResult.none) {
+  void _updateConnectionStatus(List<ConnectivityResult> connectivityResults) async {
+    if (connectivityResults.contains(ConnectivityResult.none)) {
       Get.dialog(
         WillPopScope(
           onWillPop: () async => false,

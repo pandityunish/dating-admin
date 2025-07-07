@@ -70,24 +70,29 @@ body: Column(
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                            height: 45,
-                            width: MediaQuery.of(context).size.height * 0.6,
-                            decoration: BoxDecoration(
-                              
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                    color: Color.fromARGB(255, 223, 223, 223))),
-                            child: TextFormField(
-                              
-                              controller: controller,
-                              cursorColor: main_color,
-                              decoration: InputDecoration(
-                                
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 7),
-                                  border: InputBorder.none,
-                                  hintText: "Please Enter Profile ID"),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            child: Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.height * 0.8,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1.5,
+                                  )),
+                              child: TextFormField(
+                                controller: controller,
+                                textAlign: TextAlign.start,
+                                cursorColor: main_color,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                                    border: InputBorder.none,
+                                    hintText: "Enter Profile ID",
+                                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
+                              ),
                             ),
                           ),
                         ),
@@ -95,79 +100,35 @@ body: Column(
                     ),
                   ),
                  
-                  InkWell(
-                      onTap: () async {
-                       
-                        if (controller.text.isEmpty) {
-                          showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  content: SnackBarContent(
-                                    error_text: "Please Enter Profile ID",
-                                    appreciation: "",
-                                    icon: Icons.error,
-                                    sec: 3,
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                );
-                              });
-                        } else {
-                      
-                          int status;
-                          status = await AdminService()
-                              .findprofile(controller.text);
-                          if (status == 200) {
-                            NewUserModel newUserModel =
-                                await SearchProfile().searchuserdatabyid(
-                                    puid: controller.text);
-                            if (newUserModel.gender ==
-                                widget.newUserModel.gender) {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text:
-                                            "Please Enter Valid Gender",
-                                        appreciation: "",
-                                        icon: Icons.error,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else if (widget.newUserModel.puid == controller.text) {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text:
-                                            "Please Enter Different ID",
-                                        appreciation: "",
-                                        icon: Icons.error,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } 
-                            else {
-                                
-                            Get.to(MatchSlideProfile(
-                                    userSave: widget.newUserModel,
-                                    user_list: [newUserModel],
-                                    notiPage: true));
-                             
-                            }
-                          } else {
+                  CustomSpecialButtom(
+                    text: "Match Profile",
+                    onTap: () async {
+                      if (controller.text.isEmpty) {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: SnackBarContent(
+                                  error_text: "Please Enter Profile ID",
+                                  appreciation: "",
+                                  icon: Icons.error,
+                                  sec: 3,
+                                ),
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                              );
+                            });
+                      } else {
+                        int status;
+                        status = await AdminService()
+                            .findprofile(controller.text);
+                        if (status == 200) {
+                          NewUserModel newUserModel =
+                              await SearchProfile().searchuserdatabyid(
+                                  puid: controller.text);
+                          if (newUserModel.gender ==
+                              widget.newUserModel.gender) {
                             showDialog(
                                 barrierDismissible: false,
                                 context: context,
@@ -175,7 +136,7 @@ body: Column(
                                   return const AlertDialog(
                                     content: SnackBarContent(
                                       error_text:
-                                          "Please Enter Valid Profile ID",
+                                          "Please Enter Valid Gender",
                                       appreciation: "",
                                       icon: Icons.error,
                                       sec: 3,
@@ -184,14 +145,53 @@ body: Column(
                                     elevation: 0,
                                   );
                                 });
+                          } else if (widget.newUserModel.puid == controller.text) {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return const AlertDialog(
+                                    content: SnackBarContent(
+                                      error_text:
+                                          "Please Enter Different ID",
+                                      appreciation: "",
+                                      icon: Icons.error,
+                                      sec: 3,
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                  );
+                                });
+                          } 
+                          else {
+                            Get.to(MatchSlideProfile(
+                                  userSave: widget.newUserModel,
+                                  user_list: [newUserModel],
+                                  notiPage: true));
                           }
+                        } else {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text:
+                                        "Please Enter Valid Profile ID",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
                         }
-                      },
-                      child: CustomSpecialButtom(
-                        text: "Match Profile",
-                        bordercolor:
-                            color == false ? Colors.black : Colors.blue,
-                      )),
+                      }
+                    },
+                    bordercolor:
+                        color == false ? Colors.black : Colors.blue,
+                  ),
                 
                 ],
               ),

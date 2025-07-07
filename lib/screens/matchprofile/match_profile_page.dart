@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,9 +19,13 @@ import 'package:matrimony_admin/models/new_save_pref.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
 import 'package:matrimony_admin/screens/matchprofile/kundalimatchprofile.dart';
 import 'package:matrimony_admin/screens/navigation/kundli_match_data.dart';
+import 'package:matrimony_admin/screens/navigation/navigator.dart';
+import 'package:matrimony_admin/screens/notification/navHome.dart';
 import 'package:matrimony_admin/screens/profile/buttons.dart';
 import 'package:matrimony_admin/screens/profile/imageslider.dart';
+import 'package:matrimony_admin/screens/profile/profile_service.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
+import 'package:matrimony_admin/screens/service/search_profile.dart';
 import 'package:ticker_text/ticker_text.dart';
 
 import '../../Assets/Error.dart';
@@ -1211,9 +1216,15 @@ class _ProfilePageState extends State<MatchProfilePage>
                                                                           m_name: widget
                                                                               .currentuser!
                                                                               .name,
+                                                                          m_surname: widget
+                                                                              .currentuser!
+                                                                              .surname,
                                                                           f_name: widget
                                                                               .userSave!
                                                                               .name,
+                                                                          f_surname: widget
+                                                                              .userSave!
+                                                                              .surname,
                                                                           m_month:
                                                                               m_month,
                                                                           f_month:
@@ -1943,6 +1954,102 @@ class _ProfilePageState extends State<MatchProfilePage>
                     ),
                   )
                 ])),
+                  Positioned(
+              left: MediaQuery.of(context).size.width * 0.0006,
+              top: MediaQuery.of(context).size.height * 0.04,
+              child: IconButton(
+                icon: const Icon(
+                  // Icons.more_vert_outlined,//for three dots
+                  Icons.menu, //for three lines
+                  size: 20,
+                  color: Colors.white,
+                  shadows: <Shadow>[
+                    Shadow(color: Colors.black, blurRadius: 15.0)
+                  ],
+                ),
+                onPressed: () {
+             
+                  setState(() {});
+                  if (listofadminpermissions!.contains("Can See left menu") ||
+                      listofadminpermissions!
+                          .contains("Can See user’s full name") ||
+                      listofadminpermissions!.contains("All")) {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "",
+                        userimage: "",
+                        title:
+                            "${userSave.displayName} CLICK ON THE LEFT MENU ",
+                        email: userSave.email!,
+                        subtitle: "");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyProfile(
+                                  profilecomp: 50,
+                                  userSave: widget.userSave!,
+                                  isDelete:
+                                     false,
+                                )));
+                  }
+
+                  // Get.to(() => const MyProfile(),
+                  //     transition: Transition.zoom);
+                },
+              ),
+            ),
+             Positioned(
+              right: MediaQuery.of(context).size.width * 0.004,
+              top: MediaQuery.of(context).size.height * 0.04,
+              child: IconButton(
+                icon: Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      child: const Icon(
+                        // Icons.more_vert_outlined,//for three dots
+                        FontAwesomeIcons.bell, //for three lines
+                        size: 22,
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(color: Colors.black, blurRadius: 15.0)
+                        ],
+                      ),
+                    ),
+                   
+                  ],
+                ),
+                onPressed: () {
+                  if (listofadminpermissions!
+                          .contains("Can see main admin activities") ||
+                      listofadminpermissions!
+                          .contains("Can see sub admin activities") ||
+                      listofadminpermissions!.contains("All")) {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "",
+                        userimage: "",
+                        title: "${userSave.displayName} SEEN NOTIFICATION",
+                        email: userSave.email!,
+                        subtitle: "");
+                    NotificationFunction.setNotification(
+                      "admin",
+                      "${userSave.name!.substring(0, 1)} ${userSave.surname} ${userSave.uid?.substring(userSave.uid!.length - 5)} SEEN NOTIFICATIONS",
+                      'notificationbell',
+                    );
+                    NotiService().updatenoti();
+              
+                    setState(() {});
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NavHome(
+                                  newUserModel: widget.userSave,
+                                )));
+                  }
+                },
+              ),
+            ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.86,
               // bottom: MediaQuery.of(context).size.height * 0.005,

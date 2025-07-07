@@ -38,6 +38,10 @@ class _VerifyState extends State<Verify> {
   double uploadProgress = 0;
   // ignore: prefer_typing_uninitialized_variables
   var uid;
+  
+  // State variables to track button border colors
+  bool verifyButtonBorder = false;
+  bool deleteButtonBorder = false;
 
   @override
   void initState() {
@@ -56,8 +60,12 @@ class _VerifyState extends State<Verify> {
       //   name: "1234",
       //   videoLink: "",
       // );
-      biodatas.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      verifyvideo = [...biodatas];
+            biodatas.sort((a, b) => DateTime.parse(b.createdAt).compareTo(DateTime.parse(a.createdAt))); // Sort by descending order (latest first)
+      if (mounted) {
+        setState(() {
+          verifyvideo = biodatas;
+        });
+      }
       setState(() {});
     } catch (e) {
       print(e);
@@ -94,7 +102,7 @@ class _VerifyState extends State<Verify> {
                 content: SnackBarContent(
                   error_text: "Video size must be less than 20 MB",
                   appreciation: "",
-                  icon: Icons.check,
+                  icon: Icons.check_circle,
                   sec: 2,
                 ),
                 backgroundColor: Colors.transparent,
@@ -134,7 +142,7 @@ class _VerifyState extends State<Verify> {
                 content: SnackBarContent(
                   error_text: "Video size must be less than 20 MB",
                   appreciation: "",
-                  icon: Icons.check,
+                  icon: Icons.check_circle,
                   sec: 2,
                 ),
                 backgroundColor: Colors.transparent,
@@ -174,7 +182,7 @@ class _VerifyState extends State<Verify> {
                 error_text:
                     "Video Has Been Uploaded Successfully \n Your Profile Would Be Verified Shortly",
                 appreciation: "",
-                icon: Icons.check,
+                icon: Icons.check_circle,
                 sec: 2,
               ),
               backgroundColor: Colors.transparent,
@@ -345,7 +353,7 @@ class _VerifyState extends State<Verify> {
     }
   }
 
-  final PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0); // Already set to show first item (which will be latest after sorting)
 
   @override
   Widget build(BuildContext context) {
@@ -354,29 +362,6 @@ class _VerifyState extends State<Verify> {
           appBar: CustomAppBar(
               title: "Profile Verification",
               iconImage: "images/icons/verified.png"),
-          //  CupertinoNavigationBar(
-          //   middle: Row(
-          //     children: [
-          //       BigText(
-          //         text: "Profile Verified",
-          //         size: 20,
-          //         color: main_color,
-          //         fontWeight: FontWeight.w700,
-          //       )
-          //     ],
-          //   ),
-          //   leading: GestureDetector(
-          //     onTap: () {
-          //       Navigator.pop(context);
-          //     },
-          //     child: Icon(
-          //       Icons.arrow_back_ios_new,
-          //       color: main_color,
-          //       size: 25,
-          //     ),
-          //   ),
-          //   previousPageTitle: "",
-          // ),
           body: PageView.builder(
             itemCount: verifyvideo.length,
             controller: _pageController,
@@ -746,14 +731,14 @@ class _VerifyState extends State<Verify> {
                     child: Column(
                       children: [
                         Text(
-                          "Uploaded on " +
+                         "${verifyvideo[index].name} on " +
                               DateFormat('EEEE d MMM y HH:mm').format(
                                 DateTime.parse(verifyvideo[index].createdAt)
                                     .toLocal(),
                               ),
                           style: TextStyle(
                             fontFamily: 'Serif',
-                            fontSize: 17,
+                            fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Colors.black,
                           ),
@@ -762,13 +747,25 @@ class _VerifyState extends State<Verify> {
                           height: 20,
                         ),
 
-                        SizedBox(
-                            height: 200,
-                            width: Get.width * 0.9,
-                            child: VideoPlayerWidget1(
-                              videoUrl: verifyvideo[index].videoLink!,
-                              userSave: widget.userSave,
-                            )),
+                                                (verifyvideo[index].videoLink != null && verifyvideo[index].videoLink!.isNotEmpty)
+                            ? SizedBox(
+                                height: 200,
+                                width: Get.width * 0.9,
+                                child: VideoPlayerWidget1(
+                                  videoUrl: verifyvideo[index].videoLink!,
+                                  userSave: widget.userSave,
+                                ))
+                            : Container(
+                                height: 200,
+                                width: Get.width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text("Video not available"),
+                                ),
+                              ),
                         SizedBox(
                           height: 20,
                         ),
@@ -817,7 +814,7 @@ class _VerifyState extends State<Verify> {
                                                 curve: Curves.easeInOut,
                                               )
                                             }),
-                                IconButton(
+                             verifyvideo.length==1? Center() :   IconButton(
                                     icon: Icon(
                                       Icons.arrow_forward_ios,
                                       color: main_color,
@@ -846,12 +843,19 @@ class _VerifyState extends State<Verify> {
                       style: ButtonStyle(
                           shadowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.black),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry?>(
+                                  EdgeInsets.symmetric(
+                            vertical: 15,
+                          )),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
-                            // side: const BorderSide(
-                            //     color: Colors.black)
+                            side: BorderSide(
+                                color: verifyButtonBorder ? main_color : Colors.white,
+                                width: 2.0
+                            )
                           )),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.white)),
@@ -866,14 +870,34 @@ class _VerifyState extends State<Verify> {
                               (widget.userSave.verifiedstatus != "verified")
                                   ? "Verify"
                                   : "Unverify",
-                              style: TextStyle(
-                                fontFamily: 'Serif',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
+                              style: verifyButtonBorder
+                                  ? TextStyle(
+                                      fontFamily: 'Serif',
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: main_color,
+                                    )
+                                  : TextStyle(
+                                      fontFamily: 'Serif',
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                    ),
                             ),
                       onPressed: () async {
+                        // Show blue border for 2 seconds when clicked
+                        setState(() {
+                          verifyButtonBorder = true;
+                        });
+                        
+                        // Reset border after 2 seconds
+                        Future.delayed(Duration(milliseconds: 2000), () {
+                          if (mounted) {
+                            setState(() {
+                              verifyButtonBorder = false;
+                            });
+                          }
+                        });
                          if (widget.userSave.status != "") {
                                 if ((widget.userSave.verifiedstatus !=
                                     "verified")) {
@@ -915,7 +939,7 @@ class _VerifyState extends State<Verify> {
                                         error_text:
                                             "Profile Verified Successfully",
                                         appreciation: "Congratulations",
-                                        icon: Icons.check,
+                                        icon: Icons.check_circle,
                                         sec: 2,
                                       ),
                                       margin: EdgeInsets.only(
@@ -961,7 +985,7 @@ class _VerifyState extends State<Verify> {
                                         error_text:
                                             "Profile Unverified Successfully",
                                         appreciation: "Congratulations",
-                                        icon: Icons.check,
+                                        icon: Icons.check_circle,
                                         sec: 2,
                                       ),
                                       margin: EdgeInsets.only(
@@ -1010,12 +1034,19 @@ class _VerifyState extends State<Verify> {
                       style: ButtonStyle(
                           shadowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.black),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry?>(
+                                  EdgeInsets.symmetric(
+                            vertical: 15,
+                          )),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
-                            // side: const BorderSide(
-                            //     color: Colors.black)
+                            side: BorderSide(
+                                color: deleteButtonBorder ? main_color : Colors.white,
+                                width: 2.0
+                            )
                           )),
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.white)),
@@ -1028,14 +1059,34 @@ class _VerifyState extends State<Verify> {
                             )
                           : Text(
                               "Delete",
-                              style: TextStyle(
-                                fontFamily: 'Serif',
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
+                              style: deleteButtonBorder
+                                  ? TextStyle(
+                                      fontFamily: 'Serif',
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: main_color,
+                                    )
+                                  : TextStyle(
+                                      fontFamily: 'Serif',
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                    ),
                             ),
                       onPressed: () {
+                        // Show blue border for 2 seconds when clicked
+                        setState(() {
+                          deleteButtonBorder = true;
+                        });
+                        
+                        // Reset border after 2 seconds
+                        Future.delayed(Duration(milliseconds: 2000), () {
+                          if (mounted) {
+                            setState(() {
+                              deleteButtonBorder = false;
+                            });
+                          }
+                        });
                                 HomeService().createverifieduser(
                                   editname: "Rejected By ${userSave.name}",
                                   videolink: widget.userSave.videolink,

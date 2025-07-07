@@ -72,71 +72,66 @@ class _ReligionState extends State<NewMatchProfile> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              InkWell(
-                                  onTap: () {
-                                   
-                          SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                        title: "${userSave.displayName} MATCH ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} WITH ALL PROFILES", email: userSave.email!, subtitle: "");
-                                     Get.to(MatchSlideProfile(
-                    userSave: widget.newUserModel,
-                    notiPage: true));
-                                    
-                                  },
-                                  child: CustomSpecialButtom(
-                                    text: "Match To All",
-                                    bordercolor:
-              color == false ? Colors.black : Colors.blue,
-                                  )),
-                              InkWell(
-                                  onTap: () async{
-                                   SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                                                          title: "${userSave.displayName} MATCH ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} WITH ALL SAVED PREFERENCE", email: userSave.email!, subtitle: "");
-                                            List<HistorySavePref> 
-                                             history_save_pref =
-                                await AdminService().getsavepref(id: widget.newUserModel.id);
-                                // print(object)
-                                if(history_save_pref.isEmpty){
-                                                        showDialog(
-                                              barrierDismissible: false,
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  content: SnackBarContent(
-                                                    error_text: "Preference Required",
-                                                    appreciation: "",
-                                                    icon: Icons.error,
-                                                    sec: 3,
-                                                  ),
-                                                  backgroundColor: Colors.transparent,
-                                                  elevation: 0,
-                                                );
-                                              });
-                                }else{
-                                                          Get.to(MatchSlideProfile(
-                                                    userSave: widget.newUserModel,
-                                                    notiPage: true));
-                                }
-                                          
-                                                    
-                                  },
-                                  child: CustomSpecialButtom(
-                                          text: "Match To Saved Preference",
-                                          bordercolor:
-                                              color == false ? Colors.black : Colors.blue,
-                                  )),
-                              InkWell(
-                                  onTap: () {
+                              CustomSpecialButtom(
+                                text: "Match To All",
+                                onTap: () {
+                                              
+                                                        SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
+                                                      title: "${userSave.displayName} MATCH ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} WITH ALL PROFILES", email: userSave.email!, subtitle: "");
+                                 Get.to(MatchSlideProfile(
+                                                  userSave: widget.newUserModel,
+                                                  notiPage: true));
+                                },
+                                bordercolor:
+                                            color == false ? Colors.black : Colors.blue,
+                              ),
+                              CustomSpecialButtom(
+                                      text: "Match To Saved Preference",
+                                      onTap: () async{
+                                            SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
+                                                      title: "${userSave.displayName} MATCH ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} WITH ALL SAVED PREFERENCE", email: userSave.email!, subtitle: "");
+                                        List<HistorySavePref> 
+                                         history_save_pref =
+                                                              await AdminService().getsavepref(id: widget.newUserModel.id);
+                                                              // print(object)
+                                                              if(history_save_pref.isEmpty){
+                                                    showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              content: SnackBarContent(
+                                                error_text: "Preference Required",
+                                                appreciation: "",
+                                                icon: Icons.error,
+                                                sec: 3,
+                                              ),
+                                              backgroundColor: Colors.transparent,
+                                              elevation: 0,
+                                            );
+                                          });
+                                                              }else{
+                                                      Get.to(MatchSlideProfile(
+                                                userSave: widget.newUserModel,
+                                                notiPage: true));
+                                                              }
+                                 
+                                      },
+                                      bordercolor:
+                                          color == false ? Colors.black : Colors.blue,
+                              ),
+                              CustomSpecialButtom(
+                                    text: "Match To Particular Profile",
+                                    onTap: () {
                                    SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
                         title: "${userSave.displayName} MATCH ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} WITH PERTICUALR PROFILE", email: userSave.email!, subtitle: "");
                                    Get.to(MatchPerticularProfile(
                     newUserModel: widget.newUserModel,
                    ));
-                                  },
-                                  child: CustomSpecialButtom(
-                                    text: "Match To Particular Profile",
+                                    },
                                     bordercolor:
               color == false ? Colors.black : Colors.blue,
-                                  )),
+                                  ),
                             ],
                           ),
                         ),

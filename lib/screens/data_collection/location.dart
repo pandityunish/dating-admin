@@ -260,26 +260,29 @@ class _LocationState extends State<Location> {
                               const SizedBox(height: 5),
                               // Use Flexible or SizedBox with a clamped height
                               if (heightSuggest1 > 0)
-                                SizedBox(
-                                  height: heightSuggest1.clamp(0,
-                                      MediaQuery.of(context).size.height * 0.3),
-                                  child: ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: alllist.length,
-                                    itemBuilder: (context, index) {
-                                      var data = alllist[index];
-                                      return ListTile(
-                                        title: Text(
-                                            "${data.countrycity}, ${data.countrystate}, ${data.countryname}"),
-                                        onTap: () {
-                                          setState(() {
-                                            heightSuggest1 = 0.0;
-                                          });
-                                          onSelectedPlace1(data);
-                                          print(heightSuggest1);
-                                        },
-                                      );
-                                    },
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: SizedBox(
+                                    height: heightSuggest1.clamp(0,
+                                        MediaQuery.of(context).size.height * 0.3),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: alllist.length,
+                                      itemBuilder: (context, index) {
+                                        var data = alllist[index];
+                                        return ListTile(
+                                          title: Text(
+                                              "${data.countrycity}, ${data.countrystate}, ${data.countryname}"),
+                                          onTap: () {
+                                            setState(() {
+                                              heightSuggest1 = 0.0;
+                                            });
+                                            onSelectedPlace1(data);
+                                            print(heightSuggest1);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                             ],
@@ -337,14 +340,13 @@ class _LocationState extends State<Location> {
                   Container(
                     // margin: EdgeInsets.only(left: 15),
                     width: MediaQuery.of(context).size.width * 0.9,
+                    height: 48,
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            shadowColor: MaterialStateColor.resolveWith(
+                            shadowColor: WidgetStateColor.resolveWith(
                                 (states) => Colors.black),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    EdgeInsets.symmetric(vertical: 15)),
-                            shape: MaterialStateProperty
+                       
+                            shape: WidgetStateProperty
                                 .all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
                                         borderRadius:

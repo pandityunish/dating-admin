@@ -42,36 +42,67 @@ class _MannualEducationState extends State<MannualEducation> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: TextField(
-                                    maxLength: 15,
-                                    maxLines: 1,
-                                    maxLengthEnforcement:
-                                        MaxLengthEnforcement.enforced,
-                                    focusNode: _focusNode1,
-                                    controller: name,
-                                    decoration: InputDecoration(
-                                      hintText: "Enter Education",
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                            color: main_color, width: 1.5),
-                                      ),
-                                    ),
-                                    textInputAction: TextInputAction.done,
-                                    onChanged: (name) => {},
-                                  ),
-                                ),
-                              ),
+                                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.5,
+                            )),
+                        child: TextFormField(
+                          controller: name,
+                          maxLength: 15,
+                          maxLines: 1,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                              border: InputBorder.none,
+                              hintText: "Enter Education",
+                              hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
+                        ),
+                      ),
+                    ),
+                  ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 10, vertical: 3),
+                              //   child: SizedBox(
+                              //     height: 65,
+                              //     child: TextField(
+                              //       maxLength: 15,
+                              //       maxLines: 1,
+                              //       maxLengthEnforcement:
+                              //           MaxLengthEnforcement.enforced,
+                              //       focusNode: _focusNode1,
+                              //       controller: name,
+                              //       decoration: InputDecoration(
+                              //         hintText: "Enter Education",
+                              //            contentPadding: const EdgeInsets.only(
+                              //           left: 20, bottom: 10),
+                              //         enabledBorder: OutlineInputBorder(
+                              //           borderRadius: BorderRadius.circular(30),
+                              //           borderSide:
+                              //               BorderSide(color: Colors.grey),
+                              //         ),
+                              //         focusedBorder: OutlineInputBorder(
+                              //           borderRadius: BorderRadius.circular(30),
+                              //           borderSide: BorderSide(
+                              //               color: main_color, width: 1.5),
+                              //         ),
+                              //       ),
+                              //       textInputAction: TextInputAction.done,
+                              //       onChanged: (name) => {},
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -81,13 +112,12 @@ class _MannualEducationState extends State<MannualEducation> {
                   Container(
                     // margin: EdgeInsets.only(left: 15),
                     width: MediaQuery.of(context).size.width * 0.9,
+                     height: 48,
                     child: ElevatedButton(
                         style: ButtonStyle(
                             shadowColor: MaterialStateColor.resolveWith(
                                 (states) => Colors.black),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    EdgeInsets.symmetric(vertical: 15)),
+                          
                             shape: MaterialStateProperty
                                 .all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

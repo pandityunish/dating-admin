@@ -126,34 +126,104 @@ class _ReligionState extends State<BoostProfile> {
                   Expanded(
                     child: Column(
                       children: [
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 223, 223, 223))),
-                          child: TextFormField(
-                            controller: controller,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10),
-                                border: InputBorder.none,
-                                hintText: "Enter Profile ID"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            child: Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.height * 0.8,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1.5,
+                                  )),
+                              child: TextFormField(
+                                controller: controller,
+                                textAlign: TextAlign.start,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                                    border: InputBorder.none,
+                                    hintText: "Enter Profile ID",
+                                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  InkWell(
-                      onTap: () async {
-                        if (controller.text.isEmpty) {
+                  CustomSpecialButtom(
+                    text: "Boost",
+                    onTap: ()async {
+                      if (controller.text.isEmpty) {
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              content: SnackBarContent(
+                                error_text: "Please Enter Profile ID",
+                                appreciation: "",
+                                icon: Icons.error,
+                                sec: 3,
+                              ),
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                            );
+                          });
+                    } else {
+                      int status;
+                      status =
+                          await AdminService().findprofile(controller.text);
+                      if (status == 200) {
+                        NewUserModel newUserModel = await SearchProfile()
+                            .searchuserdatabyid(puid: controller.text);
+                        if (newUserModel.gender ==
+                            widget.newUserModel.gender) {
                           showDialog(
                               barrierDismissible: false,
                               context: context,
                               builder: (context) {
                                 return const AlertDialog(
                                   content: SnackBarContent(
-                                    error_text: "Please enter profile id",
+                                    error_text: "Please Enter Valid Gender",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
+                        } else if (widget.newUserModel.puid ==
+                            controller.text) {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text: "Please Enter Different ID",
+                                    appreciation: "",
+                                    icon: Icons.error,
+                                    sec: 3,
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                );
+                              });
+                        } else if (newUserModel.status != "approved") {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: SnackBarContent(
+                                    error_text:
+                                        "Profile Should Be Approved",
                                     appreciation: "",
                                     icon: Icons.error,
                                     sec: 3,
@@ -163,150 +233,91 @@ class _ReligionState extends State<BoostProfile> {
                                 );
                               });
                         } else {
-                          int status;
-                          status =
-                              await AdminService().findprofile(controller.text);
-                          if (status == 200) {
-                            NewUserModel newUserModel = await SearchProfile()
-                                .searchuserdatabyid(puid: controller.text);
-                            if (newUserModel.gender ==
-                                widget.newUserModel.gender) {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text: "Please Enter Valid Gender",
-                                        appreciation: "",
-                                        icon: Icons.error,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else if (widget.newUserModel.puid ==
-                                controller.text) {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text: "Please Enter Different ID",
-                                        appreciation: "",
-                                        icon: Icons.error,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else if (newUserModel.status != "approved") {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text:
-                                            "Profile Should Be Approved",
-                                        appreciation: "",
-                                        icon: Icons.error,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  });
-                            } else {
-                              SearchProfile().addtoadminnotification(
-                                  userid: widget.newUserModel!.id!,
-                                  useremail: widget.newUserModel!.email!,
-                                  userimage:
-                                      widget.newUserModel!.imageurls!.isEmpty
-                                          ? ""
-                                          : widget.newUserModel!.imageurls![0],
-                                  title:
-                                      "${userSave.displayName} BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid}",
-                                  email: userSave.email!,
-                                  subtitle: "");
-
-                              if (widget.newUserModel.boostprofile!
-                                  .contains(controller.text)) {
-                                showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialog(
-                                        content: SnackBarContent(
-                                          error_text: "Profile Already Boosted",
-                                          appreciation: "",
-                                          icon: Icons.done,
-                                          sec: 3,
-                                        ),
-                                        backgroundColor: Colors.transparent,
-                                        elevation: 0,
-                                      );
-                                    });
-                              } else {
-                                AdminService()
-                                    .boosttouser(
-                                        puid: widget.newUserModel.puid,
-                                        value: newUserModel.id)
-                                    .whenComplete(() {
-                                  showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return const AlertDialog(
-                                          content: SnackBarContent(
-                                            error_text: "Boost Successfull",
-                                            appreciation: "",
-                                            icon: Icons.done,
-                                            sec: 3,
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        );
-                                      });
-                                });
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyProfile(
-                                              profilecomp: 50,
-                                              userSave: widget.newUserModel!,
-                                              isDelete: false,
-                                            )));
-                              }
-                            }
-                          } else {
+                          SearchProfile().addtoadminnotification(
+                              userid: widget.newUserModel!.id!,
+                              useremail: widget.newUserModel!.email!,
+                              userimage:
+                                  widget.newUserModel!.imageurls!.isEmpty
+                                      ? ""
+                                      : widget.newUserModel!.imageurls![0],
+                              title:
+                                  "${userSave.displayName} BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid}",
+                              email: userSave.email!,
+                              subtitle: "");
+                  
+                          if (widget.newUserModel.boostprofile!
+                              .contains(controller.text)) {
                             showDialog(
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (context) {
                                   return const AlertDialog(
                                     content: SnackBarContent(
-                                      error_text:
-                                          "Please Enter Valid Profile ID",
+                                      error_text: "Profile Already Boosted",
                                       appreciation: "",
-                                      icon: Icons.error,
+                                      icon: Icons.done,
                                       sec: 3,
                                     ),
                                     backgroundColor: Colors.transparent,
                                     elevation: 0,
                                   );
                                 });
+                          } else {
+                            AdminService()
+                                .boosttouser(
+                                    puid: widget.newUserModel.puid,
+                                    value: newUserModel.id)
+                                .whenComplete(() {
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return const AlertDialog(
+                                      content: SnackBarContent(
+                                        error_text: "Boost Successfull",
+                                        appreciation: "",
+                                        icon: Icons.done,
+                                        sec: 3,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                    );
+                                  });
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyProfile(
+                                          profilecomp: 50,
+                                          userSave: widget.newUserModel!,
+                                          isDelete: false,
+                                        )));
                           }
                         }
-                      },
-                      child: CustomSpecialButtom(
-                        text: "Boost",
-                        bordercolor:
-                            color == false ? Colors.black : Colors.blue,
-                      )),
+                      } else {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: SnackBarContent(
+                                  error_text:
+                                      "Please Enter Valid Profile ID",
+                                  appreciation: "",
+                                  icon: Icons.error,
+                                  sec: 3,
+                                ),
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                              );
+                            });
+                      }
+                    }
+                    
+                    },
+                    bordercolor:
+                        color == false ? Colors.black : Colors.blue,
+                  ),
                   // InkWell(
                   //     onTap: () {
                   //       Navigator.of(context).push(MaterialPageRoute(

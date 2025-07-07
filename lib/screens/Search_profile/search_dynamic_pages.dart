@@ -41,7 +41,7 @@ class _DynamicPageState extends State<DynamicPage> {
     return Scaffold(
       // A ScrollView that creates custom scroll effects using slivers.
       appBar: PreferredSize(
-         preferredSize: const Size.fromHeight(120),
+         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           // bottom: PreferredSize(
           //   preferredSize: Size.fromHeight(100.0), // Set the height here

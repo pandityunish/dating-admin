@@ -302,8 +302,8 @@ class _SlideProfileState extends State<SlideProfile> {
                         itemCount: allusers.length,
                       ),
             Positioned(
-                right: 15.0,
-                top: 90.0,
+                right: 5.0,
+                top: 75.0,
                 child: GestureDetector(
                   onTap: () {
                     SearchProfile().addtoadminnotification(
@@ -318,13 +318,16 @@ class _SlideProfileState extends State<SlideProfile> {
                         MaterialPageRoute(
                             builder: (context) => const FilterC()));
                   },
-                  child: const Icon(
-                    FontAwesomeIcons.filter,
-                    color: Colors.white,
-                    size: 18,
-                    shadows: <Shadow>[
-                      Shadow(color: Colors.black, blurRadius: 10.0)
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Icon(
+                      FontAwesomeIcons.filter,
+                      color: Colors.white,
+                      size: 18,
+                      shadows: <Shadow>[
+                        Shadow(color: Colors.black, blurRadius: 10.0)
+                      ],
+                    ),
                   ),
                 )),
             Positioned(

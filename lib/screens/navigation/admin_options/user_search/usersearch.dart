@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:matrimony_admin/Assets/Error.dart';
+import 'package:matrimony_admin/common/widgets/name_container.dart';
 import 'package:matrimony_admin/globalVars.dart';
 import 'package:matrimony_admin/models/user_search.dart';
 import 'package:matrimony_admin/screens/ERRORs/search_profile_error.dart';
@@ -12,6 +13,7 @@ import 'package:matrimony_admin/screens/Search_profile/search_dynamic_pages.dart
 import 'package:matrimony_admin/screens/data_collection/custom_app_bar.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/user_search/circle_bar.dart';
 import 'package:matrimony_admin/screens/profile/profileScroll.dart';
+import 'package:ticker_text/ticker_text.dart';
 
 import '../../../../Assets/ayushWidget/big_text.dart';
 import '../../../../models/new_user_model.dart';
@@ -106,25 +108,31 @@ class _UserSearchState extends State<UserSearch> {
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
-                  : SizedBox(
-                      width: 80,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                val
+                  :SizedBox(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                    val
                                     .toString()
                                     .substring(1, val.toString().length - 1),
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ), 
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
@@ -181,24 +189,30 @@ class _UserSearchState extends State<UserSearch> {
                           fontFamily: 'Sans-serif'),
                     )
                   : SizedBox(
-                      width: 65,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                val
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     val
                                     .replaceAll(RegExp(r'[\[\]]'), '')
                                     .replaceAll(',', '-'),
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ), 
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
@@ -549,23 +563,29 @@ class _UserSearchState extends State<UserSearch> {
                                 ],
                               )),
                         )
-                      : SizedBox(
-                          width: 65,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "${val[0]} - ${val[1]}",
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
+                      :SizedBox(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                   "${val[0]} - ${val[1]}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
-                                ],
-                              )),
-                        ),
+                                ),
+                          
+                          ), 
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
@@ -631,23 +651,29 @@ class _UserSearchState extends State<UserSearch> {
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Sans-serif'),
                         )
-                      : SizedBox(
-                          width: 65,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    val.replaceAll(RegExp(r'[\[\]]'), ''),
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
+                      :SizedBox(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                  val.replaceAll(RegExp(r'[\[\]]'), ''),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
-                                ],
-                              )),
-                        ),
+                                ),
+                          
+                          ), 
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
@@ -707,23 +733,29 @@ class _UserSearchState extends State<UserSearch> {
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
-                  : SizedBox(
-                      width: Get.width * 0.3,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                "${val.isNotEmpty ? val[0] : ""},${state!.isNotEmpty ? state[0] : ""},${city!.isNotEmpty ? city[0] : ""}",
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
+                  :SizedBox(
+                            width:  Get.width * 0.3,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                   "${val.isNotEmpty ? val[0] : ""},${state!.isNotEmpty ? state[0] : ""},${city!.isNotEmpty ? city[0] : ""}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ), 
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.black38,
@@ -797,675 +829,11 @@ class _UserSearchState extends State<UserSearch> {
                     print(widget.searchs[index].searchDistance);
                     _searchIDController.text =
                         widget.searchs[index].searchidprofile!;
-                    if (widget.searchs[index].userid == "12") {
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.only(left: 10, right: 15),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 10),
-                                                      child: Text(
-                                                        "Search By Profile",
-                                                        style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none,
-                                                            color: main_color,
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontFamily:
-                                                                'Sans-serif'),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 6,
-                                                    ),
-                                                    Container(
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.4,
-                                                            height: 35,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            70)),
-                                                            child: Material(
-                                                              color:
-                                                                  Colors.white,
-                                                              child: TextField(
-                                                                controller:
-                                                                    _searchIDController,
-                                                                decoration: InputDecoration(
-                                                                    contentPadding:
-                                                                        EdgeInsets.only(
-                                                                            top:
-                                                                                5,
-                                                                            left:
-                                                                                10),
-                                                                    hintText:
-                                                                        'Enter Profile Id',
-                                                                    border: OutlineInputBorder(
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            30),
-                                                                        borderSide: BorderSide(
-                                                                            color:
-                                                                                main_color)),
-                                                                    enabledBorder: OutlineInputBorder(
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            30),
-                                                                        borderSide: BorderSide(
-                                                                            color:
-                                                                                main_color)),
-                                                                    focusedBorder: OutlineInputBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                30),
-                                                                        borderSide:
-                                                                            BorderSide(color: main_color))),
-                                                                onChanged:
-                                                                    (String) {
-                                                                  profileSearch =
-                                                                      _searchIDController
-                                                                          .text;
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 20,
-                                                          ),
-                                                          GestureDetector(
-                                                            onTap: () {},
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color:
-                                                                      main_color),
-                                                              child: const Icon(
-                                                                Icons.search,
-                                                                size: 30.0,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    // GestureDetector(
-                                                    //   onTap: () {
-                                                    //     if (_searchIDController.text ==
-                                                    //             null ||
-                                                    //         _searchIDController.text ==
-                                                    //             "") {
-                                                    //       showDialog(
-                                                    //           context: context,
-                                                    //           builder: (context) {
-                                                    //             // Future.delayed(
-                                                    //             //     const Duration(seconds: 1), () {
-                                                    //             //   Navigator.of(context).pop(true);
-                                                    //             // });
-                                                    //             return const AlertDialog(
-                                                    //               content: SnackBarContent(
-                                                    //                 error_text:
-                                                    //                     "Please Enter Profile ID",
-                                                    //                 appreciation: "",
-                                                    //                 icon: Icons.error,
-                                                    //                 sec: 2,
-                                                    //               ),
-                                                    //               backgroundColor:
-                                                    //                   Colors.transparent,
-                                                    //               elevation: 0,
-                                                    //             );
-                                                    //           });
-                                                    //     } else {
-                                                    //       getProfileSearchByProfile();
-                                                    //     }
-                                                    //   },
-                                                    //   child: Container(
-                                                    //     decoration: BoxDecoration(
-                                                    //         shape: BoxShape.circle,
-                                                    //         color: main_color),
-                                                    //     child: const Icon(
-                                                    //       Icons.search,
-                                                    //       size: 30.0,
-                                                    //       color: Colors.white,
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                  ],
-                                                ),
-
-                                                //+9155556580544
-                                              ],
-                                            )),
-                                        Divider(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(left: 5),
-                                              child: Text("Search By Distance",
-                                                  style: TextStyle(
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      color: main_color,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily:
-                                                          'Sans-serif')),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 10),
-                                                    child: Text(
-                                                      "${_currentSliderValue} Km",
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 10),
-                                                    child: Text(
-                                                      "200 Km",
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    child: Text(
-                                                      "Within",
-                                                      style: TextStyle(
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .none,
-                                                          color: main_color,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'Sans-serif'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Column(
-                                          children: [
-                                            Material(
-                                              color: Colors.white,
-                                              child: SliderTheme(
-                                                data: SliderTheme.of(context)
-                                                    .copyWith(
-                                                  rangeThumbShape:
-                                                       CircleThumbShape(
-                                                         thumbColor: forIos
-                                                      ? main_color
-                                                      : Colors.black12,
-                                                    thumbRadius:
-                                                        8.0, // Size of the thumb
-                                                  ),
-                                                  thumbColor: Colors
-                                                      .transparent, // Transparent fill for hollow center
-                                                  overlayColor: Colors
-                                                      .transparent, // No overlay when thumb is pressed
-                                                  activeTrackColor:
-                                                      main_color, // Track color for selected range
-                                                  inactiveTrackColor:
-                                                      main_color.withOpacity(
-                                                          0.3), // Track color for unselected range
-                                                  trackHeight:
-                                                      4.0, // Thickness of the track
-                                                ),
-                                                child: RangeSlider(
-                                                  activeColor: main_color,
-                                                  values: _currentRangeValues,
-                                                  min: 0,
-                                                  max: 200,
-                                                  divisions: 10,
-                                                  labels: RangeLabels(
-                                                    _currentRangeValues.start
-                                                        .round()
-                                                        .toString(),
-                                                    _currentRangeValues.end
-                                                        .round()
-                                                        .toString(),
-                                                  ),
-                                                  onChanged: forIos
-                                                      ? (RangeValues values) {
-                                                          if (!mounted) return;
-
-                                                          setState(() {
-                                                            // Adjust values to maintain a minimum gap of 20
-                                                            double newStart =
-                                                                values.start;
-                                                            double newEnd =
-                                                                values.end;
-
-                                                            // If the range is less than 20, adjust the appropriate thumb
-                                                            if (newEnd -
-                                                                    newStart <
-                                                                20) {
-                                                              // If the user is moving the start thumb
-                                                              if ((values.start -
-                                                                          _currentRangeValues
-                                                                              .start)
-                                                                      .abs() >
-                                                                  (values.end -
-                                                                          _currentRangeValues
-                                                                              .end)
-                                                                      .abs()) {
-                                                                newEnd =
-                                                                    newStart +
-                                                                        20;
-                                                                if (newEnd >
-                                                                    200) {
-                                                                  newEnd = 200;
-                                                                  newStart =
-                                                                      200 - 20;
-                                                                }
-                                                              }
-                                                              // If the user is moving the end thumb
-                                                              else {
-                                                                newStart =
-                                                                    newEnd - 20;
-                                                                if (newStart <
-                                                                    0) {
-                                                                  newStart = 0;
-                                                                  newEnd = 20;
-                                                                }
-                                                              }
-                                                            }
-
-                                                            _currentRangeValues =
-                                                                RangeValues(
-                                                                    newStart,
-                                                                    newEnd);
-                                                          });
-                                                        }
-                                                      : null,
-                                                ),
-                                              ),
-                                            ),
-                                            // SliderTheme(
-                                            //   data: SliderTheme.of(context)
-                                            //       .copyWith(
-                                            //     valueIndicatorColor: Colors
-                                            //         .black, // Custom Gray Color
-                                            //   ),
-                                            //   child: RangeSlider(
-                                            //     activeColor: main_color,
-                                            //     values: _currentRangeValues,
-                                            //     min: 0,
-                                            //     max: 200,
-                                            //     divisions: 10,
-                                            //     labels: RangeLabels(
-                                            //       _currentRangeValues.start
-                                            //           .round()
-                                            //           .toString(),
-                                            //       _currentRangeValues.end
-                                            //           .round()
-                                            //           .toString(),
-                                            //     ),
-                                            //     onChanged: (forIos)
-                                            //         ? (RangeValues values) {
-                                            //             if (!mounted) return;
-                                            //             setState(() {
-                                            //               _currentRangeValues =
-                                            //                   values;
-                                            //             });
-                                            //           }
-                                            //         : null,
-                                            //   ),
-                                            // ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  height: 35,
-                                                  width: 55,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black12),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30.0),
-                                                  ),
-                                                  child: CupertinoSwitch(
-                                                    // overrides the default green color of the track
-                                                    activeColor: Colors.white,
-                                                    // color of the round icon, which moves from right to left
-                                                    thumbColor: forIos
-                                                        ? main_color
-                                                        : Colors.black12,
-                                                    // when the switch is off
-                                                    trackColor: forIos
-                                                        ? Colors.white
-                                                        : Colors.black12,
-                                                    // boolean variable value
-                                                    value: forIos,
-                                                    // changes the state of the switch
-                                                    onChanged: (value) =>
-                                                        setState(() =>
-                                                            forIos = value),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 10),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Search By Category",
-                                                style: TextStyle(
-                                                    decoration:
-                                                        TextDecoration.none,
-                                                    color: main_color,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: 'Sans-serif'),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: Get.width * 0.88,
-                                              child: Column(
-                                                children: [
-                                                  nameContainer2(
-                                                      'images/icons/calender.png',
-                                                      "Age",
-                                                      functions().AgeDialog,
-                                                      svp.AgeList),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/religion.png',
-                                                      "Religion",
-                                                      svp.ReligionList,
-                                                      sdl.Religion),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  (widget.userSave.religion ==
-                                                          "Hindu")
-                                                      ? nameContainer(
-                                                          'images/icons/kundli.png',
-                                                          "Kundli Dosh",
-                                                          svp.KundaliDoshList,
-                                                          sdl.KundaliDosh)
-                                                      : Container(),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/marital_status.png',
-                                                      "Marital Status",
-                                                      svp.MaritalStatusList,
-                                                      sdl.MaritalStatus),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/food.png',
-                                                      "Diet",
-                                                      svp.dietList,
-                                                      sdl.Diet),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/smoke.png',
-                                                      "Smoke",
-                                                      svp.SmokeList,
-                                                      sdl.Smoke),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/drink.png',
-                                                      "Drink",
-                                                      svp.DrinkList,
-                                                      sdl.Drink),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/disability.png',
-                                                      "Disability With Person",
-                                                      svp.DisabilityList,
-                                                      sdl.Disability),
-                                                  const SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  nameContainerHeight(
-                                                      'images/icons/height.png',
-                                                      "Height",
-                                                      functions().HeightDialog,
-                                                      svp.HeightList,
-                                                      sdl.Height),
-                                                  // HeightList, sdl.Height),
-                                                  const SizedBox(
-                                                    height: 1,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/education.png',
-                                                      "Education",
-                                                      svp.EducationList,
-                                                      sdl.Education),
-                                                  const SizedBox(
-                                                    height: 1,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/profession_suitcase.png',
-                                                      "Profession",
-                                                      svp.ProfessionList,
-                                                      sdl.Profession),
-                                                  const SizedBox(
-                                                    height: 1,
-                                                  ),
-                                                  nameContainer(
-                                                      'images/icons/hand_rupee.png',
-                                                      "Income",
-                                                      svp.IncomeList,
-                                                      sdl.Income),
-                                                  const SizedBox(
-                                                    height: 1,
-                                                  ),
-                                                  nameContainer3(
-                                                      'images/icons/location.png',
-                                                      "Location",
-                                                      functions()
-                                                          .LocationDialog,
-                                                      svp.LocatioList),
-                                                ],
-                                              ),
-                                            ),
-                                            InkWell(
-                                                onTap: () {
-                                                  _pageController.nextPage(
-                                                    duration: Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                },
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 18,
-                                                  color: main_color,
-                                                ))
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 1,
-                                        ),
-                                        // nameContainer2(
-                                        //     'images/icons/location.png',
-                                        //     "Location",
-                                        //     functions().LocationDialog,
-                                        //     svp.LocatioList),
-                                        const SizedBox(
-                                          height: 1,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                (searchingbool)
-                                    ? Container(
-                                        height:
-                                            MediaQuery.of(context).size.width,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Center(
-                                                child: CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                                Color>(
-                                                            main_color))),
-                                          ],
-                                        ),
-                                      )
-                                    : Container()
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            // SizedBox(
-                            //   height: 50,
-                            //   width: 300,
-                            //   child: ElevatedButton(
-                            //     style: ButtonStyle(
-                            //         shadowColor: MaterialStateColor.resolveWith(
-                            //             (states) => Colors.black),
-                            //         shape: MaterialStateProperty.all<
-                            //                 RoundedRectangleBorder>(
-                            //             RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(30.0),
-                            //           //side: BorderSide(color: Colors.black)
-                            //         )),
-                            //         backgroundColor:
-                            //             MaterialStateProperty.all<Color>(
-                            //                 Colors.white)),
-                            //     child: const Text(
-                            //       "Search",
-                            //       style: TextStyle(
-                            //         fontFamily: 'Serif',
-                            //         fontWeight: FontWeight.w700,
-                            //         fontSize: 20,
-                            //         color: Colors.black,
-                            //       ),
-                            //     ),
-                            //     onPressed: () {
-                            //       getProfileSearch();
-                            //     },
-                            //   ),
-                            // ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(height: 30),
-                          ],
-                        ),
-                      );
-                    }
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Stack(
+                    
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: Stack(
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1485,13 +853,13 @@ class _UserSearchState extends State<UserSearch> {
                                                     margin: EdgeInsets.only(
                                                         right: 10),
                                                     child: Text(
-                                                      "Search By Profile",
+                                                      "Search By Profile ID",
                                                       style: TextStyle(
                                                           decoration:
                                                               TextDecoration
                                                                   .none,
                                                           color: main_color,
-                                                          fontSize: 18,
+                                                          fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
@@ -1519,6 +887,8 @@ class _UserSearchState extends State<UserSearch> {
                                                           child: Material(
                                                             color: Colors.white,
                                                             child: TextField(
+                                                              cursorColor: main_color,
+                                                              readOnly: true,
                                                               controller:
                                                                   _searchIDController,
                                                               decoration: InputDecoration(
@@ -1529,7 +899,7 @@ class _UserSearchState extends State<UserSearch> {
                                                                           left:
                                                                               10),
                                                                   hintText:
-                                                                      'Enter Profile Id',
+                                                                      'Enter Profile ID',
                                                                   border: OutlineInputBorder(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
@@ -1560,7 +930,7 @@ class _UserSearchState extends State<UserSearch> {
                                                           ),
                                                         ),
                                                         const SizedBox(
-                                                          width: 20,
+                                                          width: 5,
                                                         ),
                                                         GestureDetector(
                                                           onTap: () {},
@@ -1583,16 +953,16 @@ class _UserSearchState extends State<UserSearch> {
                                                   ),
                                                 ],
                                               ),
-
+                                              
                                               //+9155556580544
                                             ],
                                           )),
-
+                                              
                                       // const SizedBox(
                                       //   height: 10,
                                       // ),
                                       Divider(),
-
+                                              
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1608,257 +978,206 @@ class _UserSearchState extends State<UserSearch> {
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily: 'Sans-serif')),
                                           ),
-                                          // Container(
-                                          //   margin: EdgeInsets.only(right: 10),
-                                          //   child: Text(
-                                          //     "${widget.searchs[index].searchDistance} Km",
-                                          //     style: TextStyle(
-                                          //         decoration:
-                                          //             TextDecoration.none,
-                                          //         color: main_color,
-                                          //         fontSize: 18,
-                                          //         fontWeight: FontWeight.w400,
-                                          //         fontFamily: 'Sans-serif'),
-                                          //   ),
-                                          // )
+                                        
                                         ],
                                       ),
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              "${_currentSliderValue} Km",
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.none,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'Sans-serif'),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(right: 10),
-                                            child: Text(
-                                              "200 Km",
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.none,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'Sans-serif'),
-                                            ),
-                                          ),
-                                        ],
+                                    
+                                       Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(forIos ? "${_currentRangeValues.start.round()}km" : "0km"), 
+                                  Text(forIos ? "${_currentRangeValues.end.round()}km" : "200km")
+                                ],
+                              ),
+                            ),
+                                              
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    "Within",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.none,
+                                        color: main_color,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'Sans-serif'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Material(
+                                  color: Colors.white,
+                                  child: SliderTheme(
+                                    data: SliderTheme.of(context).copyWith(
+                                      rangeThumbShape: CircleThumbShape(
+                                        thumbColor:
+                                            forIos ? main_color : Colors.black12,
+                                        thumbRadius: 8.0, // Size of the thumb
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              "Within",
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.none,
-                                                  color: main_color,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'Sans-serif'),
-                                            ),
-                                          ),
-                                        ],
+                                      thumbColor: Colors
+                                          .transparent, // Transparent fill for hollow center
+                                      overlayColor: Colors
+                                          .transparent, // No overlay when thumb is pressed
+                                      activeTrackColor:
+                                          main_color, // Track color for selected range
+                                      inactiveTrackColor: main_color.withOpacity(
+                                          0.3), // Track color for unselected range
+                                      trackHeight:
+                                          4.0, // Thickness of the track
+                                    ),
+                                    child: RangeSlider(
+                                      activeColor: main_color,
+                                      values: _currentRangeValues,
+                                      min: 0,
+                                      max: 200,
+                                      divisions: 10,
+                                      labels: RangeLabels(
+                                        _currentRangeValues.start
+                                            .round()
+                                            .toString(),
+                                        _currentRangeValues.end
+                                            .round()
+                                            .toString(),
                                       ),
-                                      Column(
-                                        children: [
-                                          Material(
-                                            color: Colors.white,
-                                            child: SliderTheme(
-                                              data: SliderTheme.of(context)
-                                                  .copyWith(
-                                                rangeThumbShape:
-                                                    CircleThumbShape(
-                                                  thumbColor: forIos
-                                                      ? main_color
-                                                      : Colors.black12,
-                                                  thumbRadius:
-                                                      8.0, // Size of the thumb
-                                                ),
-                                                thumbColor: Colors
-                                                    .transparent, // Transparent fill for hollow center
-                                                overlayColor: Colors
-                                                    .transparent, // No overlay when thumb is pressed
-                                                activeTrackColor:
-                                                    main_color, // Track color for selected range
-                                                inactiveTrackColor:
-                                                    main_color.withOpacity(
-                                                        0.3), // Track color for unselected range
-                                                trackHeight:
-                                                    4.0, // Thickness of the track
-                                              ),
-                                              child: RangeSlider(
-                                                activeColor: main_color,
-                                                // values: _currentRangeValues,
-                                                values: RangeValues(
-                                                    double.parse(widget
-                                                        .searchs[index]
-                                                        .searchDistance
-                                                        .toString()),
-                                                    80),
-                                                min: 0,
-                                                max: 200,
-                                                divisions: 10,
-                                                // labels: RangeLabels(
-                                                //   _currentRangeValues.start.round().toString(),
-                                                //   _currentRangeValues.end.round().toString(),
-                                                // ),
-                                                labels: RangeLabels(
-                                                    double.parse(widget
-                                                            .searchs[index]
-                                                            .searchDistance
-                                                            .toString())
-                                                        .round()
-                                                        .toString(),
-                                                    "200"),
-                                                onChanged: forIos
-                                                    ? (RangeValues values) {
-                                                        if (!mounted) return;
-
-                                                        setState(() {
-                                                          // Adjust values to maintain a minimum gap of 20
-                                                          double newStart =
-                                                              values.start;
-                                                          double newEnd =
-                                                              values.end;
-
-                                                          // If the range is less than 20, adjust the appropriate thumb
-                                                          if (newEnd -
-                                                                  newStart <
-                                                              20) {
-                                                            // If the user is moving the start thumb
-                                                            if ((values.start -
-                                                                        _currentRangeValues
-                                                                            .start)
-                                                                    .abs() >
-                                                                (values.end -
-                                                                        _currentRangeValues
-                                                                            .end)
-                                                                    .abs()) {
-                                                              newEnd =
-                                                                  newStart + 20;
-                                                              if (newEnd >
-                                                                  200) {
-                                                                newEnd = 200;
-                                                                newStart =
-                                                                    200 - 20;
-                                                              }
-                                                            }
-                                                            // If the user is moving the end thumb
-                                                            else {
-                                                              newStart =
-                                                                  newEnd - 20;
-                                                              if (newStart <
-                                                                  0) {
-                                                                newStart = 0;
-                                                                newEnd = 20;
-                                                              }
-                                                            }
-                                                          }
-
-                                                          _currentRangeValues =
-                                                              RangeValues(
-                                                                  newStart,
-                                                                  newEnd);
-                                                        });
-                                                      }
-                                                    : null,
-                                              ),
-                                            ),
-                                          ),
-                                          // Material(
-                                          //   child: SliderTheme(
-                                          //     data: SliderTheme.of(context)
-                                          //         .copyWith(
-                                          //       valueIndicatorColor: Colors
-                                          //           .black, // Custom Gray Color
-                                          //     ),
-                                          //     child: RangeSlider(
-                                          //       activeColor: main_color,
-                                          //       values: RangeValues(
-                                          //           double.parse(widget
-                                          //               .searchs[index]
-                                          //               .searchDistance
-                                          //               .toString()),
-                                          //           80),
-                                          //       max: 200,
-                                          //       divisions: 10,
-                                          //       labels: RangeLabels(
-                                          //           double.parse(widget
-                                          //                   .searchs[index]
-                                          //                   .searchDistance
-                                          //                   .toString())
-                                          //               .round()
-                                          //               .toString(),
-                                          //           "200"),
-                                          //       onChanged: null,
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                height: 35,
-                                                width: 55,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.black12),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                ),
-                                                child: CupertinoSwitch(
-                                                  // overrides the default green color of the track
-                                                  activeColor: Colors.white,
-                                                  // color of the round icon, which moves from right to left
-                                                  thumbColor: widget
-                                                              .searchs[index]
-                                                              .searchDistance !=
-                                                          "0.0"
-                                                      ? main_color
-                                                      : Colors.black12,
-                                                  // when the switch is off
-                                                  trackColor: widget
-                                                              .searchs[index]
-                                                              .searchDistance !=
-                                                          "0.0"
-                                                      ? Colors.white
-                                                      : Colors.black12,
-                                                  // boolean variable value
-                                                  value: widget.searchs[index]
-                                                              .searchDistance !=
-                                                          "0.0"
-                                                      ? true
-                                                      : false,
-                                                  // changes the state of the switch
-                                                  onChanged: (value) =>
-                                                      setState(
-                                                          () => forIos = value),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                      onChanged: forIos
+                                          ? (RangeValues values) {
+                                              if (!mounted) return;
+                                              
+                                              setState(() {
+                                                // Adjust values to maintain a minimum gap of 20
+                                                double newStart = values.start;
+                                                double newEnd = values.end;
+                                              
+                                                // If the range is less than 20, adjust the appropriate thumb
+                                                if (newEnd - newStart < 20) {
+                                                  // If the user is moving the start thumb
+                                                  if ((values.start -
+                                                              _currentRangeValues
+                                                                  .start)
+                                                          .abs() >
+                                                      (values.end -
+                                                              _currentRangeValues
+                                                                  .end)
+                                                          .abs()) {
+                                                    newEnd = newStart + 20;
+                                                    if (newEnd > 200) {
+                                                      newEnd = 200;
+                                                      newStart = 200 - 20;
+                                                    }
+                                                  }
+                                                  // If the user is moving the end thumb
+                                                  else {
+                                                    newStart = newEnd - 20;
+                                                    if (newStart < 0) {
+                                                      newStart = 0;
+                                                      newEnd = 20;
+                                                    }
+                                                  }
+                                                }
+                                              
+                                                _currentRangeValues =
+                                                    RangeValues(
+                                                        newStart, newEnd);
+                                              });
+                                            }
+                                          : null,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    
+                                    Container(
+                                                                  height: 35,
+                                                                  width: 55,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            30.0),
+                                                                  ),
+                                                                  child: Stack(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    children: [
+                                                                      // Track
+                                                                      AnimatedContainer(
+                                                                        duration:
+                                                                            const Duration(milliseconds: 200),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color: forIos==false
+                                                                              ? Colors.black12
+                                                                              : main_color,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30.0),
+                                                                        ),
+                                                                        width:
+                                                                            55,
+                                                                        height:
+                                                                            28,
+                                                                      ),
+                                                                      // Thumb with text
+                                                                      Align(
+                                                                        alignment: forIos==false
+                                                                            ? Alignment.centerLeft
+                                                                            : Alignment.centerRight,
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                          
+                                                                            setState(() =>
+                                                                                forIos = !forIos);
+                                                                          },
+                                                                          child:
+                                                                              AnimatedContainer(
+                                                                            duration:
+                                                                                const Duration(milliseconds: 200),
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                30,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                Text(
+                                                                              forIos==false  ? "Off" : "On",
+                                                                              style: TextStyle(
+                                                                                fontSize: 10,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                  ],
+                                ),
+                              ],
+                            ),
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -1882,7 +1201,7 @@ class _UserSearchState extends State<UserSearch> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-
+                                              
                                       Row(
                                         children: [
                                           InkWell(
@@ -1910,6 +1229,14 @@ class _UserSearchState extends State<UserSearch> {
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
+                                                    NameContainer(
+                                                          icon:
+                                                              'images/icons/profession_suitcase.png',
+                                                          head: "Profession",
+                                                          val: svp
+                                                              .ProfessionList,
+                                                          options:
+                                                              sdl.Profession),
                                                 nameContainer4(
                                                     'images/icons/religion.png',
                                                     "Religion",
@@ -2038,7 +1365,7 @@ class _UserSearchState extends State<UserSearch> {
                                               )),
                                         ],
                                       ),
-
+                                              
                                       const SizedBox(
                                         height: 1,
                                       ),
@@ -2056,53 +1383,40 @@ class _UserSearchState extends State<UserSearch> {
                               ),
                             ],
                           ),
-                          // const SizedBox(
-                          //   height: 30,
-                          // ),
-                          // SizedBox(
-                          //   height: 50,
-                          //   width: 300,
-                          //   child: ElevatedButton(
-                          //     style: ButtonStyle(
-                          //         shadowColor: MaterialStateColor.resolveWith(
-                          //             (states) => Colors.black),
-                          //         shape: MaterialStateProperty.all<
-                          //                 RoundedRectangleBorder>(
-                          //             RoundedRectangleBorder(
-                          //           borderRadius: BorderRadius.circular(30.0),
-                          //           //side: BorderSide(color: Colors.black)
-                          //         )),
-                          //         backgroundColor:
-                          //             MaterialStateProperty.all<Color>(
-                          //                 Colors.white)),
-                          //     child: const Text(
-                          //       "Search",
-                          //       style: TextStyle(
-                          //         fontFamily: 'Serif',
-                          //         fontWeight: FontWeight.w700,
-                          //         fontSize: 20,
-                          //         color: Colors.black,
-                          //       ),
-                          //     ),
-                          //     onPressed: () {},
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Search by ${widget.searchs[index].name!} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(widget.searchs[index].createdAt!).toLocal())}",
-                            style: const TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Sans-serif'),
-                          ),
-
-                          SizedBox(height: 30),
-                        ],
-                      ),
+                        ),
+                     
+                     
+                        Text(
+                          "Search by ${widget.searchs[index].name!} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(widget.searchs[index].createdAt!).toLocal())}",
+                          style: const TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Sans-serif'),
+                        ),
+                 
+                                      // widget.searchs[index].profileFound==0?
+                                      const Text(
+                                            "No Profile Found",
+                                            style: TextStyle(
+                                                decoration: TextDecoration.none,
+                                                color: Colors.red,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Sans-serif'),
+                                          ),
+                                          // :   Text(
+                                          //   "(${widget.searchs[index].profileFound} Profile Found) (Seen-${widget.searchs[index].profileFound})",
+                                          //   style: TextStyle(
+                                          //       decoration: TextDecoration.none,
+                                          //       color: main_color,
+                                          //       fontSize: 16,
+                                          //       fontWeight: FontWeight.w400,
+                                          //       fontFamily: 'Sans-serif'),
+                                          // ),
+                        SizedBox(height: 10),
+                      ],
                     );
                   },
                   itemCount: widget.searchs.length,

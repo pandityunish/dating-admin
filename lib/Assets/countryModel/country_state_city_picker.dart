@@ -119,15 +119,225 @@ class SelectStateData extends StatefulWidget {
 }
 
 class _SelectStateDataState extends State<SelectStateData> {
-  List<StatusModel.City> _cities = [];
-  List<StatusModel.StatusModel> _country = [];
-  String _selectedCity = "Choose City";
-  String _selectedCountry = "Choose Country";
-  String _selectedState = "Choose State/Province";
+//   List<StatusModel.City> _cities = [];
+//   List<StatusModel.StatusModel> _country = [];
+//   String _selectedCity = "Choose City";
+//   String _selectedCountry = "Choose Country";
+//   String _selectedState = "Choose State/Province";
+//   List<StatusModel.State> _states = [];
+//   var responses;
+//   void addlocation() {
+//     print(selectedCounty);
+//     for (var i = 0; i < selectedCounty!.length; i++) {
+//       selectedCountryList.add(StatusModel.StatusModel(
+//           emoji: "",
+//           emojiU: "",
+//           id: i,
+//           name: selectedCounty![i]["name"],
+//           state: []));
+//     }
+//     for (var i = 0; i < selectedCity!.length; i++) {
+//       cityname.add(selectedCity![i]["name"]);
+//     }
+//     for (var i = 0; i < selectedState!.length; i++) {
+//       statename.add(
+//         selectedState![i]["name"],
+//       );
+//     }
+//     setState(() {});
+//   }
+
+//   @override
+//   void initState() {
+//     setdata();
+//     getCounty();
+//     addlocation();
+//     super.initState();
+//   }
+
+//   setdata() {
+//     // for (var i = 0; i < widget.list[2].length; i++) {
+//     //   setState(() {
+//     //     _country.add(widget.list[2][i]);
+//     //   });
+//     // }
+//     // setState(() {
+//     //   _country.addAll(widget.list[2]);
+//     // });
+//   }
+
+//   Future getResponse() async {
+//     var res = await rootBundle
+//         .loadString('lib/Assets/countryModel/assets/country.json');
+//     return jsonDecode(res);
+//   }
+
+//   Future getCounty() async {
+//     var countryres = await getResponse() as List;
+//     print("getcountry running");
+//     for (var data in countryres) {
+//       var model = StatusModel.StatusModel();
+//       model.name = data['name'];
+//       model.emoji = data['emoji'];
+//       if (!mounted) continue;
+//       setState(() {
+//         _country.add(model);
+//       });
+//     }
+
+//     return _country;
+//   }
+
+//   List<StatusModel.StatusModel> selectedCountryList = [];
+//   List<StatusModel.State> selectedStateList = [];
+//   List<StatusModel.City> selectedCityList = [];
+
+//   List<List<String>> selectedLocation = [[], [], []];
+
+//   Future getState() async {
+//     var response = await getResponse();
+//     var takestate = response
+//         .map((map) => StatusModel.StatusModel.fromJson(map))
+//         .where((item) {
+//           print(item);
+//           return selectedCountryList
+//               .where((element) => item.name == element.name)
+//               .isNotEmpty;
+//         })
+//         .map((item) => item.state)
+//         .toList();
+
+//     var states = takestate as List;
+//     for (var f in states) {
+//       if (!mounted) continue;
+//       setState(() {
+//         var name = f.map((item) => item).toList();
+//         for (var statename in name) {
+//           // print(statename.toString());
+
+//           _states.add(statename);
+//           // setState(() {});
+//         }
+//       });
+//     }
+
+//     return _states;
+//   }
+
+//   Future getCity() async {
+//     var response = await getResponse();
+//     var takestate = response
+//         .map((map) => StatusModel.StatusModel.fromJson(map))
+//         .where((item) => selectedCountryList
+//             .where((element) => item.name == element.name)
+//             .isNotEmpty)
+//         .map((item) => item.state)
+//         .toList();
+//     var states = takestate as List;
+//     for (var f in states) {
+//       var name = f.where((item) => selectedStateList
+//           .where((element) => item.name == element.name)
+//           .isNotEmpty);
+//       var cityname = name.map((item) => item.city).toList();
+//       cityname.forEach((ci) {
+//         // if (!mounted) continue;
+//         setState(() {
+//           var citiesname = ci.map((item) => item).toList();
+//           for (var citynames in citiesname) {
+//             // print(citynames.toString());
+
+//             _cities.add(citynames);
+//           }
+//         });
+//       });
+//     }
+//     return _cities;
+//   }
+
+//   bool countryfocus = false;
+//   bool statefocus = false;
+//   bool cityfocus = false;
+
+//   TextEditingController countryController = TextEditingController();
+//   TextEditingController stateController = TextEditingController();
+//   TextEditingController cityController = TextEditingController();
+
+//   final state = TextEditingController();
+//   final city = TextEditingController();
+//   List<StatusModel.StatusModel> countryDataList = [];
+//   List<StatusModel.State>? stateDataList = [];
+//   List<StatusModel.City> cityDataList = [];
+
+//   countryData(List<StatusModel.StatusModel> data, String val) {
+//     print("uuuuuuuuuuu$data");
+//     if (selectedCountryList.isNotEmpty) {
+//       val = val.split(',').last;
+//     }
+
+//     List<StatusModel.StatusModel> tempCount = _country
+//         .where((element) =>
+//             element.name!.toLowerCase().startsWith(val.toLowerCase()))
+//         .toList();
+//     print(tempCount);
+//     setState(() {
+//       countryDataList = tempCount;
+//     });
+//   }
+
+//   // List<String> stateDataList = [];
+
+//   stateData(List<StatusModel.State> dataList, String val) {
+//     print("ssssssssss$dataList");
+//     if (selectedStateList.isNotEmpty) {
+//       val = val.split(',').last;
+//     }
+
+//     // List<List<StatusModel.State>?> tempCount =
+
+//     // List<StatusModel.State>? temp = [];
+//     // for (List<StatusModel.State>? data
+//     // in dataList.map((e) => e.state).toList()) {
+//     List<StatusModel.State> temp = _states
+//         .where((element) =>
+//             element.name!.toLowerCase().startsWith(val.toLowerCase()))
+//         .toList();
+
+//     setState(() {
+//       stateDataList = temp;
+//     });
+//   }
+
+//   cityData(List<StatusModel.City> data, String val) {
+//     print("uuuuuuuuuuu$data");
+//     if (selectedCityList.isNotEmpty) {
+//       val = val.split(',').last;
+//     }
+
+//     List<StatusModel.City> tempCount = data
+//         .where((element) =>
+//             element.name!.toLowerCase().startsWith(val.toLowerCase()))
+//         .toList();
+//     print(tempCount);
+//     setState(() {
+//       cityDataList = tempCount;
+//     });
+//   }
+
+// //  GoogleMapsPlaces _places =
+// //       GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
+// //         List<Prediction> _predictions = [];
+// //          List<Prediction> _citypredictions = [];
+//   final _searchController = TextEditingController();
+  // List<String> statename = [];
+  // List<String> cityname = [];
+ List<StatusModel.City> _cities = [];
+  final List<StatusModel.StatusModel> _country = [];
+  final String _selectedCity = "Choose City";
+  final String _selectedCountry = "Choose Country";
+  final String _selectedState = "Choose State/Province";
   List<StatusModel.State> _states = [];
   var responses;
   void addlocation() {
-    print(selectedCounty);
     for (var i = 0; i < selectedCounty!.length; i++) {
       selectedCountryList.add(StatusModel.StatusModel(
           emoji: "",
@@ -137,10 +347,10 @@ class _SelectStateDataState extends State<SelectStateData> {
           state: []));
     }
     for (var i = 0; i < selectedCity!.length; i++) {
-      cityname.add(selectedCity![i]["name"]);
+      selectedCityList.add(selectedCity![i]["name"]);
     }
     for (var i = 0; i < selectedState!.length; i++) {
-      statename.add(
+      selectedStateList.add(
         selectedState![i]["name"],
       );
     }
@@ -150,8 +360,11 @@ class _SelectStateDataState extends State<SelectStateData> {
   @override
   void initState() {
     setdata();
-    getCounty();
     addlocation();
+    getCounty();
+   getState();
+   getCity();
+
     super.initState();
   }
 
@@ -167,8 +380,8 @@ class _SelectStateDataState extends State<SelectStateData> {
   }
 
   Future getResponse() async {
-    var res = await rootBundle
-        .loadString('lib/Assets/countryModel/assets/country.json');
+    var res =
+        await rootBundle.loadString('assets/country.json');
     return jsonDecode(res);
   }
 
@@ -261,15 +474,18 @@ class _SelectStateDataState extends State<SelectStateData> {
   TextEditingController countryController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController cityController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _cityscrollController = ScrollController();
 
   final state = TextEditingController();
   final city = TextEditingController();
   List<StatusModel.StatusModel> countryDataList = [];
-  List<StatusModel.State>? stateDataList = [];
+  List<StatusModel.State> stateDataList = [];
   List<StatusModel.City> cityDataList = [];
 
   countryData(List<StatusModel.StatusModel> data, String val) {
     print("uuuuuuuuuuu$data");
+
     if (selectedCountryList.isNotEmpty) {
       val = val.split(',').last;
     }
@@ -304,11 +520,14 @@ class _SelectStateDataState extends State<SelectStateData> {
 
     setState(() {
       stateDataList = temp;
+      statefocus = val.isNotEmpty;
+      if (val.isEmpty) {
+        statefocus = false;
+      }
     });
   }
 
   cityData(List<StatusModel.City> data, String val) {
-    print("uuuuuuuuuuu$data");
     if (selectedCityList.isNotEmpty) {
       val = val.split(',').last;
     }
@@ -320,16 +539,9 @@ class _SelectStateDataState extends State<SelectStateData> {
     print(tempCount);
     setState(() {
       cityDataList = tempCount;
+      cityfocus = val.isNotEmpty;
     });
   }
-
-//  GoogleMapsPlaces _places =
-//       GoogleMapsPlaces(apiKey: 'AIzaSyBgldLriecKqG8pYkQIUX5CI72rUREhIrQ');
-//         List<Prediction> _predictions = [];
-//          List<Prediction> _citypredictions = [];
-  final _searchController = TextEditingController();
-  List<String> statename = [];
-  List<String> cityname = [];
 
 // void onselectstate(Prediction prediction)async{
 
@@ -395,11 +607,11 @@ class _SelectStateDataState extends State<SelectStateData> {
               for (var element in selectedCountryList) {
                 selectedLocation[0].add(element.name.toString());
               }
-              for (var element in statename) {
-                selectedLocation[1].add(element.toString());
+              for (var element in selectedStateList) {
+                selectedLocation[1].add(element.name.toString());
               }
-              for (var element in cityname) {
-                selectedLocation[2].add(element.toString());
+              for (var element in selectedCityList) {
+                selectedLocation[2].add(element.name.toString());
               }
               // selectedLocation = [selectedCountryList, selectedStateList];
               Navigator.of(context).pop(selectedLocation);
@@ -442,6 +654,7 @@ class _SelectStateDataState extends State<SelectStateData> {
             Expanded(
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   Focus(
                     onFocusChange: (val) {
                       countryfocus = val;
@@ -553,14 +766,18 @@ class _SelectStateDataState extends State<SelectStateData> {
                               // child: ListView(
                               children: [
                                 ...List<Widget>.generate(
-                                    statename.length,
+                                    selectedStateList.length,
                                     (index) => GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              statename.removeWhere((element) =>
-                                                  statename[index] == element);
-                                              // kkk
+                                              selectedStateList.removeWhere((element) =>
+                                                  selectedStateList[index] == element);
+                                           
                                             });
+                                            setState(() {
+                                                 statefocus = false;
+                                            });
+                                            log("state focus $statefocus");
                                           },
                                           child: Container(
                                             margin: const EdgeInsets.symmetric(
@@ -575,7 +792,7 @@ class _SelectStateDataState extends State<SelectStateData> {
                                                     255, 230, 228, 228)),
                                             child: Row(
                                               children: [
-                                                Text(statename[index]),
+                                                Text(selectedStateList[index].name.toString()),
                                                 Icon(
                                                   size: 15,
                                                   CupertinoIcons.clear_circled,
@@ -601,7 +818,7 @@ class _SelectStateDataState extends State<SelectStateData> {
                                     // focusNode: countryfocus,
                                     controller: stateController,
                                     onChanged: (value) {
-                                      // _onSearchChanged(value);
+                                      stateData(_states, value);
                                     },
                                   ),
                                 ),
@@ -614,18 +831,29 @@ class _SelectStateDataState extends State<SelectStateData> {
                     height: 10,
                   ),
 
-                  // statefocus
+                  statefocus
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.22,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: stateSuggetion(stateDataList),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  // const SizedBox(height: 40),
+
+                  // cityfocus
                   //     ? Container(
-                  //         height:
-                  //             MediaQuery.of(context).size.height * 0.22,
+                  //         height: MediaQuery.of(context).size.height * 0.15,
                   //         child: SingleChildScrollView(
                   //           child: Column(
-                  //             children: stateSuggetion1(_predictions),
+                  //             children: citySuggetion(cityDataList),
                   //           ),
                   //         ),
                   //       )
                   //     : Container(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   countryfocus || statefocus
                       ? Container()
@@ -642,12 +870,12 @@ class _SelectStateDataState extends State<SelectStateData> {
                               scrollDirection: Axis.horizontal,
                               children: [
                                 ...List<Widget>.generate(
-                                    cityname.length,
+                                    selectedCityList.length,
                                     (index) => GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              cityname.removeWhere((element) =>
-                                                  cityname[index] == element);
+                                              selectedCityList.removeWhere((element) =>
+                                                  selectedCityList[index] == element);
                                             });
                                           },
                                           child: Container(
@@ -663,7 +891,7 @@ class _SelectStateDataState extends State<SelectStateData> {
                                                     255, 230, 228, 228)),
                                             child: Row(
                                               children: [
-                                                Text(cityname[index]),
+                                                Text(selectedCityList[index].name.toString()),
                                                 Icon(
                                                   size: 15,
                                                   CupertinoIcons.clear_circled,
@@ -689,7 +917,7 @@ class _SelectStateDataState extends State<SelectStateData> {
                                     // focusNode: countryfocus,
                                     controller: cityController,
                                     onChanged: (value) {
-                                      //  _cityonSearchChanged(value);
+                                      cityData(_cities, value);
                                     },
                                   ),
                                 ),
@@ -704,17 +932,16 @@ class _SelectStateDataState extends State<SelectStateData> {
                     height: 10,
                   ),
 
-                  // cityfocus
-                  //     ? Container(
-                  //         height:
-                  //             MediaQuery.of(context).size.height * 0.15,
-                  //         child: SingleChildScrollView(
-                  //           child: Column(
-                  //             children: citySuggetion1(_citypredictions),
-                  //           ),
-                  //         ),
-                  //       )
-                  //     : Container(),
+                  cityfocus
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: citySuggetion(cityDataList),
+                            ),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),
@@ -769,11 +996,11 @@ class _SelectStateDataState extends State<SelectStateData> {
                     for (var element in selectedCountryList) {
                       selectedLocation[0].add(element.name.toString());
                     }
-                    for (var element in statename) {
-                      selectedLocation[1].add(element.toString());
+                    for (var element in selectedStateList) {
+                      selectedLocation[1].add(element.name.toString());
                     }
-                    for (var element in cityname) {
-                      selectedLocation[2].add(element.toString());
+                    for (var element in selectedCityList) {
+                      selectedLocation[2].add(element.name.toString());
                     }
                     Navigator.of(context).pop(selectedLocation);
                   },
@@ -810,10 +1037,6 @@ class _SelectStateDataState extends State<SelectStateData> {
   void removeCity() {
     _cities = [];
     cityDataList = [];
-    // getState();
-
-    // _states = [];
-    // stateDataList = [];
     getCity().then((value) {
       var i = selectedCityList.length - 1;
       while (i >= 0) {
@@ -937,60 +1160,7 @@ class _SelectStateDataState extends State<SelectStateData> {
 
     return statetemp;
   }
-//  List<Widget> stateSuggetion1(List<Prediction> stateList) {
-//     List<Widget> statetemp = [];
-//     for (Prediction state in stateList) {
-//       statetemp.add(Container(
-//         margin: const EdgeInsets.symmetric(
-//           horizontal: 10,
-//         ),
-//         decoration: BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.circular(5),
-//             border: Border.all(
-//                 color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
-//         child: ListTile(
-//           iconColor: Colors.black,
-//           leading: Icon(
-//             Icons.location_on_outlined,
-//             color: main_color,
-//           ),
-//           title: Text(state.description!,
-//               style: TextStyle(
-//                 color: main_color,
-//               )),
-//           onTap: () {
-//             if (statename.contains(state.structuredFormatting!.mainText)) {
-//               statename.remove(state.structuredFormatting!.mainText);
-//               // _cities = [];
-//               // cityDataList = [];
-//               // getCity();
-//               statename.remove(state.structuredFormatting!.mainText);
 
-//               setState(() {});
-//             } else {
-//               onselectstate(state);
-//               statefocus = false;
-//               stateController.clear();
-//               cityDataList = [];
-//               _cities = [];
-
-//             }
-//             setState(() {});
-//           },
-//           // trailing:
-//           // selectedStateList.map((e) => e.id).contains(state.id)
-//           //     ? Icon(
-//           //         CupertinoIcons.check_mark,
-//           //         color: main_color,
-//           //       )
-//           //     : null,
-//         ),
-//       ));
-//     }
-
-//     return statetemp;
-//   }
   List<Widget> citySuggetion(List<StatusModel.City> cityList) {
     List<Widget> citytemp = [];
     for (StatusModel.City city in cityList) {
@@ -1035,66 +1205,7 @@ class _SelectStateDataState extends State<SelectStateData> {
 
     return citytemp;
   }
-  // List<Widget> citySuggetion1(List<Prediction> cityList) {
-  //   List<Widget> citytemp = [];
-  //   for (Prediction city in cityList) {
-  //     citytemp.add(Container(
-  //       margin: const EdgeInsets.symmetric(
-  //         horizontal: 10,
-  //       ),
-  //       decoration: BoxDecoration(
-  //           color: Colors.white,
-  //           borderRadius: BorderRadius.circular(5),
-  //           border: Border.all(
-  //               color: const Color.fromARGB(255, 225, 223, 223), width: 1)),
-  //       child: ListTile(
-  //         title: Text(city.description!,
-  //             style: TextStyle(
-  //               color: main_color,
-  //             )),
-  //         iconColor: Colors.black,
-  //         leading: Icon(
-  //           Icons.location_on_outlined,
-  //           color: main_color,
-  //         ),
-  //         onTap: () {
-  //           if (cityname.contains(city.structuredFormatting!.mainText)) {
-  //             cityname.remove(city.structuredFormatting!.mainText);
-  //             // _cities = [];
-  //             // cityDataList = [];
-  //             // getCity();
-  //             cityname.remove(city.structuredFormatting!.mainText);
-
-  //             setState(() {});
-  //           } else {
-  //             onselectcity(city);
-  //             cityfocus = false;
-  //             cityController.clear();
-  //             cityDataList = [];
-
-  //           }
-  //           setState(() {});
-  //           // if (selectedCityList.contains(city)) {
-  //           //   selectedCityList.remove(city);
-  //           // } else {
-  //           //   selectedCityList.add(city);
-  //           //   cityfocus = false;
-  //           //   cityController.clear();
-  //           // }
-  //           // setState(() {});
-  //         },
-  //         // trailing: selectedCityList.contains(city)
-  //         //     ? Icon(
-  //         //         CupertinoIcons.check_mark,
-  //         //         color: main_color,
-  //         //       )
-  //         //     : null,
-  //       ),
-  //     ));
-  //   }
-
-  //   return citytemp;
-  // }
+  
 }
 
 InputDecoration textFiedstyle = InputDecoration(

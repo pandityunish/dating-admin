@@ -23,6 +23,7 @@ class Support extends StatefulWidget {
 
 class _ReligionState extends State<Support> {
   int value = 0;
+  int currentPageIndex = 0;
   var data;
   void getallsupprot() async {
     data = await SearchProfile().getsupports(widget.newUserModel.id);
@@ -36,6 +37,12 @@ class _ReligionState extends State<Support> {
   }
 
   final PageController _pageController = PageController(initialPage: 0);
+
+  void _onPageChanged(int index) {
+    setState(() {
+      currentPageIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -465,7 +472,7 @@ class _ReligionState extends State<Support> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                   data.isEmpty?Center():   GestureDetector(
+                                   data.isEmpty ?Center():   GestureDetector(
                                           onTap: () {
                                             _pageController.previousPage(
                                               duration:
@@ -498,6 +505,7 @@ class _ReligionState extends State<Support> {
                                           width: Get.width * 0.7,
                                           child: PageView.builder(
                                             controller: _pageController,
+                                            onPageChanged: _onPageChanged,
                                             itemCount: data.length,
                                             itemBuilder: (context, index) {
                                               return Column(
@@ -532,12 +540,12 @@ class _ReligionState extends State<Support> {
                                                   ),
                                                  
                                                   Text(
-                                                  "Query Send on ${  DateFormat(
+                                                  "Query-${data.length - index} Send on ${  DateFormat(
                                                             'EEEE MMMM d y H:m')
                                                         .format(DateTime.parse(
                                                                 data[index][
                                                                     "updatedAt"])
-                                                            .toLocal())}"
+                                                            .toLocal())}",style: TextStyle(color: Colors.black,fontSize: 12),
                                                   )
                                                 ],
                                               );
@@ -559,7 +567,7 @@ class _ReligionState extends State<Support> {
                                 ),
                                   if (data.isEmpty) ...[
                                         
-                                      ] else...[
+                                      ] else if (currentPageIndex == 0) ...[
                                 SizedBox(
                                   width: Get.width * 0.6,
                                   child: ElevatedButton(

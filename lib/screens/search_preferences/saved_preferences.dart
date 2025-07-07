@@ -108,44 +108,52 @@ class _SearchPreferencesState extends State<SearchPreferences> {
             }
           },
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               // Value display container
               Container(
                 width: 100,
                 child: (val.isEmpty)
-                    ? Text(
-                        "Add",
-                        style: GoogleFonts.poppins(
-                          decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Add",
+                          style: GoogleFonts.poppins(
+                            decoration: TextDecoration.none,
+                            color: Colors.black38,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      )
+                    )
                     : val.contains("Any")
-                        ? Text(
-                            "Any",
-                            style: GoogleFonts.poppins(
-                              decoration: TextDecoration.none,
-                              color: Colors.black38,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        : SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
+                        ? Align(
+                            alignment: Alignment.centerRight,
                             child: Text(
-                              val.join(
-                                  ', '), // Better formatting than toString()
+                              "Any",
                               style: GoogleFonts.poppins(
                                 decoration: TextDecoration.none,
                                 color: Colors.black38,
+                                fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ))
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                val.join(
+                                    ', '), // Better formatting than toString()
+                                style: GoogleFonts.poppins(
+                                  decoration: TextDecoration.none,
+                                  color: Colors.black38,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
                               ),
-                            ),
-                          ),
+                             ),
+                          )),
               ),
 
               // Arrow icon
@@ -390,7 +398,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -407,7 +415,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 18,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -424,7 +432,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
                                         color: Colors.black38,
-                                        fontSize: 18,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -500,7 +508,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.black38,
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -516,7 +524,7 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                               style: GoogleFonts.poppins(
                                 decoration: TextDecoration.none,
                                 color: Colors.black38,
-                                fontSize: 18,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -1047,10 +1055,10 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                       );
                     }
 
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: Row(
                             children: [
                               GestureDetector(
                                   onTap: () {
@@ -1159,111 +1167,23 @@ class _SearchPreferencesState extends State<SearchPreferences> {
                                       color: main_color)),
                             ],
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 30),
-                            child: SizedBox(
-                              width: 300,
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    shadowColor: MaterialStateColor.resolveWith(
-                                        (states) => Colors.black),
-                                    // padding:
-                                    //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    //         EdgeInsets.symmetric(vertical: 17)),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(60.0),
-                                            side: BorderSide(
-                                              color: borderColor
-                                                  ? main_color
-                                                  : Colors.white,
-                                            ))),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white)),
-                                child: const Text(
-                                  "Save",
-                                  style: TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                onPressed: () async {},
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            child: SizedBox(
-                              width: 300,
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    shadowColor: MaterialStateColor.resolveWith(
-                                        (states) => Colors.black),
-                                    // padding:
-                                    //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    //         EdgeInsets.symmetric(vertical: 17)),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(60.0),
-                                            side: BorderSide(
-                                              color: borderColor
-                                                  ? main_color
-                                                  : Colors.white,
-                                            ))),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white)),
-                                child: const Text(
-                                  "Reset",
-                                  style: TextStyle(
-                                    fontFamily: 'Serif',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                onPressed: () async {},
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            widget.history_save_pref[index].name
-                                    .contains("reset")
-                                ? "Reset by ${widget.history_save_pref[index].name.split(' ')[0]}"
-                                : "Saved by ${widget.history_save_pref[index].name}",
-                            style: const TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Sans-serif'),
-                          ),
-                          Text(
-                            DateFormat('EEEE MMMM d y HH:mm').format(
-                                DateTime.parse(widget
-                                        .history_save_pref[index].createdAt!)
-                                    .toLocal()),
-                            style: const TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Sans-serif'),
-                          ),
-                        ],
-                      ),
+                        ),
+                        
+                      
+                        Text(
+                          widget.history_save_pref[index].name
+                                  .contains("reset")
+                              ? "Reset by ${widget.history_save_pref[index].name.split(' ')[0]} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(widget.history_save_pref[index].createdAt!).toLocal())}"
+                              : "Saved by ${widget.history_save_pref[index].name} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(widget.history_save_pref[index].createdAt!).toLocal())}",
+                          style: const TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Sans-serif'),
+                        ),
+                       SizedBox(height: 10,),
+                      ],
                     );
                   },
                   itemCount: widget.history_save_pref.length,

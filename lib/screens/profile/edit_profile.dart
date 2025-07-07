@@ -116,7 +116,7 @@ class _EditProfileState extends State<EditProfile> {
 
   sliderContiner(String image, String title, String subtitle) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(right: 28),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -280,10 +280,7 @@ class _EditProfileState extends State<EditProfile> {
                       size: 15,
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 15,
-                  )
+                 
                 ],
               )
             ],
@@ -301,674 +298,38 @@ class _EditProfileState extends State<EditProfile> {
     final imageurls = ImageUrls();
 
     return Scaffold(
+       appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Row(
+          children: [
+            BigText(
+              text: "Edit Profile",
+              size: 20,
+              color: main_color,
+              fontWeight: FontWeight.w700,
+            )
+          ],
+        ),
+       
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: main_color,
+            // size: 35,
+          ), // set the icon to the back arrow
+          onPressed: () {
+           Navigator.pop(context);
+          },
+        ),
+   // set the elevation to 10.0
+      ),
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: editdata == null || editdata.isEmpty
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 35, bottom: 15),
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                List<dynamic> images = imageurls.value
-                                    .map((str) => str as dynamic)
-                                    .toList();
-                                Navigator.of(context)
-                                    .pop(images.isNotEmpty ? images[0] : null);
-                              },
-                              child: Icon(
-                                Icons.chevron_left,
-                                size: 35,
-                                color: main_color,
-                              ),
-                            ),
-                            BigText(
-                              text: "Edit Profile",
-                              size: 20,
-                              color: main_color,
-                              fontWeight: FontWeight.w700,
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 28),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Manage Your Profile",
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 3),
-                                  child: BigText(
-                                    text:
-                                        "Your Changes May Take 72 Hours To Visible",
-                                    size: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text("Hide Pics"),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 10)
-                                      .copyWith(right: 20),
-                                  child: Container(
-                                    alignment: Alignment.centerRight,
-                                    height: 35,
-                                    width: 55,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black12),
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: CupertinoSwitch(
-                                      // overrides the default green color of the track
-                                      activeColor: Colors.white,
-                                      // color of the round icon, which moves from right to left
-                                      thumbColor:
-                                          forIos ? main_color : Colors.black12,
-                                      // when the switch is off
-                                      trackColor: forIos
-                                          ? Colors.white
-                                          : Colors.black12,
-                                      // boolean variable value
-                                      value: forIos,
-                                      // changes the state of the switch
-                                      onChanged: (value) {
-                                        setState(() {
-                                          forIos = value;
-                                        });
-                                        HomeService().updateblur(
-                                            email: widget.userSave.email,
-                                            isblur: value);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 40),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ValueListenableBuilder(
-                                  valueListenable: ImageUrls(),
-                                  builder: (BuildContext context, dynamic value,
-                                      Widget? child) {
-                                    final urls = value as List<String>;
-                                    var imageCount = imageurls.length;
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            (imageCount > 0)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 0),
-                                                    num: 0)
-                                                : CustomImageContainer(
-                                                    num: 0,
-                                                    isBlur: forIos,
-                                                  ),
-                                            (imageCount > 1)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 1),
-                                                    num: 1)
-                                                : CustomImageContainer(
-                                                    num: 1,
-                                                    isBlur: forIos,
-                                                  ),
-                                            (imageCount > 2)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 2),
-                                                    num: 2)
-                                                : CustomImageContainer(
-                                                    num: 2,
-                                                    isBlur: forIos,
-                                                  ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            (imageCount > 3)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 3),
-                                                    num: 3)
-                                                : CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    num: 3,
-                                                  ),
-                                            (imageCount > 4)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 4),
-                                                    num: 4)
-                                                : CustomImageContainer(
-                                                    num: 4,
-                                                    isBlur: forIos,
-                                                  ),
-                                            (imageCount > 5)
-                                                ? CustomImageContainer(
-                                                    isBlur: forIos,
-                                                    imageUrl: imageurls
-                                                        .imageUrl(atIndex: 5),
-                                                    num: 5)
-                                                : CustomImageContainer(
-                                                    num: 5,
-                                                    isBlur: forIos,
-                                                  ),
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Column(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 28),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.only(top: 30, bottom: 15),
-                                    child: BigText(
-                                      text: "About Me",
-                                      size: 18,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  print("clicked");
-                                  setState(() {
-                                    aboutUpdateText = true;
-                                  });
-                                },
-                                child: Container(
-                                    // width: 300,
-                                    alignment: Alignment.topLeft,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(blurRadius: 0.05)
-                                        ]),
-                                    margin: EdgeInsets.only(
-                                      left: 28,
-                                      right: 28,
-                                    ),
-                                    padding: EdgeInsets.only(
-                                        left: 7, right: 5, top: 7, bottom: 7),
-                                    child: (aboutUpdateText != true)
-                                        ? ExpandableText(
-                                            (widget.userSave.About_Me == null ||
-                                                    widget.userSave.About_Me ==
-                                                        "")
-                                                ? "Welcome to my profile. I'm here to find someone who appreciates authenticity and kindness. Hope you find what you're looking for."
-                                                : widget.userSave.About_Me!,
-                                            collapseText: 'Less',
-                                            linkColor: main_color,
-                                            expandText: 'More',
-                                            maxLines: 1,
-                                          )
-                                        : TextField(
-                                            controller: aboutmeController,
-                                            minLines: 3,
-                                            maxLength: 300,
-                                            maxLines: 5,
-                                            // maxLengthEnforcement: MaxLengthEnforcement
-                                            //     .enforced, // show error message
-                                            // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',maxLines: 5,
-                                            style: TextStyle(
-                                                fontFamily: 'Sans-serif',
-                                                fontSize: 17),
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              contentPadding:
-                                                  EdgeInsets.only(top: 0.0),
-                                              // border: OutlineInputBorder(),
-                                              hintText: '',
-                                            ),
-                                          )),
-                              ),
-                            ]),
-                          ),
-                          Container(
-                            child: Column(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 28),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.only(top: 30, bottom: 15),
-                                    child: BigText(
-                                      text: "My Preference",
-                                      size: 18,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  // partnerPrefUpdate();
-                                  setState(() {
-                                    partnerUpdateText = true;
-                                  });
-                                },
-                                child: Container(
-                                  // width: 310,
-                                  alignment: Alignment.topLeft,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      color: Colors.white,
-                                      boxShadow: [BoxShadow(blurRadius: 0.05)]
-                                      // color: Color(0xFFFFE9E6).withOpacity(0.25)
-                                      ),
-                                  margin: EdgeInsets.only(
-                                    left: 28,
-                                    right: 28,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                      left: 7, right: 7, top: 7, bottom: 7),
-                                  child: (partnerUpdateText != true)
-                                      ? ExpandableText(
-                                          (widget.userSave.Partner_Prefs ==
-                                                      null ||
-                                                  widget.userSave
-                                                          .Partner_Prefs ==
-                                                      "")
-                                              ? "I am looking for a meaningful connection based on mutual respect, trust and shared values. Someone who is ready to grow and learn with me on this journey I would like to Connect"
-                                              : widget.userSave.Partner_Prefs!,
-                                          collapseText: 'Less',
-                                          linkColor: main_color,
-                                          expandText: 'More',
-                                          maxLines: 1,
-                                        )
-                                      : TextField(
-                                          controller: partnerPrefController,
-                                          maxLength: 300,
-                                          minLines: 3,
-                                          maxLines: 5,
-                                          style: TextStyle(
-                                              fontFamily: 'Sans-serif',
-                                              fontSize: 17),
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            contentPadding:
-                                                EdgeInsets.only(top: 0.0),
-                                            hintText: 'Partner Prefs',
-                                          ),
-                                        ),
-                                ),
-                              ),
-                            ]),
-                          ),
-                          Container(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 28),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 15, bottom: 15),
-                                  child: BigText(
-                                    text: "Personal Details",
-                                    size: 18,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          // SingleChildScrollView(
-                          // child:
-                          Column(
-                            children: [
-                              nameContainer('images/icons/latitude.png',
-                                  "Latitude", "${widget.userSave.adminlng}"),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/latitude.png',
-                                  "Longitude", "${widget.userSave.adminlat}"),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              // nameContainer('images/icons/name.png', "City",
-                              //     "${widget.userSave.city}"),
-                              sliderContiner("images/icons/location.png",
-                                  "L&L city", "${widget.userSave.city},"),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              listofadminpermissions!.contains(
-                                          "Can See user’s full name") ||
-                                      listofadminpermissions!.contains("All")
-                                  ? nameContaineblue(
-                                      'images/icons/name.png',
-                                      "Name",
-                                      "${widget.userSave.name[0].toUpperCase() + widget.userSave.name!.substring(1)} ${widget.userSave.surname![0].toUpperCase() + widget.userSave.surname!.substring(1)}")
-                                  : nameContaineblue(
-                                      'images/icons/name.png',
-                                      "Name",
-                                      "${widget.userSave.name[0]} ${widget.userSave.surname}"),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              listofadminpermissions!
-                                          .contains("Can See email ID") ||
-                                      listofadminpermissions!.contains("All")
-                                  ? emailContainer(
-                                      'images/icons/email.png',
-                                      "Email",
-                                      "${widget.userSave.email}",
-                                      () => {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditEmail(
-                                                    email:
-                                                        widget.userSave.email,
-                                                  ),
-                                                ))
-                                          })
-                                  : Container(),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              listofadminpermissions!
-                                          .contains("Can See mobile number") ||
-                                      listofadminpermissions!.contains("All")
-                                  ? nameContainer('images/icons/name.png',
-                                      "Phone No.", "${widget.userSave.phone}")
-                                  : Container(),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              // nameContainer('images/icons/contact.png', "Contact No",
-                              //     "${widget.userSave.phone}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/calender.png',
-                                  "Date of Birth", dob),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer(
-                                  'images/icons/calender.png',
-                                  "Time of Birth",
-                                  widget.userSave.timeofbirth!),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        ImageIcon(
-                                          AssetImage(
-                                              'images/icons/location.png'),
-                                          color: main_color,
-                                        ),
-                                        Container(
-                                            margin: EdgeInsets.only(left: 5),
-                                            child: BigText(
-                                                text: "Place of birth")),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 5),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          reverse: true,
-                                          child: Text(
-                                            "${widget.userSave.placeofbirth}",
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(fontSize: 15),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/gender.png', "Gender",
-                                  "${widget.userSave.gender}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/religion.png',
-                                  "Religion", "${widget.userSave.religion}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              (widget.userSave.religion == "Hindu")
-                                  ? nameContainer(
-                                      'images/icons/kundli.png',
-                                      "KundliDosh",
-                                      "${widget.userSave.KundaliDosh}")
-                                  : Container(),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer(
-                                  'images/icons/marital_status.png',
-                                  "Marital Status",
-                                  "${widget.userSave.MartialStatus}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/food.png', "Diet",
-                                  "${widget.userSave.Diet}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/drink.png', "Drink",
-                                  "${widget.userSave.Drink}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/smoke.png', "Smoke",
-                                  "${widget.userSave.Smoke}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer(
-                                  'images/icons/disability.png',
-                                  "Disability With Person",
-                                  "${widget.userSave.Disability}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/height.png', "Height",
-                                  "${widget.userSave.Height}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/education.png',
-                                  "Education", "${widget.userSave.Education}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer(
-                                  'images/icons/profession_suitcase.png',
-                                  "Profession",
-                                  "${widget.userSave.Profession}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              nameContainer('images/icons/hand_rupee.png',
-                                  "Income", "${widget.userSave.Income}"),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(left: 25, right: 25),
-                                margin: EdgeInsets.only(bottom: 5),
-                                child: Column(children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ImageIcon(
-                                            AssetImage(
-                                                'images/icons/location.png'),
-                                            color: main_color,
-                                          ),
-                                          Container(
-                                              margin: EdgeInsets.only(left: 5),
-                                              child: BigText(text: "Address")),
-                                        ],
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Text(
-                                            "${widget.userSave.Location},${widget.userSave.state},${widget.userSave.country}",
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(fontSize: 15),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ]),
-                              )
-                            ],
-                          ),
-                          // ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop;
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10, bottom: 10),
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: 300,
-                                height: 50,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      shadowColor:
-                                          MaterialStateColor.resolveWith(
-                                              (states) => Colors.black),
-                                      // padding:
-                                      //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                      //         EdgeInsets.symmetric(vertical: 17)),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(60.0),
-                                              side: BorderSide(
-                                                color: borderColor
-                                                    ? main_color
-                                                    : Colors.white,
-                                              ))),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white)),
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(
-                                      fontFamily: 'Serif',
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: (savedata)
-                                          ? main_color
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    // print(imageurls.value);
-                                    saveData(imageurls.value
-                                        .map((str) => str as dynamic)
-                                        .toList());
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ],
+              ?  Center(
+                  child: CircularProgressIndicator(
+                    color: main_color,
                   ),
                 )
               : PageView.builder(
@@ -1001,33 +362,6 @@ class _EditProfileState extends State<EditProfile> {
                       return SingleChildScrollView(
                         child: Column(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 35, bottom: 15),
-                              padding: EdgeInsets.only(left: 15, right: 15),
-                              child: Row(
-                                children: [
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Icon(
-                                      Icons.chevron_left,
-                                      size: 35,
-                                      color: main_color,
-                                    ),
-                                  ),
-                                  BigText(
-                                    text: "Edit Profile",
-                                    size: 20,
-                                    color: main_color,
-                                    fontWeight: FontWeight.w700,
-                                  )
-                                ],
-                              ),
-                            ),
                             Container(
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1077,24 +411,14 @@ class _EditProfileState extends State<EditProfile> {
                                               width: 55,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                    color: Colors.black12),
+                                                    color: Colors.white),
                                                 borderRadius:
                                                     BorderRadius.circular(30.0),
                                               ),
                                               child: CupertinoSwitch(
-                                                activeColor: Colors.white,
-                                                thumbColor: widget.userSave!
-                                                        .imageurls!.isNotEmpty
-                                                    ? (forIos
-                                                        ? main_color
-                                                        : Colors.black12)
-                                                    : Colors.grey,
-                                                trackColor: widget.userSave!
-                                                        .imageurls!.isNotEmpty
-                                                    ? (forIos
-                                                        ? Colors.white
-                                                        : Colors.black12)
-                                                    : Colors.grey,
+                                               thumbColor: userSave.imageUrls!.isNotEmpty
+                                    ? (forIos ? main_color : Colors.white)
+                                    : Color(0xffD0D0D0),
                                                 value: widget.userSave!
                                                         .imageurls!.isNotEmpty
                                                     ? forIos
@@ -1286,7 +610,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ? Center()
                                         : Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 10),
+                                                horizontal: 10, vertical: 2),
                                             child: SizedBox(
                                               width: Get.width,
                                               child: Row(
@@ -1294,8 +618,9 @@ class _EditProfileState extends State<EditProfile> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   IconButton(
+                                                    color: main_color ,
                                                       icon: Icon(Icons
-                                                          .arrow_forward_ios),
+                                                          .arrow_forward_ios,size: 17,),
                                                       onPressed: () => {
                                                             _pageController
                                                                 .nextPage(
@@ -1319,7 +644,7 @@ class _EditProfileState extends State<EditProfile> {
                                             alignment: Alignment.centerLeft,
                                             child: Container(
                                               margin: EdgeInsets.only(
-                                                  top: 30, bottom: 15),
+                                                  top: 5, bottom: 15),
                                               child: BigText(
                                                 text: "About Me",
                                                 size: 18,
@@ -1370,6 +695,7 @@ class _EditProfileState extends State<EditProfile> {
                                                       maxLines: 1,
                                                     )
                                                   : TextField(
+                                                      cursorColor: main_color,
                                                       controller:
                                                           aboutmeController,
                                                       minLines: 3,
@@ -1458,6 +784,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     maxLines: 1,
                                                   )
                                                 : TextField(
+                                                      cursorColor: main_color,
                                                     controller:
                                                         partnerPrefController,
                                                     maxLength: 300,
@@ -1602,6 +929,18 @@ class _EditProfileState extends State<EditProfile> {
                                                 "Contact No.",
                                                 "${widget.userSave.phone.substring(0, 3)}-${widget.userSave.phone.substring(3)}")
                                             : Container(),
+                                              const SizedBox(
+                                          height: 2,
+                                        ),
+                                        listofadminpermissions!.contains(
+                                                    "Can See Phone") ||
+                                                listofadminpermissions!
+                                                    .contains("All")
+                                            ? nameContaineblue(
+                                                'images/icons/newcontact.png',
+                                                "Email Contact No.",
+                                                "${widget.userSave.phone.substring(0, 3)}-${widget.userSave.phone.substring(3)}")
+                                            : Container(),
                                         const SizedBox(
                                           height: 2,
                                         ),
@@ -1679,10 +1018,11 @@ class _EditProfileState extends State<EditProfile> {
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        nameContainer(
-                                            'images/icons/disability.png',
+                                        sliderContiner(
+                                            "images/icons/disability.png",
                                             "Disability With Person",
                                             "${widget.userSave.Disability}"),
+                                     
                                         SizedBox(
                                           height: 2,
                                         ),
@@ -1730,11 +1070,11 @@ class _EditProfileState extends State<EditProfile> {
                                             top: 10, bottom: 10),
                                         alignment: Alignment.center,
                                         child: SizedBox(
-                                          width: 300,
+                                          width: MediaQuery.of(context).size.width * 0.9,
                                           height: 50,
                                           child: ElevatedButton(
                                             style: ButtonStyle(
-                                                shadowColor: MaterialStateColor
+                                                shadowColor: WidgetStateColor
                                                     .resolveWith((states) =>
                                                         Colors.black),
                                                 // padding:
@@ -1784,33 +1124,7 @@ class _EditProfileState extends State<EditProfile> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 35, bottom: 15),
-                            padding: EdgeInsets.only(left: 15, right: 15),
-                            child: Row(
-                              children: [
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Icon(
-                                    Icons.chevron_left,
-                                    size: 35,
-                                    color: main_color,
-                                  ),
-                                ),
-                                BigText(
-                                  text: "Edit Profile",
-                                  size: 20,
-                                  color: main_color,
-                                  fontWeight: FontWeight.w700,
-                                )
-                              ],
-                            ),
-                          ),
+                         
                           Container(
                             child: Column(children: [
                               Padding(
@@ -1855,21 +1169,17 @@ class _EditProfileState extends State<EditProfile> {
                                         width: 55,
                                         decoration: BoxDecoration(
                                           border:
-                                              Border.all(color: Colors.black12),
+                                              Border.all(color: Colors.white),
                                           borderRadius:
                                               BorderRadius.circular(30.0),
                                         ),
                                         child: CupertinoSwitch(
+                                          activeTrackColor: Color(0xffD0D0D0),
+                                          
                                           // overrides the default green color of the track
-                                          activeColor: Colors.white,
-                                          // color of the round icon, which moves from right to left
-                                          thumbColor: editdata[index].isBlur
-                                              ? main_color
-                                              : Colors.black12,
-                                          // when the switch is off
-                                          trackColor: forIos
-                                              ? Colors.white
-                                              : Colors.black12,
+                                           thumbColor: userSave.imageUrls!.isNotEmpty
+                                    ? (forIos ? main_color : Colors.white)
+                                    : Color(0xffD0D0D0),
                                           // boolean variable value
                                           value: editdata[index].isBlur,
                                           // changes the state of the switch
@@ -2022,7 +1332,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                    horizontal: 10, vertical: 2),
                                 child: SizedBox(
                                   width: Get.width,
                                   child: Row(
@@ -2032,7 +1342,7 @@ class _EditProfileState extends State<EditProfile> {
                                       editdata[index] == 0
                                           ? Center()
                                           : IconButton(
-                                              icon: Icon(Icons.arrow_back_ios),
+                                              icon: Icon(Icons.arrow_back_ios,size: 17,color: main_color,),
                                               onPressed: () => {
                                                     _pageController
                                                         .previousPage(
@@ -2042,7 +1352,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     )
                                                   }),
                                       IconButton(
-                                          icon: Icon(Icons.arrow_forward_ios),
+                                          icon: Icon(Icons.arrow_forward_ios,size: 17,color: main_color,),
                                           onPressed: () {
                                             if (index == 1) {
                                               SearchProfile()
@@ -2082,7 +1392,7 @@ class _EditProfileState extends State<EditProfile> {
                                       alignment: Alignment.centerLeft,
                                       child: Container(
                                         margin: EdgeInsets.only(
-                                            top: 30, bottom: 15),
+                                            top: 10, bottom: 15),
                                         child: BigText(
                                           text: "About Me",
                                           size: 18,
@@ -2132,6 +1442,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 maxLines: 1,
                                               )
                                             : TextField(
+                                                      cursorColor: main_color,
                                                 controller: aboutmeController,
                                                 minLines: 3,
                                                 maxLength: 300,
@@ -2211,6 +1522,7 @@ class _EditProfileState extends State<EditProfile> {
                                               maxLines: 1,
                                             )
                                           : TextField(
+                                                      cursorColor: main_color,
                                               controller: partnerPrefController,
                                               maxLength: 300,
                                               minLines: 3,
@@ -2434,12 +1746,12 @@ class _EditProfileState extends State<EditProfile> {
                                   margin: EdgeInsets.only(top: 10, bottom: 10),
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    width: 300,
+                                    width: MediaQuery.of(context).size.width * 0.9,
                                     height: 50,
                                     child: ElevatedButton(
                                       style: ButtonStyle(
                                           shadowColor:
-                                              MaterialStateColor.resolveWith(
+                                              WidgetStateColor.resolveWith(
                                                   (states) => Colors.black),
                                           // padding:
                                           //     MaterialStateProperty.all<EdgeInsetsGeometry?>(
@@ -2456,7 +1768,7 @@ class _EditProfileState extends State<EditProfile> {
                                                         : Colors.white,
                                                   ))),
                                           backgroundColor:
-                                              MaterialStateProperty.all<Color>(
+                                              WidgetStateProperty.all<Color>(
                                                   Colors.white)),
                                       child: Text(
                                         "Save",
@@ -2620,7 +1932,7 @@ class _EditProfileState extends State<EditProfile> {
                 content: SnackBarContent(
                   error_text: "Update Successfully",
                   appreciation: "",
-                  icon: Icons.check,
+                  icon: Icons.check_circle,
                   sec: 2,
                 ),
                 backgroundColor: Colors.transparent,

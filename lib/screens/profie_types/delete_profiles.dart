@@ -150,8 +150,8 @@ class _SlideProfileState extends State<DeleteProfile> {
   final int itemsPerPage = 10;
   getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
-            (ConnectivityResult result) async {
-              print("Shivam is Connected");
+            (List<ConnectivityResult> results) async {
+              print("Connected to: $results");
               isDeviceConnected =
                   await InternetConnectionChecker().hasConnection;
               if (!isDeviceConnected && isAlertSet == false) {
@@ -159,7 +159,7 @@ class _SlideProfileState extends State<DeleteProfile> {
                 if (!mounted) return;
                 setState(() => isAlertSet = true);
               }
-            } as void Function(List<ConnectivityResult> event)?,
+            },
           );
   getUserList() async {
     load = true;
@@ -240,13 +240,16 @@ class _SlideProfileState extends State<DeleteProfile> {
                         itemBuilder: (BuildContext context, int index) {
                           return Column(children: <Widget>[
                             Expanded(
-                              child: ProfilePage(
+                              child: 
+                              ProfilePage(
                                 // list: newuserlists,
                                 index: "true",
                                 isDelete: "true",
                                 type: "true",
+
                                 userSave: allusers[index],
                                 controller: controller,
+
                                 // pushchat: pushChatPage
                               ),
                             ),
@@ -254,150 +257,134 @@ class _SlideProfileState extends State<DeleteProfile> {
                         },
                         // itemCount: allusers.length,
                       ),
-            Positioned(
-              right: MediaQuery.of(context).size.width * 0.05,
-              top: MediaQuery.of(context).size.height * 0.04,
-              child: IconButton(
-                icon: Stack(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(3),
-                      child: const Icon(
-                        // Icons.more_vert_outlined,//for three dots
-                        FontAwesomeIcons.bell, //for three lines
-                        size: 25,
-                        color: Colors.white,
-                        shadows: <Shadow>[
-                          Shadow(color: Colors.black, blurRadius: 15.0)
-                        ],
-                      ),
-                    ),
-                    if (_unreadCount >= 0)
-                      Positioned(
-                        // right: 2.0,
-                        // top: 1.0,
-                        right: 1.0,
-                        top: 1.0,
-                        child: numofnoti == 0
-                            ? Text("")
-                            : Container(
-                                height: 18,
-                                width: 18,
-                                padding: EdgeInsets.all(2.0),
-                                decoration: BoxDecoration(
-                                  color: main_color,
-                                  borderRadius: BorderRadius.circular(9.0),
-                                ),
-                                constraints: BoxConstraints(
-                                  minWidth: 18.0,
-                                  minHeight: 18.0,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${numofnoti}+',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ),
-                  ],
-                ),
-                onPressed: () {
-                  NotificationFunction.setNotification(
-                    "admin",
-                    "${userSave.name!.substring(0, 1)} ${userSave.surname} ${userSave.uid?.substring(userSave.uid!.length - 5)} SEEN NOTIFICATIONS",
-                    'notificationbell',
-                  );
-                  NotiService().updatenoti();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const NavHome()));
-                },
-              ),
-            ),
-            Positioned(
-                right: 30.0,
-                top: 100.0,
+        
+          Positioned(
+                right: 5.0,
+                top: 75.0,
                 child: GestureDetector(
                   onTap: () {
+                    SearchProfile().addtoadminnotification(
+                        userid: "2345",
+                        useremail: "lksjflajk",
+                        userimage: "",
+                        title: "${userSave.displayName} CLICK ON RIGHT MENU",
+                        email: userSave.email!,
+                        subtitle: "");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const FilterC()));
-
-                    // Get.to(() => const MyProfile(),
-                    //     transition: Transition.zoom);
                   },
-                  child: Icon(
-                    FontAwesomeIcons.filter,
-                    color: Colors.white,
-                    shadows: <Shadow>[
-                      Shadow(color: Colors.black, blurRadius: 10.0)
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: const Icon(
+                      FontAwesomeIcons.filter,
+                      color: Colors.white,
+                      size: 18,
+                      shadows: <Shadow>[
+                        Shadow(color: Colors.black, blurRadius: 10.0)
+                      ],
+                    ),
                   ),
                 )),
             Positioned(
-                right: 30.0,
-                top: 250,
+                right: 15.0,
+                top: 220,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SortProfileScreen()));
-
-                    // Get.to(() => const MyProfile(),
-                    //     transition: Transition.zoom);
+                    if (listofadminpermissions!.contains("Can See Sort") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title: "${userSave.displayName} CLICK ON SORT",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SortProfileScreen()));
+                    }
                   },
-                  child: Icon(
+                  child: const Icon(
                     FontAwesomeIcons.sort,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
                   ),
                 )),
             Positioned(
-                right: 30.0,
-                top: 150.0,
+                right: 15.0,
+                top: 130.0,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Search()));
+                    print(listofadminpermissions);
+                    if (listofadminpermissions!
+                            .contains("Can See Search Bar") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON ADMIN SEARCH BAR ",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Search()));
+                    }
 
                     // Get.to(() => const MyProfile(),
                     //     transition: Transition.zoom);
                   },
-                  child: Icon(
+                  child: const Icon(
                     FontAwesomeIcons.search,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],
                   ),
                 )),
             Positioned(
-                right: 30.0,
-                top: 200.0,
+                right: 15.0,
+                top: 170.0,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LetsStart()));
-
+                    if (listofadminpermissions!
+                            .contains("Can Create Profile") ||
+                        listofadminpermissions!.contains("All")) {
+                      SearchProfile().addtoadminnotification(
+                          userid: "",
+                          useremail: userSave.email!,
+                          userimage: userSave.imageUrls!.isEmpty
+                              ? ""
+                              : userSave.imageUrls![0],
+                          title:
+                              "${userSave.displayName} CLICK ON PROFILE CREATE BY ADMIN",
+                          email: userSave.email!,
+                          subtitle: "");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LetsStart()));
+                    }
                     // Get.to(() => const MyProfile(),
                     //     transition: Transition.zoom);
                   },
-                  child: Icon(
+                  child: const Icon(
                     FontAwesomeIcons.userEdit,
                     color: Colors.white,
+                    size: 18,
                     shadows: <Shadow>[
                       Shadow(color: Colors.black, blurRadius: 10.0)
                     ],

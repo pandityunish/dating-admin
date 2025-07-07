@@ -7,6 +7,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/Assets/notification_pop.dart';
 import 'package:matrimony_admin/Auth/auth.dart';
+import 'package:matrimony_admin/netcheck.dart';
 import 'package:matrimony_admin/screens/Main_Screen.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,7 +16,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'Assets/notification_service.dart';
 import 'globalVars.dart' as glb;
 import 'globalVars.dart';
@@ -33,6 +33,8 @@ String? about;
 // String? fcmToken;
 
 Future<void> main(context) async {
+  Get.put(InternetController(), permanent: true);
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await ScreenshotDetection.initialize();
@@ -220,25 +222,25 @@ class _MainState extends State<Main> {
       showDialogBox();
       if (mounted) setState(() => isAlertSet = true);
     }
-    // subscription = Connectivity().onConnectivityChanged.listen(
-    //       (ConnectivityResult result) async {
-    //         // Ensure the widget is still mounted
-    //         if (!mounted) return;
+    subscription = Connectivity().onConnectivityChanged.listen(
+          (List<ConnectivityResult> results) async {
+            // Ensure the widget is still mounted
+            if (!mounted) return;
 
-    //         print("Shivam is Connected: $result");
-    //         isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            print("Connected to: $results");
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
 
-    //         // Show alert if the device is disconnected and no alert is set
-    //         if (!isDeviceConnected && !isAlertSet) {
-    //           showDialogBox();
-    //           if (mounted)
-    //             setState(() => isAlertSet = true); // Update state if mounted
-    //         } else if (isDeviceConnected && isAlertSet) {
-    //           // Reset alert state when the connection is restored
-    //           if (mounted) setState(() => isAlertSet = false);
-    //         }
-    //       } as void Function(List<ConnectivityResult> event)?,
-    //     );
+            // Show alert if the device is disconnected and no alert is set
+            if (!isDeviceConnected && !isAlertSet) {
+              showDialogBox();
+              if (mounted)
+                setState(() => isAlertSet = true); // Update state if mounted
+            } else if (isDeviceConnected && isAlertSet) {
+              // Reset alert state when the connection is restored
+              if (mounted) setState(() => isAlertSet = false);
+            }
+          },
+        );
   }
 
   connectivityCheck() async {
@@ -283,6 +285,19 @@ class _MainState extends State<Main> {
     return GetMaterialApp(
       theme: ThemeData(
           useMaterial3: false,
+          primaryColor: main_color,
+          primarySwatch: MaterialColor(main_color.value, {
+            50: const Color(0xFFE3F5FD),
+            100: const Color(0xFFB8E6FA),
+            200: const Color(0xFF8AD6F7),
+            300: const Color(0xFF5CC5F4),
+            400: const Color(0xFF38B9F4), // Same as main_color
+            500: const Color(0xFF14ADF2),
+            600: const Color(0xFF12A6E0),
+            700: const Color(0xFF0E9CCB),
+            800: const Color(0xFF0B93B7),
+            900: const Color(0xFF068296),
+          }),
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(color: Colors.white, elevation: 0)),
       title: 'Couple Mate',
@@ -357,14 +372,25 @@ class _SecondMainState extends State<SecondMain> {
     return GetMaterialApp(
       theme: ThemeData(
           useMaterial3: false,
+          primaryColor: main_color,
+          primarySwatch: MaterialColor(main_color.value, {
+            50: const Color(0xFFE3F5FD),
+            100: const Color(0xFFB8E6FA),
+            200: const Color(0xFF8AD6F7),
+            300: const Color(0xFF5CC5F4),
+            400: const Color(0xFF38B9F4), // Same as main_color
+            500: const Color(0xFF14ADF2),
+            600: const Color(0xFF12A6E0),
+            700: const Color(0xFF0E9CCB),
+            800: const Color(0xFF0B93B7),
+            900: const Color(0xFF068296),
+          }),
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
           expansionTileTheme: ExpansionTileThemeData(
             iconColor: main_color,
             textColor: main_color,
-          )
-          //  colorScheme: ColorScheme.fromSeed(seedColor: main_color,primary: main_color),
-          ),
+          )),
       debugShowCheckedModeBanner: false,
       home: SlideProfile(),
       // routes: {

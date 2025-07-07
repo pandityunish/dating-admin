@@ -29,7 +29,12 @@ class _ReligionState extends State<Disability> {
     return ElevatedButton(
       onPressed: () {
         if(text=="Other"){
-Get.to(MannualDisabiligy());
+            Navigator.push(
+            context,
+            PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 0),
+                reverseTransitionDuration: Duration(milliseconds: 0),
+                pageBuilder: (_, __, ___) => const MannualDisabiligy()));
         }else{
             setState(() {
           DisabilityStatus = text;

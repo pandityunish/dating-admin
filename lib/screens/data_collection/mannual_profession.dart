@@ -37,57 +37,87 @@ class _MannulProfessionState extends State<MannulProfession> {
                 children: [
                   Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 3),
-                        child: SizedBox(
-                          height: 65,
-                          child: TextField(
-                            // height: 20.0,
-
-                            maxLength: 15,
-                            maxLines: 1,
-
-                            maxLengthEnforcement: MaxLengthEnforcement
-                                .enforced, // show error message
-                            // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
-
-                            focusNode: _focusNode1,
-                            controller: name,
-                            decoration: InputDecoration(
+                        Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.5,
+                            )),
+                        child: TextFormField(
+                          controller: name,
+                          maxLength: 15,
+                          maxLines: 1,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                              border: InputBorder.none,
                               hintText: "Enter Profession",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                    color: Colors.grey), // Normal border
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                    color: main_color,
-                                    width: 1.5), // Focused border
-                              ),
-                            ),
-                            textInputAction: TextInputAction.done,
-                            onChanged: (name) => {},
-                          ),
+                              hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
                         ),
                       ),
+                    ),
+                  ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       horizontal: 10, vertical: 3),
+                      //   child: SizedBox(
+                      //     height: 65,
+                      //     child: TextField(
+                      //       // height: 20.0,
+
+                      //       maxLength: 15,
+                      //       maxLines: 1,
+
+                      //       maxLengthEnforcement: MaxLengthEnforcement
+                      //           .enforced, // show error message
+                      //       // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
+
+                      //       focusNode: _focusNode1,
+                      //       controller: name,
+                      //       decoration: InputDecoration(
+                      //            contentPadding: const EdgeInsets.only(
+                      //                   left: 20, bottom: 10),
+                      //         hintText: "Enter Profession",
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(30),
+                      //         ),
+                      //         enabledBorder: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(30),
+                      //           borderSide: BorderSide(
+                      //               color: Colors.grey), // Normal border
+                      //         ),
+                      //         focusedBorder: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(30),
+                      //           borderSide: BorderSide(
+                      //               color: main_color,
+                      //               width: 1.5), // Focused border
+                      //         ),
+                      //       ),
+                      //       textInputAction: TextInputAction.done,
+                      //       onChanged: (name) => {},
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Container(
                     // margin: EdgeInsets.only(left: 15),
                     width: MediaQuery.of(context).size.width * 0.9,
+                    height: 48,
                     child: ElevatedButton(
                         style: ButtonStyle(
                             shadowColor: MaterialStateColor.resolveWith(
                                 (states) => Colors.black),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    EdgeInsets.symmetric(vertical: 15)),
+                          
                             shape: MaterialStateProperty
                                 .all<RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

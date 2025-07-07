@@ -293,92 +293,32 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
               ? ""
               : imageurls.imageUrl(atIndex: num);
 
-          return (!imagepicked)
+          return   (!imagepicked)
               ? (imageCount <= num)
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: (imageUrl == "")
-                          ? Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: FloatingActionButton(
-                                heroTag: "btn$num",
-                                onPressed: onPressed,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.grey,
-                                ),
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              height: 100,
-                              width: 100,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    // child: Image.network(url!, fit: BoxFit.cover)
-                                    decoration: new BoxDecoration(
-                                      image: new DecorationImage(
-                                        image: NetworkImage(url!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      // make sure we apply clip it properly
-                                      child: widget.isBlur == true
-                                          ? BackdropFilter(
-                                              filter: ImageFilter.blur(
-                                                  sigmaX: 10, sigmaY: 10),
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                color: Colors.grey
-                                                    .withOpacity(0.1),
-                                              ),
-                                            )
-                                          : Center(),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          onPressed2(url);
-                                        },
-                                        child: Icon(
-                                          Icons.abc,
-                                          color: Colors.white,
-                                          shadows: <Shadow>[
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 15.0)
-                                          ],
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                          onTap: deleteImg,
-                                          child: Image.asset(
-                                              "images/icons/delete.png"))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                    )
-                  : Container(
+                      child:
+                          //(imageUrl == "")
+                          //     ?
+                          SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: FloatingActionButton(
+                          heroTag: "btn$num",
+                          onPressed: onPressed,
+                          child: const Icon(
+                            Icons.add,
+                            color: Color(0xFF888888),
+                          ),
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ))
+                  : SizedBox(
                       height: 100,
                       width: 100,
                       child: Stack(
@@ -398,10 +338,16 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                               child: widget.isBlur == true
                                   ? BackdropFilter(
                                       filter: ImageFilter.blur(
-                                          sigmaX: 10, sigmaY: 10),
+                                          sigmaX: 2, sigmaY: 2),
                                       child: Container(
                                         alignment: Alignment.center,
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey
+                                            .withOpacity(0.1), // Slight overlay
+                                        child: Icon(
+                                          Icons.lock, // Lock icon
+                                          size: 30, // Icon size
+                                          color: main_color, // Icon color
+                                        ),
                                       ),
                                     )
                                   : Center(),
@@ -409,20 +355,42 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
+                                horizontal: 4, vertical: 3),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: () {
-                                    onPressed2(url);
-                                  },
-                                  child: Image.asset("images/icons/edit.png"),
-                                ),
+                                    onTap: () {
+                                      onPressed2(url!);
+                                    },
+                                    child: Image.asset("images/icons/edit.png",
+                                        color: Colors.grey,
+                                        colorBlendMode: BlendMode.srcATop,
+                                        width: 18,
+                                        height: 18)
+
+                                    // Icon(
+                                    //   Icons.edit_square,
+                                    //   color: Colors.white,
+                                    //   size: 18,
+                                    //   shadows: <Shadow>[
+                                    //     Shadow(
+                                    //         color: Colors.black, blurRadius: 15.0)
+                                    //   ],
+                                    // ),
+                                    ),
                                 GestureDetector(
                                     onTap: deleteImg,
                                     child:
-                                        Image.asset("images/icons/delete.png"))
+                                        Image.asset(
+                                          "images/icons/delete.png",
+                                          color: Colors.grey,
+                                          colorBlendMode: BlendMode.srcATop,
+                                          width: 18,
+                                          height: 18,
+                                        ),
+                                
+                                    )
                               ],
                             ),
                           )
@@ -430,10 +398,19 @@ class _CustomImageContainerState extends State<CustomImageContainer> {
                       ),
                     )
               : Container(
-                  height: 75,
-                  width: 75,
-                  child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(main_color)),
+                  height: 100,
+                  width: 100,
+                  color: Colors.white,
+                  child: Center(
+                    child: SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(main_color),
+                        strokeWidth: 3,
+                      ),
+                    ),
+                  ),
                 );
         });
   }

@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:matrimony_admin/common/widgets/custom_toggle_switch.dart';
 import 'package:matrimony_admin/models/admin_search_model.dart';
 import 'package:matrimony_admin/models/new_user_model.dart';
 
@@ -18,6 +20,7 @@ import 'package:matrimony_admin/screens/navigation/admin_options/user_search/cir
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:matrimony_admin/screens/profile/location_searching.dart';
 import 'package:matrimony_admin/screens/service/home_service.dart';
+import 'package:ticker_text/ticker_text.dart';
 import '../Assets/Error.dart';
 import '../Assets/ayushWidget/big_text.dart';
 import '../globalVars.dart';
@@ -175,8 +178,8 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -192,8 +195,8 @@ class _SearchState extends State<Search> {
                                         1, val.toString().length - 1),
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
+                                        color: newtextColor,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -209,16 +212,16 @@ class _SearchState extends State<Search> {
                                     "${val[0]} - ${val[1]}",
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
+                                        color: newtextColor,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               )),
                         ),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -286,8 +289,8 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -295,52 +298,77 @@ class _SearchState extends State<Search> {
                           val[1].isNotEmpty &&
                           val[2].isNotEmpty)
                       ? SizedBox(
-                          width: Get.width * 0.2,
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              "${val[0][0].toString()},${val[1][0].toString()},${val[2][0].toString()}",
-                              style: GoogleFonts.poppins(
-                                decoration: TextDecoration.none,
-                                color: Colors.black38,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        )
-                      : (val[0].isNotEmpty && val[1].isNotEmpty)
-                          ? SizedBox(
-                              width: Get.width * 0.2,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  "${val[0][0].toString()},${val[1][0].toString()}",
-                                  style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
+                            width: Get.width * 0.2,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     "${val[0][0].toString()},${val[1][0].toString()},${val[2][0].toString()}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
                                 ),
-                              ),
-                            )
+                          
+                          ) 
+                      : (val[0].isNotEmpty && val[1].isNotEmpty)
+                          ? SizedBox(
+                            width: Get.width * 0.2,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                    "${val[0][0].toString()},${val[1][0].toString()}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ) 
                           : (val[0].isNotEmpty && val[2].isNotEmpty)
                               ? SizedBox(
                                   width: Get.width * 0.2,
                                   child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    child: Text(
-                                      "${val[0][0].toString()},${val[2][0].toString()}",
-                                      style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                                    child: TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                    "${val[0][0].toString()},${val[2][0].toString()}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
-                                )
+                                ),
+                                      
+                                  ))
                               : (val[0].isNotEmpty)
                                   ? Text(
                                       (val[0].length > 1)
@@ -348,8 +376,8 @@ class _SearchState extends State<Search> {
                                           : val[0][0].toString(),
                                       style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
+                                        color: newtextColor,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     )
@@ -360,8 +388,8 @@ class _SearchState extends State<Search> {
                                               : val[1][0].toString(),
                                           style: GoogleFonts.poppins(
                                               decoration: TextDecoration.none,
-                                              color: Colors.black38,
-                                              fontSize: 14,
+                                              color: newtextColor,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w400),
                                         )
                                       : Text(
@@ -370,13 +398,13 @@ class _SearchState extends State<Search> {
                                               : val[2][0].toString(),
                                           style: GoogleFonts.poppins(
                                               decoration: TextDecoration.none,
-                                              color: Colors.black38,
-                                              fontSize: 14,
+                                              color: newtextColor,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w400),
                                         ),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -432,56 +460,44 @@ class _SearchState extends State<Search> {
             }
           },
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               (val.isEmpty)
                   ? Text(
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
-                  : (head == "Location")
-                      ? Container(
-                          width: 150,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    val.toString().substring(
-                                        1, val.toString().length - 1),
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
+                  :SizedBox(
+                            width: 110,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                      "${options[int.parse(val[0])].substring(0, 4)}-${options[int.parse(val[1])]}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
-                                ],
-                              )),
-                        )
-                      : SizedBox(
-                          width: 110,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "${options[int.parse(val[0])].substring(0, 4)}-${options[int.parse(val[1])]}",
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              )),
-                        ),
-              const Icon(
+                                ),
+                          
+                          ),  
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -547,31 +563,37 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
-                  : SizedBox(
-                      width: 65,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                val,
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
-              const Icon(
+                  :SizedBox(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     val,
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ), 
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -633,7 +655,7 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
+                          color: newtextColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
@@ -650,7 +672,7 @@ class _SearchState extends State<Search> {
                                         1, val.toString().length - 1),
                                     style: GoogleFonts.poppins(
                                         decoration: TextDecoration.none,
-                                        color: Colors.black38,
+                                        color: newtextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ),
@@ -658,25 +680,31 @@ class _SearchState extends State<Search> {
                               )),
                         )
                       : SizedBox(
-                          width: 110,
-                          child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "${options[int.parse(val[0])].substring(0, 4)}-${options[int.parse(val[1])]}",
-                                    style: GoogleFonts.poppins(
-                                        decoration: TextDecoration.none,
-                                        color: Colors.black38,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     "${options[int.parse(val[0])].substring(0, 4)}-${options[int.parse(val[1])]}",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
                                   ),
-                                ],
-                              )),
-                        ),
-              const Icon(
+                                ),
+                          
+                          ),  
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -724,31 +752,37 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
-                  : SizedBox(
-                      width: 65,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                val.replaceAll(RegExp(r'[\[\]]'), ''),
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
-              const Icon(
+                  :SizedBox(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     val.replaceAll(RegExp(r'[\[\]]'), ''),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ), 
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -796,8 +830,8 @@ class _SearchState extends State<Search> {
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
@@ -813,16 +847,16 @@ class _SearchState extends State<Search> {
                                     .replaceAll(',', '-'),
                                 style: GoogleFonts.poppins(
                                     decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 14,
+                                    color: newtextColor,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
                           )),
                     ),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -883,37 +917,42 @@ class _SearchState extends State<Search> {
           child: Row(
             children: [
               (val.isEmpty)
-                  ? const Text(
+                  ? Text(
                       "Add",
                       style: TextStyle(
                           decoration: TextDecoration.none,
-                          color: Colors.black38,
-                          fontSize: 14,
+                          color: newtextColor,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Sans-serif'),
                     )
                   : SizedBox(
-                      width: 80,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Text(
-                                val
-                                    .toString()
-                                    .substring(1, val.toString().length - 1),
-                                style: GoogleFonts.poppins(
-                                    decoration: TextDecoration.none,
-                                    color: Colors.black38,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )),
-                    ),
-              const Icon(
+                            width: 80,
+                            child:
+                            TickerText(
+                                  // default values
+                                  scrollDirection: Axis.horizontal,
+                                  speed: 20,
+                                  startPauseDuration:
+                                      const Duration(seconds: 1),
+                                  endPauseDuration:
+                                      const Duration(seconds: 1),
+                                  returnDuration:
+                                      const Duration(milliseconds: 800),
+                                  primaryCurve: Curves.linear,
+                                  returnCurve: Curves.easeOut,
+                                  child: Text(
+                                     val.toString().substring(
+                                          1, val.toString().length - 1),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(fontSize: 18,color: Colors.black38,),
+                                  ),
+                                ),
+                          
+                          ),
+              Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.black38,
+                color: newtextColor,
                 size: 20,
               )
             ],
@@ -964,7 +1003,9 @@ class _SearchState extends State<Search> {
               isLoading &&
                       allsearches
                           .isEmpty // Show loading indicator only initially
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(child: CircularProgressIndicator(
+                    color: main_color,
+                  ))
                   : allsearches.isEmpty
                       ? Center(child: Text("No data available."))
                       : SafeArea(
@@ -1035,7 +1076,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       child:
                                                                           Text(
-                                                                        "Search By Profile",
+                                                                        "Search By Profile ID",
                                                                         style: TextStyle(
                                                                             decoration: TextDecoration
                                                                                 .none,
@@ -1049,7 +1090,7 @@ class _SearchState extends State<Search> {
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
-                                                                      width: 25,
+                                                                      width: 15,
                                                                     ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
@@ -1067,11 +1108,12 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
                                                                           controller:
                                                                               _searchIDController,
                                                                           decoration: InputDecoration(
                                                                               contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Profile Id',
+                                                                              hintText: 'Enter Profile ID',
                                                                               hintStyle: TextStyle(fontSize: 12),
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
@@ -1087,87 +1129,87 @@ class _SearchState extends State<Search> {
                                                                     GestureDetector(
                                                                       onTap:
                                                                           () async {
-                                                                        // if (_searchIDController
-                                                                        //             .text ==
-                                                                        //         null ||
-                                                                        //     _searchIDController
-                                                                        //             .text ==
-                                                                        //         "") {
-                                                                        //   showDialog(
-                                                                        //       context:
-                                                                        //           context,
-                                                                        //       builder:
-                                                                        //           (context) {
-                                                                        //         // Future.delayed(
-                                                                        //         //     const Duration(seconds: 1), () {
-                                                                        //         //   Navigator.of(context).pop(true);
-                                                                        //         // });
-                                                                        //         return const AlertDialog(
-                                                                        //           content:
-                                                                        //               SnackBarContent(
-                                                                        //             error_text:
-                                                                        //                 "Please Enter Profile ID",
-                                                                        //             appreciation:
-                                                                        //                 "",
-                                                                        //             icon:
-                                                                        //                 Icons.error,
-                                                                        //             sec:
-                                                                        //                 2,
-                                                                        //           ),
-                                                                        //           backgroundColor:
-                                                                        //               Colors.transparent,
-                                                                        //           elevation:
-                                                                        //               0,
-                                                                        //         );
-                                                                        //       });
-                                                                        // } else {
-                                                                        // final data= await SearchProfile().addtosearchprofile(
-                                                                        //       searchprofile:
-                                                                        //           _searchIDController
-                                                                        //               .text,
-                                                                        //       email: userSave
-                                                                        //           .email!,
-                                                                        //       name: userSave
-                                                                        //           .name!,
-                                                                        //       searchemailprofile:
-                                                                        //           _searchEmailController
-                                                                        //               .text,
-                                                                        //       searchnameprofile:
-                                                                        //           _searchNameController
-                                                                        //               .text,
-                                                                        //       searchphoneprofile:
-                                                                        //           _searchphoneController
-                                                                        //               .text,
-                                                                        //       searchsurprofile:
-                                                                        //           _searchSurnameController
-                                                                        //               .text,
-                                                                        //       searchDistance:
-                                                                        //           _currentSliderValue
-                                                                        //               .toString(),
-                                                                        //       age: svp.AgeList
-                                                                        //           .toString(),
-                                                                        //       religion: svp.ReligionList
-                                                                        //           .toString(),
-                                                                        //       kundalidosh:
-                                                                        //           svp.KundaliDoshList
-                                                                        //               .toString(),
-                                                                        //       marital_status:
-                                                                        //           svp.MaritalStatusList
-                                                                        //               .toString(),
-                                                                        //       diet: svp
-                                                                        //           .dietList
-                                                                        //           .toString(),
-                                                                        //       smoke: svp.SmokeList
-                                                                        //           .toString(),
-                                                                        //       drink: svp.DrinkList.toString(),
-                                                                        //       disability: svp.DisabilityList.toString(),
-                                                                        //       height: svp.HeightList.toString(),
-                                                                        //       education: svp.EducationList.toString(),
-                                                                        //       profession: svp.ProfessionList.toString(),
-                                                                        //       income: svp.IncomeList.toString(),
-                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                        //   getProfileSearchByProfile(data);
-                                                                        // }
+                                                                        if (_searchIDController
+                                                                                    .text ==
+                                                                                null ||
+                                                                            _searchIDController
+                                                                                    .text ==
+                                                                                "") {
+                                                                          showDialog(
+                                                                              context:
+                                                                                  context,
+                                                                              builder:
+                                                                                  (context) {
+                                                                                // Future.delayed(
+                                                                                //     const Duration(seconds: 1), () {
+                                                                                //   Navigator.of(context).pop(true);
+                                                                                // });
+                                                                                return const AlertDialog(
+                                                                                  content:
+                                                                                      SnackBarContent(
+                                                                                    error_text:
+                                                                                        "Please Enter Profile ID",
+                                                                                    appreciation:
+                                                                                        "",
+                                                                                    icon:
+                                                                                        Icons.error,
+                                                                                    sec:
+                                                                                        2,
+                                                                                  ),
+                                                                                  backgroundColor:
+                                                                                      Colors.transparent,
+                                                                                  elevation:
+                                                                                      0,
+                                                                                );
+                                                                              });
+                                                                        } else {
+                                                                        final data= await SearchProfile().addtosearchprofile(
+                                                                              searchprofile:
+                                                                                  _searchIDController
+                                                                                      .text,
+                                                                              email: userSave
+                                                                                  .email!,
+                                                                              name: userSave
+                                                                                  .name!,
+                                                                              searchemailprofile:
+                                                                                  _searchEmailController
+                                                                                      .text,
+                                                                              searchnameprofile:
+                                                                                  _searchNameController
+                                                                                      .text,
+                                                                              searchphoneprofile:
+                                                                                  _searchphoneController
+                                                                                      .text,
+                                                                              searchsurprofile:
+                                                                                  _searchSurnameController
+                                                                                      .text,
+                                                                              searchDistance:
+                                                                                  _currentSliderValue
+                                                                                      .toString(),
+                                                                              age: svp.AgeList
+                                                                                  .toString(),
+                                                                              religion: svp.ReligionList
+                                                                                  .toString(),
+                                                                              kundalidosh:
+                                                                                  svp.KundaliDoshList
+                                                                                      .toString(),
+                                                                              marital_status:
+                                                                                  svp.MaritalStatusList
+                                                                                      .toString(),
+                                                                              diet: svp
+                                                                                  .dietList
+                                                                                  .toString(),
+                                                                              smoke: svp.SmokeList
+                                                                                  .toString(),
+                                                                              drink: svp.DrinkList.toString(),
+                                                                              disability: svp.DisabilityList.toString(),
+                                                                              height: svp.HeightList.toString(),
+                                                                              education: svp.EducationList.toString(),
+                                                                              profession: svp.ProfessionList.toString(),
+                                                                              income: svp.IncomeList.toString(),
+                                                                              location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
+                                                                          getProfileSearchByProfile(data);
+                                                                        }
                                                                       },
                                                                       child:
                                                                           Container(
@@ -1207,7 +1249,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       child:
                                                                           Text(
-                                                                        "Search By Email",
+                                                                        "Search By Email ID",
                                                                         style: TextStyle(
                                                                             decoration: TextDecoration
                                                                                 .none,
@@ -1221,7 +1263,7 @@ class _SearchState extends State<Search> {
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
-                                                                      width: 25,
+                                                                      width: 15,
                                                                     ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
@@ -1239,11 +1281,12 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
                                                                           controller:
                                                                               _searchEmailController,
                                                                           decoration: InputDecoration(
-                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Email Id',
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                                                                              hintText: 'Enter Email ID',
                                                                               hintStyle: TextStyle(fontSize: 12),
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
@@ -1376,12 +1419,15 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
                                                                           controller:
                                                                               _searchphoneController,
+                                                                              keyboardType: TextInputType.number,
                                                                           decoration: InputDecoration(
                                                                               contentPadding: EdgeInsets.only(top: 5, left: 10),
                                                                               hintText: 'Enter Contact Number',
                                                                               hintStyle: TextStyle(fontSize: 12),
+                                                                              
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
@@ -1409,7 +1455,7 @@ class _SearchState extends State<Search> {
                                                                                 // });
                                                                                 return const AlertDialog(
                                                                                   content: SnackBarContent(
-                                                                                    error_text: "Please Enter Phone No.",
+                                                                                    error_text: "Please Enter Contact No.",
                                                                                     appreciation: "",
                                                                                     icon: Icons.error,
                                                                                     sec: 2,
@@ -1515,20 +1561,24 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
-                                                                          controller:
-                                                                              _searchNameController,
+                                                                          cursorColor: main_color,
+                                                                          controller: _searchNameController,
+                                                                          maxLength: 10,
                                                                           decoration: InputDecoration(
-                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Name',
-                                                                              hintStyle: TextStyle(fontSize: 12),
-                                                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
-                                                                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
-                                                                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color))),
-                                                                          onChanged:
-                                                                              (String) {
-                                                                            profileSearch =
-                                                                                _searchNameController.text;
+                                                                            contentPadding: EdgeInsets.only(top: 5, left: 10),
+                                                                            hintText: 'Enter Name ',
+                                                                            hintStyle: TextStyle(fontSize: 12),
+                                                                            counterText: '',
+                                                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
+                                                                          ),
+                                                                          onChanged: (value) {
+                                                                            profileSearch = value;
                                                                           },
+                                                                          inputFormatters: [
+                                                                            LengthLimitingTextInputFormatter(10),
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1650,8 +1700,10 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
                                                                           controller:
                                                                               _searchSurnameController,
+                                                                         
                                                                           decoration: InputDecoration(
                                                                               contentPadding: EdgeInsets.only(top: 5, left: 10),
                                                                               hintText: 'Enter Suname',
@@ -1664,6 +1716,9 @@ class _SearchState extends State<Search> {
                                                                             profileSearch =
                                                                                 _searchSurnameController.text;
                                                                           },
+                                                                           inputFormatters: [
+                                                                            LengthLimitingTextInputFormatter(10),
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1770,26 +1825,6 @@ class _SearchState extends State<Search> {
                                                                     fontFamily:
                                                                         'Sans-serif')),
                                                           ),
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    right: 10),
-                                                            child: Text(
-                                                              "${_currentSliderValue} Km",
-                                                              style: TextStyle(
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .none,
-                                                                  color:
-                                                                      main_color,
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontFamily:
-                                                                      'Sans-serif'),
-                                                            ),
-                                                          )
                                                         ],
                                                       ),
                                                       const SizedBox(
@@ -1881,8 +1916,11 @@ class _SearchState extends State<Search> {
                                                                         context)
                                                                     .copyWith(
                                                                   rangeThumbShape:
-                                                                       CircleThumbShape(
-                                                                        thumbColor:forIos? main_color:Colors.black12 ,
+                                                                      CircleThumbShape(
+                                                                    thumbColor: forIos
+                                                                        ? main_color
+                                                                        : Colors
+                                                                            .black12,
                                                                     thumbRadius:
                                                                         8.0, // Size of the thumb
                                                                   ),
@@ -2152,44 +2190,17 @@ class _SearchState extends State<Search> {
                                                                   fontFamily:
                                                                       'Sans-serif'),
                                                             ),
-                                                            Container(
-                                                              height: 30,
-                                                              width: 55,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .black12),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30.0),
-                                                              ),
-                                                              child:
-                                                                  CupertinoSwitch(
-                                                                // overrides the default green color of the track
-                                                                activeColor:
-                                                                    Colors
-                                                                        .white,
-                                                                // color of the round icon, which moves from right to left
-                                                                thumbColor: forIos2
-                                                                    ? main_color
-                                                                    : Colors
-                                                                        .black12,
-                                                                // when the switch is off
-                                                                trackColor: forIos2
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black12,
-                                                                // boolean variable value
-                                                                value: forIos2,
-                                                                // changes the state of the switch
-                                                                onChanged: (value) =>
-                                                                    setState(() =>
-                                                                        forIos2 =
-                                                                            value),
-                                                              ),
+                                                            CustomToggleSwitch(
+                                                              value:
+                                                                  forIos2, // Your boolean state variable
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() =>
+                                                                    forIos2 =
+                                                                        value);
+                                                              },
+                                                              activeColor:
+                                                                  main_color, // Your main color for the active state
                                                             ),
                                                             Text(
                                                               "Female",
@@ -2363,7 +2374,7 @@ class _SearchState extends State<Search> {
                                           ),
                                           SizedBox(
                                             height: 50,
-                                            width: 300,
+                                            width: MediaQuery.of(context).size.width * 0.9,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                   shadowColor:
@@ -2447,7 +2458,7 @@ class _SearchState extends State<Search> {
                                           ),
                                           SizedBox(
                                             height: 50,
-                                            width: 300,
+                                            width: MediaQuery.of(context).size.width * 0.9,
                                             child: ElevatedButton(
                                               style: ButtonStyle(
                                                   shadowColor:
@@ -2558,7 +2569,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       child:
                                                                           Text(
-                                                                        "Search By Profile",
+                                                                        "Search By Profile ID",
                                                                         style: TextStyle(
                                                                             decoration: TextDecoration
                                                                                 .none,
@@ -2572,7 +2583,7 @@ class _SearchState extends State<Search> {
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
-                                                                      width: 6,
+                                                                      width: 0,
                                                                     ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
@@ -2590,6 +2601,8 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
+                                                                          readOnly: true,
                                                                           controller:
                                                                               TextEditingController(text: allsearches[index].searchidprofile),
                                                                           decoration: InputDecoration(
@@ -2649,7 +2662,7 @@ class _SearchState extends State<Search> {
                                                                               10),
                                                                       child:
                                                                           Text(
-                                                                        "Search By Email",
+                                                                        "Search By Email ID",
                                                                         style: TextStyle(
                                                                             decoration: TextDecoration
                                                                                 .none,
@@ -2663,7 +2676,7 @@ class _SearchState extends State<Search> {
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
-                                                                      width: 25,
+                                                                      width: 15,
                                                                     ),
                                                                     Container(
                                                                       width: MediaQuery.of(context)
@@ -2681,11 +2694,13 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
+                                                                          readOnly: true,
                                                                           controller:
                                                                               TextEditingController(text: allsearches[index].searchemailprofile),
                                                                           decoration: InputDecoration(
-                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Email Id',
+                                                                              contentPadding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                                                                              hintText: 'Enter Email ID',
                                                                               hintStyle: TextStyle(fontSize: 12),
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
@@ -2768,11 +2783,13 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
+                                                                          readOnly: true,
                                                                           controller:
                                                                               TextEditingController(text: allsearches[index].searchphoneprofile),
                                                                           decoration: InputDecoration(
                                                                               contentPadding: EdgeInsets.only(top: 5, left: 10),
-                                                                              hintText: 'Enter Phone',
+                                                                              hintText: 'Enter Contact Number',
                                                                               hintStyle: TextStyle(fontSize: 12),
                                                                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
                                                                               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: main_color)),
@@ -2859,6 +2876,8 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
+                                                                          readOnly: true,
                                                                           controller:
                                                                               TextEditingController(text: allsearches[index].searchnameprofile),
                                                                           decoration: InputDecoration(
@@ -2879,83 +2898,7 @@ class _SearchState extends State<Search> {
                                                                     GestureDetector(
                                                                       onTap:
                                                                           () {
-                                                                        // if (_searchNameController
-                                                                        //             .text ==
-                                                                        //         null ||
-                                                                        //     _searchNameController
-                                                                        //             .text ==
-                                                                        //         "") {
-                                                                        //   showDialog(
-                                                                        //       context:
-                                                                        //           context,
-                                                                        //       builder:
-                                                                        //           (context) {
-                                                                        //         return const AlertDialog(
-                                                                        //           content:
-                                                                        //               SnackBarContent(
-                                                                        //             error_text:
-                                                                        //                 "Please Enter Name",
-                                                                        //             appreciation:
-                                                                        //                 "",
-                                                                        //             icon:
-                                                                        //                 Icons.error,
-                                                                        //             sec:
-                                                                        //                 2,
-                                                                        //           ),
-                                                                        //           backgroundColor:
-                                                                        //               Colors.transparent,
-                                                                        //           elevation:
-                                                                        //               0,
-                                                                        //         );
-                                                                        //       });
-                                                                        // } else {
-                                                                        //   SearchProfile().addtosearchprofile(
-                                                                        //       searchprofile:
-                                                                        //           _searchIDController
-                                                                        //               .text,
-                                                                        //       email: userSave
-                                                                        //           .email!,
-                                                                        //       name: userSave
-                                                                        //           .name!,
-                                                                        //       searchemailprofile:
-                                                                        //           _searchEmailController
-                                                                        //               .text,
-                                                                        //       searchnameprofile:
-                                                                        //           _searchNameController
-                                                                        //               .text,
-                                                                        //       searchphoneprofile:
-                                                                        //           _searchphoneController
-                                                                        //               .text,
-                                                                        //       searchsurprofile:
-                                                                        //           _searchSurnameController
-                                                                        //               .text,
-                                                                        //       searchDistance:
-                                                                        //           _currentSliderValue
-                                                                        //               .toString(),
-                                                                        //       age: svp.AgeList
-                                                                        //           .toString(),
-                                                                        //       religion: svp.ReligionList
-                                                                        //           .toString(),
-                                                                        //       kundalidosh:
-                                                                        //           svp.KundaliDoshList
-                                                                        //               .toString(),
-                                                                        //       marital_status:
-                                                                        //           svp.MaritalStatusList
-                                                                        //               .toString(),
-                                                                        //       diet: svp
-                                                                        //           .dietList
-                                                                        //           .toString(),
-                                                                        //       smoke: svp.SmokeList
-                                                                        //           .toString(),
-                                                                        //       drink: svp.DrinkList.toString(),
-                                                                        //       disability: svp.DisabilityList.toString(),
-                                                                        //       height: svp.HeightList.toString(),
-                                                                        //       education: svp.EducationList.toString(),
-                                                                        //       profession: svp.ProfessionList.toString(),
-                                                                        //       income: svp.IncomeList.toString(),
-                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                        //   getProfileSearchByName();
-                                                                        // }
+                                                                      
                                                                       },
                                                                       child:
                                                                           Container(
@@ -3027,6 +2970,8 @@ class _SearchState extends State<Search> {
                                                                             .white,
                                                                         child:
                                                                             TextField(
+                                                                          cursorColor: main_color,
+                                                                          readOnly: true,
                                                                           controller:
                                                                               TextEditingController(text: allsearches[index].searchsurprofile),
                                                                           decoration: InputDecoration(
@@ -3049,61 +2994,7 @@ class _SearchState extends State<Search> {
                                                                           () {
                                                                         print(userSave
                                                                             .name);
-                                                                        // if (_searchSurnameController
-                                                                        //             .text ==
-                                                                        //         null ||
-                                                                        //     _searchSurnameController
-                                                                        //             .text ==
-                                                                        //         "") {
-                                                                        //   showDialog(
-                                                                        //       context:
-                                                                        //           context,
-                                                                        //       builder:
-                                                                        //           (context) {
-                                                                        //         return const AlertDialog(
-                                                                        //           content:
-                                                                        //               SnackBarContent(
-                                                                        //             error_text:
-                                                                        //                 "Please Enter Surname",
-                                                                        //             appreciation:
-                                                                        //                 "",
-                                                                        //             icon:
-                                                                        //                 Icons.error,
-                                                                        //             sec:
-                                                                        //                 2,
-                                                                        //           ),
-                                                                        //           backgroundColor:
-                                                                        //               Colors.transparent,
-                                                                        //           elevation:
-                                                                        //               0,
-                                                                        //         );
-                                                                        //       });
-                                                                        // } else {
-                                                                        //   SearchProfile().addtosearchprofile(
-                                                                        //       // 9801564490 susan manandar new baneshor ktm
-                                                                        //       searchprofile: _searchIDController.text,
-                                                                        //       email: userSave.email!,
-                                                                        //       name: userSave.name!,
-                                                                        //       searchemailprofile: _searchEmailController.text,
-                                                                        //       searchnameprofile: _searchNameController.text,
-                                                                        //       searchphoneprofile: _searchphoneController.text,
-                                                                        //       searchsurprofile: _searchSurnameController.text,
-                                                                        //       searchDistance: _currentSliderValue.toString(),
-                                                                        //       age: svp.AgeList.toString(),
-                                                                        //       religion: svp.ReligionList.toString(),
-                                                                        //       kundalidosh: svp.KundaliDoshList.toString(),
-                                                                        //       marital_status: svp.MaritalStatusList.toString(),
-                                                                        //       diet: svp.dietList.toString(),
-                                                                        //       smoke: svp.SmokeList.toString(),
-                                                                        //       drink: svp.DrinkList.toString(),
-                                                                        //       disability: svp.DisabilityList.toString(),
-                                                                        //       height: svp.HeightList.toString(),
-                                                                        //       education: svp.EducationList.toString(),
-                                                                        //       profession: svp.ProfessionList.toString(),
-                                                                        //       income: svp.IncomeList.toString(),
-                                                                        //       location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                                        //   getProfileSearchBySurname();
-                                                                        // }
+                                                                     
                                                                       },
                                                                       child:
                                                                           Container(
@@ -3299,8 +3190,7 @@ class _SearchState extends State<Search> {
                                                       ),
                                                       Column(
                                                         children: [
-                                                         
-                                                           Material(
+                                                          Material(
                                                               color:
                                                                   Colors.white,
                                                               child:
@@ -3309,8 +3199,12 @@ class _SearchState extends State<Search> {
                                                                         context)
                                                                     .copyWith(
                                                                   rangeThumbShape:
-                                                                       CircleThumbShape(
-                                                                        thumbColor:forIos? main_color:Colors.black12 ,
+                                                                      CircleThumbShape(
+                                                                    thumbColor: allsearches[index].isSearch ==
+                                                                                true
+                                                                        ? main_color
+                                                                        : Colors
+                                                                            .black12,
                                                                     thumbRadius:
                                                                         8.0, // Size of the thumb
                                                                   ),
@@ -3320,27 +3214,26 @@ class _SearchState extends State<Search> {
                                                                       Colors
                                                                           .transparent, // No overlay when thumb is pressed
                                                                   activeTrackColor:
-                                                                      main_color, // Track color for selected range
+                                                                   allsearches[index].isSearch ==
+                                                                                true   ? main_color : Colors.black12, // Track color for selected range
                                                                   inactiveTrackColor:
-                                                                      main_color
-                                                                          .withOpacity(
-                                                                              0.3), // Track color for unselected range
+                                                                   allsearches[index].isSearch ==
+                                                                                true   ? main_color : Colors.black12, // Track color for unselected range
                                                                   trackHeight:
                                                                       4.0, // Thickness of the track
                                                                 ),
                                                                 child:
                                                                     RangeSlider(
                                                                   activeColor:
-                                                                      main_color,
-                                                                  values:
-                                                                      RangeValues(
-                                                                        (allsearches[index].minDistance ??
-                                                                            10)
-                                                                        .toDouble(),
-                                                                    (allsearches[index].maxDistance ??
-                                                                            200)
-                                                                        .toDouble()
-                                                                      ),
+                                                                   allsearches[index].isSearch ==
+                                                                                true   ? main_color : Colors.black12,
+                                                                  values: RangeValues(
+                                                                      (allsearches[index].minDistance ??
+                                                                              10)
+                                                                          .toDouble(),
+                                                                      (allsearches[index].maxDistance ??
+                                                                              200)
+                                                                          .toDouble()),
                                                                   max: 200,
                                                                   divisions: 10,
                                                                   onChanged:
@@ -3408,7 +3301,8 @@ class _SearchState extends State<Search> {
                                                                             const Duration(milliseconds: 200),
                                                                         decoration:
                                                                             BoxDecoration(
-                                                                          color: allsearches[index].isSearch == false
+                                                                          color: allsearches[index].isSearch ==
+                                                                                true
                                                                               ? main_color
                                                                               : Colors.black12,
                                                                           borderRadius:
@@ -3422,7 +3316,7 @@ class _SearchState extends State<Search> {
                                                                       // Thumb with text
                                                                       Align(
                                                                         alignment: allsearches[index].isSearch ==
-                                                                                false
+                                                                                true
                                                                             ? Alignment.centerRight
                                                                             : Alignment.centerLeft,
                                                                         child:
@@ -3464,45 +3358,7 @@ class _SearchState extends State<Search> {
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                // Container(
-                                                                //   height: 30,
-                                                                //   width: 55,
-                                                                //   decoration:
-                                                                //       BoxDecoration(
-                                                                //     border: Border.all(
-                                                                //         color: Colors
-                                                                //             .black12),
-                                                                //     borderRadius:
-                                                                //         BorderRadius.circular(
-                                                                //             30.0),
-                                                                //   ),
-                                                                //   child:
-                                                                //       CupertinoSwitch(
-                                                                //     // overrides the default green color of the track
-                                                                //     activeColor:
-                                                                //         Colors
-                                                                //             .white,
-                                                                //     // color of the round icon, which moves from right to left
-                                                                //     thumbColor: forIos
-                                                                //         ? main_color
-                                                                //         : Colors
-                                                                //             .black12,
-                                                                //     // when the switch is off
-                                                                //     trackColor: forIos
-                                                                //         ? Colors
-                                                                //             .white
-                                                                //         : Colors
-                                                                //             .black12,
-                                                                //     // boolean variable value
-                                                                //     value:
-                                                                //         forIos,
-                                                                //     // changes the state of the switch
-                                                                //     onChanged: (value) =>
-                                                                //         setState(() =>
-                                                                //             forIos =
-                                                                //                 value),
-                                                                //   ),
-                                                                // ),
+                                                             
                                                               ],
                                                             ),
                                                           ),
@@ -3564,45 +3420,17 @@ class _SearchState extends State<Search> {
                                                                   fontFamily:
                                                                       'Sans-serif'),
                                                             ),
-                                                            Container(
-                                                              height: 30,
-                                                              width: 55,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .black12),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30.0),
-                                                              ),
-                                                              child:
-                                                                  CupertinoSwitch(
-                                                                // overrides the default green color of the track
-                                                                activeColor:
-                                                                    Colors
-                                                                        .white,
-                                                                // color of the round icon, which moves from right to left
-                                                                thumbColor: forIos2
-                                                                    ? main_color
-                                                                    : Colors
-                                                                        .black12,
-                                                                // when the switch is off
-                                                                trackColor: forIos2
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .black12,
-                                                                // boolean variable value
-                                                                value: forIos2,
-                                                                // changes the state of the switch
-                                                                onChanged: (value) =>
-                                                                    setState(() =>
-                                                                        forIos2 =
-                                                                            value),
-                                                              ),
+                                                            CustomToggleSwitch(
+                                                              value:
+                                                                  allsearches[index].gender=="Male"?true:false, // Your boolean state variable
+                                                              onChanged:
+                                                                  (value) {
+                                                                  
+                                                              },
+                                                              activeColor:
+                                                                  main_color, // Your main color for the active state
                                                             ),
+                                                           
                                                             Text(
                                                               "Female",
                                                               style: const TextStyle(
@@ -3702,8 +3530,8 @@ class _SearchState extends State<Search> {
                                                                   .isEmpty ||
                                                               result.isEmpty
                                                           ? nameContainer4(
-                                                              'images/icons/disability.png',
-                                                              "Disability With Person",
+                                                              'images/icons/height.png',
+                                                              "Height",
                                                               functions()
                                                                   .AgeDialog,
                                                               allsearches[index]
@@ -3795,145 +3623,12 @@ class _SearchState extends State<Search> {
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          SizedBox(
-                                            height: 50,
-                                            width: 300,
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                  shadowColor:
-                                                      MaterialStateColor
-                                                          .resolveWith(
-                                                              (states) =>
-                                                                  Colors.black),
-                                                  shape: MaterialStateProperty
-                                                      .all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30.0),
-                                                    //side: BorderSide(color: Colors.black)
-                                                  )),
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(Colors.white)),
-                                              child: const Text(
-                                                "Search",
-                                                style: TextStyle(
-                                                  fontFamily: 'Serif',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 20,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                final data = await SearchProfile().addtosearchprofile(
-                                                    isSearch: forIos,
-                                                    searchprofile:
-                                                        _searchIDController
-                                                            .text,
-                                                    email: userSave.email!,
-                                                    name: userSave.name!,
-                                                    searchemailprofile:
-                                                        _searchEmailController
-                                                            .text,
-                                                    searchnameprofile:
-                                                        _searchNameController
-                                                            .text,
-                                                    searchphoneprofile:
-                                                        _searchphoneController
-                                                            .text,
-                                                    searchsurprofile:
-                                                        _searchSurnameController
-                                                            .text,
-                                                    searchDistance:
-                                                        _currentSliderValue
-                                                            .toString(),
-                                                    age: svp.AgeList.toString(),
-                                                    religion: svp.ReligionList
-                                                        .toString(),
-                                                    kundalidosh:
-                                                        svp.KundaliDoshList
-                                                            .toString(),
-                                                    marital_status:
-                                                        svp.MaritalStatusList.toString(),
-                                                    diet: svp.dietList.toString(),
-                                                    smoke: svp.SmokeList.toString(),
-                                                    drink: svp.DrinkList.toString(),
-                                                    disability: svp.DisabilityList.toString(),
-                                                    height: svp.HeightList.toString(),
-                                                    education: svp.EducationList.toString(),
-                                                    profession: svp.ProfessionList.toString(),
-                                                    income: svp.IncomeList.toString(),
-                                                    location: "${svp.LocatioList[0].isEmpty ? "" : svp.LocatioList[0][0]} ${svp.LocatioList[1].isEmpty ? "" : svp.LocatioList[1][0]} ${svp.LocatioList[2].isEmpty ? "" : svp.LocatioList[2][0]}");
-                                                getProfileSearch(data);
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          SizedBox(
-                                            height: 50,
-                                            width: 300,
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                  shadowColor:
-                                                      MaterialStateColor
-                                                          .resolveWith(
-                                                              (states) =>
-                                                                  Colors.black),
-                                                  shape: MaterialStateProperty
-                                                      .all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30.0),
-                                                    //side: BorderSide(color: Colors.black)
-                                                  )),
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(Colors.white)),
-                                              child: const Text(
-                                                "Reset",
-                                                style: TextStyle(
-                                                  fontFamily: 'Serif',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 20,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                _searchEmailController.clear();
-                                                _searchIDController.clear();
-                                                _searchEmailController.clear();
-                                                _searchNameController.clear();
-                                                _searchSurnameController
-                                                    .clear();
-
-                                                svp.AgeList.clear();
-                                                svp.DisabilityList.clear();
-                                                svp.DrinkList.clear();
-                                                svp.EducationList.clear();
-                                                svp.HeightList.clear();
-                                                svp.IncomeList.clear();
-                                                svp.KundaliDoshList.clear();
-                                                svp.LocatioList[0].clear();
-                                                svp.LocatioList[1].clear();
-                                                svp.LocatioList[2].clear();
-                                                svp.MaritalStatusList.clear();
-                                                svp.ProfessionList.clear();
-                                                svp.ReligionList.clear();
-                                                svp.SmokeList.clear();
-                                                svp.dietList.clear();
-                                                setState(() {});
-                                              },
-                                            ),
-                                          ),
+                                        
                                           SizedBox(
                                             height: 10,
                                           ),
                                           Text(
-                                            "Seen by ${allsearches[index].adminname} on ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(allsearches[index].createdAt!).toLocal())}",
+                                            "Search by ${allsearches[index].adminname} on ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(allsearches[index].createdAt!).toLocal())}",
                                             style: const TextStyle(
                                                 decoration: TextDecoration.none,
                                                 color: Colors.black,
@@ -3941,7 +3636,15 @@ class _SearchState extends State<Search> {
                                                 fontWeight: FontWeight.w400,
                                                 fontFamily: 'Sans-serif'),
                                           ),
-                                          Text(
+                                      allsearches[index].profileFound==0?const Text(
+                                            "No Profile Found",
+                                            style: TextStyle(
+                                                decoration: TextDecoration.none,
+                                                color: Colors.red,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Sans-serif'),
+                                          ):   Text(
                                             "(${allsearches[index].profileFound} Profile Found) (Seen-${allsearches[index].profileFound})",
                                             style: TextStyle(
                                                 decoration: TextDecoration.none,
@@ -4137,7 +3840,7 @@ class _SearchState extends State<Search> {
                 // });
                 return const AlertDialog(
                   content: SnackBarContent(
-                    error_text: "Please Enter Valid Number",
+                    error_text: "Please Enter Valid Contact No.",
                     appreciation: "",
                     icon: Icons.error,
                     sec: 2,
@@ -4336,7 +4039,7 @@ class _SearchState extends State<Search> {
                 // });
                 return const AlertDialog(
                   content: SnackBarContent(
-                    error_text: "Please Enter Valid Email",
+                    error_text: "Please Enter Valid Email ID",
                     appreciation: "",
                     icon: Icons.error,
                     sec: 2,

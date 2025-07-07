@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimony_admin/globalVars.dart';
@@ -20,9 +21,11 @@ class AudioCall extends StatefulWidget {
 }
 
 class _AudioCallState extends State<AudioCall> {
+  TextEditingController _searchController = TextEditingController();
   bool isAudio = false;
   bool isSpeaker = false;
   bool isButton = false;
+  bool isSearch=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +100,7 @@ class _AudioCallState extends State<AudioCall> {
                         onTap: () {
                           setState(() {
                             isButton = !isButton;
+                            isSearch = !isSearch;
                           });
                         },
                         child: Container(
@@ -116,6 +120,50 @@ class _AudioCallState extends State<AudioCall> {
                   )
                 : Column(
                     children: [
+                     isSearch? Column(
+                      children: [
+                      SizedBox(
+                        width: 200,
+                        child: CupertinoSearchTextField(
+                          controller: _searchController,
+                          backgroundColor: Colors.white,
+                          onChanged: (value) {
+                         
+                          },
+                          onSubmitted: (value) {
+                          
+                          },
+                          onSuffixTap: () {
+                          setState(() {
+                           _searchController.clear();
+                          });
+                          },
+                        ),
+                      ),
+                      ]): InkWell(
+                        onTap: (){
+                          setState(() {
+                            isSearch = !isSearch;
+                          });
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              color: main_color,
+                            ),
+                          ),
+                        ),
+                      ),
+                 
+
+                      SizedBox(
+                        height: 10,
+                      ),
                       Container(
                         height: 55,
                         width: 55,

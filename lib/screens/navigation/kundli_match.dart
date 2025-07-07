@@ -503,6 +503,8 @@ String getMonthName(int monthNumber) {
                                         0.29,
                                     child: Center(
                                       child: DropdownButton<String>(
+                                         isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),
@@ -565,6 +567,8 @@ String getMonthName(int monthNumber) {
                                         MediaQuery.of(context).size.width * 0.3,
                                     child: Center(
                                       child: DropdownButton<String>(
+                                         isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),
@@ -607,6 +611,8 @@ String getMonthName(int monthNumber) {
                                             BorderRadius.circular(20)),
                                     child: Center(
                                       child: DropdownButton<String>(
+                                         isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),
@@ -805,6 +811,8 @@ String getMonthName(int monthNumber) {
                                         0.29,
                                     child: Center(
                                       child: DropdownButton<String>(
+                                        isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),
@@ -843,6 +851,8 @@ String getMonthName(int monthNumber) {
                                         MediaQuery.of(context).size.width * 0.3,
                                     child: Center(
                                       child: DropdownButton<String>(
+                                        isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),
@@ -884,6 +894,8 @@ String getMonthName(int monthNumber) {
                                             BorderRadius.circular(20)),
                                     child: Center(
                                       child: DropdownButton<String>(
+                                        isExpanded: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                                         underline: Container(
                                           color: Colors.white,
                                         ),

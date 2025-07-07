@@ -392,6 +392,8 @@ class KundaliMatchDataScreen1 extends StatefulWidget {
     required this.f_gender,
     required this.f_place,
     required this.f_sec,
+    required this.f_surname,
+    required this.m_surname,
 
   }) : super(
           key: key,
@@ -404,6 +406,7 @@ class KundaliMatchDataScreen1 extends StatefulWidget {
   final m_min;
   final m_month;
   final m_name;
+  final m_surname;
   final m_tzone;
   final m_year;
   final m_gender;
@@ -416,6 +419,7 @@ class KundaliMatchDataScreen1 extends StatefulWidget {
   final f_min;
   final f_month;
   final f_name;
+  final f_surname;
   final f_tzone;
   final f_year;
   final f_gender;
@@ -572,7 +576,7 @@ print(response.body);
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${widget.m_name}".toUpperCase(),
+                          "${widget.m_name.substring(0, 1).toUpperCase()} ${widget.m_surname}".toUpperCase(),
                           style: TextStyle(
                             fontFamily: "Serif",
                             color: Colors.black,
@@ -625,7 +629,7 @@ print(response.body);
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "${widget.f_name}".toUpperCase(),
+                          "${widget.f_name.substring(0, 1).toUpperCase()} ${widget.f_surname}".toUpperCase(),
                           style: TextStyle(
                             fontFamily: "Serif",
                             color: Colors.black,

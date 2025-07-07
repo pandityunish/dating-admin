@@ -269,186 +269,167 @@ sendPushMessagetoallusers(message, "Free Risthey Wala \n${widget.roomid}", uid, 
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPress(),
-      child: CupertinoTheme(
-        data: CupertinoThemeData(
-          primaryColor: Colors.white,
-        ),
-        child: CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            backgroundColor: main_color,
-            leading: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              // onTap: Navigator.of(context).push(Materiroute),
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
-            ),
-            middle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    // Icon(Icons.arrow_back_ios),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          // color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(35),
-                          image: DecorationImage(
-                              image: NetworkImage(widget.profilepic))),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      margin: EdgeInsets.only(top: 14),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          BigText(
-                            text: widget.roomid,
-                            size: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                       
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child:  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => VideoCall(currentProfilePic: widget.profilepic, profilepic: widget.profilepic, profileDetail: widget.profileDetail),));
-
-                        },
-                        icon: const Icon(
-                          Icons.video_call,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => AudioCall(profilepic: widget.profilepic, profileDetail: widget.profileDetail),));
-                        },
-                        icon: const Icon(
-                          Icons.call,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          List<Map<dynamic, dynamic>> data =
-                              messages; // your list of maps
-                          List<MessageText> messages2 = data
-                              .map((map) => MessageText(
-                                    text: (map['text'] != null)
-                                        ? map['text']
-                                        : "",
-                                    uid: (map['uid'] != null) ? map['uid'] : "",
-                                    type: (map['type'] != null)
-                                        ? map['type']
-                                        : "",
-                                    imgname: (map['imgname'] != null)
-                                        ? map['imgname']
-                                        : "",
-                                    time: (map['time'] != null)
-                                        ? map['time']
-                                        : "",
-                                  ))
-                              .toList();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (builder) => MySearchPage(
-                                    messages: messages2,
-                                  )));
-                        },
-                        icon: const Icon(
-                          Icons.more_vert,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            previousPageTitle: "",
-          ),
-          child: Material(
-            color: Colors.white,
-            child: Container(
+    return PopScope(
+      onPopInvokedWithResult: _onBackPress(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: main_color,
+          leading: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            // onTap: Navigator.of(context).push(Materiroute),
+            child: Icon(
+              Icons.arrow_back_ios,
               color: Colors.white,
-              margin: EdgeInsets.only(top: 25),
-              height: MediaQuery.of(context).size.width * 2.3,
-              child: Column(
+            ),
+          ),
+          title: Row(
+           
+            children: [
+              // Icon(Icons.arrow_back_ios),
+              Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    // color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(35),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.profilepic))),
+              ),
+              SizedBox(width: 10,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    // FutureBuilder(
-                    //   future: _dbref,
-                    //   initialData: InitialData,
-                    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    //     return;
-                    //   },
-                    // ),
-                    child: ChatList(
-                      messages: messages,
-                      uid: widget.roomid,
-                    ),
+                  BigText(
+                    text: widget.roomid,
+                    size: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Divider(
-                    color: Colors.black,
-                  ),
-                   SendMessageBottom(
-                                  isBlocked: false,
-                                  msg: msg,
-                                  onclick: () {
-                                    print("ok");
-                                    if (msg.text.isNotEmpty) {
-                                    
-                                      sendMessage(msg.text, widget.roomid,
-                                          widget.profileDetail.id);
-                                    }
-                                    if (uploadimageurl != "") {
-                                     
-                                      sendMessage(uploadimageurl, widget.roomid,
-                                          widget.profileDetail.id);
-                                      uploadimageurl = "";
-                                      setState(() {});
-                                    }
-                                    if (videoimageurl != "") {
-                                    
-                                      sendMessage(videoimageurl, widget.roomid,
-                                          widget.profileDetail.id);
-                                      videoimageurl = "";
-                                      setState(() {});
-                                    }
-                                     if (audiourl != "") {
-                                     
-                                      sendMessage(audiourl, widget.roomid,
-                                          widget.profileDetail.id);
-                                          audiourl="";
-                                      setState(() {});
-                                    }
-                                  }),
-              
-                  SizedBox(
-                    height: 10,
-                  )
+               
                 ],
               ),
-            ),
+            ],
+          ),
+          actions: [
+             Row(
+               children: [
+                 IconButton(
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => VideoCall(currentProfilePic: widget.profilepic, profilepic: widget.profilepic, profileDetail: widget.profileDetail),));
+                   
+                   },
+                   icon:  Icon(
+                     Icons.video_call,
+                     color: Colors.white,
+                   ),
+                 ),
+                 IconButton(
+                   onPressed: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => AudioCall(profilepic: widget.profilepic, profileDetail: widget.profileDetail),));
+                   },
+                   icon:  Icon(
+                     Icons.call,
+                     color: Colors.white,
+                   ),
+                 ),
+                //  IconButton(
+                //    onPressed: () {
+                //      List<Map<dynamic, dynamic>> data =
+                //          messages; // your list of maps
+                //      List<MessageText> messages2 = data
+                //          .map((map) => MessageText(
+                //                text: (map['text'] != null)
+                //                    ? map['text']
+                //                    : "",
+                //                uid: (map['uid'] != null) ? map['uid'] : "",
+                //                type: (map['type'] != null)
+                //                    ? map['type']
+                //                    : "",
+                //                imgname: (map['imgname'] != null)
+                //                    ? map['imgname']
+                //                    : "",
+                //                time: (map['time'] != null)
+                //                    ? map['time']
+                //                    : "",
+                //              ))
+                //          .toList();
+                //      Navigator.of(context).push(MaterialPageRoute(
+                //          builder: (builder) => MySearchPage(
+                //                messages: messages2,
+                //              )));
+                //    },
+                //    icon:  Icon(
+                //      Icons.more_vert,
+                //      color: main_color,
+                //    ),
+                //  ),
+               ],
+             )
+          ],
+        ),
+        body: Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(top: 25),
+          height: MediaQuery.of(context).size.width * 2.3,
+          child: Column(
+            children: [
+              Expanded(
+                // FutureBuilder(
+                //   future: _dbref,
+                //   initialData: InitialData,
+                //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                //     return;
+                //   },
+                // ),
+                child: ChatList(
+                  messages: messages,
+                  uid: widget.roomid,
+                ),
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+               SendMessageBottom(
+                               isBlocked: false,
+                               msg: msg,
+                               onclick: () {
+                                 print("ok");
+                                 if (msg.text.isNotEmpty) {
+                                  
+                                   sendMessage(msg.text, widget.roomid,
+                                       widget.profileDetail.id);
+                                 }
+                                 if (uploadimageurl != "") {
+                                  
+                                   sendMessage(uploadimageurl, widget.roomid,
+                                       widget.profileDetail.id);
+                                   uploadimageurl = "";
+                                   setState(() {});
+                                 }
+                                 if (videoimageurl != "") {
+                                  
+                                   sendMessage(videoimageurl, widget.roomid,
+                                       widget.profileDetail.id);
+                                   videoimageurl = "";
+                                   setState(() {});
+                                 }
+                                  if (audiourl != "") {
+                                  
+                                   sendMessage(audiourl, widget.roomid,
+                                       widget.profileDetail.id);
+                                       audiourl="";
+                                   setState(() {});
+                                 }
+                               }),
+            
+              SizedBox(
+                height: 10,
+              )
+            ],
           ),
         ),
-      ),
-    );
+    ));
   }
 
   

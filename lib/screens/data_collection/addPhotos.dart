@@ -125,14 +125,14 @@ class _ReligionState extends State<AddPics> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "93% of The User Visit the Profile",
+                              "93% User Visit the Profile",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
                             ),
                             Text(
-                              "After Seen Profile Pics",
+                              "After Seen Profile Picture",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,

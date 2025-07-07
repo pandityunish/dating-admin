@@ -24,6 +24,7 @@ class AdminSearchModel {
   String? createdAt;
   String? adminname;
   bool? isSearch;
+  String? gender;
   int? profileFound;
   int? maxDistance;
   int? minDistance;
@@ -53,7 +54,8 @@ class AdminSearchModel {
     this.location,
     this.createdAt,
     this.profileFound,
-    this.isSearch
+    this.isSearch,
+    this.gender,
   });
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -76,7 +78,8 @@ class AdminSearchModel {
       'minDistance': minDistance,
       'createdAt': createdAt,
       'profileFound':profileFound,
-      'isSearch':isSearch
+      'isSearch':isSearch,
+      'gender':gender
     };
   }
 
@@ -130,6 +133,7 @@ class AdminSearchModel {
       location: map['location'] != null ? map['location'] as String : null,
       createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
       profileFound: map['profileFound'] != null ? map['profileFound'] as int : null,
+      gender: map['gender'] != null ? map['gender'] as String : null,
     );
   }
 

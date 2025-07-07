@@ -77,103 +77,113 @@ class _ReligionState extends State<InvisibleProfile> {
             Expanded(
               child: Column(
                 children: [
-                  Container(
-                    height: 50,
-                    width: Get.width * 0.9,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        border: Border.all(
-                            color: Color.fromARGB(255, 223, 223, 223))),
-                    child: TextFormField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(
-                            left: 20,
-                          ),
-                          border: InputBorder.none,
-                          hintText: "Please Enter Profile ID"),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.5,
+                            )),
+                        child: TextFormField(
+                          controller: controller,
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                              border: InputBorder.none,
+                              hintText: "Enter Profile ID",
+                              hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
+                        ),
+                      ),
                     ),
                   ),
-                
                 ],
               ),
             ),
-              InkWell(
-                      onTap: () async {
-                        if (controller.text.isEmpty) {
-                          showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  content: SnackBarContent(
-                                    error_text: "Please enter profile id",
-                                    appreciation: "",
-                                    icon: Icons.error,
-                                    sec: 3,
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                );
-                              });
-                        } else {
-                          NewUserModel newUserModel = await SearchProfile()
-                              .searchuserdatabyid(puid: controller.text);
-                          if (newUserModel.gender == widget.newUserModel.gender) {
-                            Get.showSnackbar(const GetSnackBar(
-                              title: "Same gender",
-                              message: "Same gender cannot be added",
-                              duration: Duration(seconds: 2),
-                            ));
-                          } else if (userSave.puid == controller.text) {
-                            Get.showSnackbar(const GetSnackBar(
-                              title: "Same uid",
-                              message: "Same uid cannot be added",
-                              duration: Duration(seconds: 2),
-                            ));
-                          } else {
-                            SearchProfile().addtoadminnotification(
-                                userid: widget.newUserModel.id!,
-                                useremail: widget.newUserModel.email!,
-                                userimage: widget.newUserModel.imageurls!.isEmpty
-                                    ? ""
-                                    : widget.newUserModel!.imageurls![0],
-                                title:
-                                    "${userSave.displayName} INVISIBLE ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid}",
-                                email: userSave.email!,
-                                subtitle: "");
-                            AdminService()
-                                .invisibletouser(
-                                    value: widget.newUserModel.id,
-                                    puid: controller.text)
-                                .whenComplete(() {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: SnackBarContent(
-                                        error_text: "Invisible  Successfull",
-                                        appreciation: "",
-                                        icon: Icons.done,
-                                        sec: 3,
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    );
-                                  }).whenComplete(() {
-                                Get.to(MyProfile(
-                                    userSave: widget.newUserModel,
-                                    profilecomp: 50));
-                              });
-                            }).whenComplete(() {});
-                          }
-                        }
-                      },
-                      child: CustomSpecialButtom(
-                        text: "Invisible",
-                        bordercolor: color == false ? Colors.black : Colors.blue,
-                      )),
+            InkWell(
+              onTap: () async {
+                if (controller.text.isEmpty) {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return const AlertDialog(
+                          content: SnackBarContent(
+                            error_text: "Please enter profile id",
+                            appreciation: "",
+                            icon: Icons.error,
+                            sec: 3,
+                          ),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                        );
+                      });
+                } else {
+                  NewUserModel newUserModel = await SearchProfile()
+                      .searchuserdatabyid(puid: controller.text);
+                  if (newUserModel.gender == widget.newUserModel.gender) {
+                    Get.showSnackbar(const GetSnackBar(
+                      title: "Same gender",
+                      message: "Same gender cannot be added",
+                      duration: Duration(seconds: 2),
+                    ));
+                  } else if (userSave.puid == controller.text) {
+                    Get.showSnackbar(const GetSnackBar(
+                      title: "Same uid",
+                      message: "Same uid cannot be added",
+                      duration: Duration(seconds: 2),
+                    ));
+                  } else {
+                    SearchProfile().addtoadminnotification(
+                        userid: widget.newUserModel.id!,
+                        useremail: widget.newUserModel.email!,
+                        userimage: widget.newUserModel.imageurls!.isEmpty
+                            ? ""
+                            : widget.newUserModel.imageurls![0],
+                        title:
+                            "${userSave.displayName} INVISIBLE ${widget.newUserModel.name.substring(0, 1).toUpperCase()} ${widget.newUserModel.surname.toLowerCase()} ${widget.newUserModel.puid}",
+                        email: userSave.email!,
+                        subtitle: "");
+                    AdminService()
+                        .invisibletouser(
+                            value: widget.newUserModel.id,
+                            puid: controller.text)
+                        .whenComplete(() {
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              content: SnackBarContent(
+                                error_text: "Invisible Successfully",
+                                appreciation: "",
+                                icon: Icons.done,
+                                sec: 3,
+                              ),
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                            );
+                          }).whenComplete(() {
+                        Get.to(MyProfile(
+                            userSave: widget.newUserModel,
+                            profilecomp: 50));
+                      });
+                    }).whenComplete(() {});
+                  }
+                }
+              },
+              child: CustomSpecialButtom(
+                text: "Invisible",
+                onTap: () {},
+                bordercolor: color == false ? Colors.black : Colors.blue,
+              ),
+            ),
                 
           ],
         ));

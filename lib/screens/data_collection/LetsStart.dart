@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:age_calculator/age_calculator.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -403,6 +405,19 @@ class _LetsStartState extends State<LetsStart> {
     super.initState();
     print("initState running ???");
     _scrollController = ScrollController();
+    
+    // Add focus listeners to rebuild UI when focus changes
+    _focusNode1.addListener(_onFocusChange);
+    _focusNode2.addListener(_onFocusChange);
+    _focusNode3.addListener(_onFocusChange);
+    _focusNode4.addListener(_onFocusChange);
+  }
+  
+  // This function will trigger a rebuild when focus changes
+  void _onFocusChange() {
+    setState(() {
+      // Just triggering a rebuild
+    });
   }
 
   final _focusNode1 = FocusNode();
@@ -411,10 +426,18 @@ class _LetsStartState extends State<LetsStart> {
   final _focusNode4 = FocusNode();
   @override
   void dispose() {
+    // Remove listeners before disposing
+    _focusNode1.removeListener(_onFocusChange);
+    _focusNode2.removeListener(_onFocusChange);
+    _focusNode3.removeListener(_onFocusChange);
+    _focusNode4.removeListener(_onFocusChange);
+    
+    // Then dispose the focus nodes
     _focusNode1.dispose();
     _focusNode2.dispose();
-    _scrollController.dispose();
     _focusNode3.dispose();
+    _focusNode4.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -509,7 +532,26 @@ class _LetsStartState extends State<LetsStart> {
               );
             });
       });
-    } else if (phone_num == null || phone_num.toString().length < 8) {
+    }else if (!_isValidPhoneNumber(phone_num.toString())) {
+  setState(() {
+    error = "Invalid Phone Number";
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SnackBarContent(
+              error_text: "Please enter a valid phone number",
+              appreciation: "",
+              icon: Icons.error,
+              sec: 1,
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+        });
+  });
+} else if (phone_num == null || phone_num.toString().length < 8) {
       setState(() {
         error = "Please Enter Contact Number";
         showDialog(
@@ -623,7 +665,7 @@ class _LetsStartState extends State<LetsStart> {
               );
             });
       });
-    } else if (selectedhours == "Hours" || selectedminutes == "Minutes") {
+    } else if (selectedhours == "Hour" || selectedminutes == "Minute") {
       setState(() {
         error = "";
         showDialog(
@@ -632,7 +674,7 @@ class _LetsStartState extends State<LetsStart> {
             builder: (context) {
               return AlertDialog(
                 content: SnackBarContent(
-                  error_text: "Please Enter the Time of Birth",
+                  error_text: "Please Enter Time of Birth",
                   appreciation: "",
                   icon: Icons.error,
                   sec: 2,
@@ -751,7 +793,20 @@ class _LetsStartState extends State<LetsStart> {
 //              });
     }
   }
-
+bool _isValidPhoneNumber(String? phoneNumber) {
+  if (phoneNumber == null) return false;
+  // Remove any whitespace and special characters except + and digits
+  String digits = phoneNumber.replaceAll(RegExp(r'[\s-]'), '');
+  // Check for international format with country code (e.g., +91XXXXXXXXXX)
+  if (digits.startsWith('+')) {
+    // Remove the + for the digit count check
+    String numberPart = digits.substring(1);
+    // Check if remaining characters are digits and total length is between 10-15 digits
+    return RegExp(r'^\d{10,15}$').hasMatch(numberPart);
+  }
+  // Check for local format (without country code)
+  return RegExp(r'^\d{8,15}$').hasMatch(digits);
+}
   late ScrollController _scrollController;
   TextEditingController birthPlaceController = TextEditingController();
   final _searchController = TextEditingController();
@@ -835,613 +890,652 @@ class _LetsStartState extends State<LetsStart> {
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  // DefaultTextStyle(
-                  //     style: GoogleFonts.poppins(
-                  //         color: Colors.black,
-                  //         fontSize: 40,
-                  //         fontWeight: FontWeight.bold),
-                  //     child: Container(
-                  //         padding: EdgeInsets.only(left: 20),
-                  //         alignment: Alignment.centerLeft,
-                  //         child: Text(
-                  //           "Let's Start",
-                  //           style: TextStyle(fontSize: 24),
-                  //         ))),
+            child: Column(
+              children: [
+                // DefaultTextStyle(
+                //     style: GoogleFonts.poppins(
+                //         color: Colors.black,
+                //         fontSize: 40,
+                //         fontWeight: FontWeight.bold),
+                //     child: Container(
+                //         padding: EdgeInsets.only(left: 20),
+                //         alignment: Alignment.centerLeft,
+                //         child: Text(
+                //           "Let's Start",
+                //           style: TextStyle(fontSize: 24),
+                //         ))),
+            
+                //namesubmission
+            
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Container(
+                              height: 48,
+                              child: CupertinoTextField(
+                                // height: 20.0,
+                                maxLength: 12,
+                                
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp("[a-zA-Z]")), // Allow only alphabets
+                                ],
+                                maxLengthEnforcement: MaxLengthEnforcement
+                                    .enforced, // show error message
+                                // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
+                                placeholder: "Enter Name",
+                                cursorColor: main_color,
+                                cursorWidth: 2,
+                                focusNode: _focusNode1,
+                                controller: name,
+                                
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: _focusNode1.hasFocus
+                                        ? main_color
+                                        : Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                textInputAction: TextInputAction.next,
+                                onChanged: (name) => {
+                                  setState(() {
+                                    User_Name = name;
+                                  })
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                                         
+                        
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Container(
+                              height: 48,
+                              child: CupertinoTextField(
+                                maxLength: 12,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp("[a-zA-Z]")), // Allow only alphabets
+                                ],
+                                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                placeholder: "Enter Surname",
+                                focusNode: _focusNode2,
+                                controller: surname,
+                                cursorColor: main_color,
+                                cursorWidth: 2,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: _focusNode2.hasFocus
+                                        ? main_color
+                                        : Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                textInputAction: TextInputAction.next,
+                                onChanged: (surname) => {
+                                  setState(() {
+                                    this.User_SurName = surname;
+                                  })
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Container(
+                              height: 48,
+                              child: CupertinoTextField(
+                                // height: 20.0,
+                                maxLength: 100,
+                                //               inputFormatters: [
+                                //   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
+                                // ],
+                                maxLengthEnforcement: MaxLengthEnforcement
+                                    .enforced, // show error message
+                                // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
+                                placeholder: "Enter Email ID",
+                                cursorColor: main_color,
+                                cursorWidth: 2,
+                                focusNode: _focusNode3,
+                                controller: useremail,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: _focusNode3.hasFocus
+                                        ? main_color
+                                        : Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                textInputAction: TextInputAction.next,
+                                onChanged: (name) => {
+                                  setState(() {
+                                    this.User_email = name;
+                                  })
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                          child: Container(
+                              child: IntlPhoneField(
+                            focusNode: _focusNode,
+                            flagsButtonPadding:
+                                const EdgeInsets.only(top: 20, bottom: 0),
+                            controller: Phone,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            ],
+                        
+                            decoration: InputDecoration(
+                              focusColor: main_color,
+                              hoverColor: main_color,
+                        
+                              //decoration for Input Field
+                              contentPadding: EdgeInsets.only(
+                                top: 25,
+                                left: 20,
+                                right: 20,
+                              ),
+                              // labelText: 'Phone Number',
+                        
+                              hintText: "Enter Contact Number",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
+                              errorStyle: TextStyle(
+                                // Add padding to the error text
+                        
+                                // You can also customize the text style as needed
+                                color: Colors.red, // Error text color
+                                fontSize: 14.0, // Error text font size
+                              ),
+                              // border: OutlineInputBorder(
+                              //     borderSide: BorderSide(color: main_color),
+                              //     borderRadius: BorderRadius.circular(60)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderSide: BorderSide(color: main_color),
+                              //     borderRadius: BorderRadius.circular(60)),
+                            ),
+                            // validator: (p0) {
+                        
+                            // },
+                            onCountryChanged: (value) {
+                              phone_num = "";
+                              Phone.clear();
+                              print(phone_num);
+                              setState(() {});
+                            },
+                            initialCountryCode:
+                                'IN', //default contry code, NP for Nepal
+                            onChanged: (phone) {
+                              //when phone number country code is changed
+                              // print(phone.completeNumber); //get complete number
+                              // print(phone.countryCode); // get country code only
+                              // print(phone.number); // only phone number
+                        
+                              setState(() {
+                                phone_num = phone.countryCode + phone.number;
+                              });
+                            },
+                            onSubmitted: (phone_num) => print('Submitted $phone_num'),
+                          )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 48,
+                                width: 150,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      _focusNode.unfocus();
+                                      setState(() {
+                                        male_gender = !male_gender;
+                                        female_gender = false;
+                                        if (!male_gender) {
+                                          gender = "";
+                                        }
+                                      });
+                                    },
+                                    style: male_gender
+                                        ? ButtonStyle(
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(25.0),
+                                                    side: BorderSide(
+                                                        color: main_color))),
+                                            backgroundColor: MaterialStateProperty.all<Color>(
+                                                Colors.white))
+                                        : ButtonStyle(
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(25.0))),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<Color>(Colors.white)),
+                                    child: Text("Male",
+                                        style: TextStyle(
+                                          fontFamily: 'Sans-serif',
+                                          fontWeight: FontWeight.w400,
+                                          color: male_gender ? main_color : textColor,
+                                          fontSize: 14,
+                                        ))),
+                              ),
+                              SizedBox(
+                                width: 150,
+                                height: 48,
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      _focusNode.unfocus();
+                                      setState(() {
+                                        female_gender = !female_gender;
+                                        male_gender = false;
+                                        if (!female_gender) {
+                                          gender = "";
+                                        }
+                                      });
+                                    },
+                                    style: female_gender
+                                        ? ButtonStyle(
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(25.0),
+                                                    side: BorderSide(
+                                                        color: main_color))),
+                                            backgroundColor: MaterialStateProperty.all<Color>(
+                                                Colors.white))
+                                        : ButtonStyle(
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(25.0))),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<Color>(Colors.white)),
+                                    child: Text("Female",
+                                        style: TextStyle(
+                                          fontFamily: 'Sans-serif',
+                                          fontWeight: FontWeight.w400,
+                                          color:
+                                              female_gender ? main_color : textColor,
+                                          fontSize: 14,
+                                        ))),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Date Of Birth",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontSize: 20,
+                                    fontFamily: 'Sans-serif',
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // (gender == "male")
+                        //     ? Calender(
+                        //         useTwentyOneYears: male_gender,
+                        //         setdate: updateMaleDate,
+                        //       )
+                        //     :
+                        Calender(
+                          useTwentyOneYears: male_gender,
+                          setdate: updateMaleDate,
+                        ),
+                        
+                        DefaultTextStyle(
+                            style: TextStyle(
+                              fontFamily: 'Sans-serif',
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                            child: Text("$dob")),
+                        
+                        Container(
+                          margin: EdgeInsets.only(left: 20, bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Time Of Birth",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontSize: 20,
+                                    fontFamily: 'Sans-serif',
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Card(
+                              elevation: 4,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: SizedBox(
+                                height: 48,
+                                width: MediaQuery.of(context).size.width * 0.29,
+                                child: Center(
+                                  child: DropdownButton<String>(
+                                   
+                                    underline: Container(color: Colors.white),
+                                    value: selectedhours,
+                                    isExpanded: true,
+                                     alignment: Alignment.center,
 
-                  //namesubmission
+                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                    hint: Text(
+                                      "Hour",
+                                      style: TextStyle(color: newtextColor),
+                                    ),
 
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Container(
-                        height: 50,
-                        child: CupertinoTextField(
-                          // height: 20.0,
-                          maxLength: 12,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp("[a-zA-Z]")), // Allow only alphabets
+                                    iconEnabledColor: selectedhours != 'Hour' ? Colors.black : newtextColor,
+                                    items: hours.map((value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(color: selectedhours != 'Hour'? Colors.black : textColor),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        selectedhours = newValue!;
+                                        print('Selected hours: $selectedhours');
+                                        // _updateDaysInMonth(); // Uncomment if you need this
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 4,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: SizedBox(
+                                height: 48,
+                                width: MediaQuery.of(context).size.width * 0.29,
+                                child: Center(
+                                  child: DropdownButton<String>(
+                          
+                                    underline: Container(
+                                      color: Colors.white,
+                                    ),
+                                    value: selectedminutes,
+                                      isExpanded: true,
+                                     alignment: Alignment.center,
+
+                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                    hint: Text(
+                                      "Minute",
+                                      style: TextStyle(color: newtextColor),
+                                    ),
+                                    iconEnabledColor: selectedminutes != 'Minute' ? Colors.black : newtextColor,
+                                    items: minutes.map((value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(color: selectedminutes != 'Minute' ? Colors.black : textColor),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        selectedminutes = newValue!;
+                                        // _updateDaysInMonth();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 4,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: SizedBox(
+                                height: 48,
+                                width: MediaQuery.of(context).size.width * 0.29,
+                                child: Center(
+                                  child: DropdownButton<String>(
+                                    
+                                    underline: Container(
+                                      color: Colors.white,
+                                    ),
+                                    value: selectedampm,
+                                    isExpanded: true,
+                                     alignment: Alignment.center,
+
+                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                    iconEnabledColor: textColor,
+                                    items: ampm.map((value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(color:  textColor),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        selectedampm = newValue!;
+                                        // _updateDaysInMonth();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
-                          maxLengthEnforcement: MaxLengthEnforcement
-                              .enforced, // show error message
-                          // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
-                          placeholder: "Enter Name",
-                          cursorColor: main_color,
-                          cursorWidth: 2,
-                          focusNode: _focusNode1,
-                          controller: name,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _focusNode1.hasFocus
-                                  ? main_color
-                                  : Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          onChanged: (name) => {
-                            setState(() {
-                              this.User_Name = name;
-                            })
-                          },
                         ),
-                      ),
-                    ),
-                  ),
-
-                  // Card(
-                  //   elevation: 4,
-                  //   shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(30)),
-                  //   child: TextFormField(
-                  //     // controller: namecontroller,
-                  //     textInputAction: TextInputAction.next,
-                  //     keyboardType: TextInputType.name,
-                  //     validator: (value) {
-                  //       if (value!.isEmpty) {
-                  //         return "Enter your name";
-                  //       }
-                  //       return null;
-                  //     },
-                  //     decoration: const InputDecoration(
-                  //         hintText: "Groom's Name",
-                  //         border: InputBorder.none,
-                  //         contentPadding: EdgeInsets.all(20)),
-                  //   ),
-                  // ),
-
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Container(
-                        height: 50,
-                        child: CupertinoTextField(
-                          maxLength: 12,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp("[a-zA-Z]")), // Allow only alphabets
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            child: SizedBox(
+                              height: 48,
+                              child: CupertinoTextField(
+                                cursorColor: main_color,
+                                cursorWidth: 2,
+                                
+                                controller: birthPlaceController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.name,
+                                placeholder: "Enter Place of Birth",
+                                focusNode: _focusNode4,
+                                onChanged: (value) {
+                                  _fileterlocation(value);
+                                  _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: const Duration(seconds: 1),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                                   decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: _focusNode4.hasFocus
+                                          ? main_color
+                                          : Colors.white,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                onTap: () {
+                                  _scrollController.animateTo(
+                                    _scrollController.position.maxScrollExtent,
+                                    duration: const Duration(seconds: 1),
+                                    curve: Curves.easeOut,
+                                  );
+                                },
+                              
+                                                  
+                              ),
+                            ),
+                          ),
+                        ),
+                        Stack(
+                          children: [
+                            const SizedBox(height: 1),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: SizedBox(
+                                height: height_suggest1,
+                                child: Card(
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    itemCount: alllist.length,
+                                    itemBuilder: (context, index) {
+                                      var data = alllist[index];
+                                      return SingleChildScrollView(
+                                        child: ListTile(
+                                            title: Text(
+                                                "${data.countrycity},${data.countrystate},${data.countryname}"),
+                                            onTap: () {
+                                              _onSelectedPlace1(data);
+                              
+                                              setState(() {
+                                                height_suggest1 = 0.0;
+                                              });
+                                            }),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
-                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          placeholder: "Enter Surname",
-                          focusNode: _focusNode2,
-                          controller: surname,
-                          cursorColor: main_color,
-                          cursorWidth: 2,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _focusNode2.hasFocus
-                                  ? main_color
-                                  : Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          onChanged: (surname) => {
-                            setState(() {
-                              this.User_SurName = surname;
-                            })
-                          },
                         ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Container(
-                        height: 50,
-                        child: CupertinoTextField(
-                          // height: 20.0,
-                          maxLength: 100,
-                          //               inputFormatters: [
-                          //   FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), // Allow only alphabets
-                          // ],
-                          maxLengthEnforcement: MaxLengthEnforcement
-                              .enforced, // show error message
-                          // maxLengthEnforcedMessage: 'You have reached the maximum character limit of 50',
-                          placeholder: "Enter Email ID",
-                          cursorColor: main_color,
-                          cursorWidth: 2,
-                          focusNode: _focusNode3,
-                          controller: useremail,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _focusNode3.hasFocus
-                                  ? main_color
-                                  : Colors.white,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          onChanged: (name) => {
-                            setState(() {
-                              this.User_email = name;
-                            })
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                    child: Container(
-                        child: IntlPhoneField(
-                      focusNode: _focusNode,
-                      flagsButtonPadding:
-                          const EdgeInsets.only(top: 20, bottom: 0),
-                      controller: Phone,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
-
-                      decoration: InputDecoration(
-                        focusColor: main_color,
-                        hoverColor: main_color,
-
-                        //decoration for Input Field
-                        contentPadding: EdgeInsets.only(
-                          top: 25,
-                          left: 20,
-                          right: 20,
-                        ),
-                        // labelText: 'Phone Number',
-
-                        hintText: "Enter Contact Number",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: InputBorder.none,
-                        errorStyle: TextStyle(
-                          // Add padding to the error text
-
-                          // You can also customize the text style as needed
-                          color: Colors.red, // Error text color
-                          fontSize: 14.0, // Error text font size
-                        ),
-                        // border: OutlineInputBorder(
-                        //     borderSide: BorderSide(color: main_color),
-                        //     borderRadius: BorderRadius.circular(60)),
-                        // focusedBorder: OutlineInputBorder(
-                        //     borderSide: BorderSide(color: main_color),
-                        //     borderRadius: BorderRadius.circular(60)),
-                      ),
-                      // validator: (p0) {
-
-                      // },
-                      onCountryChanged: (value) {
-                        phone_num = "";
-                        Phone.clear();
-                        print(phone_num);
-                        setState(() {});
-                      },
-                      initialCountryCode:
-                          'IN', //default contry code, NP for Nepal
-                      onChanged: (phone) {
-                        //when phone number country code is changed
-                        // print(phone.completeNumber); //get complete number
-                        // print(phone.countryCode); // get country code only
-                        // print(phone.number); // only phone number
-
+                    ),
+                  ),
+                ),
+              
+                Container(
+                  // margin: EdgeInsets.only(left: 15),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                         minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
+                          shadowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.black),
+                      
+                          shape: MaterialStateProperty
+                              .all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(60.0),
+                                      side: BorderSide(
+                                        color: (color_done2 == false)
+                                            ? Colors.white
+                                            : main_color,
+                                      ))),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white)),
+                      onPressed: () {
+                        // Show blue border for 2 seconds when clicked
                         setState(() {
-                          phone_num = phone.countryCode + phone.number;
+                          color_done2 = true;
+                        });
+                        
+                        // Call the original onpressed function
+                        onpressed();
+                        
+                        // Reset border color after 2 seconds
+                        Future.delayed(Duration(milliseconds: 3000), () {
+                          if (mounted) {
+                            setState(() {
+                              color_done2 = false;
+                            });
+                          }
                         });
                       },
-                      onSubmitted: (phone_num) => print('Submitted $phone_num'),
-                    )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 46,
-                          width: 150,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                setState(() {
-                                  male_gender = !male_gender;
-                                  female_gender = false;
-                                  if (!male_gender) {
-                                    gender = "";
-                                  }
-                                });
-                              },
-                              style: male_gender
-                                  ? ButtonStyle(
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.0),
-                                              side: BorderSide(
-                                                  color: main_color))),
-                                      backgroundColor: MaterialStateProperty.all<Color>(
-                                          Colors.white))
-                                  : ButtonStyle(
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.0))),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(Colors.white)),
-                              child: Text("Male",
-                                  style: TextStyle(
-                                    fontFamily: 'Sans-serif',
-                                    fontWeight: FontWeight.w400,
-                                    color: male_gender ? main_color : textColor,
-                                    fontSize: 14,
-                                  ))),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          height: 46,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                setState(() {
-                                  female_gender = !female_gender;
-                                  male_gender = false;
-                                  if (!female_gender) {
-                                    gender = "";
-                                  }
-                                });
-                              },
-                              style: female_gender
-                                  ? ButtonStyle(
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.0),
-                                              side: BorderSide(
-                                                  color: main_color))),
-                                      backgroundColor: MaterialStateProperty.all<Color>(
-                                          Colors.white))
-                                  : ButtonStyle(
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25.0))),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(Colors.white)),
-                              child: Text("Female",
-                                  style: TextStyle(
-                                    fontFamily: 'Sans-serif',
-                                    fontWeight: FontWeight.w400,
-                                    color:
-                                        female_gender ? main_color : textColor,
-                                    fontSize: 14,
-                                  ))),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Date Of Birth",
-                          style: TextStyle(
-                              decoration: TextDecoration.none,
-                              fontSize: 20,
-                              fontFamily: 'Sans-serif',
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // (gender == "male")
-                  //     ? Calender(
-                  //         useTwentyOneYears: male_gender,
-                  //         setdate: updateMaleDate,
-                  //       )
-                  //     :
-                  Calender(
-                    useTwentyOneYears: male_gender,
-                    setdate: updateMaleDate,
-                  ),
-
-                  DefaultTextStyle(
-                      style: TextStyle(
-                        fontFamily: 'Sans-serif',
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                      child: Text("$dob")),
-
-                  Container(
-                    margin: EdgeInsets.only(left: 20, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Time Of Birth",
-                          style: TextStyle(
-                              decoration: TextDecoration.none,
-                              fontSize: 20,
-                              fontFamily: 'Sans-serif',
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Card(
-                        elevation: 4,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: SizedBox(
-                          height: 46,
-                          width: MediaQuery.of(context).size.width * 0.29,
-                          child: Center(
-                            child: DropdownButton<String>(
-                              alignment: AlignmentDirectional.center,
-                              underline: Container(color: Colors.white),
-                              value: selectedhours,
-                              items: hours.map((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: textColor),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedhours = newValue!;
-                                  print('Selected hours: $selectedhours');
-                                  // _updateDaysInMonth(); // Uncomment if you need this
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Card(
-                        elevation: 4,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        child: SizedBox(
-                          height: 46,
-                          width: MediaQuery.of(context).size.width * 0.29,
-                          child: Center(
-                            child: DropdownButton<String>(
-                              alignment: AlignmentDirectional.center,
-                              underline: Container(
-                                color: Colors.white,
-                              ),
-                              value: selectedminutes,
-                              items: minutes.map((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: textColor),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedminutes = newValue!;
-                                  // _updateDaysInMonth();
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Card(
-                        elevation: 4,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        child: SizedBox(
-                          height: 46,
-                          width: MediaQuery.of(context).size.width * 0.29,
-                          child: Center(
-                            child: DropdownButton<String>(
-                              alignment: AlignmentDirectional.center,
-                              underline: Container(
-                                color: Colors.white,
-                              ),
-                              value: selectedampm,
-                              items: ampm.map((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: textColor),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedampm = newValue!;
-                                  // _updateDaysInMonth();
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: TextFormField(
-                        cursorColor: main_color,
-                        cursorWidth: 2,
-                        controller: birthPlaceController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
-                        onChanged: (value) {
-                          _fileterlocation(value);
-                          _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeOut,
-                          );
-                        },
-                        onTap: () {
-                          _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent,
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.easeOut,
-                          );
-                        },
-                        focusNode: _focusNode4,
-                        decoration: InputDecoration(
-                            hintText: "Enter Place of Birth",
-                            hintStyle: TextStyle(color: newtextColor),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(10)),
-                      ),
-                    ),
-                  ),
-                  Stack(
-                    children: [
-                      const SizedBox(height: 1),
-                      SizedBox(
-                        height: height_suggest1,
-                        child: Card(
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: alllist.length,
-                            itemBuilder: (context, index) {
-                              var data = alllist[index];
-                              return SingleChildScrollView(
-                                child: ListTile(
-                                    title: Text(
-                                        "${data.countrycity},${data.countrystate},${data.countryname}"),
-                                    onTap: () {
-                                      _onSelectedPlace1(data);
-
-                                      setState(() {
-                                        height_suggest1 = 0.0;
-                                      });
-                                    }),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.11,
-                  ),
-                  Container(
-                    // margin: EdgeInsets.only(left: 15),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                            shadowColor: MaterialStateColor.resolveWith(
-                                (states) => Colors.black),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                                    EdgeInsets.symmetric(
-                              vertical: 15,
-                            )),
-                            shape: MaterialStateProperty
-                                .all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(60.0),
-                                        side: BorderSide(
-                                          color: (color_done2 == false)
-                                              ? Colors.white
-                                              : main_color,
-                                        ))),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white)),
-                        onPressed: () {
-                          onpressed();
-                        },
-                        child: Text(
-                          "Register",
-                          style: (color_done2 == false)
-                              ? TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Serif')
-                              : TextStyle(
-                                  color: main_color,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Serif'),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  // Text(
-                  //   error,
-                  //   textAlign: TextAlign.center,
-                  //   style: const TextStyle(
-                  //       decoration: TextDecoration.none,
-                  //       fontSize: 14,
-                  //       fontWeight: FontWeight.w400,
-                  //       fontFamily: 'Sans-serif',
-                  //       color: Colors.black),
-                  // ),
-                ],
-              ),
+                      child: Text(
+                        "Register",
+                        style: (color_done2 == false)
+                            ? TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Serif')
+                            : TextStyle(
+                                color: main_color,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Serif'),
+                      )),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+            
+                // Text(
+                //   error,
+                //   textAlign: TextAlign.center,
+                //   style: const TextStyle(
+                //       decoration: TextDecoration.none,
+                //       fontSize: 14,
+                //       fontWeight: FontWeight.w400,
+                //       fontFamily: 'Sans-serif',
+                //       color: Colors.black),
+                // ),
+              ],
             ),
           )),
     );

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -110,8 +111,8 @@ class _ReligionState extends State<SendNotification> {
         ),
       );
 
-      print(res.body);
-      if(jsonDecode(res.body)["success"]>=1){
+      log(res.statusCode.toString());
+      if(res.statusCode==200){
    AdminService().addtosendnotification(email: widget.userSave.email,
          heading: title, name: userSave.name!, title: body, status: "Received", type: "Personal");
       }else{
@@ -305,7 +306,7 @@ print(allnotification);
                  ),
             
                  SizedBox(
-                   width: 300,
+                   width: MediaQuery.of(context).size.width*0.9,
                    height: 50,
                    child: ElevatedButton(
                      style: ButtonStyle(
@@ -337,21 +338,7 @@ print(allnotification);
                        print(widget.userSave.token);
                        // print(widget.users);
                        // if(widget.users!.isEmpty){
-                       if (controller.text.isEmpty ) {
-                         showDialog(
-                             context: context,
-                             builder: (context) {
-                               return const AlertDialog(
-                                 content: SnackBarContent(
-                                     sec: 2,
-                                     error_text: "Please Enter Notifiation",
-                                     appreciation: "",
-                                     icon: Icons.error),
-                                 backgroundColor: Colors.transparent,
-                                 elevation: 0,
-                               );
-                             });
-                       } else  if (headcontroller.text.isEmpty ) {
+                      if (headcontroller.text.isEmpty ) {
                          showDialog(
                              context: context,
                              builder: (context) {
@@ -365,7 +352,21 @@ print(allnotification);
                                  elevation: 0,
                                );
                              });
-                       } else {
+                       } else  if (controller.text.isEmpty ) {
+                         showDialog(
+                             context: context,
+                             builder: (context) {
+                               return const AlertDialog(
+                                 content: SnackBarContent(
+                                     sec: 2,
+                                     error_text: "Please Enter Notification",
+                                     appreciation: "",
+                                     icon: Icons.error),
+                                 backgroundColor: Colors.transparent,
+                                 elevation: 0,
+                               );
+                             });
+                       }  else {
                         print(widget.userSave.token);
                        
                          sendPushMessage(
@@ -404,7 +405,7 @@ print(allnotification);
                                  elevation: 0,
                                );
                              }).whenComplete(() {
-                                Navigator.push(
+                                 Navigator.push(
                                                        context,
                                                        MaterialPageRoute(
                                                            builder: (context) => MyProfile(

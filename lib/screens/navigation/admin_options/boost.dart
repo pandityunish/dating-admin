@@ -113,11 +113,13 @@ class _ReligionState extends State<Boost> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    InkWell(
-                        onTap: () {
-                          if(widget.newUserModel.status=="approved"){
+                    CustomSpecialButtom(
+                      text: "Boost To Save Preference",
+                      bordercolor: Colors.black,
+                      onTap: () {
+                        if(widget.newUserModel.status=="approved"){
                         SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                      title: "${userSave.displayName} BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} IN ALL DATABASE", email: userSave.email!, subtitle: "");
+                      title: "${userSave.displayName} BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid} IN ALL DATABASE", email: userSave.email!, subtitle: "");
                           AdminService().boosttoallprofile(value: widget.newUserModel.puid,gender: widget.newUserModel.gender=="male"?"female":"male").whenComplete((){
                              showDialog(
                               barrierDismissible: false,
@@ -125,7 +127,7 @@ class _ReligionState extends State<Boost> {
                               builder: (context) {
                                 return AlertDialog(
                                   content: SnackBarContent(
-                                    error_text: "Boost To All Successfull",
+                                    error_text: "Boost To All Successfully",
                                     appreciation: "",
                                     icon: Icons.check_circle_sharp,
                                     sec: 3,
@@ -147,7 +149,7 @@ class _ReligionState extends State<Boost> {
                             
                           }else{
                              SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                      title: "${userSave.displayName} TRIED TO BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} PROFILE (ERROR)", email: userSave.email!, subtitle: "");
+                      title: "${userSave.displayName} TRIED TO BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid} PROFILE (ERROR)", email: userSave.email!, subtitle: "");
                              showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -167,20 +169,18 @@ class _ReligionState extends State<Boost> {
                           
                           
                         },
-                        child: CustomSpecialButtom(
-                          text: "Boost To All",
-                          bordercolor:
-                              color == false ? Colors.black : Colors.blue,
-                        )),
-                    InkWell(
-                        onTap: () async{
-                          if(widget.newUserModel.status=="approved"){
+                    ),
+                    CustomSpecialButtom(
+                      text: "Boost To All",
+                      bordercolor: Colors.black,
+                      onTap: () async{
+                        if(widget.newUserModel.status=="approved"){
                             List<HistorySavePref> 
                              history_save_pref =
                             await AdminService().getsavepref(id: widget.newUserModel.id);
                             if(history_save_pref.isEmpty){
                                 SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                      title: "${userSave.displayName} TRIED TO BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} TO SAVED PREFERENCE (ERROR)", email: userSave.email!, subtitle: "");
+                      title: "${userSave.displayName} TRIED TO BOOST ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid} TO SAVED PREFERENCE (ERROR)", email: userSave.email!, subtitle: "");
                               showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -221,7 +221,7 @@ class _ReligionState extends State<Boost> {
                                     )));
                               });
                                  SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-                      title: "${userSave.displayName} BOOST ${widget.newUserModel.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} TO SAVED PREFERENCE", email: userSave.email!, subtitle: "");
+                      title: "${userSave.displayName} BOOST ${widget.newUserModel.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname.toLowerCase()} ${widget.newUserModel!.puid} TO SAVED PREFERENCE", email: userSave.email!, subtitle: "");
                         AdminService().boosttoallprofile(value: widget.newUserModel.puid,gender: widget.newUserModel.gender=="male"?"female":"male");
                     
                             }
@@ -245,26 +245,25 @@ class _ReligionState extends State<Boost> {
                               });
                                     }
                         },
-                        child: CustomSpecialButtom(
-                          text: "Boost To Save Preference",
-                          bordercolor:
-                              color == false ? Colors.black : Colors.blue,
-                        )),
-                    InkWell(
-                        onTap: () {
-                           if(widget.newUserModel.status=="approved"){
-                     Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => BoostProfile(newUserModel: widget.newUserModel,)));
+                    ),
+                    CustomSpecialButtom(
+                      text: "Boost To Particular Profile",
+                      bordercolor: Colors.black,
+                      onTap: () {
+                        if(widget.newUserModel.status=="approved"){
+                   
+                                Navigator.push(
+            context,
+            PageRouteBuilder(
+                transitionDuration: Duration(milliseconds: 0),
+                reverseTransitionDuration: Duration(milliseconds: 0),
+                pageBuilder: (_, __, ___) => BoostProfile(newUserModel: widget.newUserModel,)));
                            }else{
                             
                            }
                          
                         },
-                        child: CustomSpecialButtom(
-                          text: "Boost To Particular Profile",
-                          bordercolor:
-                              color == false ? Colors.black : Colors.blue,
-                        )),
+                    ),
                   ],
                 ),
               ),

@@ -30,11 +30,30 @@ class ManageBubbles extends StatefulWidget {
 class _ManageBubblesState extends State<ManageBubbles> {
   DateTime? selectedDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
+    final DateTime currentDate = DateTime.now();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate:
+          selectedDate!.isAfter(currentDate) ? currentDate : selectedDate!,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: main_color, // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: Colors.black, // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: main_color, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      lastDate: currentDate, // Set last date to current date
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -115,10 +134,9 @@ class _ManageBubblesState extends State<ManageBubbles> {
   String? imageurl14;
   String? imageurl15;
   String? imageurl16;
-Future<XFile> pickCropImage(String image)async{
- final croppedFile = await ImageCropper().cropImage(
+  Future<XFile> pickCropImage(String image) async {
+    final croppedFile = await ImageCropper().cropImage(
       sourcePath: image,
-     
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Free Rishtey Wala',
@@ -131,13 +149,12 @@ Future<XFile> pickCropImage(String image)async{
       ],
     );
     return XFile(croppedFile!.path);
+  }
 
-
-}
   void pickimage() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image =await pickCropImage(pickimage!.path);
+    image = await pickCropImage(pickimage!.path);
     imageurl1 = await uploadphoto(image!.path);
 
     setState(() {});
@@ -147,7 +164,7 @@ Future<XFile> pickCropImage(String image)async{
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     // image2 = pickimage;
-    image2 =await pickCropImage(pickimage!.path);
+    image2 = await pickCropImage(pickimage!.path);
 
     imageurl2 = await uploadphoto(image2!.path);
     setState(() {});
@@ -157,7 +174,7 @@ Future<XFile> pickCropImage(String image)async{
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     // image3 = pickimage;
-    image3 =await pickCropImage(pickimage!.path);
+    image3 = await pickCropImage(pickimage!.path);
 
     imageurl3 = await uploadphoto(image3!.path);
     setState(() {});
@@ -166,17 +183,17 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage4() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image4 =await pickCropImage(pickimage!.path);
+    image4 = await pickCropImage(pickimage!.path);
 
     imageurl4 = await uploadphoto(image4!.path);
-    
+
     setState(() {});
   }
 
   void pickimage5() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image5 =await pickCropImage(pickimage!.path);
+    image5 = await pickCropImage(pickimage!.path);
 
     imageurl5 = await uploadphoto(image5!.path);
     setState(() {});
@@ -185,7 +202,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage6() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image6 =await pickCropImage(pickimage!.path);
+    image6 = await pickCropImage(pickimage!.path);
 
     imageurl6 = await uploadphoto(image6!.path);
     setState(() {});
@@ -194,7 +211,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage7() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image7 =await pickCropImage(pickimage!.path);
+    image7 = await pickCropImage(pickimage!.path);
 
     imageurl7 = await uploadphoto(image7!.path);
     setState(() {});
@@ -203,7 +220,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage8() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image8 =await pickCropImage(pickimage!.path);
+    image8 = await pickCropImage(pickimage!.path);
 
     imageurl8 = await uploadphoto(image8!.path);
     setState(() {});
@@ -212,7 +229,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage9() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image9 =await pickCropImage(pickimage!.path);
+    image9 = await pickCropImage(pickimage!.path);
 
     imageurl9 = await uploadphoto(image9!.path);
     setState(() {});
@@ -221,7 +238,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage10() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image10 =await pickCropImage(pickimage!.path);
+    image10 = await pickCropImage(pickimage!.path);
 
     imageurl10 = await uploadphoto(image10!.path);
     setState(() {});
@@ -230,7 +247,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage11() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image11=await pickCropImage(pickimage!.path);
+    image11 = await pickCropImage(pickimage!.path);
 
     imageurl11 = await uploadphoto(image11!.path);
     setState(() {});
@@ -239,7 +256,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage12() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image12 =await pickCropImage(pickimage!.path);
+    image12 = await pickCropImage(pickimage!.path);
 
     imageurl12 = await uploadphoto(image12!.path);
     setState(() {});
@@ -248,7 +265,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage13() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image13 =await pickCropImage(pickimage!.path);
+    image13 = await pickCropImage(pickimage!.path);
 
     imageurl13 = await uploadphoto(image13!.path);
     setState(() {});
@@ -257,7 +274,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage14() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image14 =await pickCropImage(pickimage!.path);
+    image14 = await pickCropImage(pickimage!.path);
 
     imageurl14 = await uploadphoto(image14!.path);
     setState(() {});
@@ -266,7 +283,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage15() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image15 =await pickCropImage(pickimage!.path);
+    image15 = await pickCropImage(pickimage!.path);
 
     imageurl15 = await uploadphoto(image15!.path);
     setState(() {});
@@ -275,7 +292,7 @@ Future<XFile> pickCropImage(String image)async{
   void pickimage16() async {
     final pickimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    image15 =await pickCropImage(pickimage!.path);
+    image15 = await pickCropImage(pickimage!.path);
 
     imageurl16 = await uploadphoto(image15!.path);
     image16 = pickimage;
@@ -337,8 +354,9 @@ Future<XFile> pickCropImage(String image)async{
             return AlertDialog(
               content: SnackBarContent(
                 appreciation: "",
-                error_text: "${nonNullImages.first} Bubble Chnage Successfully",
-                icon: Icons.check,
+                error_text:
+                    "Bubble Pic-${nonNullImages.first} Change Successfully",
+                icon: Icons.check_circle,
                 sec: 2,
               ),
               backgroundColor: Colors.transparent,
@@ -360,7 +378,7 @@ Future<XFile> pickCropImage(String image)async{
             return const AlertDialog(
               content: SnackBarContent(
                 appreciation: "",
-                error_text: "Multiple Bubble Pic Chnage Successfully",
+                error_text: "Multiple Bubble Pics Change Successfully",
                 icon: Icons.check_circle_sharp,
                 sec: 2,
               ),
@@ -405,7 +423,7 @@ Future<XFile> pickCropImage(String image)async{
             middle: Row(
               children: [
                 BigText(
-                  text: "Manage Bubbles Pics",
+                  text: "Manage Bubble Pics",
                   size: 20,
                   color: main_color,
                   fontWeight: FontWeight.w700,
@@ -418,16 +436,37 @@ Future<XFile> pickCropImage(String image)async{
 
             previousPageTitle: "",
           ),
-          body: data == null
-              ? Center()
+          body: data == null || data.length == 0
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: main_color,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "No data available for the selected date",
+                        style: TextStyle(color: textColor, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                )
               : PageView.builder(
                   controller: _pageController,
                   onPageChanged: (index) {},
                   itemCount: data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    tz.TZDateTime indianTime = tz.TZDateTime.from(
-                        DateTime.parse(data[index]["createdAt"]),
-                        tz.getLocation('Asia/Kolkata'));
+                    tz.TZDateTime indianTime;
+                    try {
+                      indianTime = tz.TZDateTime.from(
+                          DateTime.parse(data[index]["createdAt"]),
+                          tz.getLocation('Asia/Kolkata'));
+                    } catch (e) {
+                      // Fallback to current time if there's an error parsing the date
+                      indianTime =
+                          tz.TZDateTime.now(tz.getLocation('Asia/Kolkata'));
+                    }
 
                     return SingleChildScrollView(
                       child: Column(
@@ -442,7 +481,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CircularBubles1(
-                                  index: index,
+                                        index: index,
                                         fileimage: image2?.path,
                                         onclick: () {
                                           pickimage2();
@@ -462,8 +501,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: -0.1, duration: 1000.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image3?.path,
                                         onclick: () {
                                           pickimage3();
@@ -490,8 +528,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image?.path,
                                         onclick: () {
                                           pickimage();
@@ -519,8 +556,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image4?.path,
                                         onclick: () {
                                           pickimage4();
@@ -539,8 +575,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: 0.1, duration: 1500.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image5?.path,
                                         onclick: () {
                                           pickimage5();
@@ -570,8 +605,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image6?.path,
                                         onclick: () {
                                           pickimage6();
@@ -590,8 +624,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: -0.1, duration: 1000.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image7?.path,
                                         onclick: () {
                                           pickimage7();
@@ -610,8 +643,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: -0.3, duration: 3000.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image8?.path,
                                         onclick: () {
                                           pickimage8();
@@ -675,8 +707,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image9?.path,
                                         onclick: () {
                                           pickimage9();
@@ -695,8 +726,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: 0.05, duration: 1000.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image10?.path,
                                         onclick: () {
                                           pickimage10();
@@ -723,8 +753,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image11?.path,
                                         onclick: () {
                                           pickimage11();
@@ -747,8 +776,7 @@ Future<XFile> pickCropImage(String image)async{
                                   width: 50,
                                 ),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image12?.path,
                                         onclick: () {
                                           pickimage12();
@@ -775,8 +803,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image13?.path,
                                         onclick: () {
                                           pickimage13();
@@ -804,8 +831,7 @@ Future<XFile> pickCropImage(String image)async{
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image14?.path,
                                         onclick: () {
                                           pickimage14();
@@ -824,7 +850,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: 0.1, duration: 1500.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
+                                        index: index,
                                         fileimage: image15?.path,
                                         onclick: () {
                                           pickimage15();
@@ -843,8 +869,7 @@ Future<XFile> pickCropImage(String image)async{
                                     .slideY(end: 0.1, duration: 1500.ms)
                                     .then(),
                                 CircularBubles1(
-                                  index: index,
-
+                                        index: index,
                                         fileimage: image16?.path,
                                         onclick: () {
                                           pickimage16();
@@ -931,40 +956,109 @@ Future<XFile> pickCropImage(String image)async{
                                                 });
                                           } else {
                                             checkImages();
-                                            BubbleService().updatebubbles(
-                                              image1: imageurl1 ??
-                                                  data[index]["image1"],
-                                              image2: imageurl2 ??
-                                                  data[index]["image2"],
-                                              image3: imageurl3 ??
-                                                  data[index]["image3"],
-                                              image4: imageurl4 ??
-                                                  data[index]["image4"],
-                                              image5: imageurl5 ??
-                                                  data[index]["image5"],
-                                              image6: imageurl6 ??
-                                                  data[index]["image6"],
-                                              image7: imageurl7 ??
-                                                  data[index]["image7"],
-                                              image8: imageurl8 ??
-                                                  data[index]["image8"],
-                                              image9: imageurl9 ??
-                                                  data[index]["image9"],
-                                              image10: imageurl10 ??
-                                                  data[index]["image10"],
-                                              image11: imageurl11 ??
-                                                  data[index]["image11"],
-                                              image12: imageurl12 ??
-                                                  data[index]["image12"],
-                                              image13: imageurl13 ??
-                                                  data[index]["image13"],
-                                              image14: imageurl14 ??
-                                                  data[index]["image14"],
-                                              image15: imageurl15 ??
-                                                  data[index]["image15"],
-                                              image16: imageurl16 ??
-                                                  data[index]["image16"],
-                                            );
+                                            List<String?> imageUrls = [
+                                              imageurl1,
+                                              imageurl2,
+                                              imageurl3,
+                                              imageurl4,
+                                              imageurl5,
+                                              imageurl6,
+                                              imageurl7,
+                                              imageurl8,
+                                              imageurl9,
+                                              imageurl10,
+                                              imageurl11,
+                                              imageurl12,
+                                              imageurl13,
+                                              imageurl14,
+                                              imageurl15,
+                                              imageurl16,
+                                            ];
+                                            List<int> nonNullImages = [];
+
+                                            for (int i = 0;
+                                                i < imageUrls.length;
+                                                i++) {
+                                              if (imageUrls[i] != null) {
+                                                nonNullImages.add(i +
+                                                    1); // Store image number (index + 1)
+                                              }
+                                            }
+                                            if (nonNullImages.isEmpty) {
+                                            }else if(nonNullImages.length == 1){
+                                              BubbleService().updatebubbles(
+                                                number: nonNullImages.first
+                                                    .toString(),
+                                                image1: imageurl1 ??
+                                                    data[index]["image1"],
+                                                image2: imageurl2 ??
+                                                    data[index]["image2"],
+                                                image3: imageurl3 ??
+                                                    data[index]["image3"],
+                                                image4: imageurl4 ??
+                                                    data[index]["image4"],
+                                                image5: imageurl5 ??
+                                                    data[index]["image5"],
+                                                image6: imageurl6 ??
+                                                    data[index]["image6"],
+                                                image7: imageurl7 ??
+                                                    data[index]["image7"],
+                                                image8: imageurl8 ??
+                                                    data[index]["image8"],
+                                                image9: imageurl9 ??
+                                                    data[index]["image9"],
+                                                image10: imageurl10 ??
+                                                    data[index]["image10"],
+                                                image11: imageurl11 ??
+                                                    data[index]["image11"],
+                                                image12: imageurl12 ??
+                                                    data[index]["image12"],
+                                                image13: imageurl13 ??
+                                                    data[index]["image13"],
+                                                image14: imageurl14 ??
+                                                    data[index]["image14"],
+                                                image15: imageurl15 ??
+                                                    data[index]["image15"],
+                                                image16: imageurl16 ??
+                                                    data[index]["image16"],
+                                              );
+                                            } else {
+                                              BubbleService().updatebubbles(
+                                                number: "Multiple",
+                                                image1: imageurl1 ??
+                                                    data[index]["image1"],
+                                                image2: imageurl2 ??
+                                                    data[index]["image2"],
+                                                image3: imageurl3 ??
+                                                    data[index]["image3"],
+                                                image4: imageurl4 ??
+                                                    data[index]["image4"],
+                                                image5: imageurl5 ??
+                                                    data[index]["image5"],
+                                                image6: imageurl6 ??
+                                                    data[index]["image6"],
+                                                image7: imageurl7 ??
+                                                    data[index]["image7"],
+                                                image8: imageurl8 ??
+                                                    data[index]["image8"],
+                                                image9: imageurl9 ??
+                                                    data[index]["image9"],
+                                                image10: imageurl10 ??
+                                                    data[index]["image10"],
+                                                image11: imageurl11 ??
+                                                    data[index]["image11"],
+                                                image12: imageurl12 ??
+                                                    data[index]["image12"],
+                                                image13: imageurl13 ??
+                                                    data[index]["image13"],
+                                                image14: imageurl14 ??
+                                                    data[index]["image14"],
+                                                image15: imageurl15 ??
+                                                    data[index]["image15"],
+                                                image16: imageurl16 ??
+                                                    data[index]["image16"],
+                                              );
+                                            }
                                           }
                                         } else {
                                           print(imageurl1 ==
@@ -977,17 +1071,15 @@ Future<XFile> pickCropImage(String image)async{
                           SizedBox(
                             height: 5,
                           ),
-                          index == 0
-                              ? Center()
-                              : Text(
-                                  "Updated pic ${index} By admin ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(indianTime.toString()).toLocal())}",
-                                  style: const TextStyle(
-                                      decoration: TextDecoration.none,
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Sans-serif'),
-                                ),
+                          Text(
+                            "Updated pic-${data[index]["username"] == null || data[index]["username"] == "" ? "${index} By admin" : data[index]["username"]} ${DateFormat('EEEE MMMM d y HH:mm').format(DateTime.parse(indianTime.toString()).toLocal())}",
+                            style: const TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Sans-serif'),
+                          ),
                         ],
                       ),
                     );

@@ -215,15 +215,35 @@ class _NotificationWidget2State extends State<NotificationWidget2> {
           if (widget.notiData.title.contains("CRITERIA")) {
           } else if (widget.notiData.title.contains("DELETE PROFILE") ||
               widget.notiData.title.contains("DELETED")) {
-            NewUserModel usermodel = await HomeService()
+            final usermodel = await HomeService()
                 .getdeleteuserdatabyid(widget.notiData.userid);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DeleteProfile(
-                          searchText: "Delete",
-                          user_list: [usermodel],
-                        )));
+            
+            if (usermodel != null) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DeleteProfile(
+                            searchText: "Delete",
+                            user_list: [usermodel],
+                          )));
+            } else {
+              // Show error dialog if user data is not found
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      content: SnackBarContent(
+                        error_text: "User doesn't exist or has been deleted",
+                        appreciation: "",
+                        icon: Icons.error,
+                        sec: 2,
+                      ),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    );
+                  });
+            }
             // Navigator.push(
             // context,
             // MaterialPageRoute(

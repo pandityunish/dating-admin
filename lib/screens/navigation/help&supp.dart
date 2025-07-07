@@ -18,6 +18,7 @@ import '../../globalVars.dart';
 import '../../sendUtils/notiFunction.dart';
 import 'navigator.dart';
 import 'package:http/http.dart' as http;
+
 class HelpSupport extends StatefulWidget {
   final NewUserModel newUserModel;
   const HelpSupport({Key? key, required this.newUserModel}) : super(key: key);
@@ -32,11 +33,11 @@ class _HelpSupportState extends State<HelpSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: "Support", iconImage: 'images/icons/community.png'),
+        appBar: CustomAppBar(
+            title: "Support", iconImage: 'images/icons/community.png'),
         body: Stack(
           children: [
             Container(
-          
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -427,7 +428,7 @@ class _HelpSupportState extends State<HelpSupport> {
                 child: SizedBox(
                   height: 350,
                   child: Material(
-                    color: Colors.white,
+                      color: Colors.white,
                       elevation: 10,
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: Container(
@@ -447,45 +448,45 @@ class _HelpSupportState extends State<HelpSupport> {
                             Divider(
                               thickness: 1,
                             ),
-                          Text("Query Reply",style: TextStyle(fontWeight: FontWeight.bold),),
-                           
+                            Text(
+                              "Query Reply",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             SizedBox(height: 10),
-                           Padding(
-                             padding: const EdgeInsets.all(8.0),
-                             child: TextField(
-                                      maxLength: 300,
-                                      // enabled: !messageSend,
-                                      // enabled: true,
-                                      minLines: 5,
-                                      maxLines: 5,
-                                      
-                                      scrollPhysics:AlwaysScrollableScrollPhysics(),
-                                      controller: descController,
-                                      cursorColor: main_color,
-                                      // scrollController: ScrollController(),
-                                      decoration: InputDecoration(
-                                        focusColor: main_color,
-                                        
-                                        focusedBorder:  OutlineInputBorder(
-              borderSide: BorderSide(color: main_color),
-                                        borderRadius: BorderRadius.circular(20),
-                                        ),
-                                        border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(20),
-                                        ),
-                                      
-                                        hintText: "Enter Reply Here",
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      onChanged: (name) => {
-                                        /*setState(() {
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                maxLength: 300,
+                                // enabled: !messageSend,
+                                // enabled: true,
+                                minLines: 5,
+                                maxLines: 5,
+
+                                scrollPhysics: AlwaysScrollableScrollPhysics(),
+                                controller: descController,
+                                cursorColor: main_color,
+                                // scrollController: ScrollController(),
+                                decoration: InputDecoration(
+                                  focusColor: main_color,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: main_color),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  hintText: "Enter Reply Here",
+                                ),
+                                textInputAction: TextInputAction.next,
+                                onChanged: (name) => {
+                                  /*setState(() {
                                             this.User_Name = name;
                                           })*/
-                                      },
-                                      //onSubmitted: (User_Name) => print('Submitted $User_Name'),
-                                    ),
-                           ),
+                                },
+                                //onSubmitted: (User_Name) => print('Submitted $User_Name'),
+                              ),
+                            ),
                             SizedBox(height: 5),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -494,39 +495,34 @@ class _HelpSupportState extends State<HelpSupport> {
                                 child: ElevatedButton(
                                   onPressed: (messageSend == false)
                                       ? () {
-                                         
-                                                   (descController.text.isNotEmpty)
-                                                      ? sendQuery()
-                                                      : showDialog(
-                                                          barrierDismissible: false,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return AlertDialog(
-                                                              content: SnackBarContent(
-                                                                  appreciation: "",
-                                                                  error_text:
-                                                                      "Please Describe Your Query",
-                                                                  sec: 1,
-                                                                  icon: Icons.error),
-                                                              backgroundColor:
-                                                                  Colors.transparent,
-                                                              elevation: 0,
-                                                            );
-                                                          });
-                                                  
-                                            
+                                          (descController.text.isNotEmpty)
+                                              ? sendQuery()
+                                              : showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      content: SnackBarContent(
+                                                          appreciation: "",
+                                                          error_text:
+                                                              "Please Enter Data",
+                                                          sec: 1,
+                                                          icon: Icons.error),
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      elevation: 0,
+                                                    );
+                                                  });
                                         }
-                                      : () {
-                                              
-                                      },
+                                      : () {},
                                   child: Text(
-                                    messageSend==true ? 'Pending' : 'Send ',
+                                    messageSend == true ? 'Pending' : 'Send ',
                                     style: TextStyle(
-                                        color: Colors.black, fontFamily: 'Serif'),
+                                        color: Colors.black,
+                                        fontFamily: 'Serif'),
                                   ),
                                   style: ButtonStyle(
-                                      padding: MaterialStateProperty.all<
-                                              EdgeInsetsGeometry?>(
+                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
                                           EdgeInsets.symmetric(
                                               horizontal: 65, vertical: 15)),
                                       shape: MaterialStateProperty.all<
@@ -534,7 +530,8 @@ class _HelpSupportState extends State<HelpSupport> {
                                           RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(60.0),
-                                              side: BorderSide(color: Colors.white))),
+                                              side: BorderSide(
+                                                  color: Colors.white))),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               Colors.white)),
@@ -554,83 +551,91 @@ class _HelpSupportState extends State<HelpSupport> {
   bool messageSend = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController descController = TextEditingController();
-void sendPushMessage(
+  void sendPushMessage(
       String body, String title, String userid, String route, String token,
       {String userName = "", String sound = "navnot"}) async {
-   
-      try {
-        print(token);
-        http.Response res = await http.post(
-          Uri.parse('https://fcm.googleapis.com/fcm/send'),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-            'Authorization':
-                'key=AAAARNDuqEs:APA91bFMhCmAO8olPfJxG868C9czilKHzNIk_pYuXBJ7iFrGiK6bPl6K_O5Uqkq607hZFu_ScIfyCRq7ZBnHTtz_vl6HvrIvdDwxu_nxP4P4E-pDpGvIeGhP5Z3CQoxgwq6sZTlFLtYa',
-          },
-          body: jsonEncode(
-            <String, dynamic>{
-              'notification': <String, dynamic>{
-                'body': body,
-                'title': title,
-                'icon': 'ic_launcher'
-              },
-              'priority': 'high',
-              'data': <String, dynamic>{
-                'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-                'uid': userid,
-                'route': route,
-                'id':widget. newUserModel.id,
-                'userName': userName,
-                'status': 'done',
-                'sound': sound
-              },
-              "to": token,
+    try {
+      print(token);
+      http.Response res = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAARNDuqEs:APA91bFMhCmAO8olPfJxG868C9czilKHzNIk_pYuXBJ7iFrGiK6bPl6K_O5Uqkq607hZFu_ScIfyCRq7ZBnHTtz_vl6HvrIvdDwxu_nxP4P4E-pDpGvIeGhP5Z3CQoxgwq6sZTlFLtYa',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': body,
+              'title': title,
+              'icon': 'ic_launcher'
             },
-          ),
-        );
-        print(res.body);
-      } catch (e) {
-        print("error push notification");
-      }
-    
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'uid': userid,
+              'route': route,
+              'id': widget.newUserModel.id,
+              'userName': userName,
+              'status': 'done',
+              'sound': sound
+            },
+            "to": token,
+          },
+        ),
+      );
+      print(res.body);
+    } catch (e) {
+      print("error push notification");
+    }
   }
+
   sendQuery() {
     setState(() {
       messageSend = true;
     });
-      SearchProfile().addtoadminnotification(userid: widget.newUserModel!.id!, useremail:widget.newUserModel!.email!, userimage:widget.newUserModel!.imageurls!.isEmpty?"":widget.newUserModel!.imageurls![0], 
-  title: "${userSave.displayName} QUERY REPLIED TO ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} ", email: userSave.email!, subtitle: "");
-    SearchProfile().postquery(email: widget.newUserModel.id, desc: descController.text);
+    SearchProfile().addtoadminnotification(
+        userid: widget.newUserModel!.id!,
+        useremail: widget.newUserModel!.email!,
+        userimage: widget.newUserModel!.imageurls!.isEmpty
+            ? ""
+            : widget.newUserModel!.imageurls![0],
+        title:
+            "${userSave.displayName} QUERY REPLIED TO ${widget.newUserModel!.name.substring(0, 1).toUpperCase()} ${widget.newUserModel!.surname..toLowerCase()} ${widget.newUserModel!.puid} ",
+        email: userSave.email!,
+        subtitle: "");
+    SearchProfile()
+        .postquery(email: widget.newUserModel.id, desc: descController.text);
     SearchProfile().addtonotification(
-          email: widget.newUserModel.email!,
-          title: "QUERY RESOLVED SUCCESSFULLY",
-        );
-        
-        sendPushMessage("Query Resolved Successfully","",
-        widget.newUserModel.id,"/",widget.newUserModel.token,sound: "",userName: widget.newUserModel.name);
-  showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: SnackBarContent(
-                                            error_text:
-                                                "Query Resolved Successfully",
-                                            appreciation: "",
-                                            icon: Icons.check,
-                                            sec: 3,
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        );
-                                      }).whenComplete((){
-  Get.off(MyProfile(
-                                       profilecomp: 50,
-                                       userSave: widget.newUserModel,
-                                      ));
-        });
-          
-     setState(() {
+      email: widget.newUserModel.email!,
+      title: "QUERY RESOLVED SUCCESSFULLY",
+    );
+
+    sendPushMessage("Query Resolved Successfully", "", widget.newUserModel.id,
+        "/", widget.newUserModel.token,
+        sound: "", userName: widget.newUserModel.name);
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SnackBarContent(
+              error_text: "Query Resolved Successfully",
+              appreciation: "",
+              icon: Icons.check_circle_rounded,
+              sec: 3,
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          );
+        }).whenComplete(() {
+      Get.off(MyProfile(
+        profilecomp: 50,
+        userSave: widget.newUserModel,
+      ));
+    });
+
+    setState(() {
       // messageSend = false;
       descController.clear();
     });

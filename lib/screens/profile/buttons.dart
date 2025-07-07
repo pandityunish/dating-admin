@@ -271,7 +271,7 @@ class _PbuttonsState extends State<Pbuttons> {
           margin: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.05),
           child: Column(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center, children: [
-            SizedBox(height: 10,),
+            SizedBox(height: 5,),
             Container(
               // padding: const EdgeInsets.only(left: 28, right: 28),
               alignment: Alignment.center,
@@ -279,7 +279,7 @@ class _PbuttonsState extends State<Pbuttons> {
                 style: ElevatedButton.styleFrom(
                     // minimumSize: Size(200, 50),
                     minimumSize:
-                        Size(MediaQuery.of(context).size.width * 0.95, 40),
+                        Size(MediaQuery.of(context).size.width * 0.95, 48),
                     elevation: 0,
                     backgroundColor: Colors.white,
                     shadowColor: Colors.black,
@@ -337,7 +337,7 @@ class _PbuttonsState extends State<Pbuttons> {
                 },
               ),
             ),
-           
+           SizedBox(height: 3,),
             Container(
                 width: MediaQuery.of(context).size.width*.95,
                 // padding: EdgeInsets.only(left: 34, right: 12),
@@ -350,7 +350,7 @@ class _PbuttonsState extends State<Pbuttons> {
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(
                                   MediaQuery.of(context).size.width / 4,
-                                  40),
+                                  48),
                               // minimumSize: Size(150, 50),
                               elevation: 0,
                               backgroundColor: Colors.white,
@@ -396,7 +396,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width / 4, 40),
+                                MediaQuery.of(context).size.width / 4, 48),
                             // minimumSize: Size(150, 50),
                             elevation: 0,
                             backgroundColor: Colors.white,
@@ -443,7 +443,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width / 4, 40),
+                                MediaQuery.of(context).size.width / 4, 48),
                             // minimumSize: Size(150, 50),
                             elevation: 0,
                             backgroundColor: Colors.white,
@@ -484,7 +484,7 @@ class _PbuttonsState extends State<Pbuttons> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                   ],
                 )),

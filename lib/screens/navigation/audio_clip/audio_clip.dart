@@ -200,7 +200,9 @@ if(allclips!=null){
                                                     _pickAudio();
                                                   },
                                             icon: _isUploading
-                                                ? CircularProgressIndicator()
+                                                ? CircularProgressIndicator(
+                                                    color: main_color,
+                                                  )
                                                 : Icon(Icons.add, size: 35),
                                           ),
                                           Text(
@@ -218,7 +220,9 @@ if(allclips!=null){
                                         child: Column(
                                           children: [
                                             _isUploading
-                                                ? CircularProgressIndicator()
+                                                ? CircularProgressIndicator(
+                                                    color: main_color,
+                                                  )
                                                 : Text(
                                                     _filePath != null
                                                         ? 'Picked file: ${_filePath!.split('/').last}'

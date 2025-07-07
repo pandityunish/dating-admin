@@ -80,7 +80,7 @@ class _HeightScreensState extends State<HeightScreens> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: const [
                   Text(
-                    "Please Select Height Preference",
+                    "Please Select Height Criteria",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 20,
@@ -111,8 +111,8 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
+                                color: Colors.white,
+                                border: Border.all(color: main_color, width: 1)),
                             child: Center(
                               child: Text(
                                 "Min Height",
@@ -125,8 +125,8 @@ class _HeightScreensState extends State<HeightScreens> {
                             height: 26,
                             width: 70,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
+                                color: Colors.white,
+                                border: Border.all(color: main_color, width: 1)),
                             child: Center(
                               child: Text(
                                 "Max Height",
@@ -144,22 +144,22 @@ class _HeightScreensState extends State<HeightScreens> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              height: 26,
+                              height: 25,
                               width: 70,
                               decoration: BoxDecoration(color: main_color),
                               child: Center(
                                   child: Text(
                                 sdl.Height[_minHeight],
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ))),
                           Container(
-                              height: 26,
+                              height: 25,
                               width: 70,
                               decoration: BoxDecoration(color: main_color),
                               child: Center(
                                   child: Text(
                                 sdl.Height[_maxHeight],
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ))),
                         ],
                       ),
@@ -170,17 +170,17 @@ class _HeightScreensState extends State<HeightScreens> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            height: 26,
-                            width: 70,
+                            height: 25,
+                            width: 73,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
+                                color: Colors.white,
+                                border: Border.all(color: main_color, width: 1)),
                             child: Center(
                               child: DropdownButton<double>(
+                                underline: const Text(""),
                                 value: _minHeight * 1.0,
-                                style:
-                                    TextStyle(fontSize: 12, color: main_color),
-                                iconSize: 12,
+                                padding: EdgeInsets.only(left: 4),
+                                style: TextStyle(fontSize: 10,color: main_color),
                                 iconEnabledColor: main_color,
                                 items: _getDropdownItems(0, 60),
                                 onChanged: (double? value) {
@@ -195,17 +195,19 @@ class _HeightScreensState extends State<HeightScreens> {
                             ),
                           ),
                           Container(
-                            height: 26,
-                            width: 70,
+                           height: 25,
+                            width: 73,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
+                                color: Colors.white,
+                                border: Border.all(color: main_color, width: 1)),
                             child: Center(
                               child: DropdownButton<double>(
+                                underline: const Text(""),
                                 value: _maxHeight * 1.0,
-                                style:
-                                    TextStyle(fontSize: 12, color: main_color),
-                                iconSize: 12,
+                                padding: EdgeInsets.only(left: 4),
+
+                                
+                                style: TextStyle(fontSize: 10,color: main_color),
                                 iconEnabledColor: main_color,
                                 items: _getDropdownItems(_minHeight, 60),
                                 onChanged: (double? value) {

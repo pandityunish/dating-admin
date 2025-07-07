@@ -156,24 +156,24 @@ class HomeService extends GetxController {
     }
   }
 
-  Future<NewUserModel> getdeleteuserdatabyid(String _id) async {
+  Future<NewUserModel?> getdeleteuserdatabyid(String _id) async {
     NewUserModel? newUserModel;
 
     try {
       http.Response res = await http.post(Uri.parse(getdeleteduserbyid),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode({"uid": _id}));
-      print(res.body);
+      log(res.body);
       if (res.statusCode == 200) {
         newUserModel = NewUserModel.fromJson(jsonEncode(jsonDecode(res.body)));
         return newUserModel;
       } else {
-        print("something went wrong");
+        log("something went wrong");
       }
     } catch (e) {
       print(e.toString() + "3ee");
     }
-    return newUserModel!;
+    return newUserModel; // Return null if user not found
   }
 
   Future<int> gettotaluser() async {
@@ -1120,7 +1120,7 @@ class HomeService extends GetxController {
       http.Response res = await http.post(Uri.parse(createverifyuserurl),
           headers: {'Content-Type': 'Application/json'},
           body: jsonEncode(
-              {"userid": useremail, "videolink": videolink, "name": editname}));
+              {"userid": useremail, "videoLink": videolink, "name": editname}));
       print(res.body);
       if (res.statusCode == 200) {
         print("accept request successfully");

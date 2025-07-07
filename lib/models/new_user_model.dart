@@ -214,86 +214,116 @@ this.chatnow,
 
   factory NewUserModel.fromMap(Map<String, dynamic> map) {
     return NewUserModel(
-      age: map["age"] as String,
-      timeofbirth: map["timeofbirth"] as String,
-      placeofbirth: map["placeofbirth"] as String,
-      About_Me: map['aboutme'] as String,
-      adminlat: map['adminlat'] as double,
-      adminlng: map['adminlng'] as double,
-      isBlur:map['isBlur'] as bool,
-      puid: map["puid"] as String,
-      createdAt: map['createdAt'] as String,
-      editstatus: map['editstatus'] as String,
-      offlinetime: map['offlinetime'] as String,
-      status: map['status'] as String,
-      id: map['_id'] as String,
-      verifiedstatus: map['verifiedstatus'] as String,
-      videolink: map['videolink'] as String,
-      Diet: map['diet'] as String,
-      chatnow: map['chatnow'] as int,
-      numberdownloadbiodata: map['numberdownloadbiodata'] as int,
-      onlinenumbers: map['onlinenumbers'] as int,
-       share: map['share'] as int,
-       freepersonmatch: map['freepersonmatch'] as int,
-       marriageloan: map['marriageloan'] as int,
-      downloadbiodata: map['downloadbiodata'] as bool,
-      support: map['support'] as int,
-      onlineuser: map['onlineuser'] as bool,
-      lng: map['lng'] as double,
-      lat: map['lat'] as double,
-      Disability: map['disability'] as String,
-      Drink: map['drink'] as String,
-      Education: map['education'] as String,
-       isLogOut: map['isLogOut'] as String,
-      Height: map['height'] as String,
-      Income: map['income'] as String,
-      Partner_Prefs: map['patnerprefs'] as String,
-      Smoke: map['smoke'] as String,
-      displayname: map['displayname'] as String,
-      email: map['email'] as String,
-      religion: map['religion'] as String,
-      name: map['name'] as String,
-      surname: map['surname'] as String,
-      phone: map['phone'] as String,
-      gender: map['gender'] as String,
-      KundaliDosh: map['kundalidosh'] as String,
-      MartialStatus: map['martialstatus'] as String,
-      Profession: map['profession'] as String,
-      Location: map['location1'] as String,
-      city: map['city'] as String,
-      state: map['state'] as String,
-      chats: List<ChatsModel>.from(
-        (map['chats'] as List<dynamic>).map<ChatsModel>(
-          (x) => ChatsModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      sendreq: List<dynamic>.from((map['sendreq'] as List<dynamic>)),
-      boostprofile: List<dynamic>.from((map['boostprofile'] as List<dynamic>)),
-      friends: List<dynamic>.from((map['friends'] as List<dynamic>)),
-      pendingreq: List<dynamic>.from((map['pendingreq'] as List<dynamic>)),
-      imageurls: List<dynamic>.from((map['imageurls'] as List<dynamic>)),
-      blocklists: List<dynamic>.from((map['blocklists'] as List<dynamic>)),
-      reportlist: List<dynamic>.from((map['reportlist'] as List<dynamic>)),
-      shortlist: List<dynamic>.from((map['shortlist'] as List<dynamic>)),
-      showads:List<AdsModel>.from(
-        (map['showads'] as List<dynamic>).map<AdsModel>(
-          (x) => AdsModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-       unapproveActivites:List<UnapproveActivites>.from(
-        (map['unapproveacitivites'] as List<dynamic>).map<UnapproveActivites>(
-          (x) => UnapproveActivites.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      country: map['country'] as String,
-      token: map['token'] as String,
-      dob: map['dob'] as int,
-      notifications: List<NotificationModel>.from(
-        (map['notifications'] as List<dynamic>).map<NotificationModel>(
-          (x) => NotificationModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-       activities: List<ActivitiesModel>.from((map['activities'] as List<dynamic>).map<ActivitiesModel>((x) => ActivitiesModel.fromMap(x as Map<String,dynamic>),),),
+      age: map["age"]?.toString() ?? '',
+      timeofbirth: map["timeofbirth"]?.toString() ?? '',
+      placeofbirth: map["placeofbirth"]?.toString() ?? '',
+      About_Me: map['aboutme']?.toString(),
+      adminlat: map['adminlat'] != null ? (map['adminlat'] as num).toDouble() : null,
+      adminlng: map['adminlng'] != null ? (map['adminlng'] as num).toDouble() : null,
+      isBlur: map['isBlur'] as bool?,
+      puid: map["puid"]?.toString() ?? '',
+      createdAt: map['createdAt']?.toString(),
+      editstatus: map['editstatus']?.toString(),
+      offlinetime: map['offlinetime']?.toString(),
+      status: map['status']?.toString() ?? '',
+      id: map['_id']?.toString() ?? '',
+      verifiedstatus: map['verifiedstatus']?.toString() ?? '',
+      videolink: map['videolink']?.toString() ?? '',
+      Diet: map['diet']?.toString(),
+      chatnow: map['chatnow'] as int?,
+      numberdownloadbiodata: map['numberdownloadbiodata'] as int?,
+      onlinenumbers: map['onlinenumbers'] as int?,
+      share: map['share'] as int?,
+      freepersonmatch: map['freepersonmatch'] as int?,
+      marriageloan: map['marriageloan'] as int?,
+      downloadbiodata: map['downloadbiodata'] as bool?,
+      support: map['support'] as int?,
+      onlineuser: map['onlineuser'] as bool?,
+      lng: map['lng'] != null ? (map['lng'] as num).toDouble() : 0.0,
+      lat: map['lat'] != null ? (map['lat'] as num).toDouble() : 0.0,
+      Disability: map['disability']?.toString(),
+      Drink: map['drink']?.toString(),
+      Education: map['education']?.toString(),
+      isLogOut: map['isLogOut']?.toString(),
+      Height: map['height']?.toString(),
+      Income: map['income']?.toString(),
+      Partner_Prefs: map['patnerprefs']?.toString(),
+      Smoke: map['smoke']?.toString(),
+      displayname: map['displayname']?.toString() ?? '',
+      email: map['email']?.toString() ?? '',
+      religion: map['religion']?.toString() ?? '',
+      name: map['name']?.toString() ?? '',
+      surname: map['surname']?.toString() ?? '',
+      phone: map['phone']?.toString() ?? '',
+      gender: map['gender']?.toString() ?? '',
+      KundaliDosh: map['kundalidosh']?.toString() ?? '',
+      MartialStatus: map['martialstatus']?.toString() ?? '',
+      Profession: map['profession']?.toString() ?? '',
+      Location: map['location1']?.toString() ?? '',
+      city: map['city']?.toString() ?? '',
+      state: map['state']?.toString() ?? '',
+      chats: map['chats'] != null
+          ? List<ChatsModel>.from(
+              (map['chats'] as List<dynamic>).map<ChatsModel>(
+                (x) => ChatsModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
+      sendreq: map['sendreq'] != null
+          ? List<dynamic>.from(map['sendreq'] as List<dynamic>)
+          : [],
+      boostprofile: map['boostprofile'] != null
+          ? List<dynamic>.from(map['boostprofile'] as List<dynamic>)
+          : [],
+      friends: map['friends'] != null
+          ? List<dynamic>.from(map['friends'] as List<dynamic>)
+          : [],
+      pendingreq: map['pendingreq'] != null
+          ? List<dynamic>.from(map['pendingreq'] as List<dynamic>)
+          : [],
+      imageurls: map['imageurls'] != null
+          ? List<dynamic>.from(map['imageurls'] as List<dynamic>)
+          : [],
+      blocklists: map['blocklists'] != null
+          ? List<dynamic>.from(map['blocklists'] as List<dynamic>)
+          : [],
+      reportlist: map['reportlist'] != null
+          ? List<dynamic>.from(map['reportlist'] as List<dynamic>)
+          : [],
+      shortlist: map['shortlist'] != null
+          ? List<dynamic>.from(map['shortlist'] as List<dynamic>)
+          : [],
+      showads: map['showads'] != null
+          ? List<AdsModel>.from(
+              (map['showads'] as List<dynamic>).map<AdsModel>(
+                (x) => AdsModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
+      unapproveActivites: map['unapproveacitivites'] != null
+          ? List<UnapproveActivites>.from(
+              (map['unapproveacitivites'] as List<dynamic>).map<UnapproveActivites>(
+                (x) => UnapproveActivites.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
+      country: map['country']?.toString() ?? '',
+      token: map['token']?.toString() ?? '',
+      dob: map['dob'] as int? ?? 0,
+      notifications: map['notifications'] != null
+          ? List<NotificationModel>.from(
+              (map['notifications'] as List<dynamic>).map<NotificationModel>(
+                (x) => NotificationModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
+      activities: map['activities'] != null
+          ? List<ActivitiesModel>.from(
+              (map['activities'] as List<dynamic>).map<ActivitiesModel>(
+                (x) => ActivitiesModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
     );
   }
 

@@ -205,12 +205,12 @@ log("message ${searchemail}");
       print(name);
       http.Response res = await http.post(Uri.parse(searchuserbynameurl),
           headers: {'Content-Type': 'Application/json'},
-          body: json.encode({"name": name, "email": email}));
-      print("${res.body} hello");
+          body: json.encode({"name": name,"limit":20,"page":1}));
+      log("new ${res.body} hello");
       if (res.statusCode == 200) {
-        for (var i = 0; i < jsonDecode(res.body).length; i++) {
+        for (var i = 0; i < jsonDecode(res.body)["users"].length; i++) {
           allusers
-              .add(NewUserModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+              .add(NewUserModel.fromJson(jsonEncode(jsonDecode(res.body)["users"][i])));
 
           // print(userdata);
         }
@@ -231,12 +231,12 @@ log("message ${searchemail}");
     try {
       http.Response res = await http.post(Uri.parse(searchuserbysurnameurl),
           headers: {'Content-Type': 'Application/json'},
-          body: json.encode({"surname": surname, "email": email}));
+          body: json.encode({"surname": surname,"limit":20,"page":1}));
       print(res.body);
       if (res.statusCode == 200) {
-        for (var i = 0; i < jsonDecode(res.body).length; i++) {
+        for (var i = 0; i < jsonDecode(res.body)["users"].length; i++) {
           allusers
-              .add(NewUserModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+              .add(NewUserModel.fromJson(jsonEncode(jsonDecode(res.body)["users"][i])));
         }
         return allusers;
       } else {

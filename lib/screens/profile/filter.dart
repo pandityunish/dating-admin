@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:matrimony_admin/Assets/Error.dart';
 import 'package:matrimony_admin/screens/Main_Screen.dart';
+import 'package:matrimony_admin/screens/navigation/admin_options/custom_spButton.dart';
 import 'package:matrimony_admin/screens/navigation/admin_options/service/admin_service.dart';
 import 'package:matrimony_admin/screens/profie_types/manage_admin.dart';
 import 'package:matrimony_admin/screens/profie_types/manage_advertisiment.dart';
@@ -39,7 +40,7 @@ class _ReligionState extends State<FilterC> {
   var data;
   Future<void> logout({required BuildContext context}) async {
     SharedPref sharedpref = SharedPref();
-    await NotificationFunction.setonlineStatus(userSave.uid!, "Offline");
+    await NotificationFunction.setonlineStatus(userSave.uid ?? "", "Offline");
 
     sharedpref.remove("user");
     sharedpref.remove("uid");
@@ -48,13 +49,13 @@ class _ReligionState extends State<FilterC> {
     uid = "";
     ImageUrls().clear();
 
-    SearchProfile().addtoadminnotification(
-        userid: userSave.uid!,
-        useremail: userSave.email!,
-        userimage: userSave.imageUrls!.isEmpty ? "" : userSave.imageUrls![0],
-        title: "${userSave.displayName} LOGOUT SUCCESSFULLY BY OWNSELF",
-        email: userSave.email!,
-        subtitle: "");
+    // SearchProfile().addtoadminnotification(
+    //     userid: userSave.uid!,
+    //     useremail: userSave.email!,
+    //     userimage: userSave.imageUrls!.isEmpty ? "" : userSave.imageUrls![0],
+    //     title: "${userSave.displayName} LOGOUT SUCCESSFULLY BY OWNSELF",
+    //     email: userSave.email!,
+    //     subtitle: "");
     friends = []; //sent requests
     friendr = []; //received requests
     frienda = []; //accepted requests
@@ -129,6 +130,15 @@ class _ReligionState extends State<FilterC> {
     alladmins = await CreateAdminService().getalladmins();
     setState(() {});
   }
+
+  // Button state variables
+  Color borderColor = Colors.white;
+  Color textColor = Colors.black;
+  Color buttonBgColor = Colors.white;
+  
+  // Keys to force rebuild of buttons when state changes
+  final yesButtonKey = GlobalKey();
+  final noButtonKey = GlobalKey();
 
   @override
   void initState() {
@@ -227,9 +237,6 @@ class _ReligionState extends State<FilterC> {
                                 : Alignment.centerRight,
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  ison = !ison;
-                                });
                                 showDialog(
                                   context: context,
                                   builder: (context) {
@@ -266,45 +273,25 @@ class _ReligionState extends State<FilterC> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Are You Sure You Want ${ison == true ? "Stop" : "Start"} Platform?",
+                                              "Are You Sure You Want ${ison == true ? "Start" : "Stop"} Platform?",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             SizedBox(
-                                              height: 23,
+                                              height: 40,
                                             ),
-                                            Container(
-                                              margin: EdgeInsets.only(left: 6),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8,
-                                              child: ElevatedButton(
-                                                  style: ButtonStyle(
-                                                      shadowColor:
-                                                          MaterialStateColor.resolveWith(
-                                                              (states) =>
-                                                                  Colors.black),
-                                                      padding:
-                                                          MaterialStateProperty.all<
-                                                              EdgeInsetsGeometry?>(
-                                                        EdgeInsets.symmetric(
-                                                          vertical: 15,
-                                                        ),
-                                                      ),
-                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      60.0),
-                                                              side: BorderSide(
-                                                                color:
-                                                                    main_color,
-                                                              ))),
-                                                      backgroundColor:
-                                                          MaterialStateProperty.all<Color>(
-                                                              Colors.white)),
-                                                  onPressed: () async {
+                                            CustomSpecialButtom(
+                                              text: "Yes",
+                                              bordercolor: Colors.white,
+                                              onTap: () {
+                                                 setState(() {
+                                                      ison = !ison;
+                                                      // Change colors with high contrast for visibility
+                                                      borderColor = main_color;
+                                                      textColor = Colors.white; // White text for better contrast
+                                                      buttonBgColor = main_color;
+                                                    });
+                                                    
                                                     NotiService()
                                                         .updatemaintenance(
                                                             ison);
@@ -328,54 +315,74 @@ class _ReligionState extends State<FilterC> {
                                                             subtitle: "");
                                                     setState(() {});
                                                     Navigator.pop(context);
-                                                    // logout(context: context);
-                                                  },
-                                                  child: Text("Yes",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 16,
-                                                          fontFamily: 'Serif',
-                                                          fontWeight: FontWeight.w700))),
+                                              },
                                             ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            // InkWell(
-                                            //     onTap: () {
-                                            //       Navigator.pop(context);
-                                            //     },
-                                            //     child: const SpecialButtom(text: "Cancel"))
-                                            Container(
-                                              margin: EdgeInsets.only(left: 6),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8,
-                                              child: ElevatedButton(
-                                                  style: ButtonStyle(
-                                                      shadowColor:
-                                                          MaterialStateColor.resolveWith(
-                                                              (states) =>
-                                                                  Colors.black),
-                                                      padding: MaterialStateProperty.all<
-                                                              EdgeInsetsGeometry?>(
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 15)),
-                                                      shape: MaterialStateProperty.all<
-                                                              RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(60.0),
-                                                              side: BorderSide(
-                                                                color: Colors
-                                                                    .white,
-                                                              ))),
-                                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text("No", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Serif', fontWeight: FontWeight.w700))),
-                                            ),
+                                             
+                                           
+                                          CustomSpecialButtom(
+                                            text: "No",
+                                            
+                                            bordercolor: Colors.white,
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                            // Container(
+                                            //   margin: EdgeInsets.only(left: 6),
+                                            //   width: MediaQuery.of(context)
+                                            //           .size
+                                            //           .width *
+                                            //       0.8,
+                                            //   height: 45,
+                                            //   child: ElevatedButton(
+                                            //       key: noButtonKey,
+                                            //       style: ButtonStyle(
+                                            //           shadowColor:
+                                            //               MaterialStateColor.resolveWith(
+                                            //                   (states) =>
+                                            //                       Colors.black),
+                                            //           padding: MaterialStateProperty.all<
+                                            //                   EdgeInsetsGeometry?>(
+                                            //               EdgeInsets.symmetric(
+                                            //                   vertical: 15)),
+                                            //           shape: MaterialStateProperty.all<
+                                            //                   RoundedRectangleBorder>(
+                                            //               RoundedRectangleBorder(
+                                            //                   borderRadius:
+                                            //                       BorderRadius.circular(60.0),
+                                            //                   side: BorderSide(
+                                            //                     color: borderColor,
+                                            //                     width: 2.5, // Make border more visible
+                                            //                   ))),
+                                            //           backgroundColor: WidgetStateProperty.all<Color>(Colors.white)),
+                                            //       onPressed: () async {
+                                            //         final originalColors = {
+                                            //           'border': borderColor,
+                                            //           'text': textColor,
+                                            //           'bg': buttonBgColor
+                                            //         };
+                                            //         setState(() {
+                                            //           // Change colors with high contrast for visibility
+                                            //           borderColor = main_color;
+                                            //           textColor = Colors.white; // White text for better contrast
+                                            //           buttonBgColor = main_color;
+                                            //         });
+                                            //         await Future.delayed(Duration(seconds: 1));
+                                            //         setState(() {
+                                            //           borderColor = originalColors['border']!;
+                                            //           textColor = originalColors['text']!;
+                                            //           buttonBgColor = originalColors['bg']!;
+                                            //         });
+                                            //         Navigator.of(context).pop();
+                                            //       },
+                                            //       child: Text("No", 
+                                            //         style: TextStyle(
+                                            //           color: textColor, 
+                                            //           fontSize: 16, 
+                                            //           fontFamily: 'Serif', 
+                                            //           fontWeight: FontWeight.w700
+                                            //         ))),
+                                            // ),
                                           ],
                                         ),
                                       ),

@@ -3,7 +3,7 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class VerifyUserModel {
   final String name;
-  final String videoLink;
+    final String? videoLink;
   final String createdAt;
   VerifyUserModel({
     required this.name,
@@ -23,7 +23,7 @@ class VerifyUserModel {
   factory VerifyUserModel.fromMap(Map<String, dynamic> map) {
     return VerifyUserModel(
       name: map['name'] as String,
-      videoLink: map['videoLink'] as String,
+            videoLink: map['videoLink'] as String?,
       createdAt: map['createdAt'] as String,
     );
   }

@@ -295,11 +295,10 @@ class _VideoPlayerWidget1State extends State<VideoPlayerWidget1> {
                SizedBox(
   height: 200,
   width: Get.width * 0.9,
-  child: FittedBox(
-    fit: BoxFit.fitHeight, // or BoxFit.fill depending on how you want it
-    child: SizedBox(
-      width: _videoPlayerController.value.size.width,
-      height: _videoPlayerController.value.size.height,
+  child: ClipRRect(
+    borderRadius: BorderRadius.circular(8),
+    child: AspectRatio(
+      aspectRatio: _videoPlayerController.value.aspectRatio,
       child: VideoPlayer(_videoPlayerController),
     ),
   ),

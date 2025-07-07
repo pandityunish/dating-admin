@@ -121,17 +121,30 @@ class _ReligionState extends State<ShareProfile> {
                             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 50,
-                    width:  MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                            color: Color.fromARGB(255, 223, 223, 223))),
-                    child: TextFormField(
-                      controller: controller,
-                    cursorColor: main_color,
-                      onFieldSubmitted: (value) async {
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      child: Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.5,
+                            )),
+                        child: TextFormField(
+                          controller: controller,
+                          textAlign: TextAlign.start,
+                          cursorColor: main_color,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15).copyWith(bottom: 5),
+                              border: InputBorder.none,
+                              hintText: "Enter Profile ID",
+                              hintStyle: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16)),
+                          onFieldSubmitted: (value) async {
                         int status;
                         status = await AdminService().findprofile(value);
                         if (status == 200) {
@@ -259,13 +272,8 @@ class _ReligionState extends State<ShareProfile> {
                               });
                         }
                       },
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          border: InputBorder.none,
-                          
-                          hintText: "Enter Profile ID"),
                     ),
-                  ),
+                  ),)),
                   GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

@@ -237,6 +237,7 @@ class _CreateAdminState extends State<CreateAdmin> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
                           child: CupertinoTextField(
+                            cursorColor: main_color,
                             // height: 20.0,
                             maxLength: 15,
                             inputFormatters: [
@@ -272,6 +273,7 @@ class _CreateAdminState extends State<CreateAdmin> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
                           child: CupertinoTextField(
+                            cursorColor: main_color,
                             // height: 20.0,
                             maxLength: 100,
                   

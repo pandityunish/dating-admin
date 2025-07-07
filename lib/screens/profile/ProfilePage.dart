@@ -434,10 +434,9 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
   }
 
   locationCard(boxname, imgicon, defaultText) {
-    print(boxname.toString() + "hello");
     return Container(
         margin: const EdgeInsets.only(bottom: 1.5, right: 2),
-        height: MediaQuery.of(context).size.height * 0.0195,
+        height: MediaQuery.of(context).size.height * 0.024,
 
         // width: (width == null) ? box_text.length * 8 + 32.0 : width,
         width: 80,
@@ -962,7 +961,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                                         .offlinetime ==
                                                     ""
                                                 ? widget.userSave!.createdAt!
-                                                : widget.userSave!.offlinetime!,
+                                                : widget.userSave?.offlinetime?? widget.userSave!.createdAt!,
                                             olddate:
                                                 widget.userSave!.createdAt!,
                                           ),
@@ -980,13 +979,13 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                         ]),
                         SizedBox(
                           // height: MediaQuery.of(context).size.height * 0.49,
-                          height: MediaQuery.of(context).size.height * 0.42,
+                          height: MediaQuery.of(context).size.height * 0.5,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               Row(
                                 // crossAxisAlignment: CrossAxisAlignment.start,
@@ -1034,7 +1033,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                 ],
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
 
                               Stack(
@@ -1045,8 +1044,8 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                       margin: const EdgeInsets.only(
                                           left: 10, right: 0, top: 5),
                                       child: Wrap(
-                                        spacing: 5,
-                                        runSpacing: 5,
+                                        spacing: 3,
+                                        runSpacing: 3,
                                         // alignment:WrapAlignment.spaceBetween,
                                         children: [
                                           SizedBox(
@@ -1234,7 +1233,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                     ),
                                   ]),
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
 
                               //interested in marraige with
@@ -1259,8 +1258,8 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                               //   height: MediaQuery.of(context).size.height *
                               //       0.002,
                               // ),
-                              SizedBox(
-                                height: 10,
+                              const SizedBox(
+                                height: 5,
                               ),
 
                               Stack(
@@ -1272,7 +1271,76 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                     margin: const EdgeInsets.only(
                                         left: 10, right: 0, top: 4),
                                     child: newSavePrefModel == null
-                                        ? const Center()
+                                        ?  Wrap(
+                                              spacing: 4,
+                                        runSpacing: 4,
+                                              children: [
+                                                SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.04,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                ),
+                                                ageCard(
+                                                    [],
+                                                    'images/icons/calender.png',
+                                                    defaultSp.AgeList,
+                                                    ),
+                                                savedPrefCard([],
+                                                    'images/icons/religion.png',
+                                                    defaultSp.ReligionList),
+                                                (widget.userSave!.religion ==
+                                                        "Hindu")
+                                                    ? savedPrefCard(
+                                                        [],
+                                                        'images/icons/kundli.png',
+                                                        defaultSp
+                                                            .KundaliDoshList)
+                                                    : Container(width: 0),
+                                                savedPrefCard(
+                                                    [],
+                                                    'images/icons/marital_status.png',
+                                                    defaultSp
+                                                        .MaritalStatusList),
+                                                          savedPrefCard([],
+                                                    'images/icons/food.png',
+                                                    defaultSp.dietList),
+                                                      savedPrefCard([],
+                                                    'images/icons/drink.png',
+                                                    defaultSp.DrinkList),
+                                                savedPrefCard([],
+                                                    'images/icons/smoke.png',
+                                                    defaultSp.SmokeList),
+                                                      (widget.userSave!.Disability ==
+                                                        "Normal")
+                                                    ? Container(width: 0)
+                                                    : savedPrefCard(
+                                                        [],
+                                                        'images/icons/disability.png',
+                                                        defaultSp
+                                                            .DisabilityList),
+                                                heightard([],
+                                                    'images/icons/height.png',
+                                                    defaultSp.HeightList),
+                                              
+                                                savedPrefCard([],
+                                                    'images/icons/education.png',
+                                                    defaultSp.EducationList),
+                                                savedPrefCard([],
+                                                    'images/icons/profession_suitcase.png',
+                                                    defaultSp.ProfessionList),
+                                                savedPrefCard([],
+                                                    'images/icons/hand_rupee.png',
+                                                    defaultSp.IncomeList),
+                                                        locationCard(
+                                                    "Any ",
+                                                    'images/icons/location.png',
+                                                    defaultSp.LocatioList),
+                                              ],
+                                            )
                                         : Wrap(
                                             spacing: 3,
                                             runSpacing: 3,
@@ -1346,7 +1414,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                                                               .citylocation
                                                               .isEmpty
                                                       ? "Any"
-                                                      : "${newSavePrefModel!.location.join(', ') + ","}, ${newSavePrefModel!.statelocation.join(', ') + ","} ${newSavePrefModel!.citylocation.join(', ')}",
+                                                      : "${newSavePrefModel!.citylocation.join(', ')}${newSavePrefModel!.statelocation.join(', ') + ","}${newSavePrefModel!.location.join(', ') + ","}",
                                                   'images/icons/location.png',
                                                   defaultSp.LocatioList),
                                               savedPrefCard(

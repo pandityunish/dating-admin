@@ -48,6 +48,7 @@ class _ReligionState extends State<Religion> {
   UserService userService = Get.put(UserService());
   Widget CustomRadioButton(String text, int index) {
     return ElevatedButton(
+      
       onPressed: () {
         setState(() {
           religion_text = text;
@@ -94,9 +95,11 @@ class _ReligionState extends State<Religion> {
         ),
       ),
       style: ButtonStyle(
+        minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry?>(
               EdgeInsets.symmetric(vertical: 15)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60.0),
                   side: BorderSide(
